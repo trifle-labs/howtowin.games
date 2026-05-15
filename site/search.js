@@ -64,6 +64,7 @@ function renderMd(text) {
   const lines = text.split("\n");
   const out = [];
   let paragraph = [];
+  let inTable = false;
 
   function flushParagraph() {
     if (paragraph.length) {
@@ -72,25 +73,15 @@ function renderMd(text) {
     }
   }
 
+  function closeTable() {
+    if (inTable) { out.push("</table>"); inTable = false; }
+  }
+
   for (const raw of lines) {
     let line = raw;
     const trimmed = line.trim();
 
-    // tables
-    if (/^\|.+\|$/.test(trimmed) && line.includes("|")) {
-      flushParagraph();
-      const cells = trimmed.split("|").slice(1, -1).map(c => c.trim());
-      out.push("<tr>" + cells.map(c => `<td>${esc(c)}</td>`).join("") + "</tr>");
-      continue;
-    }
-
-    if (/^---/.test(trimmed)) {
-      flushParagraph();
-      out.push('<hr class="md-hr">');
-      continue;
-    }
-
-    // inline formatting
+    // inline formatting (apply early so checks below see formatted content)
     line = line.replace(/`([^`]+)`/g, "<code>$1</code>");
     line = line.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
     line = line.replace(/(?<!\w)\*(?!\*)(.+?)(?<!\*)\*(?!\w)/g, "<em>$1</em>");
@@ -99,7 +90,28 @@ function renderMd(text) {
       return `<a href="${u}" target="_blank" rel="noopener">${t}</a>`;
     });
 
+    // table rows — wrap in <table>
+    if (/^\|.+\|$/.test(trimmed) && line.includes("|")) {
+      const cells = trimmed.split("|").slice(1, -1).map(c => c.trim());
+      // skip separator rows (|----| or |:---:| etc.)
+      if (cells.every(c => /^:?-+:?$/.test(c.replace(/<[^>]+>/g, "")))) continue;
+      flushParagraph();
+      if (!inTable) { out.push("<table>"); inTable = true; }
+      out.push("<tr>" + cells.map(c => `<td>${esc(c)}</td>`).join("") + "</tr>");
+      continue;
+    }
+    if (inTable) closeTable();
+
+    if (/^---/.test(trimmed)) {
+      flushParagraph();
+      out.push('<hr class="md-hr">');
+      continue;
+    }
+
     if (!trimmed) {
+      flushParagraph();
+    } else if (/^# /.test(line)) {
+      // h1 is shown in the detail header; skip
       flushParagraph();
     } else if (/^##+\s+/.test(line)) {
       flushParagraph();
@@ -118,6 +130,7 @@ function renderMd(text) {
     }
   }
   flushParagraph();
+  closeTable();
   return out.join("\n");
 }
 
@@ -331,8 +344,8 @@ function showResults(hits) {
 
   $results.innerHTML = hits.map(h => {
     const r = meta[h.idx];
-    let path = r.type === "game" ? `game/${r.source}` :
-               r.type === "lexicon" ? `game/lexicon/${r.source}` : null;
+    let path = r.type === "game" ? `${r.source}` :
+               r.type === "lexicon" ? `lexicon/${r.source}` : null;
     const section = r.section ? `<span class="section">§ ${esc(r.section)}</span>` : "";
     let text = r.text;
     if (text.length > 600) text = text.slice(0, 600) + "…";
