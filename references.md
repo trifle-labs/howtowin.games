@@ -22,7 +22,7 @@ Ph.D. thesis, University of Limburg, Maastricht, 1994. — Defines the
 ultra-weakly / weakly / strongly solved hierarchy used throughout this archive;
 also covers Gomoku, Qubic, Connect Four, Nine Men's Morris.
 
-Link: <https://project.dke.maastrichtuniversity.nl/games/files/phd/allis_thesis.pdf>
+Link: <http://fragrieu.free.fr/SearchingForSolutions.pdf> ([archive](http://web.archive.org/web/20260217010357/http://fragrieu.free.fr/SearchingForSolutions.pdf))
 
 ### allis-gomoku1996
 L. Victor Allis, H. Jaap van den Herik, M. P. H. Huntjens. *Go-Moku Solved by
