@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -55,19 +55,24 @@ jobs:
           path: howtowin.db
           retention-days: 90
 
-      - name: Publish rolling release
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          gh release delete db-latest --yes --cleanup-tag 2>/dev/null || true
-          gh release create db-latest howtowin.db \
-            --title "Database (latest)" \
-            --notes "Auto-generated from commit ${{ github.sha }}. Schema and embedding model: BAAI/bge-small-en-v1.5 (384-dim)."
-
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: site
+
+      - name: Publish rolling release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view db-latest >/dev/null 2>&1; then
+            gh release edit db-latest \
+              --notes "Auto-generated from commit ${{ github.sha }}. Schema: bge-small-en-v1.5 (384-dim)."
+            gh release upload db-latest howtowin.db --clobber
+          else
+            gh release create db-latest howtowin.db \
+              --title "Database (latest)" \
+              --notes "Auto-generated from commit ${{ github.sha }}. Schema: bge-small-en-v1.5 (384-dim)."
+          fi
 
   deploy:
     needs: build
