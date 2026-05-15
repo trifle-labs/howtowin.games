@@ -99,16 +99,12 @@ async function loadBin(url) {
 function topK(queryVec, k) {
   const n = meta.length;
   const scores = new Float64Array(n);
-  let nq2 = 0;
-  for (let i = 0; i < DIM; i++) nq2 += queryVec[i] * queryVec[i];
-  const nq = Math.sqrt(nq2) || 1;
   for (let i = 0; i < n; i++) {
     const off = i * DIM;
     let dot = 0, nv2 = 0;
     for (let j = 0; j < DIM; j++) {
-      const q = queryVec[j] / nq;
       const v = vecs[off + j];
-      dot += q * v;
+      dot += queryVec[j] * v;
       nv2 += v * v;
     }
     scores[i] = dot / (Math.sqrt(nv2) || 1);
@@ -204,9 +200,15 @@ async function runSearch(text) {
     return;
   }
   setStatus("searching…");
-  const out = await extract(text, { pooling: "cls", normalize: true });
+  const out = await extract(text, {});
   if (myId !== pending) return;
-  const qv = out.data;
+  // normalize the query vector
+  const raw = out.data;
+  let norm = 0;
+  for (let i = 0; i < DIM; i++) norm += raw[i] * raw[i];
+  norm = Math.sqrt(norm) || 1;
+  const qv = new Float64Array(DIM);
+  for (let i = 0; i < DIM; i++) qv[i] = raw[i] / norm;
   const hits = topK(qv, 8);
   if (myId !== pending) return;
   renderSearchResults(hits);
@@ -261,7 +263,6 @@ try {
     "feature-extraction",
     "Xenova/bge-small-en-v1.5",
     {
-      dtype: "q8",
       progress_callback: (p) => {
         if (p.status === "progress" && p.total) {
           setStatus(`loading model… ${p.file} ${Math.round((p.loaded / p.total) * 100)}%`);
