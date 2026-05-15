@@ -15,6 +15,7 @@
 | Solved by | Ueda & Nagao |
 | State-space complexity | Up to exponential in grid size |
 | Game-tree complexity | NP-complete |
+| **Playable** | nonograms |
 
 ## Description
 

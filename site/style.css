@@ -329,6 +329,52 @@ a:hover { text-decoration: underline; }
 }
 .detail-body p { margin: 0.6rem 0; }
 
+/* ── filter bar ──────────────────────────────────── */
+
+.filter-bar {
+  max-width: 900px;
+  margin: 0 auto 1rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 0.82rem;
+  color: var(--fg-soft);
+  cursor: pointer;
+  user-select: none;
+  transition: border-color .15s, background .15s, color .15s;
+}
+.filter-chip:hover { border-color: var(--border-strong); }
+.filter-chip input { display: none; }
+.filter-chip.active {
+  border-color: var(--accent);
+  background: rgba(187,51,51,0.08);
+  color: var(--accent);
+}
+.filter-chip.active .chip-label { font-weight: 500; }
+
+.filter-select {
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-family: inherit;
+  color: var(--fg-soft);
+  background: transparent;
+  cursor: pointer;
+  transition: border-color .15s;
+}
+.filter-select:hover { border-color: var(--border-strong); }
+.filter-select:focus { outline: none; border-color: var(--accent); }
+
 /* ── category tile grid ────────────────────────────── */
 
 .tile-grid {
@@ -408,6 +454,12 @@ a:hover { text-decoration: underline; }
   cursor: pointer;
 }
 .tile-game-list li a:hover { color: var(--accent); text-decoration: none; }
+.playable-dot {
+  font-size: 0.55rem;
+  color: var(--accent);
+  margin-right: 0.1rem;
+  opacity: 0.8;
+}
 .tile-game-list .sol-badge {
   font-size: 0.6rem;
   text-transform: uppercase;

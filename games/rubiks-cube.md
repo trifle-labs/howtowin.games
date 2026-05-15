@@ -16,6 +16,7 @@
 | Solved by | Rokicki, Kociemba, Davidson & Dethridge |
 | State-space complexity | 43,252,003,274,489,856,000 ≈ 4.3 × 10^19 reachable states |
 | Game-tree complexity | N/A (puzzle) |
+| **Playable** | rubiks-cube |
 
 ## Description
 

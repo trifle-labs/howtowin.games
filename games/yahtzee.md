@@ -16,6 +16,7 @@
 | Solved by | James Glenn; Tom Verhoeff; others |
 | State-space complexity | Tractable (scorecard × dice states) |
 | Game-tree complexity | N/A (Markov decision process) |
+| **Playable** | yahtzee |
 
 ## Description
 

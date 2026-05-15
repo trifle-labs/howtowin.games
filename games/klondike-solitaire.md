@@ -17,6 +17,7 @@
 | Solved by | Bjarnason, Fern & Tadepalli (estimate for "thoughtful" Klondike) |
 | State-space complexity | 52! deal space ≈ 8 × 10^67 |
 | Game-tree complexity | Large per deal |
+| **Playable** | klondike-solitaire |
 
 ## Description
 

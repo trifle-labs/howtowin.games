@@ -15,6 +15,7 @@
 | Solved by | Various — Tomas Rokicki et al. |
 | State-space complexity | 3,674,160 distinct positions |
 | Game-tree complexity | Solved by exhaustive table |
+| **Playable** | pocket-cube |
 
 ## Description
 

@@ -15,6 +15,7 @@
 | Solved by | Robert Hearn, Erik Demaine |
 | State-space complexity | Up to exponential in board size |
 | Game-tree complexity | PSPACE-complete in general |
+| **Playable** | klotski |
 
 ## Description
 

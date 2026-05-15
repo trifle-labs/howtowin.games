@@ -15,6 +15,7 @@
 | Solved by | Yato & Seta |
 | State-space complexity | ~6.67×10^21 valid 9×9 grids |
 | Game-tree complexity | NP-complete (n²×n²) |
+| **Playable** | sudoku |
 
 ## Description
 

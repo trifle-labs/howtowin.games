@@ -418,19 +418,21 @@ def main() -> int:
     conn = sqlite3.connect(DB_PATH)
     rows = conn.execute(
         "SELECT slug, title, type, solution_status, game_theoretic_value, "
-        "summary, family, is_head FROM games ORDER BY title"
+        "summary, family, is_head, playable, players FROM games ORDER BY title"
     ).fetchall()
     conn.close()
 
     # Build family → members map
     families: dict[str, list[dict]] = {}
     all_games: list[dict] = []
-    for slug, title, type_, sol, gtv, summary, family, is_head in rows:
+    for slug, title, type_, sol, gtv, summary, family, is_head, playable, players in rows:
         entry = {
             "slug": slug,
             "title": title,
             "solution_status": sol or "Unknown",
             "game_theoretic_value": gtv or "Unknown",
+            "playable": bool(playable),
+            "players": (players or "").strip(),
         }
         if is_head:
             entry["is_head"] = True

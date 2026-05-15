@@ -16,6 +16,8 @@ const $clear = $("clear-btn");
 let meta = [];
 let vecs = null;
 let extract = null;
+let allCategories = [];
+let currentFilters = { playable: false, status: "", players: "" };
 
 // ── helpers ──────────────────────────────────────────────────────────────
 
@@ -235,7 +237,9 @@ function gameItem(g) {
   const label = g.solution_status?.length > 25
     ? g.solution_status.slice(0, 22) + "…"
     : g.solution_status || "Unknown";
-  let html = `<li><a href="#game/${g.slug}">${esc(g.title)}</a><span class="sol-badge ${bc}">${esc(label)}</span></li>`;
+  let html = `<li><a href="#game/${g.slug}">${esc(g.title)}</a>`;
+  if (g.playable) html += `<span class="playable-dot" title="playable demo">▶</span>`;
+  html += `<span class="sol-badge ${bc}">${esc(label)}</span></li>`;
   if (g.members && g.members.length) {
     html += `<ul class="family-members">`;
     html += g.members.map(m => {
@@ -248,6 +252,47 @@ function gameItem(g) {
     html += `</ul>`;
   }
   return html;
+}
+
+// ── filters ────────────────────────────────────────────────────────────────
+
+function applyFilters() {
+  const f = currentFilters;
+  if (!f.playable && !f.status && !f.players) {
+    renderGrid(allCategories);
+    document.getElementById("filter-empty").style.display = "none";
+    return;
+  }
+  const filtered = allCategories.map(cat => {
+    const games = cat.games.filter(g => {
+      if (f.playable && !g.playable) return false;
+      if (f.status) {
+        const st = (g.solution_status || "").toLowerCase();
+        const isUnsolved = st.includes("unsolved") || st.includes("open") || st.includes("unknown");
+        const isPartial = st.includes("partial") || st.includes("partially") || st.includes("analysed") || st.includes("pspace") || st.includes("np-");
+        const isSolved = !isUnsolved && !isPartial && (st.includes("solved") || st.includes("complete"));
+        if (f.status === "solved" && !isSolved) return false;
+        if (f.status === "unsolved" && !isUnsolved) return false;
+        if (f.status === "partial" && !isPartial) return false;
+      }
+      if (f.players) {
+        const p = (g.players || "").trim();
+        if (!p.startsWith(f.players)) return false;
+      }
+      return true;
+    });
+    if (!games.length) return null;
+    return { ...cat, games, count: games.reduce((n, g) => n + 1 + g.members.length, 0) };
+  }).filter(Boolean);
+
+  const $empty = document.getElementById("filter-empty");
+  if (filtered.length) {
+    renderGrid(filtered);
+    $empty.style.display = "none";
+  } else {
+    renderGrid([]);
+    $empty.style.display = "block";
+  }
 }
 
 // ── game detail ──────────────────────────────────────────────────────────
@@ -455,8 +500,28 @@ const [categories, metaRaw, vecsRaw] = await Promise.all([
 ]);
 meta = metaRaw;
 vecs = vecsRaw;
+allCategories = categories;
 
 renderGrid(categories);
+
+// ── filter bar wiring ──────────────────────────────
+const $chkPlayable = document.getElementById("chk-playable");
+const $filterStatus = document.getElementById("filter-status");
+const $filterPlayers = document.getElementById("filter-players");
+
+$chkPlayable.addEventListener("change", () => {
+  currentFilters.playable = $chkPlayable.checked;
+  document.getElementById("filter-playable").classList.toggle("active", $chkPlayable.checked);
+  applyFilters();
+});
+$filterStatus.addEventListener("change", () => {
+  currentFilters.status = $filterStatus.value;
+  applyFilters();
+});
+$filterPlayers.addEventListener("change", () => {
+  currentFilters.players = $filterPlayers.value;
+  applyFilters();
+});
 
 const counts = { game: 0, reference: 0, lexicon: 0 };
 for (const c of meta) {

@@ -16,6 +16,7 @@
 | Solved by | John H. Conway |
 | State-space complexity | Infinite board, but the result is a closed theorem |
 | Game-tree complexity | N/A |
+| **Playable** | conways-soldiers |
 
 ## Description
 
