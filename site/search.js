@@ -60,6 +60,17 @@ function onHashChange() {
 
 // ── markdown renderer ────────────────────────────────────────────────────
 
+function fmtInline(text) {
+  return String(text)
+    .replace(/`([^`]+)`/g, "<code>$1</code>")
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/(?<!\w)\*(?!\*)(.+?)(?<!\*)\*(?!\w)/g, "<em>$1</em>")
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (m, t, u) => {
+      if (u.startsWith("games/") || u.startsWith("lexicon/")) return `<a href="#game/${u.replace(/\.md$/, "")}" class="game-link">${t}</a>`;
+      return `<a href="${u}" target="_blank" rel="noopener">${t}</a>`;
+    });
+}
+
 function renderMd(text) {
   const lines = text.split("\n");
   const out = [];
@@ -78,29 +89,21 @@ function renderMd(text) {
   }
 
   for (const raw of lines) {
-    let line = raw;
-    const trimmed = line.trim();
-
-    // inline formatting (apply early so checks below see formatted content)
-    line = line.replace(/`([^`]+)`/g, "<code>$1</code>");
-    line = line.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
-    line = line.replace(/(?<!\w)\*(?!\*)(.+?)(?<!\*)\*(?!\w)/g, "<em>$1</em>");
-    line = line.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (m, t, u) => {
-      if (u.startsWith("games/") || u.startsWith("lexicon/")) return `<a href="#game/${u.replace(/\.md$/, "")}" class="game-link">${t}</a>`;
-      return `<a href="${u}" target="_blank" rel="noopener">${t}</a>`;
-    });
+    const trimmed = raw.trim();
 
     // table rows — wrap in <table>
-    if (/^\|.+\|$/.test(trimmed) && line.includes("|")) {
+    if (/^\|.+\|$/.test(trimmed) && raw.includes("|")) {
       const cells = trimmed.split("|").slice(1, -1).map(c => c.trim());
       // skip separator rows (|----| or |:---:| etc.)
-      if (cells.every(c => /^:?-+:?$/.test(c.replace(/<[^>]+>/g, "")))) continue;
+      if (cells.every(c => /^:?-+:?$/.test(c))) continue;
       flushParagraph();
       if (!inTable) { out.push("<table>"); inTable = true; }
-      out.push("<tr>" + cells.map(c => `<td>${esc(c)}</td>`).join("") + "</tr>");
+      out.push("<tr>" + cells.map(c => `<td>${fmtInline(esc(c))}</td>`).join("") + "</tr>");
       continue;
     }
     if (inTable) closeTable();
+
+    let line = fmtInline(raw);
 
     if (/^---/.test(trimmed)) {
       flushParagraph();
@@ -110,19 +113,19 @@ function renderMd(text) {
 
     if (!trimmed) {
       flushParagraph();
-    } else if (/^# /.test(line)) {
+    } else if (/^# /.test(trimmed)) {
       // h1 is shown in the detail header; skip
       flushParagraph();
-    } else if (/^##+\s+/.test(line)) {
+    } else if (/^##+\s+/.test(trimmed)) {
       flushParagraph();
       out.push(`<h2>${line.replace(/^##+\s+/, "")}</h2>`);
-    } else if (/^>\s+/.test(line)) {
+    } else if (/^>\s+/.test(trimmed)) {
       flushParagraph();
       out.push(`<blockquote>${line.replace(/^>\s+/, "")}</blockquote>`);
-    } else if (/^[-*]\s/.test(line)) {
+    } else if (/^[-*]\s/.test(trimmed)) {
       flushParagraph();
       out.push(`<li class="md-li">${line.replace(/^[-*]\s+/, "")}</li>`);
-    } else if (/^\d+[.)]\s/.test(line)) {
+    } else if (/^\d+[.)]\s/.test(trimmed)) {
       flushParagraph();
       out.push(`<li class="md-li">${line.replace(/^\d+[.)]\s+/, "")}</li>`);
     } else {
