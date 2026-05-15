@@ -1,4 +1,4 @@
-# Contributing to `solved`
+# Contributing to howtowin.games
 
 This archive aims to be **accurate and well-cited** above all else. It is
 better to say "unsolved" or "the author is uncertain" than to repeat an
