@@ -50,6 +50,13 @@ jobs:
       - run: python _scripts/categories.py
       - run: python _scripts/export_site_data.py
 
+      - name: Copy content for site
+        run: |
+          mkdir -p site/games site/lexicon
+          cp games/*.md site/games/
+          cp lexicon/*.md site/lexicon/
+          cp references.md CONTRIBUTING.md site/
+
       - uses: actions/upload-artifact@v4
         with:
           name: howtowin-db

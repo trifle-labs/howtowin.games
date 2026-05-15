@@ -9,6 +9,7 @@ const $q = $("q");
 const $status = $("status");
 const $grid = $("category-grid");
 const $results = $("results");
+const $backdrop = $("results-backdrop");
 const $clear = $("clear-btn");
 
 let meta = [];
@@ -23,12 +24,8 @@ function esc(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" })[c]);
 }
 
-function modelUrl(type, id) {
-  const repo = "https://github.com/trifle-labs/howtowin.games/blob/main";
-  if (type === "game") return `${repo}/games/${id}.md`;
-  if (type === "reference") return `${repo}/references.md#${id}`;
-  if (type === "lexicon") return `${repo}/lexicon/README.md#${id}`;
-  return null;
+function isGamePath(path) {
+  return path.startsWith("games/") || path.startsWith("lexicon/") || path === "references.md";
 }
 
 function badgeClass(status) {
@@ -39,45 +36,78 @@ function badgeClass(status) {
   return "unsolved";
 }
 
-// ── quick markdown renderer ──────────────────────────────────────────────
+// ── markdown renderer ────────────────────────────────────────────────────
 
 function renderMd(text) {
   const lines = text.split("\n");
   const out = [];
+  let inTable = false;
   for (const raw of lines) {
     let line = raw;
 
-    // inline code first (protect from other inline transforms)
-    line = line.replace(/`([^`]+)`/g, "<code>$1</code>");
-
-    // bold **text**
-    line = line.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
-
-    // italic *text* (not inside a word)
-    line = line.replace(/(?<!\w)\*(?!\*)(.+?)(?<!\*)\*(?!\w)/g, "<em>$1</em>");
-
-    // links [text](url)
-    line = line.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
-
-    // inline code (already handled above)
-    // headers ## → bold
-    line = line.replace(/^##+\s+(.+)$/, "<strong>$1</strong>");
-
-    // list items
-    if (/^[-*]\s/.test(line)) {
-      line = `<li class="md-li">${line.replace(/^[-*]\s+/, "")}</li>`;
-    } else if (/^\d+[.)]\s/.test(line)) {
-      line = `<li class="md-li">${line.replace(/^\d+[.)]\s+/, "")}</li>`;
-    } else if (line === "---") {
-      line = '<hr class="md-hr">';
-    } else if (line.trim()) {
-      // regular paragraph line
-      line = `<span class="md-p">${line}</span>`;
+    // table — render as HTML table rows
+    if (/^\|.+\|$/.test(line.trim()) && line.includes("|")) {
+      const cells = line.trim().split("|").slice(1, -1).map(c => c.trim());
+      if (!inTable) {
+        out.push("<tr>" + cells.map(c => `<td>${esc(c)}</td>`).join("") + "</tr>");
+        inTable = true;
+      } else {
+        out.push("<tr>" + cells.map(c => `<td>${esc(c)}</td>`).join("") + "</tr>");
+      }
+      continue;
+    } else if (inTable) {
+      // Close the table — actually we don't know when table started
+      // Tables are handled differently below
+      inTable = false;
     }
 
-    out.push(line);
+    // separator
+    if (/^---/.test(line.trim())) {
+      out.push('<hr class="md-hr">');
+      continue;
+    }
+
+    // inline code (protect from other transforms)
+    line = line.replace(/`([^`]+)`/g, "<code>$1</code>");
+    // bold
+    line = line.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+    // italic (not mid-word)
+    line = line.replace(/(?<!\w)\*(?!\*)(.+?)(?<!\*)\*(?!\w)/g, "<em>$1</em>");
+    // links
+    line = line.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (m, t, u) => {
+      if (isGamePath(u)) return `<a href="${u}" class="game-link">${t}</a>`;
+      return `<a href="${u}" target="_blank" rel="noopener">${t}</a>`;
+    });
+    // headers ## → h2
+    if (/^##+\s+/.test(line)) {
+      out.push(`<h2>${line.replace(/^##+\s+/, "")}</h2>`);
+      continue;
+    }
+    // blockquote >
+    if (/^>\s+/.test(line)) {
+      out.push(`<blockquote>${line.replace(/^>\s+/, "")}</blockquote>`);
+      continue;
+    }
+    // list items
+    if (/^[-*]\s/.test(line)) {
+      out.push(`<li class="md-li">${line.replace(/^[-*]\s+/, "")}</li>`);
+    } else if (/^\d+[.)]\s/.test(line)) {
+      out.push(`<li class="md-li">${line.replace(/^\d+[.)]\s+/, "")}</li>`);
+    } else if (line.trim()) {
+      out.push(`<p>${line}</p>`);
+    }
   }
   return out.join("\n");
+}
+
+function renderGameDetail(title, md) {
+  const lines = md.split("\n");
+  // Try to find content after the front-matter (title line) and infobox
+  // For game entries: # Title, > summary, infobox, then content
+  // Skip the first ## onwards properly
+  const bodyStart = lines.findIndex(l => l.startsWith("## "));
+  const body = bodyStart >= 0 ? lines.slice(bodyStart).join("\n") : md;
+  return renderMd(body);
 }
 
 // ── data loading ─────────────────────────────────────────────────────────
@@ -114,7 +144,7 @@ function topK(queryVec, k) {
   return indices.slice(0, k).map(i => ({ idx: i, dist: 1 - scores[i] }));
 }
 
-// ── tile grid rendering ────────────────────────────────────────────────
+// ── tile grid ────────────────────────────────────────────────────────────
 
 function renderGrid(categories) {
   $grid.innerHTML = categories.map(c => {
@@ -123,9 +153,7 @@ function renderGrid(categories) {
     return `
       <div class="tile" data-cat="${c.id}">
         <div class="tile-header">
-          <div class="tile-icon">
-            ${c.icon_svg}
-          </div>
+          <div class="tile-icon">${c.icon_svg}</div>
           <h3>${esc(c.title)} <span class="count">${c.count}</span></h3>
         </div>
         <div class="tile-blurb">${esc(c.blurb)}</div>
@@ -139,14 +167,20 @@ function renderGrid(categories) {
       </div>`;
   }).join("");
 
-  // expand/collapse toggles
   document.querySelectorAll(".tile-toggle").forEach(btn => {
     btn.addEventListener("click", () => {
-      const id = btn.dataset.target;
-      const extra = document.querySelector(`ul[data-id="${id}-extra"]`);
+      const extra = document.querySelector(`ul[data-id="${btn.dataset.target}-extra"]`);
       if (!extra) return;
       const open = extra.classList.toggle("open");
       btn.textContent = open ? "− fewer" : `+ ${extra.children.length} more`;
+    });
+  });
+
+  // Game link clicks → open detail overlay
+  document.querySelectorAll(".tile-game-list a").forEach(a => {
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      openGame(a.getAttribute("href"));
     });
   });
 }
@@ -156,35 +190,96 @@ function gameItem(g) {
   const label = g.solution_status?.length > 25
     ? g.solution_status.slice(0, 22) + "…"
     : g.solution_status || "Unknown";
-  return `<li><a href="${modelUrl("game", g.slug)}" target="_blank" rel="noopener">${esc(g.title)}</a><span class="sol-badge ${bc}">${esc(label)}</span></li>`;
+  return `<li><a href="games/${g.slug}.md">${esc(g.title)}</a><span class="sol-badge ${bc}">${esc(label)}</span></li>`;
 }
 
-// ── search ────────────────────────────────────────────────────────────────
+// ── game detail overlay ──────────────────────────────────────────────────
 
-function renderSearchResults(hits) {
-  $grid.classList.add("hidden");
+async function openGame(path) {
+  // Prevent if already showing
+  if ($("#detail-overlay")) $("#detail-overlay").remove();
+
+  const overlay = document.createElement("div");
+  overlay.id = "detail-overlay";
+  overlay.innerHTML = `
+    <div class="detail-header">
+      <button class="detail-back">← back</button>
+      <h2 class="detail-title">${esc(path.replace(/\.md$/, "").replace(/^.*\//, ""))}</h2>
+    </div>
+    <div class="detail-body"><p class="md-p" style="color:var(--fg-muted)">loading…</p></div>
+  `;
+  document.body.appendChild(overlay);
+
+  overlay.querySelector(".detail-back").addEventListener("click", closeGame);
+
+  try {
+    const r = await fetch(path);
+    if (!r.ok) throw new Error(`${r.status}`);
+    const md = await r.text();
+    const title = md.split("\n")[0].replace(/^#\s*/, "") || path;
+    overlay.querySelector(".detail-title").textContent = title;
+    overlay.querySelector(".detail-body").innerHTML = renderGameDetail(title, md);
+
+    // Wire up game links inside the detail view
+    overlay.querySelectorAll(".game-link").forEach(a => {
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        openGame(a.getAttribute("href"));
+      });
+    });
+  } catch (e) {
+    overlay.querySelector(".detail-body").innerHTML =
+      `<p class="md-p" style="color:var(--accent)">could not load ${esc(path)} (${e.message})</p>`;
+  }
+}
+
+function closeGame() {
+  const o = $("#detail-overlay");
+  if (o) o.remove();
+}
+
+// ── search results ───────────────────────────────────────────────────────
+
+function showResults(hits) {
   $results.classList.remove("hidden");
+  $backdrop.classList.remove("hidden");
+  $grid.classList.add("searching");
+
   $results.innerHTML = hits.map(h => {
     const r = meta[h.idx];
-    const url = modelUrl(r.type, r.source);
-    const title = url ? `<a href="${url}" target="_blank" rel="noopener" class="source">${esc(r.source)}</a>` : `<span class="source">${esc(r.source)}</span>`;
+    let path;
+    if (r.type === "game") path = `games/${r.source}.md`;
+    else if (r.type === "lexicon") path = `lexicon/${r.source}.md`;
+    else if (r.type === "reference") path = `references.md`;
+    else path = "#";
     const section = r.section ? `<span class="section">§ ${esc(r.section)}</span>` : "";
+    let text = r.text;
+    if (text.length > 600) text = text.slice(0, 600) + "…";
     return `
-      <div class="hit">
+      <div class="hit" data-path="${esc(path)}">
         <div class="meta">
           <span class="kind">${esc(r.type)}</span>
-          ${title}
+          <span class="source">${esc(r.source)}</span>
           ${section}
           <span class="dist">d=${h.dist.toFixed(3)}</span>
         </div>
-        <div class="text">${renderMd(r.text.slice(0, 600))}${r.text.length > 600 ? "…" : ""}</div>
+        <div class="text">${renderMd(text)}</div>
       </div>`;
   }).join("");
+
+  // Click hit to open detail
+  $results.querySelectorAll(".hit").forEach(el => {
+    el.addEventListener("click", () => {
+      const path = el.dataset.path;
+      if (path && path !== "#") openGame(path);
+    });
+  });
 }
 
-function showGrid() {
-  $grid.classList.remove("hidden");
+function hideResults() {
   $results.classList.add("hidden");
+  $backdrop.classList.add("hidden");
+  $grid.classList.remove("searching");
 }
 
 // ── search loop ──────────────────────────────────────────────────────────
@@ -195,14 +290,13 @@ async function runSearch(text) {
   const myId = ++pending;
   text = text.trim();
   if (!text || !extract || !vecs) {
-    showGrid();
+    hideResults();
     setStatus(extract && vecs ? (text ? "type to search" : "ready") : "loading…");
     return;
   }
   setStatus("searching…");
   const out = await extract(text, {});
   if (myId !== pending) return;
-  // normalize the query vector
   const raw = out.data;
   let norm = 0;
   for (let i = 0; i < DIM; i++) norm += raw[i] * raw[i];
@@ -211,7 +305,7 @@ async function runSearch(text) {
   for (let i = 0; i < DIM; i++) qv[i] = raw[i] / norm;
   const hits = topK(qv, 8);
   if (myId !== pending) return;
-  renderSearchResults(hits);
+  showResults(hits);
   setStatus(`${hits.length} hits`);
 }
 
@@ -223,15 +317,20 @@ $q.addEventListener("input", () => {
 });
 $q.addEventListener("keydown", (e) => {
   if (e.key === "Enter") { clearTimeout(debounce); runSearch($q.value); }
+  if (e.key === "Escape") { hideResults(); $q.blur(); }
 });
 $clear.addEventListener("click", () => {
   $q.value = "";
   $clear.classList.add("hidden");
-  showGrid();
+  hideResults();
   setStatus("ready.");
   $q.focus();
 });
+$backdrop.addEventListener("click", () => { hideResults(); $q.blur(); });
 $q.addEventListener("focus", () => $q.select());
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && !$results.classList.contains("hidden")) hideResults();
+});
 
 // ── boot ──────────────────────────────────────────────────────────────────
 
@@ -246,7 +345,6 @@ vecs = vecsRaw;
 
 renderGrid(categories);
 
-// Counts
 const counts = { game: 0, reference: 0, lexicon: 0 };
 for (const c of meta) {
   if (c.type in counts) counts[c.type]++;
@@ -256,7 +354,6 @@ $("count-games").textContent = counts.game;
 $("count-refs").textContent = counts.reference;
 $("count-lex").textContent = counts.lexicon;
 
-// Load model
 setStatus("loading embedding model (~30 MB, cached after first visit)…");
 try {
   extract = await pipeline(

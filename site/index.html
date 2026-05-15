@@ -15,18 +15,20 @@
       <p class="tagline">how to play 200+ games well — and whether they are solved.</p>
     </div>
     <div class="search-area">
-      <input id="q" type="search" placeholder="how do I play go well…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" disabled>
-      <button id="clear-btn" class="hidden" aria-label="Clear search">&times;</button>
+      <div class="search-bar-row">
+        <input id="q" type="search" placeholder="how do I play go well…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" disabled>
+        <button id="clear-btn" class="hidden" aria-label="Clear search">&times;</button>
+      </div>
       <div id="status">loading…</div>
+
+      <!-- search results dropdown (positioned below the search bar) -->
+      <div id="results" class="hidden"></div>
+      <div id="results-backdrop" class="hidden"></div>
     </div>
   </header>
 
   <main id="main-content">
-    <!-- category tile grid (visible when not searching) -->
     <div id="category-grid" class="tile-grid"></div>
-
-    <!-- search results (visible when searching) -->
-    <div id="results" class="hidden"></div>
   </main>
 
   <footer class="site-footer">
