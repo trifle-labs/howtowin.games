@@ -16,6 +16,7 @@
 | Solved by | — |
 | State-space complexity | Exponential in board size |
 | Game-tree complexity | Exponential |
+| **Playable** | samegame |
 
 ## Description
 

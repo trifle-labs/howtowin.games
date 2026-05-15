@@ -16,6 +16,7 @@
 | Solved by | Johnson & Story (solvability); Brüngger / later computations (diameter) **[verify]** |
 | State-space complexity | 16!/2 = 10,461,394,944,000 ≈ 1.0 × 10^13 reachable states |
 | Game-tree complexity | N/A (puzzle) |
+| **Playable** | fifteen-puzzle |
 
 ## Description
 

@@ -15,6 +15,7 @@
 | Solved by | Édouard Lucas |
 | State-space complexity | 3^n |
 | Game-tree complexity | 2^n − 1 (optimal) |
+| **Playable** | tower-of-hanoi |
 
 ## Description
 

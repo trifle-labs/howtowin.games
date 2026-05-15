@@ -15,6 +15,7 @@
 | Solved by | Anderson & Feil (1998) and others |
 | State-space complexity | 2^25 (for 5×5) |
 | Game-tree complexity | Polynomial via linear algebra |
+| **Playable** | lights-out |
 
 ## Description
 

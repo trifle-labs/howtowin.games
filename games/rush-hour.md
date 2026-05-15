@@ -15,6 +15,7 @@
 | Solved by | Gary William Flake, Eric B. Baum |
 | State-space complexity | Up to exponential in board size |
 | Game-tree complexity | PSPACE-complete in general |
+| **Playable** | rush-hour |
 
 ## Description
 

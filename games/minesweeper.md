@@ -15,6 +15,7 @@
 | Solved by | Richard Kaye |
 | State-space complexity | Up to exponential in board size |
 | Game-tree complexity | NP-complete inference subproblem |
+| **Playable** | minesweeper |
 
 ## Description
 

@@ -15,6 +15,7 @@
 | Solved by | Joseph Culberson (complexity) |
 | State-space complexity | Up to exponential in board size |
 | Game-tree complexity | Up to exponential in board size |
+| **Playable** | sokoban |
 
 ## Description
 

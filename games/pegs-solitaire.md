@@ -16,6 +16,7 @@
 | Solved by | John D. Beasley (and earlier work by de Bruijn, Conway and others) |
 | State-space complexity | Board-dependent (English board: ~2 × 10^9 reachable states) |
 | Game-tree complexity | N/A (puzzle) |
+| **Playable** | peg-solitaire |
 
 ## Description
 
