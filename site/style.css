@@ -464,6 +464,7 @@ a:hover { text-decoration: underline; }
 .family-members .sol-badge { font-size: 0.55rem; }
 
 /* ── hidden state (for search/grid toggle) ──────────── */
+#category-grid.hidden { display: none; }
 #category-grid.searching { opacity: 0.15; pointer-events: none; }
 
 /* ── footer ──────────────────────────────────────────── */
