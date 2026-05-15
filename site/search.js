@@ -76,6 +76,7 @@ function renderMd(text) {
   const out = [];
   let paragraph = [];
   let inTable = false;
+  let inList = false;
 
   function flushParagraph() {
     if (paragraph.length) {
@@ -88,15 +89,24 @@ function renderMd(text) {
     if (inTable) { out.push("</table>"); inTable = false; }
   }
 
+  function openList(ordered) {
+    out.push(ordered ? "<ol>" : "<ul>");
+    inList = true;
+  }
+
+  function closeList() {
+    if (inList) { out.push(inList === "ol" ? "</ol>" : "</ul>"); inList = false; }
+  }
+
   for (const raw of lines) {
     const trimmed = raw.trim();
 
     // table rows — wrap in <table>
     if (/^\|.+\|$/.test(trimmed) && raw.includes("|")) {
       const cells = trimmed.split("|").slice(1, -1).map(c => c.trim());
-      // skip separator rows (|----| or |:---:| etc.)
       if (cells.every(c => /^:?-+:?$/.test(c))) continue;
       flushParagraph();
+      closeList();
       if (!inTable) { out.push("<table>"); inTable = true; }
       out.push("<tr>" + cells.map(c => `<td>${fmtInline(esc(c))}</td>`).join("") + "</tr>");
       continue;
@@ -107,33 +117,41 @@ function renderMd(text) {
 
     if (/^---/.test(trimmed)) {
       flushParagraph();
+      closeList();
       out.push('<hr class="md-hr">');
       continue;
     }
 
     if (!trimmed) {
       flushParagraph();
+      closeList();
     } else if (/^# /.test(trimmed)) {
-      // h1 is shown in the detail header; skip
       flushParagraph();
+      closeList();
     } else if (/^##+\s+/.test(trimmed)) {
       flushParagraph();
+      closeList();
       out.push(`<h2>${line.replace(/^##+\s+/, "")}</h2>`);
     } else if (/^>\s+/.test(trimmed)) {
       flushParagraph();
+      closeList();
       out.push(`<blockquote>${line.replace(/^>\s+/, "")}</blockquote>`);
     } else if (/^[-*]\s/.test(trimmed)) {
       flushParagraph();
-      out.push(`<li class="md-li">${line.replace(/^[-*]\s+/, "")}</li>`);
+      if (!inList) openList(false);
+      out.push(`<li>${line.replace(/^[-*]\s+/, "")}</li>`);
     } else if (/^\d+[.)]\s/.test(trimmed)) {
       flushParagraph();
-      out.push(`<li class="md-li">${line.replace(/^\d+[.)]\s+/, "")}</li>`);
+      if (!inList) openList(true);
+      out.push(`<li>${line.replace(/^\d+[.)]\s+/, "")}</li>`);
     } else {
+      closeList();
       paragraph.push(line);
     }
   }
   flushParagraph();
   closeTable();
+  closeList();
   return out.join("\n");
 }
 

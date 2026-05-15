@@ -173,17 +173,12 @@ a:hover { text-decoration: underline; }
 }
 .hit .text a { color: var(--accent); font-weight: 500; }
 .hit .text a:hover { text-decoration: underline; }
-.hit .text .md-li {
-  display: block;
+.hit .text ul, .hit .text ol {
+  margin: 0.2em 0;
   padding-left: 1.2em;
-  position: relative;
-  margin: 0.1em 0;
 }
-.hit .text .md-li::before {
-  content: "–";
-  position: absolute;
-  left: 0.2em;
-  color: var(--fg-muted);
+.hit .text li {
+  margin: 0.1em 0;
 }
 
 /* ── results backdrop ───────────────────────────────── */
@@ -296,9 +291,12 @@ a:hover { text-decoration: underline; }
 }
 .detail-body a { color: var(--accent); }
 .detail-body a:hover { text-decoration: underline; }
+.detail-body ul, .detail-body ol {
+  margin: 0.5rem 0;
+  padding-left: 1.5em;
+}
 .detail-body li {
-  padding-left: 0.5em;
-  margin: 0.15em 0;
+  margin: 0.2em 0;
 }
 .detail-body blockquote {
   margin: 0.75rem 0;
