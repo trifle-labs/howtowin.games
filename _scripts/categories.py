@@ -219,6 +219,8 @@ MANUAL = {
     "einstein-wurfelt-nicht": "card-stochastic",
     "klondike-solitaire": "puzzles",
     "tribolo": "abstract-strategy",
+    "nada": "card-stochastic",
+    "ticket-to-ride": "card-stochastic",
 }
 
 

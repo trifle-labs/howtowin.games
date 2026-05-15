@@ -8,6 +8,7 @@ const $ = (id) => document.getElementById(id);
 const $q = $("q");
 const $status = $("status");
 const $grid = $("category-grid");
+const $detail = $("detail-view");
 const $results = $("results");
 const $backdrop = $("results-backdrop");
 const $clear = $("clear-btn");
@@ -24,10 +25,6 @@ function esc(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" })[c]);
 }
 
-function isGamePath(path) {
-  return path.startsWith("games/") || path.startsWith("lexicon/") || path === "references.md";
-}
-
 function badgeClass(status) {
   const s = status.toLowerCase();
   if (s.includes("unsolved") || s.includes("open") || s.includes("unknown")) return "unsolved";
@@ -36,78 +33,92 @@ function badgeClass(status) {
   return "unsolved";
 }
 
+// ── routing ──────────────────────────────────────────────────────────────
+
+function getRoute() {
+  const hash = location.hash.slice(1);
+  if (!hash) return { view: "grid" };
+  if (hash.startsWith("game/")) return { view: "game", path: hash.slice(5) };
+  if (hash.startsWith("search/")) return { view: "search", q: hash.slice(7) };
+  // treat unknown hash as game slug
+  return { view: "game", path: hash };
+}
+
+function navigate(hash) {
+  if (hash === location.hash || (!hash && !location.hash)) return;
+  location.hash = hash;
+}
+
+function onHashChange() {
+  const route = getRoute();
+  if (route.view === "game") {
+    openGame(route.path, true);
+  } else {
+    hideDetail();
+  }
+}
+
 // ── markdown renderer ────────────────────────────────────────────────────
 
 function renderMd(text) {
   const lines = text.split("\n");
   const out = [];
-  let inTable = false;
+  let paragraph = [];
+
+  function flushParagraph() {
+    if (paragraph.length) {
+      out.push(`<p>${paragraph.join(" ")}</p>`);
+      paragraph = [];
+    }
+  }
+
   for (const raw of lines) {
     let line = raw;
+    const trimmed = line.trim();
 
-    // table — render as HTML table rows
-    if (/^\|.+\|$/.test(line.trim()) && line.includes("|")) {
-      const cells = line.trim().split("|").slice(1, -1).map(c => c.trim());
-      if (!inTable) {
-        out.push("<tr>" + cells.map(c => `<td>${esc(c)}</td>`).join("") + "</tr>");
-        inTable = true;
-      } else {
-        out.push("<tr>" + cells.map(c => `<td>${esc(c)}</td>`).join("") + "</tr>");
-      }
+    // tables
+    if (/^\|.+\|$/.test(trimmed) && line.includes("|")) {
+      flushParagraph();
+      const cells = trimmed.split("|").slice(1, -1).map(c => c.trim());
+      out.push("<tr>" + cells.map(c => `<td>${esc(c)}</td>`).join("") + "</tr>");
       continue;
-    } else if (inTable) {
-      // Close the table — actually we don't know when table started
-      // Tables are handled differently below
-      inTable = false;
     }
 
-    // separator
-    if (/^---/.test(line.trim())) {
+    if (/^---/.test(trimmed)) {
+      flushParagraph();
       out.push('<hr class="md-hr">');
       continue;
     }
 
-    // inline code (protect from other transforms)
+    // inline formatting
     line = line.replace(/`([^`]+)`/g, "<code>$1</code>");
-    // bold
     line = line.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
-    // italic (not mid-word)
     line = line.replace(/(?<!\w)\*(?!\*)(.+?)(?<!\*)\*(?!\w)/g, "<em>$1</em>");
-    // links
     line = line.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (m, t, u) => {
-      if (isGamePath(u)) return `<a href="${u}" class="game-link">${t}</a>`;
+      if (u.startsWith("games/") || u.startsWith("lexicon/")) return `<a href="#game/${u.replace(/\.md$/, "")}" class="game-link">${t}</a>`;
       return `<a href="${u}" target="_blank" rel="noopener">${t}</a>`;
     });
-    // headers ## → h2
-    if (/^##+\s+/.test(line)) {
+
+    if (!trimmed) {
+      flushParagraph();
+    } else if (/^##+\s+/.test(line)) {
+      flushParagraph();
       out.push(`<h2>${line.replace(/^##+\s+/, "")}</h2>`);
-      continue;
-    }
-    // blockquote >
-    if (/^>\s+/.test(line)) {
+    } else if (/^>\s+/.test(line)) {
+      flushParagraph();
       out.push(`<blockquote>${line.replace(/^>\s+/, "")}</blockquote>`);
-      continue;
-    }
-    // list items
-    if (/^[-*]\s/.test(line)) {
+    } else if (/^[-*]\s/.test(line)) {
+      flushParagraph();
       out.push(`<li class="md-li">${line.replace(/^[-*]\s+/, "")}</li>`);
     } else if (/^\d+[.)]\s/.test(line)) {
+      flushParagraph();
       out.push(`<li class="md-li">${line.replace(/^\d+[.)]\s+/, "")}</li>`);
-    } else if (line.trim()) {
-      out.push(`<p>${line}</p>`);
+    } else {
+      paragraph.push(line);
     }
   }
+  flushParagraph();
   return out.join("\n");
-}
-
-function renderGameDetail(title, md) {
-  const lines = md.split("\n");
-  // Try to find content after the front-matter (title line) and infobox
-  // For game entries: # Title, > summary, infobox, then content
-  // Skip the first ## onwards properly
-  const bodyStart = lines.findIndex(l => l.startsWith("## "));
-  const body = bodyStart >= 0 ? lines.slice(bodyStart).join("\n") : md;
-  return renderMd(body);
 }
 
 // ── data loading ─────────────────────────────────────────────────────────
@@ -176,11 +187,12 @@ function renderGrid(categories) {
     });
   });
 
-  // Game link clicks → open detail overlay
+  // Game links → navigate to hash
   document.querySelectorAll(".tile-game-list a").forEach(a => {
     a.addEventListener("click", (e) => {
       e.preventDefault();
-      openGame(a.getAttribute("href"));
+      const slug = a.getAttribute("href").replace(/\.md$/, "");
+      navigate(`game/${slug}`);
     });
   });
 }
@@ -190,52 +202,79 @@ function gameItem(g) {
   const label = g.solution_status?.length > 25
     ? g.solution_status.slice(0, 22) + "…"
     : g.solution_status || "Unknown";
-  return `<li><a href="games/${g.slug}.md">${esc(g.title)}</a><span class="sol-badge ${bc}">${esc(label)}</span></li>`;
+  return `<li><a href="#game/${g.slug}">${esc(g.title)}</a><span class="sol-badge ${bc}">${esc(label)}</span></li>`;
 }
 
-// ── game detail overlay ──────────────────────────────────────────────────
+// ── game detail ──────────────────────────────────────────────────────────
 
-async function openGame(path) {
-  // Prevent if already showing
-  if ($("#detail-overlay")) $("#detail-overlay").remove();
+let currentPath = null;
 
-  const overlay = document.createElement("div");
-  overlay.id = "detail-overlay";
-  overlay.innerHTML = `
+async function openGame(path, fromHash) {
+  // Normalize: strip .md
+  path = path.replace(/\.md$/, "");
+
+  // Resolve to a file path for fetching
+  let filePath;
+  if (path.startsWith("games/") || path.startsWith("lexicon/")) {
+    filePath = path + ".md";
+  } else {
+    filePath = "games/" + path + ".md";
+  }
+
+  if (!fromHash) navigate(`game/${path}`);
+
+  // Save scroll position before swapping
+  const prevY = window.scrollY;
+
+  hideResults();
+  $grid.classList.add("hidden");
+  $detail.classList.remove("hidden");
+
+  $detail.innerHTML = `
     <div class="detail-header">
       <button class="detail-back">← back</button>
-      <h2 class="detail-title">${esc(path.replace(/\.md$/, "").replace(/^.*\//, ""))}</h2>
+      <h2 class="detail-title">${esc(path.replace(/^.*\//, ""))}</h2>
     </div>
-    <div class="detail-body"><p class="md-p" style="color:var(--fg-muted)">loading…</p></div>
+    <div class="detail-body"><p style="color:var(--fg-muted)">loading…</p></div>
   `;
-  document.body.appendChild(overlay);
 
-  overlay.querySelector(".detail-back").addEventListener("click", closeGame);
+  $detail.querySelector(".detail-back").addEventListener("click", (e) => {
+    e.preventDefault();
+    history.back();
+  });
+
+  currentPath = path;
 
   try {
-    const r = await fetch(path);
+    const r = await fetch(filePath);
     if (!r.ok) throw new Error(`${r.status}`);
     const md = await r.text();
     const title = md.split("\n")[0].replace(/^#\s*/, "") || path;
-    overlay.querySelector(".detail-title").textContent = title;
-    overlay.querySelector(".detail-body").innerHTML = renderGameDetail(title, md);
+    $detail.querySelector(".detail-title").textContent = title;
+    $detail.querySelector(".detail-body").innerHTML = renderMd(md);
 
-    // Wire up game links inside the detail view
-    overlay.querySelectorAll(".game-link").forEach(a => {
+    // Wire game links inside detail
+    $detail.querySelectorAll(".game-link").forEach(a => {
       a.addEventListener("click", (e) => {
         e.preventDefault();
-        openGame(a.getAttribute("href"));
+        const href = a.getAttribute("href");
+        const m = href.match(/^#game\/(.+)/);
+        if (m) openGame(m[1], false);
       });
     });
+
+    window.scrollTo(0, 0);
   } catch (e) {
-    overlay.querySelector(".detail-body").innerHTML =
-      `<p class="md-p" style="color:var(--accent)">could not load ${esc(path)} (${e.message})</p>`;
+    $detail.querySelector(".detail-body").innerHTML =
+      `<p style="color:var(--accent)">could not load ${esc(filePath)} (${e.message})</p>`;
+    window.scrollTo(0, prevY);
   }
 }
 
-function closeGame() {
-  const o = $("#detail-overlay");
-  if (o) o.remove();
+function hideDetail() {
+  $detail.classList.add("hidden");
+  $grid.classList.remove("hidden");
+  currentPath = null;
 }
 
 // ── search results ───────────────────────────────────────────────────────
@@ -244,19 +283,17 @@ function showResults(hits) {
   $results.classList.remove("hidden");
   $backdrop.classList.remove("hidden");
   $grid.classList.add("searching");
+  $detail.classList.add("hidden");
 
   $results.innerHTML = hits.map(h => {
     const r = meta[h.idx];
-    let path;
-    if (r.type === "game") path = `games/${r.source}.md`;
-    else if (r.type === "lexicon") path = `lexicon/${r.source}.md`;
-    else if (r.type === "reference") path = `references.md`;
-    else path = "#";
+    let path = r.type === "game" ? `game/${r.source}` :
+               r.type === "lexicon" ? `game/lexicon/${r.source}` : null;
     const section = r.section ? `<span class="section">§ ${esc(r.section)}</span>` : "";
     let text = r.text;
     if (text.length > 600) text = text.slice(0, 600) + "…";
     return `
-      <div class="hit" data-path="${esc(path)}">
+      <div class="hit" data-path="${path ? esc(path) : ""}">
         <div class="meta">
           <span class="kind">${esc(r.type)}</span>
           <span class="source">${esc(r.source)}</span>
@@ -267,11 +304,10 @@ function showResults(hits) {
       </div>`;
   }).join("");
 
-  // Click hit to open detail
   $results.querySelectorAll(".hit").forEach(el => {
     el.addEventListener("click", () => {
-      const path = el.dataset.path;
-      if (path && path !== "#") openGame(path);
+      const p = el.dataset.path;
+      if (p) openGame(p, false);
     });
   });
 }
@@ -328,9 +364,8 @@ $clear.addEventListener("click", () => {
 });
 $backdrop.addEventListener("click", () => { hideResults(); $q.blur(); });
 $q.addEventListener("focus", () => $q.select());
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && !$results.classList.contains("hidden")) hideResults();
-});
+
+window.addEventListener("hashchange", onHashChange);
 
 // ── boot ──────────────────────────────────────────────────────────────────
 
@@ -375,4 +410,11 @@ try {
 
 setStatus("ready.");
 $q.disabled = false;
-$q.focus();
+
+// Route based on hash
+const route = getRoute();
+if (route.view === "game") {
+  openGame(route.path, true);
+} else {
+  $q.focus();
+}
