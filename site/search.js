@@ -1,28 +1,28 @@
-import { pipeline, env } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.0.2";
+import { pipeline } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.0.2";
 
 const DIM = 384;
+const SHOW_INITIAL = 5;
 
-const $q = document.getElementById("q");
-const $status = document.getElementById("status");
-const $results = document.getElementById("results");
-const $countGames = document.getElementById("count-games");
-const $countRefs = document.getElementById("count-refs");
-const $countLexicon = document.getElementById("count-lex");
+const $ = (id) => document.getElementById(id);
+const $q = $("q");
+const $status = $("status");
+const $grid = $("category-grid");
+const $results = $("results");
+const $clear = $("clear-btn");
 
-env.allowLocalModels = false;
-env.useBrowserCache = true;
+let meta = [];
+let vecs = null;
+let extract = null;
 
-function setStatus(msg) {
-  $status.textContent = msg;
+// ── helpers ──────────────────────────────────────────────────────────────
+
+function setStatus(msg) { $status.textContent = msg; }
+
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" })[c]);
 }
 
-function escapeHtml(s) {
-  return String(s).replace(/[&<>"']/g, (c) => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
-  })[c]);
-}
-
-function sourceUrl(type, id) {
+function modelUrl(type, id) {
   const repo = "https://github.com/trifle-labs/howtowin.games/blob/main";
   if (type === "game") return `${repo}/games/${id}.md`;
   if (type === "reference") return `${repo}/references.md#${id}`;
@@ -30,92 +30,167 @@ function sourceUrl(type, id) {
   return null;
 }
 
-// --- data loading ---
-
-let meta = [];
-let vecs = null;
-
-async function loadMeta() {
-  const resp = await fetch("./data/meta.json");
-  if (!resp.ok) throw new Error(`meta.json: ${resp.status}`);
-  meta = await resp.json();
+function badgeClass(status) {
+  const s = status.toLowerCase();
+  if (s.includes("unsolved") || s.includes("open") || s.includes("unknown")) return "unsolved";
+  if ((s.includes("solved") || s.includes("complete")) && !(s.includes("partial") || s.includes("partially"))) return "solved";
+  if (s.includes("partial") || s.includes("analysed") || s.includes("pspace") || s.includes("np-")) return "partial";
+  return "unsolved";
 }
 
-async function loadVectors() {
-  const resp = await fetch("./data/vectors.bin");
-  if (!resp.ok) throw new Error(`vectors.bin: ${resp.status}`);
-  const buf = await resp.arrayBuffer();
-  vecs = new Float32Array(buf);
-}
+// ── quick markdown renderer ──────────────────────────────────────────────
 
-// --- cosine similarity ---
+function renderMd(text) {
+  const lines = text.split("\n");
+  const out = [];
+  for (const raw of lines) {
+    let line = raw;
 
-function cosineSimilarity(query, offset) {
-  let dot = 0, nq = 0, nv = 0;
-  // query is already normalized, but compute norms for safety
-  for (let i = 0; i < DIM; i++) {
-    const q = query[i];
-    const v = vecs[offset + i];
-    dot += q * v;
-    nq += q * q;
-    nv += v * v;
+    // inline code first (protect from other inline transforms)
+    line = line.replace(/`([^`]+)`/g, "<code>$1</code>");
+
+    // bold **text**
+    line = line.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+
+    // italic *text* (not inside a word)
+    line = line.replace(/(?<!\w)\*(?!\*)(.+?)(?<!\*)\*(?!\w)/g, "<em>$1</em>");
+
+    // links [text](url)
+    line = line.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+
+    // inline code (already handled above)
+    // headers ## → bold
+    line = line.replace(/^##+\s+(.+)$/, "<strong>$1</strong>");
+
+    // list items
+    if (/^[-*]\s/.test(line)) {
+      line = `<li class="md-li">${line.replace(/^[-*]\s+/, "")}</li>`;
+    } else if (/^\d+[.)]\s/.test(line)) {
+      line = `<li class="md-li">${line.replace(/^\d+[.)]\s+/, "")}</li>`;
+    } else if (line === "---") {
+      line = '<hr class="md-hr">';
+    } else if (line.trim()) {
+      // regular paragraph line
+      line = `<span class="md-p">${line}</span>`;
+    }
+
+    out.push(line);
   }
-  return dot / (Math.sqrt(nq) * Math.sqrt(nv) || 1);
+  return out.join("\n");
 }
 
-function topK(query, k) {
+// ── data loading ─────────────────────────────────────────────────────────
+
+async function loadJSON(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`${url}: ${r.status}`);
+  return r.json();
+}
+
+async function loadBin(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`${url}: ${r.status}`);
+  return new Float32Array(await r.arrayBuffer());
+}
+
+// ── cosine similarity ────────────────────────────────────────────────────
+
+function topK(queryVec, k) {
   const n = meta.length;
   const scores = new Float64Array(n);
+  let nq2 = 0;
+  for (let i = 0; i < DIM; i++) nq2 += queryVec[i] * queryVec[i];
+  const nq = Math.sqrt(nq2) || 1;
   for (let i = 0; i < n; i++) {
-    scores[i] = cosineSimilarity(query, i * DIM);
+    const off = i * DIM;
+    let dot = 0, nv2 = 0;
+    for (let j = 0; j < DIM; j++) {
+      const q = queryVec[j] / nq;
+      const v = vecs[off + j];
+      dot += q * v;
+      nv2 += v * v;
+    }
+    scores[i] = dot / (Math.sqrt(nv2) || 1);
   }
   const indices = Array.from({ length: n }, (_, i) => i);
   indices.sort((a, b) => scores[b] - scores[a]);
-  return indices.slice(0, k).map((i) => ({ idx: i, dist: 1 - scores[i] }));
+  return indices.slice(0, k).map(i => ({ idx: i, dist: 1 - scores[i] }));
 }
 
-// --- model ---
+// ── tile grid rendering ────────────────────────────────────────────────
 
-let extract = null;
+function renderGrid(categories) {
+  $grid.innerHTML = categories.map(c => {
+    const top = c.games.slice(0, SHOW_INITIAL);
+    const rest = c.games.slice(SHOW_INITIAL);
+    return `
+      <div class="tile" data-cat="${c.id}">
+        <div class="tile-header">
+          <div class="tile-icon">
+            ${c.icon_svg}
+          </div>
+          <h3>${esc(c.title)} <span class="count">${c.count}</span></h3>
+        </div>
+        <div class="tile-blurb">${esc(c.blurb)}</div>
+        <ul class="tile-game-list" data-id="${c.id}">
+          ${top.map(g => gameItem(g)).join("")}
+        </ul>
+        ${rest.length ? `<ul class="tile-game-list extra" data-id="${c.id}-extra">
+          ${rest.map(g => gameItem(g)).join("")}
+        </ul>
+        <button class="tile-toggle" data-target="${c.id}">+ ${rest.length} more</button>` : ""}
+      </div>`;
+  }).join("");
 
-async function loadModel() {
-  setStatus("loading embedding model… (~30 MB, cached after first visit)");
-  extract = await pipeline(
-    "feature-extraction",
-    "Xenova/bge-small-en-v1.5",
-    { progress_callback: (p) => {
-        if (p.status === "progress" && p.total) {
-          const pct = Math.round((p.loaded / p.total) * 100);
-          setStatus(`downloading model… ${p.file} ${pct}%`);
-        }
-    } }
-  );
+  // expand/collapse toggles
+  document.querySelectorAll(".tile-toggle").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.target;
+      const extra = document.querySelector(`ul[data-id="${id}-extra"]`);
+      if (!extra) return;
+      const open = extra.classList.toggle("open");
+      btn.textContent = open ? "− fewer" : `+ ${extra.children.length} more`;
+    });
+  });
 }
 
-// --- search ---
+function gameItem(g) {
+  const bc = badgeClass(g.solution_status);
+  const label = g.solution_status?.length > 25
+    ? g.solution_status.slice(0, 22) + "…"
+    : g.solution_status || "Unknown";
+  return `<li><a href="${modelUrl("game", g.slug)}" target="_blank" rel="noopener">${esc(g.title)}</a><span class="sol-badge ${bc}">${esc(label)}</span></li>`;
+}
 
-function render(hits) {
-  $results.innerHTML = hits.map((h) => {
+// ── search ────────────────────────────────────────────────────────────────
+
+function renderSearchResults(hits) {
+  $grid.classList.add("hidden");
+  $results.classList.remove("hidden");
+  $results.innerHTML = hits.map(h => {
     const r = meta[h.idx];
-    const url = sourceUrl(r.type, r.source);
-    const title = url
-      ? `<a href="${url}" target="_blank" rel="noopener">${escapeHtml(r.source)}</a>`
-      : escapeHtml(r.source);
-    const section = r.section ? `<span>§ ${escapeHtml(r.section)}</span>` : "";
-    let text = r.text;
-    if (text.length > 600) text = text.slice(0, 600) + "…";
+    const url = modelUrl(r.type, r.source);
+    const title = url ? `<a href="${url}" target="_blank" rel="noopener" class="source">${esc(r.source)}</a>` : `<span class="source">${esc(r.source)}</span>`;
+    const section = r.section ? `<span class="section">§ ${esc(r.section)}</span>` : "";
     return `
       <div class="hit">
         <div class="meta">
-          <span class="kind">${escapeHtml(r.type)}</span>
+          <span class="kind">${esc(r.type)}</span>
           ${title}
           ${section}
           <span class="dist">d=${h.dist.toFixed(3)}</span>
         </div>
-        <div class="text">${escapeHtml(text)}</div>
+        <div class="text">${renderMd(r.text.slice(0, 600))}${r.text.length > 600 ? "…" : ""}</div>
       </div>`;
   }).join("");
 }
+
+function showGrid() {
+  $grid.classList.remove("hidden");
+  $results.classList.add("hidden");
+}
+
+// ── search loop ──────────────────────────────────────────────────────────
 
 let pending = 0;
 
@@ -123,49 +198,75 @@ async function runSearch(text) {
   const myId = ++pending;
   text = text.trim();
   if (!text || !extract || !vecs) {
-    $results.innerHTML = "";
-    if (extract && vecs) setStatus("ready.");
+    showGrid();
+    setStatus(extract && vecs ? (text ? "type to search" : "ready") : "loading…");
     return;
   }
   setStatus("searching…");
   const out = await extract(text, { pooling: "cls", normalize: true });
   if (myId !== pending) return;
-  const queryVec = out.data;
-  const hits = topK(queryVec, 8);
+  const qv = out.data;
+  const hits = topK(qv, 8);
   if (myId !== pending) return;
-  render(hits);
-  setStatus(`${hits.length} hits.`);
+  renderSearchResults(hits);
+  setStatus(`${hits.length} hits`);
 }
 
 let debounce;
 $q.addEventListener("input", () => {
+  $clear.classList.toggle("hidden", !$q.value);
   clearTimeout(debounce);
   debounce = setTimeout(() => runSearch($q.value), 180);
 });
 $q.addEventListener("keydown", (e) => {
   if (e.key === "Enter") { clearTimeout(debounce); runSearch($q.value); }
 });
+$clear.addEventListener("click", () => {
+  $q.value = "";
+  $clear.classList.add("hidden");
+  showGrid();
+  setStatus("ready.");
+  $q.focus();
+});
+$q.addEventListener("focus", () => $q.select());
 
-// --- boot ---
+// ── boot ──────────────────────────────────────────────────────────────────
 
 setStatus("loading metadata…");
-await loadMeta();
+const [categories, metaRaw, vecsRaw] = await Promise.all([
+  loadJSON("./data/categories.json"),
+  loadJSON("./data/meta.json"),
+  loadBin("./data/vectors.bin"),
+]);
+meta = metaRaw;
+vecs = vecsRaw;
 
-setStatus("loading vectors…");
-await loadVectors();
+renderGrid(categories);
 
-// Update counts
+// Counts
 const counts = { game: 0, reference: 0, lexicon: 0 };
 for (const c of meta) {
   if (c.type in counts) counts[c.type]++;
   else if (c.type === "game") counts.game++;
 }
-$countGames.textContent = counts.game;
-$countRefs.textContent = counts.reference;
-$countLexicon.textContent = counts.lexicon;
+$("count-games").textContent = counts.game;
+$("count-refs").textContent = counts.reference;
+$("count-lex").textContent = counts.lexicon;
 
-await loadModel();
+// Load model
+setStatus("loading embedding model (~30 MB, cached after first visit)…");
+extract = await pipeline(
+  "feature-extraction",
+  "Xenova/bge-small-en-v1.5",
+  {
+    progress_callback: (p) => {
+      if (p.status === "progress" && p.total) {
+        setStatus(`loading model… ${p.file} ${Math.round((p.loaded / p.total) * 100)}%`);
+      }
+    }
+  }
+);
 
-setStatus("ready. type a question above.");
+setStatus("ready.");
 $q.disabled = false;
 $q.focus();

@@ -3,36 +3,76 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>howtowin.games — semantic search</title>
+  <title>howtowin.games — how to play games well</title>
+  <meta name="description" content="How to play 200+ games well — solution status, consensus strategy, engine analysis.">
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <header>
-    <h1><a href="./">howtowin.games</a></h1>
-    <p class="tagline">how to play 200+ games well — and whether they are solved.</p>
+
+  <!-- dither filter (SVG), referenced by CSS -->
+  <svg aria-hidden="true" height="0" width="0" style="position:absolute">
+    <filter id="dither">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" result="noise"/>
+      <feColorMatrix type="matrix" values="
+        0 0 0 0 0
+        0 0 0 0 0
+        0 0 0 0 0
+        0 0 0 3 -1.5" in="noise" result="mask"/>
+      <feComposite operator="in" in="SourceGraphic" in2="mask"/>
+    </filter>
+    <filter id="dither-heavy">
+      <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="2" result="noise"/>
+      <feColorMatrix type="matrix" values="
+        0 0 0 0 0
+        0 0 0 0 0
+        0 0 0 0 0
+        0 0 0 4 -2" in="noise" result="mask"/>
+      <feComposite operator="in" in="SourceGraphic" in2="mask"/>
+    </filter>
+  </svg>
+
+  <header class="site-header">
+    <div class="header-top">
+      <h1><a href="./">howtowin.games</a></h1>
+      <p class="tagline">how to play 200+ games well — and whether they are solved.</p>
+    </div>
+    <div class="search-area">
+      <input id="q" type="search" placeholder="how do I play go well…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" disabled>
+      <button id="clear-btn" class="hidden" aria-label="Clear search">&times;</button>
+      <div id="status">loading…</div>
+    </div>
   </header>
 
-  <main>
-    <input id="q" type="search" placeholder="how do I play go well…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" disabled>
-    <div id="status">starting up…</div>
-    <div id="results"></div>
-    <details id="about">
-      <summary>about this search</summary>
+  <main id="main-content">
+    <!-- category tile grid (visible when not searching) -->
+    <div id="category-grid" class="tile-grid"></div>
+
+    <!-- search results (visible when searching) -->
+    <div id="results" class="hidden"></div>
+  </main>
+
+  <footer class="site-footer">
+    <details>
+      <summary>about this site</summary>
       <p>
-        This is a semantic search over the howtowin.games corpus
-        (<span id="count-games">…</span> games, <span id="count-refs">…</span> references,
-        <span id="count-lex">…</span> lexicon terms). Both the database and the embedding
-        model run in your browser — nothing is sent to a server.
+        <strong>howtowin.games</strong> catalogs games alongside the best available answer
+        to the question <em>"how should I play this well?"</em> — solution status,
+        consensus strategy, and engine analysis. The search runs entirely in your
+        browser: query vectors are computed with <a href="https://huggingface.co/BAAI/bge-small-en-v1.5">bge-small-en-v1.5</a>
+        via <a href="https://github.com/huggingface/transformers.js">transformers.js</a>,
+        and compared against pre-computed chunk vectors
+        (<a href="./data/meta.json">meta</a> +
+        <a href="./data/vectors.bin">vectors</a>, generated in CI).
       </p>
       <p>
-        Query embeddings: <code>BAAI/bge-small-en-v1.5</code> via
-        <a href="https://github.com/huggingface/transformers.js">transformers.js</a> (ONNX, ~30 MB, cached after first load).
-        Vector search: <a href="https://github.com/asg017/sqlite-vec">sqlite-vec</a> WASM
-        running the same <code>howtowin.db</code> the CLI uses
-        (<a href="https://github.com/trifle-labs/howtowin.games/releases/tag/db-latest">download</a>).
+        <span id="count-games">…</span> games &middot;
+        <span id="count-refs">…</span> references &middot;
+        <span id="count-lex">…</span> lexicon terms &middot;
+        <a href="https://github.com/trifle-labs/howtowin.games">source</a> &middot;
+        <a href="https://github.com/trifle-labs/howtowin.games/releases/tag/db-latest">download db</a>
       </p>
     </details>
-  </main>
+  </footer>
 
   <script type="module" src="./search.js"></script>
 </body>
