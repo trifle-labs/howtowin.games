@@ -6,11 +6,20 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@v4
 
@@ -38,6 +47,7 @@ jobs:
 
       - run: python _scripts/build_db.py
       - run: python _scripts/embed.py
+      - run: python _scripts/export_site_data.py
 
       - uses: actions/upload-artifact@v4
         with:
@@ -46,7 +56,6 @@ jobs:
           retention-days: 90
 
       - name: Publish rolling release
-        if: github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -54,3 +63,19 @@ jobs:
           gh release create db-latest howtowin.db \
             --title "Database (latest)" \
             --notes "Auto-generated from commit ${{ github.sha }}. Schema and embedding model: BAAI/bge-small-en-v1.5 (384-dim)."
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

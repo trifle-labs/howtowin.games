@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>howtowin.games — semantic search</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header>
+    <h1><a href="./">howtowin.games</a></h1>
+    <p class="tagline">how to play 200+ games well — and whether they are solved.</p>
+  </header>
+
+  <main>
+    <input id="q" type="search" placeholder="how do I play go well…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" disabled>
+    <div id="status">starting up…</div>
+    <div id="results"></div>
+    <details id="about">
+      <summary>about this search</summary>
+      <p>
+        This is a semantic search over the howtowin.games corpus
+        (<span id="count-games">…</span> games, <span id="count-refs">…</span> references,
+        <span id="count-lex">…</span> lexicon terms). Both the database and the embedding
+        model run in your browser — nothing is sent to a server.
+      </p>
+      <p>
+        Query embeddings: <code>BAAI/bge-small-en-v1.5</code> via
+        <a href="https://github.com/huggingface/transformers.js">transformers.js</a> (ONNX, ~30 MB, cached after first load).
+        Vector search: <a href="https://github.com/asg017/sqlite-vec">sqlite-vec</a> WASM
+        running the same <code>howtowin.db</code> the CLI uses
+        (<a href="https://github.com/trifle-labs/howtowin.games/releases/tag/db-latest">download</a>).
+      </p>
+    </details>
+  </main>
+
+  <script type="module" src="./search.js"></script>
+</body>
+</html>
