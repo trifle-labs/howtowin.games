@@ -64,6 +64,27 @@ solved-games literature and the most-played classical and abstract titles.
 Coverage, citations, and accuracy are all works in progress — see
 [CONTRIBUTING.md](CONTRIBUTING.md).
 
+## Search database
+
+A SQLite build of the archive — including vector embeddings of every section,
+reference, and lexicon term — is produced by CI on every push to `main` and
+attached to the [`db-latest`](https://github.com/trifle-labs/howtowin.games/releases/tag/db-latest)
+release. To run search locally:
+
+```sh
+python3 -m venv .venv
+.venv/bin/pip install -r _scripts/requirements.txt
+.venv/bin/python _scripts/build_db.py
+.venv/bin/python _scripts/embed.py
+.venv/bin/python _scripts/search.py "how do I play connect four well"
+```
+
+The embedding model is [`BAAI/bge-small-en-v1.5`](https://huggingface.co/BAAI/bge-small-en-v1.5)
+via [`fastembed`](https://github.com/qdrant/fastembed) (CPU, 384-dim);
+vector search uses [`sqlite-vec`](https://github.com/asg017/sqlite-vec).
+Embeddings are content-addressed and cached in `_cache/embeddings.sqlite`, so
+unchanged chunks are never re-embedded.
+
 ## A note on accuracy
 
 Game-solving results are sometimes misreported in secondary sources, and
