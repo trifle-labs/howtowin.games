@@ -15,6 +15,7 @@
 | Solved by | — |
 | State-space complexity | Much larger than chess (piece reserves) |
 | Game-tree complexity | Much larger than chess |
+| **Family** | chess |
 
 ## Description
 

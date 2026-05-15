@@ -204,6 +204,48 @@ a:hover { text-decoration: underline; }
   margin: 0 auto;
   padding: 0 0 3rem;
 }
+
+/* ── playable area (embedded canvas game) ─────────── */
+
+.playable-area.hidden { display: none; }
+.playable-area {
+  margin: 1rem 0;
+  padding: 0.75rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  text-align: center;
+}
+.playable-area canvas {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  border-radius: 4px;
+  background: #fff;
+}
+@media (prefers-color-scheme: dark) {
+  .playable-area canvas { background: #000; }
+}
+.playable-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+}
+#playable-restart {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.2rem 0.5rem;
+  color: var(--fg-soft);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.8rem;
+}
+#playable-restart:hover { background: var(--card-hover); }
+#playable-status { color: var(--fg-muted); font-size: 0.8rem; }
 .detail-header {
   display: flex;
   align-items: center;
@@ -398,6 +440,28 @@ a:hover { text-decoration: underline; }
 
 .tile-game-list.extra { display: none; }
 .tile-game-list.extra.open { display: block; }
+
+/* ── family members (nested under family head) ──── */
+.family-members {
+  list-style: none;
+  margin: 0.15rem 0 0.15rem 1rem;
+  padding: 0;
+  border-left: 1px solid var(--border);
+}
+.family-members li {
+  font-size: 0.78rem;
+  padding: 0.1rem 0 0.1rem 0.5rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+}
+.family-members li a {
+  font-weight: 400;
+  color: var(--fg-soft);
+  cursor: pointer;
+}
+.family-members li a:hover { color: var(--accent); text-decoration: none; }
+.family-members .sol-badge { font-size: 0.55rem; }
 
 /* ── hidden state (for search/grid toggle) ──────────── */
 #category-grid.searching { opacity: 0.15; pointer-events: none; }

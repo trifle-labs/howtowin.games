@@ -21,6 +21,9 @@ Keep infobox fields consistent. Use "Unknown" / "N/A" rather than blanks.
 | Solved by | — |
 | State-space complexity | ~10^? |
 | Game-tree complexity | ~10^? |
+| Family | — |
+| Is head | — |
+| Playable | — |
 
 ## Description
 

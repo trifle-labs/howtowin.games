@@ -418,25 +418,42 @@ def main() -> int:
     conn = sqlite3.connect(DB_PATH)
     rows = conn.execute(
         "SELECT slug, title, type, solution_status, game_theoretic_value, "
-        "summary FROM games ORDER BY title"
+        "summary, family, is_head FROM games ORDER BY title"
     ).fetchall()
     conn.close()
 
-    # Build category→games mapping
-    by_cat: dict[str, list[dict]] = {}
-    for cat in CATEGORIES:
-        by_cat[cat["id"]] = []
-
-    unmatched = []
-    for slug, title, type_, sol, gtv, summary in rows:
-        cat_id = resolve_category(slug, type_)
+    # Build family → members map
+    families: dict[str, list[dict]] = {}
+    all_games: list[dict] = []
+    for slug, title, type_, sol, gtv, summary, family, is_head in rows:
         entry = {
             "slug": slug,
             "title": title,
             "solution_status": sol or "Unknown",
             "game_theoretic_value": gtv or "Unknown",
         }
+        if is_head:
+            entry["is_head"] = True
+            families.setdefault(slug, [])
+        if family:
+            families.setdefault(family, []).append(entry)
+        all_games.append((slug, title, type_, entry, family, is_head))
+
+    # Build category→games mapping
+    by_cat: dict[str, list[dict]] = {}
+    for cat in CATEGORIES:
+        by_cat[cat["id"]] = []
+
+    members_in_cat: set[str] = set()
+    unmatched = []
+    for slug, title, type_, entry, family, is_head in all_games:
+        cat_id = resolve_category(slug, type_)
+        # Skip non-head family members (shown under their family head)
+        if family and not is_head:
+            members_in_cat.add(slug)
+            continue
         if cat_id in by_cat:
+            entry["members"] = families.get(slug, [])
             by_cat[cat_id].append(entry)
         else:
             unmatched.append(slug)
@@ -450,12 +467,15 @@ def main() -> int:
         games = by_cat[cat["id"]]
         if not games:
             continue
+        cat_count = len(games)
+        for g in games:
+            cat_count += len(g.get("members", []))
         output.append({
             "id": cat["id"],
             "title": cat["title"],
             "blurb": cat["blurb"],
             "icon_svg": ICONS.get(cat["id"], ICONS["abstract"]),
-            "count": len(games),
+            "count": cat_count,
             "games": games,
         })
 

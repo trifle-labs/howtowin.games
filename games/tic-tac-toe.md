@@ -16,6 +16,7 @@
 | Solved by | Folklore |
 | State-space complexity | 765 essentially different positions; 5,478 reachable positions |
 | Game-tree complexity | ~26,830 distinct games (up to symmetry) |
+| **Playable** | tic-tac-toe |
 
 ## Description
 

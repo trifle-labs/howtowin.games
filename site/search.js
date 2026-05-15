@@ -188,11 +188,10 @@ function renderGrid(categories) {
   });
 
   // Game links → navigate to hash
-  document.querySelectorAll(".tile-game-list a").forEach(a => {
+  document.querySelectorAll(".tile-game-list a, .family-members a").forEach(a => {
     a.addEventListener("click", (e) => {
       e.preventDefault();
-      const slug = a.getAttribute("href").replace(/\.md$/, "");
-      navigate(`game/${slug}`);
+      navigate(a.getAttribute("href"));
     });
   });
 }
@@ -202,12 +201,25 @@ function gameItem(g) {
   const label = g.solution_status?.length > 25
     ? g.solution_status.slice(0, 22) + "…"
     : g.solution_status || "Unknown";
-  return `<li><a href="#game/${g.slug}">${esc(g.title)}</a><span class="sol-badge ${bc}">${esc(label)}</span></li>`;
+  let html = `<li><a href="#game/${g.slug}">${esc(g.title)}</a><span class="sol-badge ${bc}">${esc(label)}</span></li>`;
+  if (g.members && g.members.length) {
+    html += `<ul class="family-members">`;
+    html += g.members.map(m => {
+      const mbc = badgeClass(m.solution_status);
+      const mlabel = m.solution_status?.length > 25
+        ? m.solution_status.slice(0, 22) + "…"
+        : m.solution_status || "Unknown";
+      return `<li><a href="#game/${m.slug}">${esc(m.title)}</a><span class="sol-badge ${mbc}">${esc(mlabel)}</span></li>`;
+    }).join("");
+    html += `</ul>`;
+  }
+  return html;
 }
 
 // ── game detail ──────────────────────────────────────────────────────────
 
 let currentPath = null;
+let currentPlayable = null;
 
 async function openGame(path, fromHash) {
   // Normalize: strip .md
@@ -235,6 +247,13 @@ async function openGame(path, fromHash) {
       <button class="detail-back">← back</button>
       <h2 class="detail-title">${esc(path.replace(/^.*\//, ""))}</h2>
     </div>
+    <div id="playable-area" class="playable-area hidden">
+      <canvas id="playable-canvas"></canvas>
+      <div class="playable-controls">
+        <button id="playable-restart">↺ restart</button>
+        <span id="playable-status"></span>
+      </div>
+    </div>
     <div class="detail-body"><p style="color:var(--fg-muted)">loading…</p></div>
   `;
 
@@ -252,6 +271,13 @@ async function openGame(path, fromHash) {
     const title = md.split("\n")[0].replace(/^#\s*/, "") || path;
     $detail.querySelector(".detail-title").textContent = title;
     $detail.querySelector(".detail-body").innerHTML = renderMd(md);
+
+    // Check for playable implementation
+    const playableMatch = md.match(/^\|\s*\*\*Playable\*\*\s*\|\s*(.+?)\s*\|/m);
+    const playableSlug = playableMatch ? playableMatch[1].trim() : null;
+    if (playableSlug && playableSlug !== "—" && playableSlug !== "N/A") {
+      loadPlayable(playableSlug);
+    }
 
     // Wire game links inside detail
     $detail.querySelectorAll(".game-link").forEach(a => {
@@ -272,9 +298,27 @@ async function openGame(path, fromHash) {
 }
 
 function hideDetail() {
+  if (currentPlayable) { currentPlayable.destroy(); currentPlayable = null; }
   $detail.classList.add("hidden");
   $grid.classList.remove("hidden");
   currentPath = null;
+}
+
+async function loadPlayable(slug) {
+  try {
+    const mod = await import(`./playables/${slug}.js`);
+    const canvas = document.getElementById("playable-canvas");
+    if (!canvas) return;
+    const area = document.getElementById("playable-area");
+    area.classList.remove("hidden");
+    if (currentPlayable) currentPlayable.destroy();
+    currentPlayable = mod.create(canvas);
+    document.getElementById("playable-restart").addEventListener("click", () => {
+      if (currentPlayable && currentPlayable.restart) currentPlayable.restart();
+    });
+  } catch (e) {
+    console.warn(`playable "${slug}" not available:`, e);
+  }
 }
 
 // ── search results ───────────────────────────────────────────────────────

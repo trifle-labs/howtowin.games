@@ -38,6 +38,9 @@ CREATE TABLE games (
     solved_by TEXT,
     state_space_complexity TEXT,
     game_tree_complexity TEXT,
+    family TEXT,
+    is_head INTEGER DEFAULT 0,
+    playable TEXT,
     raw_md TEXT NOT NULL,
     content_hash TEXT NOT NULL
 );
@@ -154,6 +157,9 @@ def parse_game(path: Path) -> tuple[dict, list[tuple[str, str]]]:
         "solved_by": infobox.get("Solved by"),
         "state_space_complexity": infobox.get("State-space complexity"),
         "game_tree_complexity": infobox.get("Game-tree complexity"),
+        "family": infobox.get("Family"),
+        "is_head": 1 if infobox.get("Is head", "").lower() in ("yes", "y", "true") else 0,
+        "playable": infobox.get("Playable"),
         "raw_md": md,
         "content_hash": sha256(md),
     }
@@ -308,12 +314,14 @@ def build() -> int:
                 perfect_information, chance_element, solution_status,
                 game_theoretic_value, year_solved, solved_by,
                 state_space_complexity, game_tree_complexity,
+                family, is_head, playable,
                 raw_md, content_hash
             ) VALUES (
                 :slug, :title, :summary, :also_known_as, :players, :type,
                 :perfect_information, :chance_element, :solution_status,
                 :game_theoretic_value, :year_solved, :solved_by,
                 :state_space_complexity, :game_tree_complexity,
+                :family, :is_head, :playable,
                 :raw_md, :content_hash
             )""",
             game,

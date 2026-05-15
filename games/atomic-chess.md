@@ -15,6 +15,7 @@
 | Solved by | — |
 | State-space complexity | Similar to chess |
 | Game-tree complexity | Similar to chess |
+| **Family** | chess |
 
 ## Description
 

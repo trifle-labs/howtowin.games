@@ -16,6 +16,8 @@
 | Solved by | — |
 | State-space complexity | ~10^44 legal positions |
 | Game-tree complexity | ~10^120 (the "Shannon number") |
+| **Family** | — |
+| **Is head** | Yes |
 
 ## Description
 
