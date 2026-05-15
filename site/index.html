@@ -9,28 +9,6 @@
 </head>
 <body>
 
-  <!-- dither filter (SVG), referenced by CSS -->
-  <svg aria-hidden="true" height="0" width="0" style="position:absolute">
-    <filter id="dither">
-      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" result="noise"/>
-      <feColorMatrix type="matrix" values="
-        0 0 0 0 0
-        0 0 0 0 0
-        0 0 0 0 0
-        0 0 0 3 -1.5" in="noise" result="mask"/>
-      <feComposite operator="in" in="SourceGraphic" in2="mask"/>
-    </filter>
-    <filter id="dither-heavy">
-      <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="2" result="noise"/>
-      <feColorMatrix type="matrix" values="
-        0 0 0 0 0
-        0 0 0 0 0
-        0 0 0 0 0
-        0 0 0 4 -2" in="noise" result="mask"/>
-      <feComposite operator="in" in="SourceGraphic" in2="mask"/>
-    </filter>
-  </svg>
-
   <header class="site-header">
     <div class="header-top">
       <h1><a href="./">howtowin.games</a></h1>

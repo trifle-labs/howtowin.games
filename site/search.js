@@ -1,4 +1,5 @@
-import { pipeline } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.0.2";
+import { pipeline, env } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.0.2";
+env.allowLocalModels = false;
 
 const DIM = 384;
 const SHOW_INITIAL = 5;
@@ -255,17 +256,24 @@ $("count-lex").textContent = counts.lexicon;
 
 // Load model
 setStatus("loading embedding model (~30 MB, cached after first visit)…");
-extract = await pipeline(
-  "feature-extraction",
-  "Xenova/bge-small-en-v1.5",
-  {
-    progress_callback: (p) => {
-      if (p.status === "progress" && p.total) {
-        setStatus(`loading model… ${p.file} ${Math.round((p.loaded / p.total) * 100)}%`);
+try {
+  extract = await pipeline(
+    "feature-extraction",
+    "Xenova/bge-small-en-v1.5",
+    {
+      dtype: "q8",
+      progress_callback: (p) => {
+        if (p.status === "progress" && p.total) {
+          setStatus(`loading model… ${p.file} ${Math.round((p.loaded / p.total) * 100)}%`);
+        }
       }
     }
-  }
-);
+  );
+} catch (e) {
+  setStatus(`model failed to load: ${e.message}. refresh to retry.`);
+  console.error("transformers load error:", e);
+  throw e;
+}
 
 setStatus("ready.");
 $q.disabled = false;
