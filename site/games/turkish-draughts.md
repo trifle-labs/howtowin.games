@@ -13,6 +13,7 @@
 | **Game-theoretic value** | Unknown |
 | Year solved | — |
 | Solved by | — |
+| **Playable** | turkish-draughts |
 | State-space complexity | Similar to English draughts |
 | Game-tree complexity | Similar to English draughts |
 

@@ -286,7 +286,7 @@ function mountTile(card) {
   if (!card.dataset.playable) return; // not a playable
   const canvas = document.createElement("canvas");
   holder.appendChild(canvas);
-  import(`./playables/${slug}.js?v=70`).then(mod => {
+  import(`./playables/${slug}.js?v=72`).then(mod => {
     if (!holder.isConnected) return;
     try {
       const inst = mod.create(canvas);
@@ -431,6 +431,8 @@ async function openGame(path, fromHash) {
   hideResults();
   $grid.classList.add("hidden");
   $detail.classList.remove("hidden");
+  document.querySelector('.header-top').classList.add('hidden');
+  $('filters').classList.add('hidden');
 
   $detail.innerHTML = `
     <div class="detail-header">
@@ -456,7 +458,7 @@ async function openGame(path, fromHash) {
 
   $detail.querySelector(".detail-back").addEventListener("click", (e) => {
     e.preventDefault();
-    history.back();
+    navigate("");
   });
 
   currentPath = path;
@@ -526,12 +528,14 @@ function hideDetail() {
   if (currentPlayable) { currentPlayable.destroy(); currentPlayable = null; }
   $detail.classList.add("hidden");
   $grid.classList.remove("hidden");
+  document.querySelector('.header-top').classList.remove('hidden');
+  $('filters').classList.remove('hidden');
   currentPath = null;
 }
 
 async function loadPlayable(slug) {
   try {
-    const mod = await import(`./playables/${slug}.js?v=70`);
+    const mod = await import(`./playables/${slug}.js?v=72`);
     const canvas = document.getElementById("playable-canvas");
     if (!canvas) return;
     const area = document.getElementById("playable-area");
@@ -702,6 +706,9 @@ async function loadPlayable(slug) {
       "king-of-the-hill": "move your king to d4/e4/d5/e5 to win — standard chess moves",
       "horde-chess": "32 white pawns vs standard black army — capture the king (white) or survive (black)",
       "italian-draughts": "men cannot capture kings; capture the MOST pieces when multiple captures available",
+      "russian-draughts": "8×8 — flying kings; men capture forward & backward; mid-capture promotion",
+      "frisian-draughts": "10×10 — capture diagonally AND orthogonally; orthogonal-flying kings",
+      "turkish-draughts": "8×8 — orthogonal moves; rook kings; 16 men per side",
       "los-alamos-chess": "6×6 chess variant — no bishops, no castling, no en passant",
       "shogi": "click your piece or hand piece, then a destination. Drops & promotion — capture the king to win.",
       "janggi": "click your piece, click destination. Elephant = 1 ortho + 2 diag. Cannon jumps a screen.",

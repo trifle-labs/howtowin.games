@@ -13,6 +13,7 @@
 | **Game-theoretic value** | Unknown |
 | Year solved | — |
 | Solved by | — |
+| **Playable** | frisian-draughts |
 | State-space complexity | Similar to international draughts |
 | Game-tree complexity | Similar to international draughts |
 

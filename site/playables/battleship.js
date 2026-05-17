@@ -5,11 +5,6 @@
 
 export function create(canvas) {
   const ctx = canvas.getContext("2d");
-  function _fit(ctx, t, x, y, maxW){
-    let f = parseFloat(ctx.font) || 12;
-    while (f > 8 && ctx.measureText(t).width > maxW){ f--; ctx.font = ctx.font.replace(/[\d.]+px/, f + 'px'); }
-    ctx.fillText(t, x, y);
-  }
 
   const size = Math.min(canvas.parentElement.clientWidth - 24, 460);
   canvas.width = size; canvas.height = size + 40;
@@ -94,7 +89,6 @@ export function create(canvas) {
   function draw(){
     ctx.fillStyle = "#fafaf7"; ctx.fillRect(0, 0, W, H);
     ctx.font = "12px sans-serif"; ctx.textAlign = "center"; ctx.fillStyle = "#444";
-    _fit(ctx, "Battleship — click enemy grid (right) to fire", W/2, 18, W - 8);
     ctx.font = "10px sans-serif";
     ctx.fillText("your fleet", W/4, 28);
     ctx.fillText("enemy waters", 3*W/4, 28);

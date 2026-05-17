@@ -7,15 +7,10 @@
 
 export function create(canvas) {
   const ctx = canvas.getContext("2d");
-  function _fit(ctx, t, x, y, maxW){
-    let f = parseFloat(ctx.font) || 12;
-    while (f > 8 && ctx.measureText(t).width > maxW){ f--; ctx.font = ctx.font.replace(/[\d.]+px/, f + 'px'); }
-    ctx.fillText(t, x, y);
-  }
 
   const size = Math.min(canvas.parentElement.clientWidth - 24, 380);
   canvas.width = size;
-  canvas.height = size + 30;
+  canvas.height = Math.ceil(size * 1.05);
   const W = canvas.width, H = canvas.height;
   const statusEl = document.getElementById("playable-status");
 
@@ -80,8 +75,8 @@ export function create(canvas) {
   }
 
   function hexPos(q, r){
-    const cx = W/2, cy = 30 + (size - 30)/2;
-    const s = Math.min(W, size - 30) / (2*S + 1);
+    const s = Math.min(W, size) / 13;
+    const cx = W/2, cy = H/2;
     const x = cx + s * Math.sqrt(3) * (q + r/2);
     const y = cy + s * 1.5 * r;
     return { x, y, s };
@@ -89,8 +84,6 @@ export function create(canvas) {
 
   function draw(){
     ctx.fillStyle = "#fafaf7"; ctx.fillRect(0, 0, W, H);
-    ctx.font = "12px sans-serif"; ctx.textAlign = "center"; ctx.fillStyle = "#444";
-    _fit(ctx, "*Star — perimeter cells in your group score (peri − 3). High score wins when full.", W/2, 18, W - 8);
     for (const [q, r] of cells){
       const p = hexPos(q, r);
       ctx.beginPath();

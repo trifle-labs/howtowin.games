@@ -6,11 +6,6 @@
 
 export function create(canvas) {
   const ctx = canvas.getContext("2d");
-  function _fit(ctx, t, x, y, maxW){
-    let f = parseFloat(ctx.font) || 12;
-    while (f > 8 && ctx.measureText(t).width > maxW){ f--; ctx.font = ctx.font.replace(/[\d.]+px/, f + 'px'); }
-    ctx.fillText(t, x, y);
-  }
 
   const size = Math.min(canvas.parentElement.clientWidth - 24, 380);
   canvas.width = size;
@@ -114,7 +109,6 @@ export function create(canvas) {
   function draw(){
     ctx.fillStyle = "#fafaf7"; ctx.fillRect(0, 0, W, H);
     ctx.font = "13px sans-serif"; ctx.textAlign = "center"; ctx.fillStyle = "#444";
-    _fit(ctx, "Fanorona — captures by approach/withdrawal; mandatory when available", W/2, 18, W - 8);
 
     ctx.strokeStyle = "#888"; ctx.lineWidth = 1;
     for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++){

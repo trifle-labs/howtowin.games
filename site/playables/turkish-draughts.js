@@ -1,10 +1,7 @@
-// Italian draughts — 8×8 dark squares. Distinguishing rules:
-//   • Men cannot capture kings (we enforce this).
-//   • Captures are mandatory; pick the longest (we just check any cap chain).
-//   • Men capture only forward (like English/American).
-//   • Kings move/capture only one diagonal square (not flying).
-// Otherwise like checkers. AI: captures-first random.
-
+// Turkish draughts — 8×8 orthogonal movement. 16 men per side.
+// Men move forward/sideways; capture forward/sideways.
+// Kings move/capture like rooks (any distance orthogonal).
+// AI: captures-first random.
 export function create(canvas) {
   const ctx = canvas.getContext("2d");
 
@@ -17,8 +14,10 @@ export function create(canvas) {
   let board, turn, winner, sel, mustChain;
   function newGame(){
     board = Array.from({ length: N }, () => new Array(N).fill('.'));
-    for (let r = 0; r < 3; r++) for (let c = 0; c < N; c++) if ((r + c) % 2 === 1) board[r][c] = 'w';
-    for (let r = N-3; r < N; r++) for (let c = 0; c < N; c++) if ((r + c) % 2 === 1) board[r][c] = 'b';
+    // AI (white) top: rows 0-1
+    for (let r = 0; r < 2; r++) for (let c = 0; c < N; c++) board[r][c] = 'w';
+    // You (black) bottom: rows 6-7
+    for (let r = N-2; r < N; r++) for (let c = 0; c < N; c++) board[r][c] = 'b';
     turn = "you"; winner = null; sel = null; mustChain = null;
   }
   newGame();
@@ -27,33 +26,62 @@ export function create(canvas) {
   const isAI = (p) => p === 'w' || p === 'W';
   const isKing = (p) => p === 'B' || p === 'W';
 
-  function dirsFor(p){
-    if (isKing(p)) return [[-1,-1],[-1,1],[1,-1],[1,1]];
-    if (p === 'b') return [[-1,-1],[-1,1]];
-    return [[1,-1],[1,1]];
-  }
+  // Direction helpers
+  const manDir = (p) => isYou(p) ? -1 : 1; // forward = upward for you, downward for AI
+
   function captures(b, r, c){
     const p = b[r][c]; if (p === '.') return [];
     const enemy = isYou(p) ? isAI : isYou;
     const out = [];
-    for (const [dr, dc] of dirsFor(p)){
-      const er = r + dr, ec = c + dc, lr = r + 2*dr, lc = c + 2*dc;
-      if (lr < 0 || lr >= N || lc < 0 || lc >= N) continue;
-      if (!enemy(b[er][ec])) continue;
-      // Italian rule: men can't capture kings
-      if (!isKing(p) && isKing(b[er][ec])) continue;
-      if (b[lr][lc] !== '.') continue;
-      out.push({ to:[lr, lc], over:[er, ec] });
+    const dirs = [[-1,0],[1,0],[0,-1],[0,1]]; // orthogonal only
+    for (const [dr, dc] of dirs){
+      if (!isKing(p) && dc !== 0) continue; // men only capture forward, not sideways -- wait, Turkish draughts men CAN capture sideways too
+      // Actually men can capture forward and sideways, just not backward
+      if (!isKing(p) && dr === 1 && isYou(p)) continue; // you (bottom) can't capture downward
+      if (!isKing(p) && dr === -1 && isAI(p)) continue; // AI (top) can't capture upward
+
+      let nr = r + dr, nc = c + dc;
+      if (isKing(p)){
+        while (nr >= 0 && nr < N && nc >= 0 && nc < N && b[nr][nc] === '.'){ nr += dr; nc += dc; }
+        if (nr < 0 || nr >= N || nc < 0 || nc >= N) continue;
+        if (!enemy(b[nr][nc])) continue;
+        const er = nr, ec = nc;
+        let lr = er + dr, lc = ec + dc;
+        while (lr >= 0 && lr < N && lc >= 0 && lc < N && b[lr][lc] === '.'){
+          out.push({ to:[lr, lc], over:[er, ec] }); lr += dr; lc += dc;
+        }
+      } else {
+        // Men: one-square jumps
+        const er = nr, ec = nc;
+        if (er < 0 || er >= N || ec < 0 || ec >= N) continue;
+        if (!enemy(b[er][ec])) continue;
+        const lr = er + dr, lc = ec + dc;
+        if (lr < 0 || lr >= N || lc < 0 || lc >= N) continue;
+        if (b[lr][lc] !== '.') continue;
+        out.push({ to:[lr, lc], over:[er, ec] });
+      }
     }
     return out;
   }
+
   function quietMoves(b, r, c){
     const p = b[r][c]; if (p === '.') return [];
     const out = [];
-    for (const [dr, dc] of dirsFor(p)){
-      const nr = r + dr, nc = c + dc;
-      if (nr < 0 || nr >= N || nc < 0 || nc >= N) continue;
-      if (b[nr][nc] === '.') out.push({ to:[nr, nc] });
+    if (isKing(p)){
+      for (const [dr, dc] of [[-1,0],[1,0],[0,-1],[0,1]]){
+        let nr = r + dr, nc = c + dc;
+        while (nr >= 0 && nr < N && nc >= 0 && nc < N && b[nr][nc] === '.'){ out.push({ to:[nr, nc] }); nr += dr; nc += dc; }
+      }
+    } else {
+      // Men: forward (for you: -1, for AI: +1) and sideways
+      const dir = manDir(p);
+      const mv = [{dr: dir, dc: 0}, {dr: 0, dc: -1}, {dr: 0, dc: 1}];
+      // Can't move backward
+      for (const {dr, dc} of mv){
+        const nr = r + dr, nc = c + dc;
+        if (nr < 0 || nr >= N || nc < 0 || nc >= N) continue;
+        if (b[nr][nc] === '.') out.push({ to:[nr, nc] });
+      }
     }
     return out;
   }
@@ -111,22 +139,24 @@ export function create(canvas) {
   }
 
   function cellRect(r, c){
-    const margin = 16, cs = (size - 2*margin) / N;
+    const margin = 12, cs = (size - 2*margin) / N;
     return { x: margin + c*cs, y: 30 + r*cs, w: cs, h: cs };
   }
 
   function draw(){
-    ctx.fillStyle = "#fafaf7"; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = "#f6f0e0"; ctx.fillRect(0, 0, W, H);
     ctx.font = "12px sans-serif"; ctx.textAlign = "center"; ctx.fillStyle = "#444";
     for (let r = 0; r < N; r++) for (let c = 0; c < N; c++){
       const rc = cellRect(r, c);
-      ctx.fillStyle = (r + c) % 2 === 0 ? "#f6e3b4" : "#7a3" ;
+      ctx.fillStyle = "#d4c8a0";
       ctx.fillRect(rc.x, rc.y, rc.w, rc.h);
+      ctx.strokeStyle = "#b8a880"; ctx.lineWidth = 0.5; ctx.strokeRect(rc.x, rc.y, rc.w, rc.h);
       if (sel && sel.r === r && sel.c === c){ ctx.fillStyle = "rgba(120,220,120,0.5)"; ctx.fillRect(rc.x, rc.y, rc.w, rc.h); }
       const p = board[r][c]; if (p === '.') continue;
-      ctx.beginPath(); ctx.arc(rc.x + rc.w/2, rc.y + rc.h/2, rc.w * 0.36, 0, Math.PI*2);
-      ctx.fillStyle = isYou(p) ? "#39c" : "#e60"; ctx.fill(); ctx.strokeStyle = "#222"; ctx.stroke();
-      if (isKing(p)){ ctx.fillStyle = "#ff0"; ctx.font = "bold 14px sans-serif"; ctx.fillText("♚", rc.x + rc.w/2, rc.y + rc.h/2 + 5); }
+      ctx.beginPath(); ctx.arc(rc.x + rc.w/2, rc.y + rc.h/2, rc.w * 0.38, 0, Math.PI*2);
+      ctx.fillStyle = isYou(p) ? "#333" : "#ddd"; ctx.fill();
+      ctx.strokeStyle = "#222"; ctx.lineWidth = 1; ctx.stroke();
+      if (isKing(p)){ ctx.fillStyle = "#ff0"; ctx.font = "bold 14px sans-serif"; ctx.fillText("♛", rc.x + rc.w/2, rc.y + rc.h/2 + 5); }
     }
     if (winner) statusEl.textContent = winner === "you" ? "you win!" : "AI wins";
     else statusEl.textContent = turn === "you" ? (sel ? "click destination (captures mandatory)" : "click your piece") : "AI thinking…";
@@ -193,6 +223,7 @@ export function create(canvas) {
   return {
     solve(){
       if (winner || turn !== "you") return;
+      mustChain = null; sel = null;
       const hasCaps = anyCaptures(board, "you");
       if (hasCaps){
         const caps = [];
@@ -216,7 +247,6 @@ export function create(canvas) {
         board[m.to[0]][m.to[1]] = board[m.from[0]][m.from[1]]; board[m.from[0]][m.from[1]] = '.';
         maybePromote(m.to[0], m.to[1]);
       }
-      sel = null; mustChain = null;
       turn = "ai"; draw(); setTimeout(aiMove, 80);
     },
     destroy(){ canvas.removeEventListener("click", onClick); ctx.clearRect(0, 0, W, H); },

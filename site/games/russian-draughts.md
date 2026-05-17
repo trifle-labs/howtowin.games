@@ -13,6 +13,7 @@
 | **Game-theoretic value** | Unknown |
 | Year solved | — |
 | Solved by | — |
+| **Playable** | russian-draughts |
 | State-space complexity | Similar to English draughts (~5×10^20) |
 | Game-tree complexity | Similar to English draughts |
 

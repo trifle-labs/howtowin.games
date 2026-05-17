@@ -6,11 +6,6 @@
 
 export function create(canvas) {
   const ctx = canvas.getContext("2d");
-  function _fit(ctx, t, x, y, maxW){
-    let f = parseFloat(ctx.font) || 12;
-    while (f > 8 && ctx.measureText(t).width > maxW){ f--; ctx.font = ctx.font.replace(/[\d.]+px/, f + 'px'); }
-    ctx.fillText(t, x, y);
-  }
 
   const size = Math.min(canvas.parentElement.clientWidth - 24, 400);
   canvas.width = size; canvas.height = size + 30;
@@ -124,7 +119,6 @@ export function create(canvas) {
   function draw(){
     ctx.fillStyle = "#fafaf7"; ctx.fillRect(0, 0, W, H);
     ctx.font = "12px sans-serif"; ctx.textAlign = "center"; ctx.fillStyle = "#444";
-    _fit(ctx, "Makruk — Met (◆) moves one diagonal; Khon (△) diag+forward; pawn→Met at row 6", W/2, 18, W - 8);
     for (let r = 0; r < N; r++) for (let c = 0; c < N; c++){
       const rc = cellRect(r, c);
       ctx.fillStyle = (r + c) % 2 === 0 ? "#f0d59c" : "#a07842";

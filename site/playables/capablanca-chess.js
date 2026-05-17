@@ -2,11 +2,6 @@
 // AI: depth-1 material search.
 export function create(canvas) {
   const ctx = canvas.getContext("2d");
-  function _fit(ctx, t, x, y, maxW){
-    let f = parseFloat(ctx.font) || 12;
-    while (f > 8 && ctx.measureText(t).width > maxW){ f--; ctx.font = ctx.font.replace(/[\d.]+px/, f + 'px'); }
-    ctx.fillText(t, x, y);
-  }
 
   const size = Math.min(canvas.parentElement.clientWidth - 24, 400);
   canvas.width = size; canvas.height = Math.floor(size * 8 / 10) + 30;
@@ -158,7 +153,6 @@ export function create(canvas) {
     }
     ctx.textBaseline = "alphabetic";
     ctx.font = "11px sans-serif"; ctx.textAlign = "center"; ctx.fillStyle = "#444";
-    _fit(ctx, "Capablanca chess — 10×8. Archbishop (B+N) and Chancellor (R+N).", W / 2, 14, W - 8);
 
     if (winner) statusEl.textContent = winner === "you" ? "You win!" : "AI wins!";
     else statusEl.textContent = turn === "you" ? (sel ? "click destination" : "click your piece") : "AI thinking…";

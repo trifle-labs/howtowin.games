@@ -4,11 +4,6 @@
 
 export function create(canvas) {
   const ctx = canvas.getContext("2d");
-  function _fit(ctx, t, x, y, maxW){
-    let f = parseFloat(ctx.font) || 12;
-    while (f > 8 && ctx.measureText(t).width > maxW){ f--; ctx.font = ctx.font.replace(/[\d.]+px/, f + 'px'); }
-    ctx.fillText(t, x, y);
-  }
 
   const size = Math.min(canvas.parentElement.clientWidth - 24, 380);
   canvas.width = size;
@@ -127,8 +122,6 @@ export function create(canvas) {
   function draw(){
     ctx.fillStyle = "#fafaf7"; ctx.fillRect(0, 0, W, H);
     ctx.font = "13px sans-serif"; ctx.textAlign = "center"; ctx.fillStyle = "#444";
-    _fit(ctx, "Score Four — pick a peg; your bead falls to the lowest empty slot", W/2, 22, W - 8);
-    _fit(ctx, "4-in-a-line anywhere in the 4×4×4 cube wins", W/2, 42, W - 8);
 
     for (let y = 0; y < N; y++) for (let x = 0; x < N; x++){
       const rc = pegRect(x, y);
