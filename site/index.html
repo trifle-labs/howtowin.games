@@ -28,27 +28,80 @@
   </header>
 
   <main id="main-content">
-    <div class="filter-bar" id="filter-bar">
-      <label class="filter-chip" id="filter-playable" tabindex="0">
-        <input type="checkbox" id="chk-playable">
-        <span class="chip-label">▶ playable</span>
-      </label>
-      <select id="filter-status" class="filter-select">
-        <option value="">all status</option>
-        <option value="solved">solved</option>
-        <option value="unsolved">unsolved</option>
-        <option value="partial">partial</option>
-      </select>
-      <select id="filter-players" class="filter-select">
-        <option value="">all players</option>
-        <option value="1">1-player</option>
-        <option value="2">2-player</option>
-      </select>
+    <div class="filters" id="filters">
+      <input id="grid-q" type="search" class="grid-q" placeholder="filter by name…" autocomplete="off">
+
+      <details class="filter-group" open>
+        <summary>basics</summary>
+        <div class="filter-row">
+          <label class="filter-chip" id="filter-playable" tabindex="0">
+            <input type="checkbox" id="chk-playable">
+            <span class="chip-label">▶ playable</span>
+          </label>
+          <label class="filter-chip" data-status="solved" tabindex="0"><input type="checkbox" data-fkind="status" value="solved"><span class="chip-label">solved</span></label>
+          <label class="filter-chip" data-status="partial" tabindex="0"><input type="checkbox" data-fkind="status" value="partial"><span class="chip-label">partial</span></label>
+          <label class="filter-chip" data-status="unsolved" tabindex="0"><input type="checkbox" data-fkind="status" value="unsolved"><span class="chip-label">unsolved</span></label>
+          <span class="filter-sep"></span>
+          <label class="filter-chip" tabindex="0"><input type="checkbox" data-fkind="players" value="1"><span class="chip-label">1-player</span></label>
+          <label class="filter-chip" tabindex="0"><input type="checkbox" data-fkind="players" value="2"><span class="chip-label">2-player</span></label>
+        </div>
+      </details>
+
+      <details class="filter-group">
+        <summary>family <span class="filter-count" data-for="family"></span></summary>
+        <div class="filter-row" id="filter-family-row"></div>
+      </details>
+
+      <details class="filter-group">
+        <summary>mechanic <span class="filter-count" data-for="mechanic"></span></summary>
+        <div class="filter-row" id="filter-mechanic-row"></div>
+      </details>
+
+      <details class="filter-group">
+        <summary>complexity <span class="filter-count" data-for="complexity"></span></summary>
+        <div class="filter-row">
+          <label class="filter-chip" tabindex="0"><input type="checkbox" data-fkind="complexity" value="1"><span class="chip-label">trivial</span></label>
+          <label class="filter-chip" tabindex="0"><input type="checkbox" data-fkind="complexity" value="2"><span class="chip-label">simple</span></label>
+          <label class="filter-chip" tabindex="0"><input type="checkbox" data-fkind="complexity" value="3"><span class="chip-label">medium</span></label>
+          <label class="filter-chip" tabindex="0"><input type="checkbox" data-fkind="complexity" value="4"><span class="chip-label">deep</span></label>
+          <label class="filter-chip" tabindex="0"><input type="checkbox" data-fkind="complexity" value="5"><span class="chip-label">very deep</span></label>
+        </div>
+      </details>
+
+      <details class="filter-group">
+        <summary>popularity <span class="filter-count" data-for="popularity"></span></summary>
+        <div class="filter-row">
+          <label class="filter-chip" tabindex="0"><input type="checkbox" data-fkind="popularity" value="5"><span class="chip-label">★★★★★ household</span></label>
+          <label class="filter-chip" tabindex="0"><input type="checkbox" data-fkind="popularity" value="4"><span class="chip-label">★★★★ well-known</span></label>
+          <label class="filter-chip" tabindex="0"><input type="checkbox" data-fkind="popularity" value="3"><span class="chip-label">★★★ niche</span></label>
+          <label class="filter-chip" tabindex="0"><input type="checkbox" data-fkind="popularity" value="2"><span class="chip-label">★★ obscure</span></label>
+          <label class="filter-chip" tabindex="0"><input type="checkbox" data-fkind="popularity" value="1"><span class="chip-label">★ esoteric</span></label>
+        </div>
+      </details>
+
+      <details class="filter-group">
+        <summary>age <span class="filter-count" data-for="age"></span></summary>
+        <div class="filter-row">
+          <label class="filter-chip" tabindex="0"><input type="checkbox" data-fkind="age" value="ancient"><span class="chip-label">ancient (pre-500 CE)</span></label>
+          <label class="filter-chip" tabindex="0"><input type="checkbox" data-fkind="age" value="medieval"><span class="chip-label">medieval (500–1500)</span></label>
+          <label class="filter-chip" tabindex="0"><input type="checkbox" data-fkind="age" value="early-modern"><span class="chip-label">early-modern (1500–1900)</span></label>
+          <label class="filter-chip" tabindex="0"><input type="checkbox" data-fkind="age" value="20c"><span class="chip-label">20th century</span></label>
+          <label class="filter-chip" tabindex="0"><input type="checkbox" data-fkind="age" value="modern"><span class="chip-label">modern (post-2000)</span></label>
+        </div>
+      </details>
+
+      <div class="filter-summary">
+        <span id="filter-result-count"></span>
+        <button id="filter-clear" class="filter-clear-btn hidden">clear filters</button>
+      </div>
     </div>
-    <div id="category-grid" class="tile-grid"></div>
+
+    <div id="category-grid" class="game-grid"></div>
     <div class="filter-bar-empty" id="filter-empty" style="display:none;text-align:center;padding:3rem 1rem;color:var(--fg-muted)">no games match these filters</div>
     <div id="detail-view" class="hidden"></div>
   </main>
+  <!-- Shared status element used by playables (both detail view and grid thumbnails) -->
+  <div id="playable-status" style="display:none"></div>
 
   <footer class="site-footer">
     <details>
@@ -73,6 +126,6 @@
     </details>
   </footer>
 
-  <script type="module" src="./search.js?v=68"></script>
+  <script type="module" src="./search.js?v=69"></script>
 </body>
 </html>

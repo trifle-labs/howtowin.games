@@ -17,7 +17,20 @@ let meta = [];
 let vecs = null;
 let extract = null;
 let allCategories = [];
-let currentFilters = { playable: false, status: "", players: "" };
+let gameMeta = {};        // slug → metadata
+let flatGames = [];       // all games (heads + members) merged with metadata
+let familyMeta = {};      // family id → {title, blurb, icon_svg}
+let currentFilters = {
+  q: "",
+  playable: false,
+  status: new Set(),
+  players: new Set(),
+  family: new Set(),
+  mechanic: new Set(),
+  complexity: new Set(),
+  popularity: new Set(),
+  age: new Set(),
+};
 
 // ── helpers ──────────────────────────────────────────────────────────────
 
@@ -225,103 +238,158 @@ function topK(queryVec, k) {
   return indices.slice(0, k).map(i => ({ idx: i, dist: 1 - scores[i] }));
 }
 
-// ── tile grid ────────────────────────────────────────────────────────────
+// ── flat game grid ──────────────────────────────────────────────────────
 
-function renderGrid(categories) {
-  $grid.innerHTML = categories.map(c => {
-    const top = c.games.slice(0, SHOW_INITIAL);
-    const rest = c.games.slice(SHOW_INITIAL);
-    return `
-      <div class="tile" data-cat="${c.id}">
-        <div class="tile-header">
-          <div class="tile-icon">${c.icon_svg}</div>
-          <h3>${esc(c.title)} <span class="count">${c.count}</span></h3>
-        </div>
-        <div class="tile-blurb">${esc(c.blurb)}</div>
-        <ul class="tile-game-list" data-id="${c.id}">
-          ${top.map(g => gameItem(g)).join("")}
-        </ul>
-        ${rest.length ? `<ul class="tile-game-list extra" data-id="${c.id}-extra">
-          ${rest.map(g => gameItem(g)).join("")}
-        </ul>
-        <button class="tile-toggle" data-target="${c.id}">+ ${rest.length} more</button>` : ""}
-      </div>`;
-  }).join("");
+const MECHANIC_LABELS = {
+  grid: "grid board",
+  hex: "hex board",
+  cards: "cards",
+  dice: "dice",
+  "mancala-track": "pit-and-seed",
+  "3d": "3D / stacked",
+  line: "graph / line",
+  pegs: "peg board",
+};
 
-  document.querySelectorAll(".tile-toggle").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const extra = document.querySelector(`ul[data-id="${btn.dataset.target}-extra"]`);
-      if (!extra) return;
-      const open = extra.classList.toggle("open");
-      btn.textContent = open ? "− fewer" : `+ ${extra.children.length} more`;
-    });
-  });
-
-  // Game links → navigate to hash
-  document.querySelectorAll(".tile-game-list a, .family-members a").forEach(a => {
-    a.addEventListener("click", (e) => {
-      e.preventDefault();
-      navigate(a.getAttribute("href"));
-    });
-  });
+const AGE_BUCKETS = [
+  { id: "ancient", min: -10000, max: 500 },
+  { id: "medieval", min: 500, max: 1500 },
+  { id: "early-modern", min: 1500, max: 1900 },
+  { id: "20c", min: 1900, max: 2000 },
+  { id: "modern", min: 2000, max: 3000 },
+];
+function ageBucket(year) {
+  if (year == null) return null;
+  for (const b of AGE_BUCKETS) if (year >= b.min && year < b.max) return b.id;
+  return null;
 }
 
-function gameItem(g) {
-  const bc = badgeClass(g.solution_status);
-  const label = g.solution_status?.length > 25
-    ? g.solution_status.slice(0, 22) + "…"
-    : g.solution_status || "Unknown";
-  let html = `<li><a href="#game/${g.slug}">${esc(g.title)}</a>`;
-  if (g.playable) html += `<span class="playable-dot" title="playable demo">▶</span>`;
-  html += `<span class="sol-badge ${bc}">${esc(label)}</span></li>`;
-  if (g.members && g.members.length) {
-    html += `<ul class="family-members">`;
-    html += g.members.map(m => {
-      const mbc = badgeClass(m.solution_status);
-      const mlabel = m.solution_status?.length > 25
-        ? m.solution_status.slice(0, 22) + "…"
-        : m.solution_status || "Unknown";
-      let mhtml = `<li><a href="#game/${m.slug}">${esc(m.title)}</a>`;
-      if (m.playable) mhtml += `<span class="playable-dot" title="playable demo">▶</span>`;
-      mhtml += `<span class="sol-badge ${mbc}">${esc(mlabel)}</span></li>`;
-      return mhtml;
-    }).join("");
-    html += `</ul>`;
+function statusBucket(s) {
+  const st = (s || "").toLowerCase();
+  const unsolved = st.includes("unsolved") || st.includes("open") || st.includes("unknown");
+  const partial = st.includes("partial") || st.includes("partially") || st.includes("analysed") || st.includes("pspace") || st.includes("np-");
+  const solved = !unsolved && !partial && (st.includes("solved") || st.includes("complete"));
+  if (solved) return "solved";
+  if (partial) return "partial";
+  return "unsolved";
+}
+
+// Tile observer: mount mini-canvas when scrolled near, destroy when far.
+let tileObserver = null;
+const tilePlayables = new Map(); // slug → playable instance
+
+function mountTile(card) {
+  const slug = card.dataset.slug;
+  if (!slug || tilePlayables.has(slug)) return;
+  const holder = card.querySelector(".tile-canvas-holder");
+  if (!holder) return;
+  if (!card.dataset.playable) return; // not a playable
+  const canvas = document.createElement("canvas");
+  holder.appendChild(canvas);
+  import(`./playables/${slug}.js?v=69`).then(mod => {
+    if (!holder.isConnected) return;
+    try {
+      const inst = mod.create(canvas);
+      tilePlayables.set(slug, inst);
+    } catch (e) {
+      console.warn(`tile mount failed for ${slug}:`, e);
+    }
+  }).catch(e => console.warn(`tile import failed for ${slug}:`, e));
+}
+
+function unmountTile(card) {
+  const slug = card.dataset.slug;
+  const inst = tilePlayables.get(slug);
+  if (inst) { try { inst.destroy(); } catch (e) {} tilePlayables.delete(slug); }
+  const holder = card.querySelector(".tile-canvas-holder");
+  if (holder) holder.innerHTML = "";
+}
+
+function clearAllTiles() {
+  for (const [slug, inst] of tilePlayables) {
+    try { inst.destroy(); } catch (e) {}
   }
-  return html;
+  tilePlayables.clear();
+}
+
+function setupTileObserver() {
+  if (tileObserver) tileObserver.disconnect();
+  tileObserver = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) mountTile(e.target);
+      else unmountTile(e.target);
+    }
+  }, { rootMargin: "300px 0px" });
+}
+
+function gameTileHTML(g) {
+  const bc = statusBucket(g.solution_status);
+  const fam = familyMeta[g.family];
+  const famLabel = fam ? fam.title : (g.family || "");
+  const playableAttr = g.playable ? ' data-playable="1"' : "";
+  const ageStr = g.age == null ? "" : (g.age < 0 ? `${-g.age} BCE` : `${g.age}`);
+  return `
+    <a class="game-tile" data-slug="${esc(g.slug)}"${playableAttr} href="#game/${esc(g.slug)}">
+      <div class="tile-canvas-holder" aria-hidden="true">
+        ${g.playable ? "" : `<div class="tile-no-canvas">${fam?.icon_svg || "◯"}</div>`}
+      </div>
+      <div class="tile-meta">
+        <div class="tile-title">${esc(g.title)}</div>
+        <div class="tile-tags">
+          <span class="sol-badge ${bc}">${esc(bc)}</span>
+          ${g.playable ? '<span class="tag tag-playable">▶ play</span>' : ""}
+          ${famLabel ? `<span class="tag tag-family">${esc(famLabel)}</span>` : ""}
+          ${g.players ? `<span class="tag tag-players">${esc(g.players)}p</span>` : ""}
+          ${ageStr ? `<span class="tag tag-age">${esc(ageStr)}</span>` : ""}
+        </div>
+      </div>
+    </a>`;
+}
+
+function renderGrid(games) {
+  clearAllTiles();
+  $grid.innerHTML = games.map(gameTileHTML).join("");
+  document.querySelectorAll(".game-tile").forEach(card => {
+    card.addEventListener("click", (e) => {
+      e.preventDefault();
+      navigate(card.getAttribute("href"));
+    });
+    if (tileObserver) tileObserver.observe(card);
+  });
+  const cnt = document.getElementById("filter-result-count");
+  if (cnt) cnt.textContent = `${games.length} game${games.length === 1 ? "" : "s"}`;
 }
 
 // ── filters ────────────────────────────────────────────────────────────────
 
+function filterActive() {
+  const f = currentFilters;
+  if (f.q.trim()) return true;
+  if (f.playable) return true;
+  return f.status.size + f.players.size + f.family.size + f.mechanic.size + f.complexity.size + f.popularity.size + f.age.size > 0;
+}
+
 function applyFilters() {
   const f = currentFilters;
-  if (!f.playable && !f.status && !f.players) {
-    renderGrid(allCategories);
-    document.getElementById("filter-empty").style.display = "none";
-    return;
-  }
-  const filtered = allCategories.map(cat => {
-    const games = cat.games.filter(g => {
-      if (f.playable && !g.playable) return false;
-      if (f.status) {
-        const st = (g.solution_status || "").toLowerCase();
-        const isUnsolved = st.includes("unsolved") || st.includes("open") || st.includes("unknown");
-        const isPartial = st.includes("partial") || st.includes("partially") || st.includes("analysed") || st.includes("pspace") || st.includes("np-");
-        const isSolved = !isUnsolved && !isPartial && (st.includes("solved") || st.includes("complete"));
-        if (f.status === "solved" && !isSolved) return false;
-        if (f.status === "unsolved" && !isUnsolved) return false;
-        if (f.status === "partial" && !isPartial) return false;
-      }
-      if (f.players) {
-        const p = (g.players || "").trim();
-        if (!p.startsWith(f.players)) return false;
-      }
-      return true;
-    });
-    if (!games.length) return null;
-    return { ...cat, games, count: games.reduce((n, g) => n + 1 + g.members.length, 0) };
-  }).filter(Boolean);
-
+  const q = f.q.trim().toLowerCase();
+  const filtered = flatGames.filter(g => {
+    if (q && !g.title.toLowerCase().includes(q) && !g.slug.includes(q)) return false;
+    if (f.playable && !g.playable) return false;
+    if (f.status.size && !f.status.has(statusBucket(g.solution_status))) return false;
+    if (f.players.size) {
+      const p = (g.players || "").trim().charAt(0);
+      if (!f.players.has(p)) return false;
+    }
+    if (f.family.size && !f.family.has(g.family)) return false;
+    if (f.mechanic.size && !f.mechanic.has(g.mechanic)) return false;
+    if (f.complexity.size && !f.complexity.has(String(g.complexity))) return false;
+    if (f.popularity.size && !f.popularity.has(String(g.popularity))) return false;
+    if (f.age.size) {
+      const b = ageBucket(g.age);
+      if (!b || !f.age.has(b)) return false;
+    }
+    return true;
+  });
   const $empty = document.getElementById("filter-empty");
   if (filtered.length) {
     renderGrid(filtered);
@@ -330,6 +398,7 @@ function applyFilters() {
     renderGrid([]);
     $empty.style.display = "block";
   }
+  document.getElementById("filter-clear").classList.toggle("hidden", !filterActive());
 }
 
 // ── game detail ──────────────────────────────────────────────────────────
@@ -460,7 +529,7 @@ function hideDetail() {
 
 async function loadPlayable(slug) {
   try {
-    const mod = await import(`./playables/${slug}.js?v=68`);
+    const mod = await import(`./playables/${slug}.js?v=69`);
     const canvas = document.getElementById("playable-canvas");
     if (!canvas) return;
     const area = document.getElementById("playable-area");
@@ -750,35 +819,111 @@ window.addEventListener("hashchange", onHashChange);
 // ── boot ──────────────────────────────────────────────────────────────────
 
 setStatus("loading metadata…");
-const [categories, metaRaw, vecsRaw] = await Promise.all([
+const [categories, gameMetaRaw, metaRaw, vecsRaw] = await Promise.all([
   loadJSON("./data/categories.json"),
+  loadJSON("./data/game-meta.json"),
   loadJSON("./data/meta.json"),
   loadBin("./data/vectors.bin"),
 ]);
 meta = metaRaw;
 vecs = vecsRaw;
 allCategories = categories;
+gameMeta = gameMetaRaw;
 
-renderGrid(categories);
+// Build family lookup (id → {title, blurb, icon_svg})
+for (const c of categories) {
+  familyMeta[c.id] = { title: c.title, blurb: c.blurb, icon_svg: c.icon_svg };
+}
+
+// Flatten heads + members and merge with game-meta
+const seen = new Set();
+for (const c of categories) {
+  for (const g of c.games) {
+    if (!seen.has(g.slug)) {
+      seen.add(g.slug);
+      flatGames.push({ ...(gameMeta[g.slug] || {}), ...g, family: gameMeta[g.slug]?.family || c.id });
+    }
+    for (const m of (g.members || [])) {
+      if (!seen.has(m.slug)) {
+        seen.add(m.slug);
+        flatGames.push({ ...(gameMeta[m.slug] || {}), ...m, family: gameMeta[m.slug]?.family || c.id });
+      }
+    }
+  }
+}
+flatGames.sort((a, b) => a.title.localeCompare(b.title));
+
+setupTileObserver();
+renderGrid(flatGames);
 
 // ── filter bar wiring ──────────────────────────────
-const $chkPlayable = document.getElementById("chk-playable");
-const $filterStatus = document.getElementById("filter-status");
-const $filterPlayers = document.getElementById("filter-players");
 
+// Build family + mechanic chip rows from data
+const familyRow = document.getElementById("filter-family-row");
+const familyOrder = categories.map(c => c.id);
+familyRow.innerHTML = familyOrder.map(id => {
+  const fm = familyMeta[id];
+  if (!fm) return "";
+  return `<label class="filter-chip" tabindex="0"><input type="checkbox" data-fkind="family" value="${esc(id)}"><span class="chip-label">${esc(fm.title)}</span></label>`;
+}).join("");
+
+const mechanicRow = document.getElementById("filter-mechanic-row");
+const mechanicCounts = {};
+for (const g of flatGames) if (g.mechanic) mechanicCounts[g.mechanic] = (mechanicCounts[g.mechanic] || 0) + 1;
+const mechanicOrder = Object.keys(mechanicCounts).sort((a, b) => mechanicCounts[b] - mechanicCounts[a]);
+mechanicRow.innerHTML = mechanicOrder.map(m => {
+  const lbl = MECHANIC_LABELS[m] || m;
+  return `<label class="filter-chip" tabindex="0"><input type="checkbox" data-fkind="mechanic" value="${esc(m)}"><span class="chip-label">${esc(lbl)}</span></label>`;
+}).join("");
+
+// Wire all checkbox chips (delegated to each input via fkind dataset)
+document.querySelectorAll('#filters input[type=checkbox][data-fkind]').forEach(input => {
+  input.addEventListener("change", () => {
+    const kind = input.dataset.fkind;
+    const value = input.value;
+    const set = currentFilters[kind];
+    if (input.checked) set.add(value); else set.delete(value);
+    input.closest(".filter-chip").classList.toggle("active", input.checked);
+    updateFilterCounts();
+    applyFilters();
+  });
+});
+
+const $chkPlayable = document.getElementById("chk-playable");
 $chkPlayable.addEventListener("change", () => {
   currentFilters.playable = $chkPlayable.checked;
   document.getElementById("filter-playable").classList.toggle("active", $chkPlayable.checked);
   applyFilters();
 });
-$filterStatus.addEventListener("change", () => {
-  currentFilters.status = $filterStatus.value;
+
+const $gridQ = document.getElementById("grid-q");
+$gridQ.addEventListener("input", () => {
+  currentFilters.q = $gridQ.value;
   applyFilters();
 });
-$filterPlayers.addEventListener("change", () => {
-  currentFilters.players = $filterPlayers.value;
+
+document.getElementById("filter-clear").addEventListener("click", () => {
+  document.querySelectorAll('#filters input[type=checkbox]').forEach(i => {
+    i.checked = false;
+    const chip = i.closest(".filter-chip");
+    if (chip) chip.classList.remove("active");
+  });
+  for (const k of ["status","players","family","mechanic","complexity","popularity","age"]) currentFilters[k].clear();
+  currentFilters.playable = false;
+  currentFilters.q = "";
+  $gridQ.value = "";
+  updateFilterCounts();
   applyFilters();
 });
+
+function updateFilterCounts() {
+  const map = { family: "family", mechanic: "mechanic", complexity: "complexity", popularity: "popularity", age: "age" };
+  for (const k in map) {
+    const n = currentFilters[k].size;
+    const el = document.querySelector(`.filter-count[data-for="${k}"]`);
+    if (el) el.textContent = n ? `(${n})` : "";
+  }
+}
 
 const counts = { game: 0, reference: 0, lexicon: 0 };
 for (const c of meta) {
