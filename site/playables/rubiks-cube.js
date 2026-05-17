@@ -5,6 +5,12 @@ export function create(canvas) {
   const ctx = canvas.getContext("2d");
   const size = Math.min(canvas.parentElement.clientWidth - 24, 380);
   canvas.width = size; canvas.height = size;
+  const dpr = window.devicePixelRatio || 1;
+  if (dpr > 1) {
+    const w = canvas.width, h = canvas.height;
+    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+    canvas.width = w * dpr; canvas.height = h * dpr; ctx.scale(dpr, dpr);
+  }
   const statusEl = document.getElementById("playable-status");
   const gap = 3, cell = Math.floor((size - 40) / (4 * 3 + 3));
   const faceSz = cell * 3 + gap * 2;

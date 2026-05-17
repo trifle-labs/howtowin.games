@@ -8,6 +8,12 @@ export function create(canvas) {
   const size = Math.min(canvas.parentElement.clientWidth - 24, 420);
   canvas.width = size;
   canvas.height = 260;
+  const dpr = window.devicePixelRatio || 1;
+  if (dpr > 1) {
+    const w = canvas.width, h = canvas.height;
+    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+    canvas.width = w * dpr; canvas.height = h * dpr; ctx.scale(dpr, dpr);
+  }
   const statusEl = document.getElementById("playable-status");
 
   const PHI = (1 + Math.sqrt(5)) / 2;

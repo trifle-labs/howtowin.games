@@ -9,6 +9,8 @@ export function create(canvas) {
   canvas.width = size;
   canvas.height = 220;
   const W = canvas.width, H = canvas.height;
+  const dpr = window.devicePixelRatio || 1;
+  if (dpr > 1) { canvas.style.width = W + 'px'; canvas.style.height = H + 'px'; canvas.width = W * dpr; canvas.height = H * dpr; ctx.scale(dpr, dpr); }
   const statusEl = document.getElementById("playable-status");
 
   // 0..5 = your pits, 6..11 = enemy pits. Stores held separately.

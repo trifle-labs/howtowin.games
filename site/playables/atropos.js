@@ -12,6 +12,8 @@ export function create(canvas) {
   canvas.width = size;
   canvas.height = size + 40;
   const W = canvas.width, H = canvas.height;
+  const dpr = window.devicePixelRatio || 1;
+  if (dpr > 1) { canvas.style.width = W + 'px'; canvas.style.height = H + 'px'; canvas.width = W * dpr; canvas.height = H * dpr; ctx.scale(dpr, dpr); }
   const statusEl = document.getElementById("playable-status");
 
   // Triangular grid: rows 0..N with row r having (r+1) vertices. Boundary

@@ -1,7 +1,6 @@
 # Amazons
 
-> A territorial game of queens that shoot arrows; a favourite CGT research
-> target, but unsolved on its standard board.
+> A game where queens move like chess queens and shoot arrows to block off territory. A favorite for math research, but no one has solved the standard board yet.
 
 | Field | Value |
 |-------|-------|
@@ -20,10 +19,12 @@
 
 ## Description
 
-Played on a 10×10 board, each side with four "amazons" that move like chess
-queens. After moving, an amazon **shoots an arrow** (also moving queen-like)
-that permanently blocks a square. Blocked squares and pieces obstruct movement.
-A player who cannot move loses — so the game is about walling off territory.
+Amazons is played on a 10×10 board. Each player has four pieces called
+"amazons" that move like queens in chess (any number of squares in any
+direction: up, down, left, right, or diagonal). After moving, an amazon
+**shoots an arrow** (which also travels like a chess queen) that permanently
+blocks that square. Blocked squares and pieces block movement. A player who
+cannot move loses, so the game is about walling off territory.
 
 ## Solution status
 
@@ -39,12 +40,12 @@ between Othello and chess/Go.
 
 ## Consensus on optimal play
 
-- **Control territory early, not pieces** — the object is to leave your opponent without moves, so expanding your reachable squares matters more than capturing or threatening amazons directly.
-- **Shoot arrows that restrict the opponent** — the arrow after each move is as important as the move itself; a well-placed arrow that limits an enemy amazon's future options is often stronger than a distant territorial gain.
-- **Keep your amazons mobile** — amazons trapped behind their own arrows become worthless; avoid self-blocking by thinking two moves ahead about where you will shoot next.
-- **Fragment the board in your favour** — when the board breaks into independent regions, each region has a CGT value; aim to create more and larger regions on your side than on your opponent's.
-- **In the endgame, count liberties** — once regions are isolated, the player whose region contains more "moves remaining" (mobility surplus) wins; thermographic analysis from CGT guides exact endgame play.
-- **Opening: anchor amazons near the corners** — moving toward the corners early gives your amazons protected territory to develop from without being cut off.
+- **Control territory early, not pieces** — the goal is to leave your opponent with no moves, so expanding how many squares you can reach matters more than capturing or threatening amazons directly.
+- **Shoot arrows that box in your opponent** — the arrow you shoot after moving is just as important as the move itself. A well-placed arrow that limits where the opponent can go is often better than grabbing territory far away.
+- **Keep your amazons room to move** — amazons trapped behind their own arrows become useless. Avoid blocking yourself by thinking ahead about where you will shoot next.
+- **Break the board into pieces that favor you** — when the board splits into separate areas, each area becomes a small battle. Try to make more and bigger areas on your side.
+- **In the endgame, count how many moves each side has left** — once the board is split into separate areas, the player whose areas have more moves left wins.
+- **At the start, move amazons near the corners** — moving toward the corners early gives your amazons safe territory to work from without getting cut off.
 
 ## Engines & current best play
 

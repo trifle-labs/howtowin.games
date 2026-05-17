@@ -1,8 +1,6 @@
 # Battleship
 
-> The childhood guessing game — an imperfect-information game; "optimal play"
-> means probabilistic search strategy, and the standard game is not solved in
-> the game-theoretic sense.
+> The classic guessing game where you hide ships and try to find the enemy's. Since you can't see the opponent's board, it is not the kind of game that can be "solved" in the usual way.
 
 | Field | Value |
 |-------|-------|
@@ -21,11 +19,12 @@
 
 ## Description
 
-Each player secretly places a fleet of ships on a 10×10 grid. Players then
-alternate calling shots at coordinates on the opponent's grid; the opponent
-announces hit or miss (and, in most rules, when a ship is sunk). The first player
-to sink the opponent's entire fleet wins. Because each player's board is hidden,
-this is a game of **imperfect information**, unlike most entries in this archive.
+Each player secretly places a fleet of ships on a 10×10 grid. Players then take
+turns calling out coordinates to shoot at on the opponent's grid. The opponent
+says whether it was a hit or a miss (and in most versions, tells you when a ship
+is fully sunk). The first player to sink all of the opponent's ships wins.
+Because each player's board is hidden from the other, this is a game of **hidden
+information** — unlike most games in this archive.
 
 ## Solution status
 
@@ -42,12 +41,12 @@ solution.
 
 ## Consensus on optimal play
 
-- **Use probability-density targeting during the hunting phase** — mentally (or computationally) track which squares can still contain an unsunk ship given all misses; always shoot at the square with the highest probability of being occupied.
-- **Exploit parity to reduce wasted shots** — ships occupy at least 2 consecutive squares; during the hunting phase, only fire at every other square in a checkerboard pattern to guarantee touching every possible 2-square ship with minimal shots.
-- **Follow hits in both directions** — when you score a hit, shoot the adjacent squares along a line until you find both ends of the ship before switching back to hunting; this sinks ships faster than scattering shots after a hit.
-- **Avoid placing ships at edges and corners** — against a probability-density hunter, ships near the edges are statistically easier to locate because fewer ship orientations fit there; interior placement forces the opponent to waste more shots.
-- **Separate your ships** — placing ships adjacent or near each other concentrates targets; a spread-out fleet makes each hit less informative about where neighbouring ships are.
-- **Vary your placement pattern against repeated opponents** — because Battleship has hidden information and depends on opponent strategy, the "optimal" placement is really a mixed strategy; avoid predictable patterns that a learning opponent can exploit.
+- **Use probability targeting when hunting** — keep track of which squares could still hold an unsunk ship based on your misses. Always shoot at the square most likely to be occupied.
+- **Use a checkerboard pattern to save shots** — ships take up at least 2 squares in a row. When hunting, shoot every other square (like a checkerboard pattern) to cover all possible 2-square ships with the fewest shots.
+- **Follow hits in both directions** — when you get a hit, keep shooting in a straight line in both directions until you find both ends of the ship before going back to hunting. This sinks ships faster than scattering shots.
+- **Don't put ships on edges or corners** — if the opponent is using probability targeting, ships near the edges are easier to find because fewer ship arrangements fit there. Placing ships in the middle forces the opponent to waste more shots.
+- **Spread your ships apart** — putting ships next to each other clusters your targets. A spread-out fleet makes each hit less useful for finding nearby ships.
+- **Vary where you put your ships against repeat opponents** — since Battleship has hidden information and depends on what the opponent does, the best placement is random. Don't use predictable patterns that an observant opponent can learn.
 
 ## Engines & current best play
 

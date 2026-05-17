@@ -1,7 +1,6 @@
 # DVONN
 
-> A stacking game with three "DVONN" pieces that anchor the board — unsolved
-> but a frequent computer-game research target.
+> A stacking game where three red "DVONN" pieces anchor the board. Unsolved, but a common target for game AI research.
 
 | Field | Value |
 |-------|-------|
@@ -20,10 +19,10 @@
 
 ## Description
 
-DVONN (Kris Burm, 2001) is the third GIPF-project game. Two players have
-single-coloured pieces (black and white); a small set of red **DVONN pieces**
-anchor groups of pieces. The board shrinks as orphaned stacks (groups not
-connected via a DVONN piece) fall off.
+DVONN (by Kris Burm, 2001) is the third game in the GIPF project. The two
+players have pieces of their own color (black and white). A small set of red
+**DVONN pieces** act as anchors for stacks of pieces. The board shrinks as
+groups of stacks that are not connected to a DVONN piece fall off.
 
 ## Rules
 

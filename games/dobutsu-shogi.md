@@ -1,6 +1,6 @@
 # Dōbutsu shōgi
 
-> "Animal chess" — a 3×4 shogi for children that has been completely solved.
+> "Animal chess" — a tiny 3×4 shogi variant for children. Completely solved.
 
 | Field | Value |
 |-------|-------|
@@ -19,11 +19,12 @@
 
 ## Description
 
-Played on a 3-column × 4-row board. Each side has four pieces — Lion (the king),
-Giraffe, Elephant, and Chick — with simple movement. As in [shogi](shogi.md),
-captured pieces are kept in hand and may be **dropped** back into play; the
-Chick promotes to a Hen. You win by capturing the enemy Lion or by marching your
-own Lion safely to the far rank.
+Played on a 3-column by 4-row board. Each player has four pieces: Lion (like a
+king in chess), Giraffe, Elephant, and Chick — all with simple movements. As in
+[shogi](shogi.md), captured pieces are kept and can be **dropped** back onto
+the board later. The Chick promotes to a Hen when it reaches the far end. You
+win by capturing the enemy Lion or by getting your own Lion safely to the
+opponent's back row.
 
 ## Solution status
 
@@ -45,11 +46,11 @@ explosive complexity of [shogi](shogi.md).
 
 ## Consensus on optimal play
 
-- **Second player (Gote) wins with perfect play** — first player is in a losing position from move 1; as Sente, your only hope is opponent error; as Gote, follow the solved database and you cannot lose.
-- **Lion advancement is the decisive threat** — the game ends when a Lion reaches the far rank safely OR when a Lion is captured; controlling whether YOUR Lion can advance safely to the goal rank while preventing the opponent's is the central strategic calculation on the tiny 3×4 board.
-- **Use drops to create immediate threats** — captured pieces can be dropped anywhere on your turn; a well-timed Giraffe or Elephant drop that attacks the enemy Lion immediately forces a defensive response and is often more powerful than advancing a piece already on the board.
-- **The Chick → Hen promotion doubles its value** — getting a Chick to promote on the far rank converts it from a single-step-forward piece to a multi-direction Hen; promoting while also threatening the Lion is a strong combined goal.
-- **On a 3-wide board, flanking is impossible** — the Lion has nowhere to hide; every piece threatens the central file; defensive play often means keeping your Lion near the back rank while advancing supported threats.
+- **Second player wins with perfect play** — the first player is in a losing position from move 1. As first player, your only hope is opponent error. As second player, follow the solved database and you cannot lose.
+- **Getting your Lion across is the key threat** — the game ends when a Lion reaches the far row safely or when a Lion is captured. The central question on this tiny 3×4 board is whether YOUR Lion can safely advance while stopping the opponent's Lion.
+- **Use drops to create instant threats** — captured pieces can be dropped anywhere on your turn. A well-timed Giraffe or Elephant drop that attacks the enemy Lion forces a defensive response and is often more powerful than advancing a piece already on the board.
+- **Promoting a Chick makes it much stronger** — getting a Chick to promote on the far row turns it from a piece that moves one step forward into a Hen that can move in multiple directions. Promoting while also threatening the Lion is a strong combined goal.
+- **On a board only 3 columns wide, there is nowhere to hide** — the Lion has no safe spot. Every piece threatens the center column. Defensive play often means keeping your Lion near the back row while advancing with support.
 
 ## Engines & current best play
 

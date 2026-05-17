@@ -1,6 +1,6 @@
 # Achi
 
-> A Ghanaian three-in-a-row game, a close relative of Three Men's Morris.
+> A traditional game from Ghana where players try to line up three pieces on a small board.
 
 | Field | Value |
 |-------|-------|
@@ -19,11 +19,12 @@
 
 ## Description
 
-A traditional game of Ghana played on a 3×3 grid of points with both diagonals
-marked (giving the centre point a high connectivity). Each player has **four**
-pieces. Players place all their pieces alternately, then enter a movement phase,
-sliding a piece along a marked line to an adjacent empty point; three in a row
-along a marked line wins.
+Achi comes from Ghana. It is played on a 3×3 board made of dots connected by
+lines, including both diagonal lines (which makes the center dot extra
+important). Each player has **four** pieces. First, players take turns placing
+their pieces on empty dots. Once all pieces are on the board, players take
+turns sliding one piece along a line to an empty neighboring dot. The first
+player to get three of their pieces in a row along a drawn line wins.
 
 ## Solution status
 
@@ -40,11 +41,11 @@ advantage notwithstanding.
 
 ## Consensus on optimal play
 
-- **Take the centre on move 1** — the centre point connects all four lines (horizontal, vertical, two diagonals), giving more winning threats than any corner or edge point.
-- **Fill corners before edges** — corners connect 3 lines each; edges connect only 2, making corners more strategically valuable in the placement phase.
-- **Deny your opponent two-in-a-row** — because the board is tiny (4 pieces each, 9 points), a single unchallenged two-in-a-row often converts directly to a win.
-- **In the movement phase, use the centre as a pivot** — the centre connects to all other points; controlling it in the sliding phase gives mobility advantage.
-- **Mirror or block immediately** — with optimal play by both sides the game is a draw; any passive move that allows an unblocked two-in-a-row is fatal.
+- **Take the center on your first turn** — the center dot connects to all lines (horizontal, vertical, and both diagonals), which gives you more ways to win than any corner or edge dot.
+- **Fill corners before edges** — corner dots connect to 3 lines each; edge dots connect to only 2, so corners are more valuable during placement.
+- **Stop your opponent from getting two in a row** — because the board is tiny (4 pieces each, 9 dots), letting the opponent get two in a row without blocking usually means they will win.
+- **In the movement phase, use the center as a hub** — the center connects to every other dot; controlling it during sliding gives you more options.
+- **Mirror or block immediately** — if both players play perfectly, the game ends in a draw. Any careless move that lets the opponent get an unblocked two in a row is a loss.
 
 ## Engines & current best play
 

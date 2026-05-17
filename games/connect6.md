@@ -1,7 +1,6 @@
 # Connect6
 
-> A k-in-a-row game deliberately designed for fairness — two stones per turn —
-> and, partly by design, still unsolved.
+> A six-in-a-row game designed for fairness — each player places two stones per turn. Unsolved by design.
 
 | Field | Value |
 |-------|-------|
@@ -20,10 +19,10 @@
 
 ## Description
 
-Introduced by Professor I-Chen Wu in 2003. Played on a Go board (or larger).
-The first player places **one** stone; thereafter **each player places two
-stones per turn**. The winner is the first to get **six** (or more) of their
-stones in a row, horizontally, vertically, or diagonally.
+Connect6 was introduced by Professor I-Chen Wu in 2003. It is played on a Go
+board (or larger). The first player places **one** stone. After that, **each
+player places two stones per turn**. The first player to get **six** (or more)
+of their stones in a row — horizontally, vertically, or diagonally — wins.
 
 ## Solution status
 
@@ -37,11 +36,11 @@ the game-theoretic value of the standard opening exists.
 
 ## Consensus on optimal play
 
-- **Build "live fours" (four-in-a-row with both ends open) with two-stone turns** — placing two stones in one turn means you can simultaneously advance two different threats; a live four is nearly unblockable because the opponent cannot cover both ends in a single two-stone turn while also advancing their own attack.
-- **Create double live-four threats ("double four")** — having two independent live fours on the board at once is an immediate win, since the opponent's two stones cannot block both; the entire strategy of expert Connect6 play converges on creating this double-four situation.
-- **Respond to opponent threats first, then build** — with two stones per turn, you can usually block one serious threat and create a new one in the same move; falling behind in threat count is typically fatal.
-- **Spread your stones over multiple lines, not one** — concentrating all stones in a single row telegraphs your intention; mixing line directions (horizontal, vertical, two diagonals) makes it harder for the opponent to pre-emptively block.
-- **The opening single stone confers no lasting advantage** — unlike Gomoku, the one-stone start is quickly equalised; do not play as though you have a persistent first-move edge; play for balanced development.
+- **Build "live fours" (four in a row with both ends open) using your two-stone turns** — since you place two stones per turn, you can advance two different threats at once. A live four is nearly impossible to block because the opponent cannot cover both ends in a single two-stone turn while also building their own attack.
+- **Create double live-four threats (a "double four")** — having two separate live fours on the board at the same time is an instant win, since the opponent's two stones cannot block both. Expert Connect6 strategy revolves around creating this double-four situation.
+- **Respond to opponent threats first, then build yours** — with two stones per turn, you can usually block one serious threat and create a new threat of your own in the same move. Falling behind in threats is usually fatal.
+- **Spread your stones across multiple lines** — putting all your stones in one row makes your plan obvious. Mixing horizontal, vertical, and diagonal threats makes it harder for the opponent to block everything.
+- **The one-stone opening does not give a lasting advantage** — unlike Gomoku, the single opening stone is quickly balanced out. Do not play as though you have a permanent first-move edge. Play for balanced development.
 
 ## Engines & current best play
 

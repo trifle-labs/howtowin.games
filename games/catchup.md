@@ -1,6 +1,6 @@
 # Catchup
 
-> Hex-grid placement game where leading lets the trailing player play more — unsolved.
+> A hexagonal board game where the player who is behind gets to place more stones. Unsolved.
 
 | Field | Value |
 |-------|-------|
@@ -19,22 +19,19 @@
 
 ## Description
 
-Catchup (Nick Bentley, 2010) is a connection-style game on a hexagonal grid
-with an unusual move structure: the **size of the largest opposing group**
-determines how many pieces you place on your next turn, dynamically
-"catching up" the trailing player.
+Catchup (by Nick Bentley, 2010) is a connection game played on a hexagonal
+grid. It has an unusual rule: the **size of the biggest group of either color**
+on the board decides how many stones you get to place on your next turn. This
+dynamically helps the player who is behind.
 
 ## Rules
 
-1. Board: hexagonal grid (commonly side 5 or 6, with 61 cells).
-2. The first player places one stone; thereafter the rule is:
-   - At the start of your turn, find the size *G* of the **largest connected
-     group of either colour** currently on the board.
-   - You then place **as many** stones as the lesser of *G* and the number of
-     empty cells, distributed one per cell.
-3. After the board is full, the player with the largest connected group wins;
-   ties are broken by next-largest group, then third-largest, etc.
-4. Stones once placed are never moved or removed.
+1. The board is a hexagonal grid (commonly 5 or 6 cells per side, with 61 cells total).
+2. The first player places just one stone. After that:
+   - At the start of your turn, check the size *G* of the **biggest connected group of either color** on the board.
+   - You then place that many stones (one per empty cell), or as many as there are empty cells, whichever is fewer.
+3. When the board is full, the player with the biggest connected group wins. Ties are broken by comparing the next-biggest group, then the third-biggest, and so on.
+4. Stones are never moved or removed once placed.
 
 ## Solution status
 
@@ -43,11 +40,11 @@ unusual but no formal value has been computed.
 
 ## Consensus on optimal play
 
-- **Avoid creating large groups prematurely** — the catch-up rule means that growing the board's largest group hands your opponent more stones on their next turn; building many small scattered groups may be better than one large connected one until the late game.
-- **Cluster your stones before the endgame** — the winner is the player with the largest connected group at the end; stones must eventually connect, but the timing of merging clusters is key — merge just when the opponent cannot mount an equal-sized response.
-- **Exploit the opponent's catch-up moves against them** — when the opponent gets to place many stones (because your group is large), they are forced to spread across the board; use those forced placements to your advantage by ensuring they create only fragmented groups.
-- **Control the centre of the hexagonal board** — as in most hexagonal placement games, central stones are reachable from more directions and can join clusters on multiple axes; peripheral stones are easier to cut off.
-- **Count group sizes before each move** — precisely knowing the current largest group size tells you how many stones you will place next turn and how many your opponent will place; planning several moves ahead with these counts avoids being surprised by a sudden opponent surge.
+- **Don't make big groups too early** — the catch-up rule means that if you make the board's biggest group bigger, your opponent gets more stones on their next turn. Spreading your stones in small separate groups may be better than making one big group until late in the game.
+- **Cluster your stones before the game ends** — the winner is whoever has the biggest connected group when the board is full. Stones must eventually connect, but *when* you merge them is key. Merge just when the opponent cannot build an equally big group in response.
+- **Turn the opponent's catch-up moves against them** — when the opponent gets to place lots of stones (because your group is big), they have to spread them across the board. Use this to your advantage by forcing them to create only scattered, disconnected groups.
+- **Control the center of the hexagonal board** — as in most hexagonal games, stones in the center can connect in more directions. Stones on the edges are easier to cut off.
+- **Count group sizes before every move** — knowing the current biggest group size tells you how many stones you and your opponent will place next turn. Planning ahead with these numbers helps you avoid a surprise big move by the opponent.
 
 ## Engines & current best play
 

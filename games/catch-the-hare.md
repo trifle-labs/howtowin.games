@@ -1,6 +1,6 @@
 # Catch the Hare
 
-> Asymmetric hunt game: hounds versus a single hare — partially analysed.
+> An asymmetric chase game where hounds try to corner a single hare. Partially solved.
 
 | Field | Value |
 |-------|-------|
@@ -19,19 +19,17 @@
 
 ## Description
 
-Catch the Hare is the generic name for a family of asymmetric pursuit games
-in which a small number of hounds (typically 3) try to corner a single hare
-on a small board. Versions appear across medieval Europe and the Americas.
+Catch the Hare is the general name for a family of chase games where a small
+number of hounds (usually 3) try to trap a single hare on a small board.
+Different versions of this game appear across medieval Europe and the Americas.
 
 ## Rules
 
-1. Board: small cross- or diamond-shaped grid (varies by tradition).
-2. One side controls 3 (sometimes 4) hounds; the other side controls 1 hare.
-3. Hounds may move one step **forward or sideways** but never backward;
-   the hare moves one step in any direction. No captures.
-4. The hounds win if the hare cannot move (cornered).
-5. The hare wins by **escaping past** the hounds — reaching the back row from
-   which the hounds started.
+1. Board: a small cross-shaped or diamond-shaped grid (exact shape varies by tradition).
+2. One player controls 3 (sometimes 4) hounds; the other controls 1 hare.
+3. Hounds can move one step **forward or sideways** but never backward. The hare can move one step in any direction. No pieces are captured.
+4. The hounds win if the hare cannot move (it is cornered).
+5. The hare wins by **sneaking past** the hounds and reaching the back row where the hounds started.
 
 ## Solution status
 
@@ -42,11 +40,11 @@ board's value.
 
 ## Consensus on optimal play
 
-- **Hounds must advance as an unbroken line** — because the hare can escape through any gap in the hound formation, the hounds must maintain a contiguous front with no jumpable spaces; a single-step gap between two adjacent hounds allows the hare to slip through and win.
-- **Hounds: never let a hound fall behind the others** — all three hounds should advance together at roughly the same rank; an isolated hound ahead of its companions is easily flanked and the formation breaks.
-- **Hare: immediately probe for and exploit gaps** — the hare's only winning strategy is to find or force a gap in the hound line and sprint through it; probing moves that threaten multiple gaps simultaneously are strongest.
-- **Hare: use lateral movement to stretch the hound line** — moving to the side forces hounds to spread their formation wider, increasing the risk of a gap; diagonal escapes to the corner regions are often the last resort.
-- **Geometry is decisive** — on narrow boards (few columns) the hounds can close all gaps easily and win reliably; on wide open boards the hare has room to manoeuvre around the line and escape. Know which regime your specific board falls into.
+- **Hounds must move forward as a solid wall** — the hare can slip through any gap in the hound line. The hounds must stay side by side with no spaces between them. A single empty space between two hounds lets the hare squeeze through and win.
+- **Hounds: keep all hounds together** — all three hounds should advance together at roughly the same row. If one hound gets ahead of the others, it is easily outflanked and the formation breaks.
+- **Hare: look for gaps right away** — the hare's only winning move is to find or force a gap in the hound line and run through it. Moves that threaten multiple gaps at once are strongest.
+- **Hare: move sideways to stretch the hounds** — moving to the side forces the hounds to spread out wider, which makes gaps more likely. Diagonal escapes toward the corners are often the last hope.
+- **Board shape decides everything** — on narrow boards (few columns), the hounds can cover all gaps easily and win reliably. On wide open boards, the hare has room to run around the line and escape. Know which kind of board you are playing on.
 
 ## Engines & current best play
 

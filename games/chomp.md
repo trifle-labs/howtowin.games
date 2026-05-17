@@ -1,7 +1,6 @@
 # Chomp
 
-> A game where we *know* the first player wins — but, remarkably, no one knows
-> how.
+> A game where we know the first player wins — but remarkably, nobody knows how.
 
 | Field | Value |
 |-------|-------|
@@ -20,10 +19,11 @@
 
 ## Description
 
-Played on a rectangular grid of cells, thought of as a chocolate bar; the
-top-left cell is "poisoned." On a turn a player picks a cell and "chomps" it
-together with every cell below and to the right of it. The player forced to eat
-the poisoned top-left cell loses.
+Played on a rectangular grid of cells, imagined as a chocolate bar. The
+top-left cell is "poisoned." On your turn, you pick a cell and "chomp" it
+along with every cell below it and to the right of it (removing that whole
+chunk from the bar). The player who is forced to eat the poisoned top-left
+cell loses.
 
 ## Solution status
 
@@ -42,11 +42,11 @@ ultra-weak solution.
 
 ## Consensus on optimal play
 
-- **First player wins on any non-trivial rectangular board** — this is proven (via strategy stealing), so if you are the first player you are in a won position; the challenge is finding the actual winning move.
-- **On a 2×n board, the winning first move is to take from the bottom row leaving a 2×1 column** — explicit solutions exist for 2×n boards; memorise the winning pattern for small cases (it involves leaving the opponent with an L-shaped position they cannot handle).
-- **On square boards, first move: take the bottom-right corner only** — this leaves a symmetric non-square position; the winning strategy on square n×n boards is known: maintain a specific symmetry until the opponent is forced to eat the poison.
-- **On large general boards, no known efficient strategy exists** — the ultra-weak solution only proves a winner exists; finding the winning move in a given position requires game-tree search, and no polynomial algorithm is known for general *m*×*n*.
-- **As second player on a general board, your only hope is opponent error** — against a perfect opponent, second player loses; focus on positions (narrow boards, specific sizes) where explicit first-player strategies are known if you want to improve.
+- **First player wins on any non-trivial rectangular board** — this is proven (by a strategy-stealing argument). If you are the first player, you are in a winning position. The problem is finding the actual winning move.
+- **On a 2×n board, the winning first move is to take from the bottom row leaving a 2×1 column** — exact winning strategies are known for 2×n boards. The pattern usually involves leaving the opponent with an L-shaped position they cannot handle.
+- **On square boards, first move: take only the bottom-right corner** — this leaves a non-square position. The winning strategy on square n×n boards is known: keep a specific symmetry until the opponent is forced to eat the poison.
+- **On large general boards, no one knows a quick winning strategy** — the proof only shows a winner exists. Actually finding the winning move for large boards requires searching through possible moves, and no fast (polynomial-time) method is known.
+- **As second player on a general board, your only hope is opponent error** — against a perfect opponent, the second player loses. Focus on specific board sizes (narrow or small boards) where winning strategies are known.
 
 ## Engines & current best play
 

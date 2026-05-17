@@ -1,7 +1,6 @@
 # Arimaa
 
-> A game deliberately designed to be hard for computers — playable with a chess
-> set, and unsolved.
+> A game designed to be hard for computers, playable with a chess set, and still unsolved.
 
 | Field | Value |
 |-------|-------|
@@ -19,11 +18,12 @@
 
 ## Description
 
-Invented by Omar Syed in 2002, playable on a chessboard with chess pieces.
-Players first **set up** their pieces freely on their two home ranks. Each turn
-consists of **up to four steps**, which may move several pieces; stronger pieces
-can **push and pull** weaker enemy pieces. Pieces are lost by being forced onto
-trap squares. A player wins by getting a rabbit (pawn) to the far rank.
+Arimaa was invented by Omar Syed in 2002 and can be played on a chessboard with
+chess pieces. Before the game starts, players **set up** their pieces however
+they want on their two home rows. Each turn you get **up to four steps**, which
+can move several different pieces. Stronger pieces can **push and pull** weaker
+enemy pieces. Pieces are removed when they are forced onto trap squares. The
+goal is to get one of your rabbits (pawns) to the opponent's back row.
 
 ## Solution status
 
@@ -39,12 +39,12 @@ value of Arimaa is unknown and the game is nowhere near solved.
 
 ## Consensus on optimal play
 
-- **Control the traps** — the four trap squares are the primary way pieces are eliminated; placing friendly pieces adjacent to your own traps (as "hosts") protects them, while attacking the defenders of enemy traps is the main tactical theme.
-- **Setup determines the game** — the free placement phase is crucial; standard setups place the stronger pieces (elephant, camel) behind rabbits near the traps they will anchor, and cats/dogs as trap defenders.
-- **The elephant dominates — push yours forward** — the elephant cannot be pushed or pulled; advancing it aggressively ties down the opponent's elephant in defense and creates a positional wedge.
-- **Rabbit advancement is the winning condition** — every strategic decision filters through "can I advance a rabbit to the 8th rank?"; keeping rabbit lanes open while blocking opponent rabbit paths is the strategic core.
-- **Immobilisation wins without captures** — a player with no legal moves loses; surrounding the opponent's pieces (especially their camel or elephant) to create a goal-through-immobilisation threat is a major tactical weapon.
-- **Tempo matters enormously** — with up to four steps per turn, wasting steps on non-threatening moves hands the initiative to your opponent; experienced players maximise "goal threats" per step.
+- **Control the traps** — the four trap squares are the main way to remove pieces. Keep friendly pieces next to your own traps to protect them (like "guards"), and attack the guards of the opponent's traps.
+- **Your setup decides the game** — the free placement phase at the start is crucial. Standard setups put the strongest pieces (elephant, camel) behind rabbits near the traps they will guard, with cats and dogs as trap defenders.
+- **Push your elephant forward** — the elephant is the strongest piece and cannot be pushed or pulled by anything. Advancing it aggressively pins down the opponent's elephant in defense and gives you a position advantage.
+- **Getting a rabbit across wins the game** — every strategic decision comes down to "can I get a rabbit to the far row?" Keeping open paths for your rabbits while blocking the opponent's rabbit paths is the heart of the game.
+- **You can also win by trapping your opponent** — a player with no legal moves loses. Surrounding the opponent's pieces (especially their camel or elephant) to trap them is a major tactic.
+- **Don't waste steps** — with up to four steps per turn, wasting steps on useless moves hands the advantage to your opponent. Experienced players try to make every step count toward winning.
 
 ## Engines & current best play
 

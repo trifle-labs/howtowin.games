@@ -1,7 +1,6 @@
 # Dawson's chess
 
-> A chess-derived impartial game that reduces to the octal game 0.137 and is
-> fully solved by a periodic nim-value sequence.
+> A chess-like game that reduces to a math puzzle (octal game 0.137). Fully solved by a repeating number pattern.
 
 | Field | Value |
 |-------|-------|
@@ -20,13 +19,13 @@
 
 ## Description
 
-Dawson's chess was posed by T. R. Dawson (1935) as a chess problem: pawns of
-opposite colours face off on a 3×*n* board, captures are *compulsory*, and —
-analysed under the [misère](../lexicon/README.md#misère-play) convention as
-Dawson intended — it asks who is forced to make the last capture. The position
-abstracts to a take-and-break game on a row, and under
-[normal play](../lexicon/README.md#normal-play-convention) it is the octal game
-**0.137** (remove a run of three, or related moves, splitting the row).
+Dawson's chess was proposed by T. R. Dawson in 1935 as a chess problem. Pawns of
+opposite colors face each other on a 3×*n* board, captures are **required**
+(you must capture if you can), and the question is which player is forced to
+make the last capture. The position can be simplified to a take-and-break game
+on a single row, and under normal play rules it is known as the octal game
+**0.137** (where you remove a group of three pawns, or related moves, possibly
+splitting the row into smaller groups).
 
 ## Solution status
 
@@ -43,11 +42,11 @@ fully-solved object usually meant by "Dawson's chess" in CGT.
 
 ## Consensus on optimal play
 
-- **Look up the nim-value from the period-34 table** — for normal play, the nim-value (Grundy value) of a single row of length *n* follows a period-34 pattern (after a short non-periodic prefix); the table is the complete strategy — no other reasoning is needed.
-- **Combine multi-component positions with nim-sum** — if the position has multiple independent rows/components, compute each component's nim-value separately, then XOR (nim-sum) them; a position with nim-sum 0 is a second-player win, any non-zero nim-sum is a first-player win.
-- **To win from a non-zero nim-sum position, move to make the nim-sum 0** — find the component whose nim-value, when replaced by a reachable nim-value, makes the total nim-sum zero; that is your optimal move.
-- **For misère play, apply misère-quotient theory** — the normal-play strategy almost always works for misère too, with the exception: when all components have nim-value 0 or 1, invert the normal-play winning condition (move to leave an *odd* number of 1s instead of an even number).
-- **Period-34 means the game is essentially mechanical** — after looking up the table, optimal play requires no insight beyond nim-sum arithmetic; the game has no room for creative play.
+- **Look up the value from the repeating table** — for normal play, the nim-value (a number that tells you who wins) of a single row of length *n* follows a pattern that repeats every 34 steps (after a short uneven start). The table is the complete strategy.
+- **Combine multiple rows with XOR (nim-sum)** — if the position has several separate rows, find each row's nim-value separately, then XOR (a math operation) all of them together. A total of 0 means the second player wins. Any other number means the first player wins.
+- **To win from a winning position, make the XOR total 0** — find a row whose nim-value you can change (by making a legal move) so that the new XOR total becomes 0. That is your best move.
+- **For misere play (last move loses), use a slightly different rule** — the normal strategy usually works, except when all rows have nim-value 0 or 1. In that special case, flip the condition: move to leave an odd number of 1s instead of an even number.
+- **The game is essentially a math problem** — once you have the table, playing perfectly is just doing simple math. There is no room for creativity.
 
 ## Engines & current best play
 

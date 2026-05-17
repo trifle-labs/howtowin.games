@@ -8,6 +8,12 @@ export function create(canvas) {
   const size = Math.min(canvas.parentElement.clientWidth - 24, 360);
   canvas.width = size;
   canvas.height = size;
+  const dpr = window.devicePixelRatio || 1;
+  if (dpr > 1) {
+    const w = canvas.width, h = canvas.height;
+    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+    canvas.width = w * dpr; canvas.height = h * dpr; ctx.scale(dpr, dpr);
+  }
   const statusEl = document.getElementById("playable-status");
 
   // Cells 0..7 = outer points (in order), 8 = center.

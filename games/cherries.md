@@ -1,7 +1,6 @@
 # Cherries
 
-> A small partisan game on coloured stones — illustrates how a tiny rule
-> change yields switches and infinitesimals.
+> A small teaching game with colored stones. Shows how small rule changes create interesting math results.
 
 | Field | Value |
 |-------|-------|
@@ -20,20 +19,17 @@
 
 ## Description
 
-Cherries is one of several small partisan games developed in the CGT teaching
-tradition: a row of "cherries" coloured for Left or Right, with simple removal
-rules. Its purpose is to give a hands-on example of partisan value computation
-without the combinatorial weight of full board games.
+Cherries is a small teaching game used to explain combinatorial game theory. It
+has a row of "cherries" colored for one player or the other, with simple rules
+for removing them. Its purpose is to give a hands-on example of game value
+calculation without the complexity of full board games.
 
 ## Rules
 
-1. A row (or set) of cherries, each coloured blue (Left) or red (Right). Specific
-   variants attach cherries in pairs or singletons. **[verify]** the canonical
-   rule set, which differs slightly between sources.
-2. **Left** moves: remove a blue cherry (and possibly its attached partner,
-   depending on the variant).
-3. **Right** moves: remove a red cherry similarly.
-4. The player unable to move loses (normal play).
+1. A row (or group) of cherries, each colored blue (one player) or red (the other). In some versions, cherries are attached in pairs or are alone.
+2. **One player** can remove a blue cherry (and possibly its attached partner, depending on the version).
+3. **The other player** can remove a red cherry the same way.
+4. The player who cannot move loses (normal play).
 
 ## Solution status
 
@@ -45,11 +41,11 @@ rule set. **[verify]**
 
 ## Consensus on optimal play
 
-- **Compute the CGT value of each isolated component first** — Cherries typically decomposes into independent sub-games (individual cherry pairs or singletons); compute the game value of each component separately, then sum them to find the overall value.
-- **Play the hottest component first** — in CGT terms the "temperature" of a component measures how much it is worth to move there next; always play in the highest-temperature component to maximise your advantage per move.
-- **A position with value > 0 is a Left (first player) win; < 0 a Right win; = 0 a second-player win** — reading the computed CGT sum directly gives the winner under optimal play; no heuristic reasoning is needed once the values are known.
-- **Use mean-value estimates to guide play when exact temperatures are complex** — the mean value of a game tells you roughly what each player will score from a position; comparing means across components identifies where your moves have the biggest impact.
-- **Cherries is a teaching example, not a competitive game** — its primary purpose is to illustrate partisan CGT concepts (switches, infinitesimals, temperature); in practice you compute the value analytically rather than searching a game tree.
+- **Work out the value of each separate part first** — Cherries usually splits into independent sub-games (each cherry pair or single cherry). Figure out the game value of each part separately, then add them up to get the overall value.
+- **Play the "hottest" component first** — the "temperature" of a part tells you how much you gain by making a move there. Always play in the highest-temperature part to get the most advantage per move.
+- **Positive value means one player wins, negative means the other wins, zero means the second player wins** — once you have the total game value, you know the winner directly. No guesswork needed.
+- **Use average values when exact numbers are too complex** — the average value of a game tells you roughly what each player will get from that position. Comparing averages across parts shows you where your moves have the biggest impact.
+- **Cherries is a teaching game, not a competitive one** — its purpose is to illustrate math concepts (switches, tiny values, temperature). You solve it by calculating values, not by searching through moves.
 
 ## Engines & current best play
 

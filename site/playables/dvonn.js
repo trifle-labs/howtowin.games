@@ -14,6 +14,8 @@ export function create(canvas) {
   canvas.width = size;
   canvas.height = size + 30;
   const W = canvas.width, H = canvas.height;
+  const dpr = window.devicePixelRatio || 1;
+  if (dpr > 1) { canvas.style.width = W + 'px'; canvas.style.height = H + 'px'; canvas.width = W * dpr; canvas.height = H * dpr; ctx.scale(dpr, dpr); }
   const statusEl = document.getElementById("playable-status");
 
   // hex coords (q, r) with |q|, |r|, |q+r| <= S-1 then s=5 ⇒ 61 cells; DVONN

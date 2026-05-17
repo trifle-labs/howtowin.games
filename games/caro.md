@@ -1,7 +1,6 @@
 # Caro
 
-> The Vietnamese five-in-a-row variant — like Gomoku but with a "blocked" rule
-> that closes the standard first-player win.
+> The Vietnamese version of five-in-a-row. Like Gomoku, but a five-in-a-row blocked at both ends does not count. Unsolved.
 
 | Field | Value |
 |-------|-------|
@@ -20,21 +19,18 @@
 
 ## Description
 
-Caro is the Vietnamese form of five-in-a-row. It differs from
-[Gomoku](gomoku.md) in one key respect: a five-in-a-row is **not a win if it is
-blocked at both ends** by opposing stones. This single rule neutralises many of
-Gomoku's standard "double threat" forcing sequences and gives Caro a more
-defensive flavour.
+Caro is the Vietnamese version of five-in-a-row (like Gomoku). It differs in one
+key way: a line of five stones **does not count as a win** if it has an
+opponent's stone blocking it at both ends. This one rule stops many of the
+forcing attacks that make Gomoku a first-player win, giving Caro a more
+defensive style of play.
 
 ## Rules
 
-1. A Go-style board (commonly 15×15 or 19×19), initially empty.
-2. Players alternate placing one stone of their colour on any empty
-   intersection.
-3. The first player to form an **uninterrupted line** of five or more stones
-   horizontally, vertically, or diagonally — **with at least one end of the
-   line not blocked by an opposing stone** — wins.
-4. If the board fills with no such line, the game is a draw (very rare).
+1. Played on a Go-style board (usually 15×15 or 19×19), starting empty.
+2. Players take turns placing one stone of their color on any empty intersection.
+3. The first player to make a **continuous line** of five or more stones going across, up-down, or diagonally wins — **but only if at least one end of the line is not blocked by an opponent's stone**.
+4. If the board fills up with no such line, the game is a draw (this is very rare).
 
 ## Solution status
 
@@ -45,11 +41,11 @@ practical consensus that the first player is favoured but not decisively so.
 
 ## Consensus on optimal play
 
-- **Build unblocked fours and threes** — because a five-in-a-row blocked at both ends does not win, always orient your attack so that at least one end of your forming line is open; a "four with two open ends" (live four) is the most dangerous threat.
-- **Create double-open-three threats** — simultaneously threatening two different lines of three stones, each with both ends open (so both will become winning live fours), forces the opponent to defend both at once and is usually decisive.
-- **Block opponent threes at the earliest open end** — blocking a live three at one end converts it to a half-blocked three, severely reducing its threat value; waiting until it becomes a four is too late.
-- **Centre play opens the most attack lines** — central stones sit on more diagonals, horizontals, and verticals than edge stones; early central placement gives more directions from which to form a live five.
-- **Unlike Gomoku, direct first-player forcing wins are rarer** — the blocked rule prevents many classic Gomoku sequences; Caro rewards patient positional build-up over sharp tactical sequences, and second-player defensive resources are stronger.
+- **Build lines that are open at one end** — since a five-in-a-row blocked at both ends does not win, always attack so that at least one end of your forming line is open. A line of four stones with both ends open (a "live four") is the most dangerous threat.
+- **Create two open-three threats at once** — threatening two different lines of three stones, each with both ends open, forces the opponent to defend both at the same time and is usually a winning move.
+- **Block the opponent's threes early** — blocking a live three at one end makes it a half-blocked three, which is much less dangerous. Waiting until it becomes a four is too late.
+- **Play in the center for more options** — central stones sit on more diagonals, horizontals, and verticals than edge stones. Playing in the center early gives you more directions to form a winning line.
+- **Unlike Gomoku, the first player cannot force a win easily** — the blocked rule kills many classic Gomoku attacks. Caro rewards patient, positional play over sharp tactics, and the second player's defensive options are stronger.
 
 ## Engines & current best play
 

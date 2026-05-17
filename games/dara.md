@@ -1,7 +1,6 @@
 # Dara
 
-> A West African three-in-a-row game with a much larger board than the morris
-> family — unsolved.
+> A West African three-in-a-row game on a bigger board than the morris family. Unsolved.
 
 | Field | Value |
 |-------|-------|
@@ -20,26 +19,21 @@
 
 ## Description
 
-Dara is a traditional Nigerian/Sahelian abstract strategy game played in sand
-or on a wooden board. Although superficially related to
-[Nine Men's Morris](nine-mens-morris.md) — placement followed by movement,
-winning by making a "line" — the larger board (commonly 5×6 with 24 pieces
-total) and the **capture-on-three-in-a-row** rule give it a quite different
-character.
+Dara is a traditional abstract strategy game from Nigeria and the Sahel region,
+often played in sand or on a wooden board. It looks a bit like
+[Nine Men's Morris](nine-mens-morris.md) — you place pieces, then move them,
+and you win by making lines — but the bigger board (usually 5×6 with 24 pieces
+total) and the rule that **you capture by making three in a row** make it quite
+different.
 
 ## Rules
 
-1. Board: 5 × 6 grid (some variants 6×6) of intersections.
+1. Board: a 5×6 grid of intersections (some versions use 6×6).
 2. Each player has **12 stones**.
-3. **Placement phase**: players alternate placing stones on empty
-   intersections. Three-in-a-row is **not** allowed during placement.
-4. **Movement phase**: players alternate sliding one of their stones one square
-   orthogonally to an empty adjacent intersection.
-5. A player who makes a row of exactly three stones in a straight line (along
-   the grid, not diagonal) **captures** one opponent stone of their choice.
-   Only horizontal and vertical lines count; rows of four or more do not score.
-6. The first player reduced to fewer than 3 stones (and so unable ever to make
-   a three-row) loses.
+3. **Placement phase**: Players take turns placing stones on empty intersections. You are **not** allowed to make three in a row during this phase.
+4. **Movement phase**: Players take turns sliding one of their stones one square up, down, left, or right to an empty neighboring intersection.
+5. If you make a line of exactly three stones in a straight row (across or up-down, not diagonal), you **capture** one enemy stone of your choice. Lines of four or more do not count.
+6. The first player who has fewer than 3 stones left (and so can never make three in a row) loses.
 
 ## Solution status
 
@@ -50,11 +44,11 @@ game-theoretic value.
 
 ## Consensus on optimal play
 
-- **In the placement phase, build near-rows without completing them** — three-in-a-row is prohibited during placement; place stones that create two-in-a-row configurations that will become immediate capture threats the moment the movement phase begins, without triggering the placement ban.
-- **Capture pieces that support opponent three-row threats** — when you score a three-in-a-row and can remove an opponent stone, prioritise removing the stone that is most integral to their next potential three-in-a-row; this both denies them a capture and may reduce them below the three-stone losing threshold faster.
-- **Control the centre columns/rows** — central intersections participate in more potential three-in-a-row lines (horizontal and vertical) than edge intersections; a piece in the centre can contribute to multiple future rows simultaneously.
-- **Avoid rows of four or more** — only exactly three-in-a-row scores; a line of four does not, so extending a three into a four on your own initiative wastes the capture and blocks the scoring line. Know when to stop.
-- **Manage piece count carefully** — the game is won by reducing the opponent below 3 pieces; count captures and plan whether you are on a winning attrition track or need to slow down to preserve your own material.
+- **During placement, set up near-rows without finishing them** — three in a row is not allowed during placement. Place stones that create two-in-a-row setups, which will turn into immediate capture threats the moment the movement phase starts.
+- **When you capture, take the opponent's most useful piece** — when you get three in a row and can remove an enemy stone, take the one that is most important to their next potential three in a row. This stops them from making a line and gets them closer to the 3-stone losing limit.
+- **Control the center rows and columns** — center intersections are part of more possible three-in-a-row lines (both across and up-down) than edge intersections. A piece in the center can help make several lines at once.
+- **Avoid rows of four or more** — only exactly three in a row scores. A line of four does not count, so extending your own three into a four wastes your capture and blocks the scoring line. Know when to stop.
+- **Watch your piece count** — you win by reducing the opponent below 3 pieces. Count captures and plan whether you are on track to win by attrition or need to slow down to protect your own pieces.
 
 ## Engines & current best play
 

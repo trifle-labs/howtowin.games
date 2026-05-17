@@ -1,8 +1,6 @@
 # Backgammon
 
-> The ancient race game — superhuman computer players exist and equity is known
-> to high precision, but the dice make a formal "solution" effectively
-> unattainable.
+> An ancient race game with dice. Computers play better than any human, but the dice make a true "solution" impossible.
 
 | Field | Value |
 |-------|-------|
@@ -21,12 +19,13 @@
 
 ## Description
 
-Two players race 15 checkers each around a 24-point board in opposite
-directions, moving according to the roll of two dice; a lone checker ("blot") can
-be hit and sent back. The doubling cube adds a wagering dimension. Backgammon has
-**no hidden information** but is **stochastic** — every move depends on a dice
-roll — which places it outside the perfect-information solving framework that
-covers most of this archive.
+Two players each race 15 checkers around a board with 24 points, moving in
+opposite directions. You move based on the roll of two dice. If a lone checker
+(called a "blot") is sitting on a point your piece lands on, you can hit it and
+send it back to the start. A special "doubling cube" lets you raise the stakes
+during the game. Backgammon has **no hidden information** — you can see
+everything — but **luck is involved** because you roll dice. This means it does
+not fit the kind of "solving" used for most games in this archive.
 
 ## Solution status
 
@@ -43,12 +42,12 @@ the player on roll — but this is a precise statistical estimate, not a proof.
 
 ## Consensus on optimal play
 
-- **Prime your opponent** — building a consecutive wall of 6 points (a "prime") that an opponent's checker cannot pass is the single most powerful strategic structure; a checker trapped behind a 6-prime is out of the game until the prime breaks.
-- **Hit loose blots early, especially on your home board** — sending an opponent checker to the bar when you have a strong home board forces them to re-enter from scratch; timing hits with a strong board maximises this penalty.
-- **Double aggressively, take marginal cubes** — the doubling cube swings equity dramatically; engines show that players double too late and drop too readily; the correct take/drop threshold is around 25% winning chances (accounting for gammon chances).
-- **Race equity: use pip count** — in pure racing positions (no contact), the player ahead in raw pip count has winning equity proportional to the lead; top players count pips mentally to calibrate cube decisions.
-- **Anchor on opponent's high points to survive backgame** — when behind in a race, establishing an "anchor" (your own point deep in the opponent's home board) gives re-entry from hits, delays bearoff, and threatens counterplay.
-- **Bearoff accuracy is exact** — retrograde databases give perfect play for all bearoff positions; memorise the key bearoff equities (e.g., single vs. two-checker bearoffs) to avoid errors in the final race.
+- **Build a wall of six points in a row** — creating a solid wall of 6 points (called a "prime") that the opponent's checkers cannot get past is the most powerful thing you can do. A checker trapped behind a 6-point wall is out of the game until the wall breaks.
+- **Hit lone enemy checkers early, especially in your home area** — sending an opponent's checker back to the start (the "bar") when you have a strong home board forces them to enter from the beginning. Time your hits to make this hurt the most.
+- **Double aggressively and don't drop too easily** — the doubling cube changes the stakes dramatically. Computers show that human players double too late and drop too eagerly. You should usually accept a double if you have about a 25% chance to win.
+- **In a pure race (no contact), count the pips** — when no checkers can hit each other, the player ahead in total pip count (the sum of all dice rolls needed to bear off) is more likely to win. Top players count pips in their heads to decide about doubling.
+- **Anchor on the opponent's high points when behind** — when you are losing the race, building a safe point deep in the opponent's home board lets you re-enter if hit, slows down their bear-off, and gives you a chance at counterattack.
+- **Endgame play can be perfect** — computer databases give perfect play for all bear-off positions. Memorize the key endgame numbers (like single-checker vs. two-checker bear-offs) to avoid mistakes in the final race.
 
 ## Engines & current best play
 

@@ -13,6 +13,8 @@ export function create(canvas) {
   canvas.width = size;
   canvas.height = size + 40;
   const W = canvas.width, H = canvas.height;
+  const dpr = window.devicePixelRatio || 1;
+  if (dpr > 1) { canvas.style.width = W + 'px'; canvas.style.height = H + 'px'; canvas.width = W * dpr; canvas.height = H * dpr; ctx.scale(dpr, dpr); }
   const statusEl = document.getElementById("playable-status");
 
   // Layer 0: 4×4 grid (positions (r,c) r∈0..3, c∈0..3). Layer 1: 3×3. Layer 2: 2×2. Layer 3: 1×1.

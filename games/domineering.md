@@ -1,7 +1,6 @@
 # Domineering
 
-> A partisan tiling game — one player places vertical dominoes, the other
-> horizontal — weakly solved for many board sizes.
+> One player places vertical dominoes, the other places horizontal ones. Solved for many board sizes.
 
 | Field | Value |
 |-------|-------|
@@ -21,9 +20,9 @@
 ## Description
 
 Played on a rectangular grid. One player ("Vertical") places 1×2 dominoes
-vertically, the other ("Horizontal") places them horizontally; dominoes may not
-overlap. A player unable to place a domino loses
-([normal play](../lexicon/README.md#normal-play-convention)).
+standing up (covering two squares top-to-bottom), and the other ("Horizontal")
+places them lying down (covering two squares left-to-right). Dominoes cannot
+overlap. A player who cannot place a domino loses.
 
 ## Solution status
 
@@ -40,11 +39,11 @@ whole is not "solved" — but a large and growing table of board sizes is.
 
 ## Consensus on optimal play
 
-- **Vertical wants tall open corridors; Horizontal wants wide open corridors** — each player benefits from regions shaped for their orientation; early play should occupy and block regions that suit the opponent's orientation while exploiting those that suit yours.
-- **Decompose the board into independent regions and evaluate each** — as the game progresses, the board breaks into disconnected areas; each area has an exact CGT value; the game result is determined by the sum of these values, so evaluate each region separately.
-- **A region with CGT value 0 favours the second player; > 0 favours Vertical; < 0 favours Horizontal** — reading off the CGT sum tells you directly who wins and roughly by how much without playing out all moves.
-- **Play in "hot" regions first** — temperature measures how urgently you should move in a region; always play in the highest-temperature region to maximise your advantage per move.
-- **Square boards tend to favour first player by slight margins** — solved square boards (up through 11×11) generally give the first player the win; the advantage arises from asymmetric region formation that slightly favours the first player's orientation.
+- **Vertical wants tall open spaces; Horizontal wants wide open spaces** — each player benefits from areas shaped for their domino orientation. Early on, take and block areas that help the opponent's orientation while using areas that help yours.
+- **Break the board into separate areas and evaluate each** — as the game goes on, the board splits into disconnected regions. Each region has an exact game value. The result is the sum of all region values, so evaluate each one separately.
+- **A region value of 0 favors the second player; positive favors Vertical; negative favors Horizontal** — reading the total value tells you directly who wins and by roughly how much, without playing out all the moves.
+- **Play in "hot" regions first** — "temperature" measures how urgent it is to move in a region. Always play in the highest-temperature region to get the most advantage per move.
+- **Square boards usually favor the first player** — solved square boards (up to 11×11) generally give the first player the win. The advantage comes from how the board breaks into regions, which slightly favors whichever domino orientation goes first.
 
 ## Engines & current best play
 

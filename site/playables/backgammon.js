@@ -13,6 +13,8 @@ export function create(canvas) {
   canvas.width = size;
   canvas.height = 320;
   const W = canvas.width, H = canvas.height;
+  const dpr = window.devicePixelRatio || 1;
+  if (dpr > 1) { canvas.style.width = W + 'px'; canvas.style.height = H + 'px'; canvas.width = W * dpr; canvas.height = H * dpr; ctx.scale(dpr, dpr); }
   const statusEl = document.getElementById("playable-status");
 
   // points[0..23]: array of integer (positive = white count, negative = black count)

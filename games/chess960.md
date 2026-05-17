@@ -1,6 +1,6 @@
 # Chess960
 
-> Chess with randomised back-rank setup (960 starting positions) — unsolved.
+> Chess with a random starting position (960 possible setups). Unsolved.
 
 | Field | Value |
 |-------|-------|
@@ -19,24 +19,18 @@
 
 ## Description
 
-Chess960 (Bobby Fischer, 1996) keeps every rule of chess intact but randomises
-the back-rank pieces among the **960** legal starting positions (bishops on
-opposite colours, king between the rooks). The goal is to defeat memorised
-opening theory.
+Chess960 (by Bobby Fischer, 1996) keeps all the rules of regular chess but
+randomizes the starting position of the back-row pieces. There are **960**
+legal starting positions (bishops must start on opposite colors, king must
+start between the rooks). The goal is to make memorized opening sequences
+useless, so players must think from move one.
 
 ## Rules
 
-1. Before play begins one of the 960 valid starting positions is chosen (the
-   pawns always occupy the 2nd/7th ranks, the king lies between the rooks, and
-   the two bishops sit on opposite colours).
-2. Both players start with mirrored back ranks. After setup, play proceeds
-   exactly as in orthodox chess.
-3. **Castling** is generalised: the king and chosen rook end on the standard
-   castled squares (c1/g1 or c8/g8 for king; d1/f1 or d8/f8 for rook),
-   irrespective of their starting files; all squares the king passes through
-   must be safe and unoccupied save for the castling rook.
-4. All other rules — pawn double-step, en passant, promotion, stalemate, 50-move
-   rule — are unchanged.
+1. Before the game starts, one of the 960 valid starting setups is chosen. Pawns always start on the 2nd and 7th rows. The king must be between the two rooks, and the two bishops must sit on opposite colors.
+2. Both players start with the same setup (mirrored). After setup, the game plays exactly like regular chess.
+3. **Castling** works differently: no matter where the king and rook started, they end up on the standard castling squares (c1/g1 or c8/g8 for the king; d1/f1 or d8/f8 for the rook). All squares the king passes through must be safe and empty (except for the rook).
+4. All other rules — pawn double-step, en passant, promotion, stalemate, the 50-move rule — stay the same as regular chess.
 
 ## Solution status
 
@@ -45,11 +39,11 @@ problem and engines play the game very strongly.
 
 ## Consensus on optimal play
 
-- **Standard chess middlegame and endgame principles apply fully** — piece activity, king safety, pawn structure, and endgame technique carry over unchanged from orthodox chess; Chess960 only randomises the opening, not the underlying strategy.
-- **Develop toward the centre quickly regardless of starting position** — without memorised opening theory to lean on, moving central pawns and developing minor pieces to active squares is even more important; reactive, passive development is more easily punished.
-- **Understand castling rights before committing king or rook** — Chess960 castling rules can be counter-intuitive (e.g., a rook starting on g1 still castles to f1); confirm which pieces must stay in place before making commitments that forfeit castling.
-- **Use engine analysis per starting position** — Stockfish, Leela Chess Zero, and Fairy-Stockfish all handle Chess960 natively; analysing your specific starting position beforehand gives opening guidance that substitutes for memorised theory.
-- **Symmetric starts tend toward equality; asymmetric starts may offer sharper imbalances** — engine evaluation of the 960 positions shows most are roughly balanced but a few starting configurations give one side structurally superior piece placement; knowing which regime you are in calibrates risk tolerance.
+- **Standard chess strategy still applies after the opening** — piece activity, king safety, pawn structure, and endgame technique all work the same way. Chess960 only randomizes the opening, not the underlying strategy.
+- **Develop toward the center quickly** — without memorized opening theory to rely on, moving center pawns and getting your pieces to active squares is even more important. Passive play is punished more easily.
+- **Know your castling rules before moving king or rook** — Chess960 castling can be confusing (for example, a rook that started on g1 still ends up on f1 after castling). Check which pieces must stay in place before you commit to moves that might lose castling rights.
+- **Use engine analysis for your specific starting position** — chess engines handle Chess960 natively. Analyzing your particular starting position beforehand can guide your opening moves.
+- **Some starting positions are more balanced than others** — most of the 960 positions are roughly equal, but a few give one side a structural advantage. Knowing which type you have helps you decide how risky to play.
 
 ## Engines & current best play
 

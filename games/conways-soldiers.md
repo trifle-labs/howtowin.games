@@ -1,7 +1,6 @@
 # Conway's Soldiers
 
-> A one-player peg puzzle with a beautiful impossibility proof: you can reach
-> the fourth row, but never the fifth.
+> A one-player peg puzzle with a beautiful proof: you can reach the fourth row, but never the fifth.
 
 | Field | Value |
 |-------|-------|
@@ -20,11 +19,12 @@
 
 ## Description
 
-On an infinite checkerboard, a horizontal line divides it into a "lower" half
-(filled with as many soldiers as you like) and an empty "upper" half. Soldiers
-move only by peg-solitaire jumps — horizontally or vertically over an adjacent
-soldier into an empty cell, removing the jumped soldier. The goal is to advance
-a soldier as far up into the empty half as possible.
+On an endless checkerboard, a horizontal line divides it into a "lower" half
+(where you can place as many soldiers as you like) and an empty "upper" half.
+Soldiers move only by jumping like in peg solitaire — horizontally or
+vertically over a neighboring soldier into an empty cell, removing the soldier
+you jumped over. The goal is to move a soldier as far up into the empty half
+as possible.
 
 ## Solution status
 
@@ -43,11 +43,11 @@ reachable — but the standard puzzle is completely settled.)
 
 ## Consensus on optimal play
 
-- **Row 4 is the maximum reachable row; attempting row 5 is provably futile** — no matter how many soldiers you start with or which sequence of jumps you make, row 5 above the line is unreachable; do not waste time searching for a clever configuration.
-- **Use the potential-function argument to check any candidate construction** — assign each cell weight φ^(−r) where r is the vertical distance from the target row; any valid jump sequence preserves total weight exactly; if your starting configuration's weight is less than 1, reaching that target is impossible.
-- **For row 4 (our row 0): the minimum known construction requires exactly 20 soldiers in a 3‑5‑7‑5 diamond** — this is the established optimal pattern. The exact solution requires 19 jumps (only 10 moves if consecutive jumps by the same soldier are grouped). This specific sequence is known but non‑obvious — the playable solver uses beam search and generally reaches row 1 (three above the line) but may not find the full 19‑jump solution automatically.
-- **For rows 1–3: constructions are much smaller and straightforward** — small symmetric formations bring a soldier up 1, 2, or 3 rows respectively; these are tractable and well-documented in the references.
-- **Diagonal-jump variants change the reachability threshold** — if diagonal jumps are allowed, different rows become reachable; the classical result applies only to the standard orthogonal-jump rule.
+- **Row 4 is as far as you can go; row 5 is proven impossible** — no matter how many soldiers you start with or what sequence of jumps you try, you can never reach row 5 above the line. Do not waste time looking for a clever setup that reaches row 5.
+- **Use the potential function to check if a target row is possible** — each cell has a weight that gets smaller the farther it is from the target row. If the total weight of your starting soldiers is less than 1, reaching that target is impossible. Any valid jump keeps the total weight the same.
+- **For row 4: the smallest known setup uses exactly 20 soldiers in a 3-5-7-5 diamond shape** — this is the known optimal pattern. Solving it takes 19 jumps (10 moves if you group consecutive jumps by the same soldier). This sequence is known but not obvious.
+- **For rows 1-3: much smaller setups work** — small, symmetrical formations can bring a soldier up 1, 2, or 3 rows. These are straightforward and well-documented.
+- **If diagonal jumps are allowed, the reachable rows change** — the classic result only applies to the standard up/down/left/right jump rule.
 
 ## Engines & current best play
 

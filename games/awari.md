@@ -1,7 +1,6 @@
 # Awari (Oware)
 
-> The classic two-row mancala — strongly solved in 2002, every one of its
-> ~900 billion positions catalogued.
+> The classic two-row mancala game. Every one of its ~900 billion positions was solved in 2002.
 
 | Field | Value |
 |-------|-------|
@@ -20,11 +19,13 @@
 
 ## Description
 
-Played on two rows of six pits, with 48 seeds (4 per pit at the start). On a
-turn a player picks up all seeds from one of their pits and **sows** them one
-per pit, counter-clockwise. If the last seed lands in an enemy pit bringing it
-to 2 or 3 seeds, those are captured (and possibly preceding pits too). The
-player capturing more than 24 seeds wins.
+Awari is played on a board with two rows of six pits (holes) and 48 seeds
+total (4 seeds in each pit at the start). On your turn, you pick up all the
+seeds from one of your pits and **sow** them one by one into each following
+pit going counter-clockwise. If the last seed lands in an enemy pit and makes
+that pit hold exactly 2 or 3 seeds, you capture those seeds (and possibly the
+seeds in the pits before it too). The player who captures more than 24 seeds
+wins.
 
 ## Solution status
 
@@ -42,11 +43,11 @@ completely.
 
 ## Consensus on optimal play
 
-- **Both sides capturing exactly 24 seeds is the perfect-play outcome** — every deviation from the drawn line eventually hands the opponent a material edge; the value is 24-24 with best play.
-- **Deny grand slams** — a move that would leave the opponent with no seeds on their side is illegal if the opponent has no seeds; under legal-play rules, plan ahead to avoid giving your opponent no valid pits to sow from, which forfeits your capture rights.
-- **Count seeds before sowing** — the exact landing pit of the last seed determines captures; precise arithmetic about pit counts (especially pits holding 12+ seeds that wrap the whole board) separates strong from weak play.
-- **Capture chains compound** — a sow can trigger a cascade of captures in preceding pits if each of those pits also holds exactly 2 or 3 seeds after the final seed lands; spotting multi-pit capture chains is a core tactical skill.
-- **Preserve your own pit count** — keeping seeds spread across your pits maintains future flexibility; having one or two fat pits is predictable and allows your opponent to count your landing squares accurately.
+- **Perfect play leads to a 24-24 tie** — if both players play perfectly, each captures exactly 24 seeds. Any mistake lets the opponent pull ahead.
+- **Avoid leaving your opponent with no seeds** — a move that would leave the opponent with no seeds on their side is not allowed. Plan ahead so you don't give your opponent no pits to play from, which costs you capture chances.
+- **Count seeds before you sow** — where the last seed lands decides what you capture. Doing the math on pit counts (especially pits with 12 or more seeds that wrap all the way around) is what separates strong from weak players.
+- **Look for capture chains** — when you sow, you might trigger a chain of captures in several pits, as long as each one has exactly 2 or 3 seeds after your last seed lands. Spotting these multi-pit chains is a key skill.
+- **Keep your seeds spread out** — keeping seeds spread across your pits gives you more options later. Having one or two fat pits makes you predictable and lets the opponent count your landing spots easily.
 
 ## Engines & current best play
 

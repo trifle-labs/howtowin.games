@@ -1,7 +1,6 @@
 # Checkers (English draughts)
 
-> The most complex game ever weakly solved — eighteen years of computation
-> ending in a single word: draw.
+> The most complex game ever solved. After 18 years of computation, the answer is one word: draw.
 
 | Field | Value |
 |-------|-------|
@@ -20,9 +19,12 @@
 
 ## Description
 
-Played on the 32 dark squares of an 8×8 board, 12 pieces per side. Men move and
-capture diagonally forward; captures are **compulsory**; reaching the far rank
-makes a king, which moves and captures diagonally in any direction.
+Played on the 32 dark squares of an 8×8 board, with 12 pieces per side. Regular
+pieces (called "men") move one square forward diagonally and capture by jumping
+over enemy pieces diagonally forward. Captures are **required** — if you can
+capture, you must. When a man reaches the opponent's back row, it becomes a
+king, which can move and capture diagonally in any direction (forward or
+backward).
 
 ## Solution status
 
@@ -44,12 +46,12 @@ even in principle, be beaten.
 
 ## Consensus on optimal play
 
-- **Hold the centre** — central squares (especially the "dog hole" squares d4/e5) control more diagonal lines than edge squares; a piece in the centre limits the opponent's manoeuvre options significantly.
-- **Maintain piece count parity; compulsory captures can be traps** — because all captures are mandatory, setting up a multi-jump sequence where you sacrifice one piece to capture two is a standard tactic; always check whether your intended move exposes you to a forced recapture chain.
-- **Promote kings without losing the back row** — a king is far stronger than a man; race to promote while keeping enough back-rank men to prevent opponent promotions; letting the opponent king up freely loses quickly.
-- **King mobility dominates endgames** — in king vs. king endings, the player whose king can reach the centre diagonal faster usually wins; triangulation (wasting moves to put the opponent in zugzwang) is a key technique.
-- **Avoid the "single-corner" trap** — a common tactical motif is forcing the opponent's king into a corner where it can only oscillate between two squares while your pieces tighten the net; recognise this pattern both to execute and to escape it.
-- **Draw technique: 3-2 or 2-1 king endings** — with correct play by the defender, many king-heavy endings are draws by repeated position; knowing the exact drawing moves in these endings avoids needless losses.
+- **Control the center** — central squares (especially the "dog hole" squares d4 and e5) give you more diagonal options than edge squares. A piece in the center limits the opponent's movement.
+- **Keep piece count even; forced captures can be traps** — since captures are required, setting up a multi-jump where you sacrifice one piece to take two is a standard trick. Always check if your move leaves you open to a forced chain of captures.
+- **Get kings without giving up your back row** — a king is much stronger than a regular piece. Race to promote while keeping enough men on your back row to stop the opponent from promoting. Letting the opponent get a king for free loses quickly.
+- **King movement decides endgames** — when only kings are left, whoever can reach the center diagonal faster usually wins. Using moves that force the opponent into a bad position is a key technique.
+- **Watch for the "single-corner" trap** — a common trick is forcing the opponent's king into a corner where it can only move back and forth between two squares while your pieces close in. Learn to spot this pattern both to use it and to escape it.
+- **Know your drawing techniques: 3-2 and 2-1 king endings** — with correct defense, many king-heavy endings are draws through repeated positions. Knowing the exact drawing moves in these endings prevents unnecessary losses.
 
 ## Engines & current best play
 

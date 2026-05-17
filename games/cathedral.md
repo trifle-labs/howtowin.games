@@ -1,6 +1,6 @@
 # Cathedral
 
-> A medieval-themed area-control game with polyominoes — unsolved.
+> A medieval-themed board game where you place building-shaped pieces and surround enemy buildings. Unsolved.
 
 | Field | Value |
 |-------|-------|
@@ -18,25 +18,19 @@
 
 ## Description
 
-Cathedral (Robert P. Moore, 1962) is a polyomino-placement game on a 10×10
-board: each player places a fixed set of differently-shaped building pieces;
-surrounding an opposing piece on all sides removes it from the board. The
-player with the fewer remaining un-played pieces wins.
+Cathedral (by Robert P. Moore, 1962) is a game where you place differently
+shaped building pieces on a 10×10 board. Each player has a fixed set of pieces.
+If you surround an enemy piece on all sides (with your pieces or the board
+edge), it is removed and returned to its owner. The player with fewer unplayed
+pieces (by point value) at the end wins.
 
 ## Rules
 
-1. Board: 10×10 grid, initially empty except for the neutral **Cathedral** piece
-   (a fixed polyomino).
-2. Each player has a fixed inventory of buildings, each a different polyomino
-   shape and orientation.
-3. The starting player places the Cathedral, then players alternate placing one
-   of their buildings on the board. Pieces may rotate but not overlap.
-4. Once each player has placed at least one piece, **enclosing rule**: if a
-   single small area is entirely bounded by one player's pieces (and/or the
-   board edge), any opposing pieces fully inside that area are removed and
-   returned to their owner.
-5. A player who cannot make a legal placement passes. When both players pass
-   consecutively, the player with the fewer points of unplayed pieces wins.
+1. Board: a 10×10 grid. It starts empty except for the neutral **Cathedral** piece (a fixed shape that belongs to neither player).
+2. Each player has a fixed set of buildings, each with a different shape. Pieces can be rotated but cannot overlap.
+3. The starting player places the Cathedral. Then players take turns placing one of their buildings on the board.
+4. Once both players have placed at least one piece, the **enclosing rule** kicks in: if a small area is completely surrounded by one player's pieces (and/or the board edge), any enemy pieces fully inside that area are removed and given back to their owner.
+5. If you cannot make a legal placement, you pass. When both players pass one after another, the player with fewer points worth of unplaced pieces wins.
 
 ## Solution status
 
@@ -45,11 +39,11 @@ the branching factor enormous; engines exist but no formal solving result.
 
 ## Consensus on optimal play
 
-- **Place the Cathedral near the centre to contest territory from both sides** — the Cathedral is neutral and placed first; a central placement denies both players optimal anchor squares while a corner placement largely wastes it as a shared border piece.
-- **Use large pieces early, small pieces to fill gaps late** — large polyominoes require contiguous open space; placing them when the board is open gives more placement options. Small pieces can fill awkward spaces later.
-- **Try to form enclosed regions quickly** — a closed region owned by you removes any opponent pieces inside it; regions that close with 4–6 squares can capture significant opponent pieces and simultaneously deny that space.
-- **Deny your opponent enclosing opportunities** — avoid clustering your pieces in a concave arrangement that the opponent can cap with a single piece to form a closed region around your buildings.
-- **Count unplayed piece-points, not placed pieces** — the winning condition is *fewer points of unplayed pieces remaining*, so deliberately placing high-value pieces (large buildings) early reduces your score even if you cannot create a great enclosure from them.
+- **Place the Cathedral near the center** — the Cathedral is neutral and is placed first. A central placement denies both players the best anchor spots, while putting it in a corner wastes it.
+- **Use large pieces early, small pieces to fill gaps later** — big pieces need open space. Place them when the board is still empty. Small pieces can fill odd-shaped gaps later.
+- **Try to surround areas quickly** — an enclosed area you own removes any enemy pieces inside it. Areas that close with 4-6 squares can capture important opponent pieces and also deny that space.
+- **Stop the opponent from surrounding you** — don't cluster your pieces in a U shape that the opponent can close off with a single piece, trapping your buildings inside.
+- **Track your unplaced piece points, not what's on the board** — you win by having fewer points of *unplaced* pieces. Placing high-value (large) pieces early helps your score even if they don't surround anything useful.
 
 ## Engines & current best play
 

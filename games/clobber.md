@@ -1,7 +1,6 @@
 # Clobber
 
-> A young partisan game (2001) of capturing adjacent enemy stones; rich in CGT
-> theory, solved only for small boards.
+> A game where you move your stones onto neighboring enemy stones to capture them. Rich in math theory, but only solved on small boards.
 
 | Field | Value |
 |-------|-------|
@@ -20,10 +19,11 @@
 
 ## Description
 
-Played on a grid initially filled in a checkerboard pattern of black and white
-stones. On a turn a player moves one of **their own** stones onto an
-**orthogonally adjacent enemy** stone, removing ("clobbering") that enemy stone.
-A player unable to move loses ([normal play](../lexicon/README.md#normal-play-convention)).
+Played on a grid that starts filled with black and white stones in a
+checkerboard pattern. On your turn, you move one of **your own** stones onto a
+**neighboring enemy** stone (up, down, left, or right — not diagonally),
+removing ("clobbering") that enemy stone. The player who cannot make a legal
+move loses.
 
 ## Solution status
 
@@ -38,11 +38,11 @@ general theory giving every position's value.
 
 ## Consensus on optimal play
 
-- **Preserve mobility while reducing the opponent's** — each capture removes an enemy stone and moves one of yours; the endgame is a race to leave the opponent with no adjacent enemy to move onto; prioritise captures that give you future move options while stranding opponent clusters.
-- **Identify components early** — the board typically fragments into regions of alternating stones; each isolated component has a CGT value that can be computed independently; the game value is the sum of component values, so compute these before deciding where to play.
-- **Play in the hottest component first** — CGT temperature tells you how much it is worth to move in a given component; always play in the highest-temperature component to maximise your gain.
-- **Value zero-temperature components as "free moves" for the opponent** — a component with value 0 is a second-player win in isolation; leaving such a component undisturbed while playing elsewhere often lets you steer the sum toward a winning value.
-- **Avoid creating isolated singleton stones** — a stone with no adjacent enemy cannot be moved; creating such orphans prematurely reduces your move count and risks losing by immobility.
+- **Keep your options open while limiting the opponent's** — each capture removes an enemy stone and moves one of yours. The endgame is a race to leave the opponent with no neighboring enemy to move onto. Prioritize captures that give you future moves while leaving the opponent stranded.
+- **Spot the separate regions early** — the board usually breaks into separate areas of alternating stones. Each area has a game value you can figure out on its own. The total game value is the sum of all areas, so figure these out before deciding where to play.
+- **Play in the "hottest" area first** — the "temperature" of an area tells you how much you gain by moving there. Always play in the highest-temperature area to maximize your advantage.
+- **Treat zero-temperature areas as free moves for the opponent** — an area with value 0 is a second-player win on its own. Leaving it alone while playing elsewhere often helps you steer the overall game toward a win.
+- **Avoid creating lone stones** — a stone with no neighboring enemy cannot move. Creating such stranded stones early reduces your move count and risks losing because you cannot move.
 
 ## Engines & current best play
 

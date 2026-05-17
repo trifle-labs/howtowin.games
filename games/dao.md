@@ -1,6 +1,6 @@
 # Dao
 
-> 4×4 line-and-corner movement game — solved by exhaustive search.
+> A 4×4 board game where stones slide to the edge. Solved by exhaustive search.
 
 | Field | Value |
 |-------|-------|
@@ -19,25 +19,20 @@
 
 ## Description
 
-Dao (Ben van Buskirk, 1999) is a 4×4 abstract game in which each player has
-4 stones and tries to achieve any of three winning patterns. The board is
-small enough to be fully analysed.
+Dao (by Ben van Buskirk, 1999) is a 4×4 abstract game where each player has 4
+stones and tries to create any of three winning patterns. The board is small
+enough to be fully analyzed by computer.
 
 ## Rules
 
-1. Board: 4×4 grid; each player has 4 stones placed in opposite corners
-   (one player's at a1, b2, a3, b4 — the other in a mirrored arrangement;
-   **[verify]** the canonical starting layout).
-2. On a turn the player picks one of their stones and **slides** it in any
-   of the eight directions as far as it can go before hitting an edge or
-   another piece (cannot stop short).
-3. Stones never capture; the board content shifts but never decreases.
-4. A player wins immediately by achieving any of:
+1. Board: a 4×4 grid. Each player has 4 stones placed in opposite corners (one player starts at a1, b2, a3, b4 — the other is mirrored).
+2. On your turn, you pick one of your stones and **slide** it in any of the eight directions as far as it can go until it hits the edge of the board or another piece. You cannot stop short.
+3. Stones never capture. The pieces on the board shift around but never leave.
+4. A player wins right away by making any of these patterns:
    - All 4 stones in one row, column, or diagonal.
-   - All 4 stones occupying the four corners.
-   - All 4 stones occupying a 2×2 square.
-   - All 4 stones surrounding a single opposing stone (a 2×2 enclosure rule
-     — varies by variant).
+   - All 4 stones on the four corners.
+   - All 4 stones in a 2×2 square.
+   - All 4 stones surrounding a single enemy stone (this one varies by version).
 
 ## Solution status
 
@@ -47,11 +42,11 @@ on the abstract-games mailing list around 2002 suggest a first-player win.
 
 ## Consensus on optimal play
 
-- **Work toward multiple winning threats simultaneously** — Dao has three different winning configurations (line/diagonal, four corners, 2×2 square); threatening two different configurations at once forces the opponent to defend both, which is usually impossible on the tiny 4×4 board.
-- **Stones slide to the edge — plan the endpoint, not the path** — a stone in an unobstructed line always slides to the board edge; before moving, trace exactly where each stone will land and which patterns become threatened or blocked by that landing square.
-- **The 2×2 winning cluster is easiest to threaten covertly** — a 2×2 square can form in any of nine positions on the board; grouping your stones centrally gives the most potential 2×2 formations and makes your intent hardest to read.
-- **Opponent blocking is mutual** — your own stones block your opponent's slides and vice versa; placing a stone as a blocker that simultaneously threatens a pattern of yours is the most efficient use of a turn.
-- **The four-corners pattern is hardest to block** — the opponent must keep pieces off all four corners to prevent this; threatening corners forces the opponent to occupy them, which constrains their own pattern formation.
+- **Work toward multiple winning patterns at once** — Dao has three winning patterns (line/diagonal, four corners, 2×2 square). Threatening two different patterns at once forces the opponent to defend both, which is usually impossible on the tiny 4×4 board.
+- **Stones slide to the edge — plan where they end up, not how they get there** — a stone with nothing in its way always slides to the board edge. Before you move, trace exactly where each stone will land and which patterns get created or blocked by that landing spot.
+- **The 2×2 square is the easiest threat to hide** — a 2×2 square can form in nine different positions on the board. Grouping your stones in the center gives you the most possible 2×2 formations and makes your plan hardest to read.
+- **Your stones block the opponent too** — your own stones block the opponent's slides and vice versa. Placing a stone that both blocks the opponent and threatens one of your own patterns is the best use of a turn.
+- **The four-corners pattern is hardest to block** — to stop it, the opponent must keep pieces off all four corners. Threatening the corners forces the opponent to occupy them, which limits their own pattern options.
 
 ## Engines & current best play
 
