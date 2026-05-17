@@ -171,5 +171,13 @@ export function create(canvas) {
       won = false;
       draw();
     },
+    solve() {
+      if (won) return;
+      for (let r = 0; r < n; r++)
+        for (let c = 0; c < n; c++)
+          cells[r][c] = solution[r][c] ? 1 : 0;
+      won = true;
+      draw();
+    },
   };
 }

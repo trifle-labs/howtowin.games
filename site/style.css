@@ -240,7 +240,49 @@ a:hover { text-decoration: underline; }
   font-size: 0.8rem;
 }
 #playable-restart:hover { background: var(--card-hover); }
+#playable-solve { display: inline; background: none; border: 1px solid var(--border); border-radius: 4px; padding: 0.2rem 0.5rem; color: var(--fg-soft); cursor: pointer; font-family: inherit; font-size: 0.8rem; }
+#playable-solve:hover { background: var(--card-hover); border-color: var(--accent); color: var(--accent); }
+#playable-solve.hidden { display: none; }
 #playable-status { color: var(--fg-muted); font-size: 0.8rem; }
+.playable-hint {
+  text-align: center;
+  color: var(--fg-muted);
+  font-size: 0.78rem;
+  margin-top: 0.35rem;
+  font-style: italic;
+}
+.playable-seed-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+  font-size: 0.78rem;
+  color: var(--fg-muted);
+}
+.playable-seed-row.hidden { display: none; }
+#playable-seed {
+  width: 90px;
+  padding: 0.15rem 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-family: inherit;
+  color: var(--fg-soft);
+  background: var(--bg);
+}
+#playable-seed:focus { outline: none; border-color: var(--accent); }
+#playable-new-game {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.15rem 0.5rem;
+  color: var(--fg-soft);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.78rem;
+}
+#playable-new-game:hover { background: var(--card-hover); }
 .detail-header {
   display: flex;
   align-items: center;
@@ -328,6 +370,24 @@ a:hover { text-decoration: underline; }
   font-weight: 600;
 }
 .detail-body p { margin: 0.6rem 0; }
+
+.detail-summary {
+  margin: 1rem 0;
+}
+.detail-summary table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+.detail-summary th, .detail-summary td {
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--border);
+  text-align: left;
+}
+.detail-summary th {
+  background: var(--card);
+  font-weight: 600;
+}
 
 /* ── filter bar ──────────────────────────────────── */
 

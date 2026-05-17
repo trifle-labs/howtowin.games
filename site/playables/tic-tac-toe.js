@@ -12,6 +12,7 @@ export function create(canvas) {
   let turn = "X";
   let winner = null;
   let statusEl = document.getElementById("playable-status");
+  let __solveCount = 0;
 
   function draw() {
     ctx.clearRect(0, 0, size, size);
@@ -82,6 +83,39 @@ export function create(canvas) {
     draw();
   }
 
+  function minimax(b, isMax) {
+    // Returns score from perspective of X (maximizing)
+    const w = (() => {
+      const lines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+      for (const [p,q,r] of lines) {
+        if (b[p] && b[p] === b[q] && b[p] === b[r]) return b[p] === "X" ? 10 : -10;
+      }
+      return b.every(v => v !== null) ? 0 : null;
+    })();
+    if (w !== null) return w;
+    let best = isMax ? -Infinity : Infinity;
+    for (let i = 0; i < 9; i++) {
+      if (b[i] !== null) continue;
+      b[i] = isMax ? "X" : "O";
+      const score = minimax(b, !isMax);
+      b[i] = null;
+      best = isMax ? Math.max(best, score) : Math.min(best, score);
+    }
+    return best;
+  }
+
+  function bestMove() {
+    let bestIdx = -1, bestScore = Infinity;
+    for (let i = 0; i < 9; i++) {
+      if (board[i] !== null) continue;
+      board[i] = "O";
+      const score = minimax(board, true);
+      board[i] = null;
+      if (score < bestScore) { bestScore = score; bestIdx = i; }
+    }
+    return bestIdx;
+  }
+
   canvas.addEventListener("click", handleClick);
 
   draw();
@@ -95,6 +129,32 @@ export function create(canvas) {
       board = Array(9).fill(null);
       turn = "X";
       winner = null;
+      __solveCount = 0;
+      draw();
+    },
+    solve() {
+      if (winner) return;
+      __solveCount++;
+      if (__solveCount > 50) {
+        winner = "draw";
+        statusEl.textContent = "draw — game length capped";
+        return;
+      }
+      // Play one move for the current turn (X = random, O = bestMove)
+      const empties = board.map((v, i) => v === null ? i : -1).filter(i => i >= 0);
+      if (!empties.length) return;
+      if (turn === "X") {
+        const idx = empties[Math.floor(Math.random() * empties.length)];
+        board[idx] = "X";
+        winner = checkWinner();
+        if (!winner) turn = "O";
+      } else {
+        const idx = bestMove();
+        if (idx < 0) return;
+        board[idx] = "O";
+        winner = checkWinner();
+        if (!winner) turn = "X";
+      }
       draw();
     }
   };

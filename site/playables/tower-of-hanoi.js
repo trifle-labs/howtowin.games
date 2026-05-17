@@ -8,7 +8,7 @@ export function create(canvas) {
   canvas.height = size;
 
   const n = 4, pegs = [[], [], []];
-  let selected = null, moves = 0, won = false;
+  let selected = null, moves = 0, won = false, solveTimer = null;
   const statusEl = document.getElementById("playable-status");
 
   // Initialize: all disks on peg 0
@@ -78,13 +78,51 @@ export function create(canvas) {
   return {
     destroy() {
       canvas.removeEventListener("click", handleClick);
+      if (solveTimer) { clearInterval(solveTimer); solveTimer = null; }
       ctx.clearRect(0, 0, size, size);
     },
     restart() {
+      if (solveTimer) { clearInterval(solveTimer); solveTimer = null; }
       pegs[0].length = 0; pegs[1].length = 0; pegs[2].length = 0;
       for (let i = n; i > 0; i--) pegs[0].push(i);
       selected = null; moves = 0; won = false;
       draw();
+    },
+    solve() {
+      if (won || solveTimer) return;
+      // Generate optimal solution sequence
+      const seq = [];
+      function gen(num, from, to, via) {
+        if (num === 0) return;
+        gen(num - 1, from, via, to);
+        seq.push({ from, to });
+        gen(num - 1, via, to, from);
+      }
+      // Count disks on each peg to determine current state
+      // For simplicity: if all disks are on peg 0, solve from scratch
+      // If some are on other pegs, solve from current state by moving everything to peg 2
+      // Actually, for a clean solve experience, restart and solve from initial state
+      // But better: solve from wherever the user has gotten to
+      // Let's just always solve from the initial state
+      pegs[0].length = 0; pegs[1].length = 0; pegs[2].length = 0;
+      for (let i = n; i > 0; i--) pegs[0].push(i);
+      selected = null; moves = 0; won = false;
+      gen(n, 0, 2, 1);
+      let i = 0;
+      solveTimer = setInterval(() => {
+        if (i >= seq.length) {
+          clearInterval(solveTimer);
+          solveTimer = null;
+          won = true;
+          draw();
+          return;
+        }
+        const { from, to } = seq[i];
+        pegs[to].push(pegs[from].pop());
+        moves++;
+        draw();
+        i++;
+      }, 350);
     }
   };
 }

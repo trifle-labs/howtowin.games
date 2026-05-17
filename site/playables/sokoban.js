@@ -121,6 +121,82 @@ export function create(canvas) {
     }
   }
 
+  // ── BFS solver ───────────────────────────────────────────
+  let solveTimer = null, solvePath = [];
+
+  function stateKey(b, pr, pc) {
+    let k = pr + "," + pc;
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) if (b[r][c] === 2) k += "," + r + "," + c;
+    return k;
+  }
+
+  function bfsSolve(b, pr, pc) {
+    const startKey = stateKey(b, pr, pc);
+    parent.clear();
+    parent.set(startKey, null);
+    const queue = [startKey];
+    let qIdx = 0;
+    while (qIdx < queue.length && qIdx < 200000) {
+      const cur = queue[qIdx++];
+      // Decode state
+      const parts = cur.split(",").map(Number);
+      const cr = parts[0], cc = parts[1];
+      const boxes = new Set();
+      for (let i = 2; i < parts.length; i += 2) boxes.add(parts[i] * cols + parts[i + 1]);
+      // Check solved
+      let solved = true;
+      for (const t of targets) if (!boxes.has(t)) { solved = false; break; }
+      if (solved) { return cur; }
+      for (const [dr, dc] of [[-1,0],[1,0],[0,-1],[0,1]]) {
+        const nr = cr + dr, nc = cc + dc;
+        if (nr < 0 || nr >= rows || nc < 0 || nc >= cols) continue;
+        if (b[nr][nc] === -1) continue;
+        const ni = nr * cols + nc;
+        if (boxes.has(ni)) {
+          // Push box
+          const br = nr + dr, bc = nc + dc;
+          if (br < 0 || br >= rows || bc < 0 || bc >= cols) continue;
+          if (b[br][bc] === -1) continue;
+          if (boxes.has(br * cols + bc)) continue;
+          // New boxes set
+          const newBoxes = new Set(boxes);
+          newBoxes.delete(ni);
+          newBoxes.add(br * cols + bc);
+          const sortedBoxes = [...newBoxes].sort((a, b) => a - b);
+          let nk = nr + "," + nc;
+          for (const bv of sortedBoxes) nk += "," + Math.floor(bv / cols) + "," + (bv % cols);
+          if (!parent.has(nk)) {
+            parent.set(nk, { from: cur, dr, dc });
+            queue.push(nk);
+          }
+        } else {
+          const nk = nr + "," + nc;
+          const parts = cur.split(",");
+          const rest = "," + parts.slice(2).join(",");
+          const fk = nk + rest;
+          if (!parent.has(fk)) {
+            parent.set(fk, { from: cur, dr, dc });
+            queue.push(fk);
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  function reconstructPath(endKey) {
+    const seq = [];
+    let cur = endKey;
+    while (parent.get(cur) !== null) {
+      const entry = parent.get(cur);
+      seq.unshift(entry);
+      cur = entry.from;
+    }
+    return seq;
+  }
+
+  const parent = new Map();
+
   // Focus canvas for keyboard
   canvas.setAttribute("tabindex", "0");
   canvas.addEventListener("keydown", handleKey);
@@ -132,9 +208,38 @@ export function create(canvas) {
   return {
     destroy() {
       canvas.removeEventListener("keydown", handleKey);
+      if (solveTimer) { clearInterval(solveTimer); solveTimer = null; }
       canvas.removeAttribute("tabindex");
       ctx.clearRect(0, 0, size, size);
     },
-    restart() { reset(); draw(); canvas.focus(); }
+    restart() {
+      if (solveTimer) { clearInterval(solveTimer); solveTimer = null; }
+      reset(); draw(); canvas.focus();
+    },
+    solve() {
+      if (won || solveTimer) return;
+      statusEl.textContent = "solving…";
+      draw();
+      setTimeout(() => {
+        parent.clear();
+        const endKey = bfsSolve(board, playerR, playerC);
+        if (!endKey) { draw(); statusEl.textContent = "no solution found"; return; }
+        const path = reconstructPath(endKey);
+        if (path.length === 0) { draw(); statusEl.textContent = "already solved?"; return; }
+        solvePath = path;
+        let i = 0;
+        solveTimer = setInterval(() => {
+          if (i >= solvePath.length) {
+            clearInterval(solveTimer);
+            solveTimer = null;
+            won = true;
+            draw();
+            return;
+          }
+          const step = solvePath[i++];
+          move(step.dr, step.dc);
+        }, 300);
+      }, 50);
+    }
   };
 }

@@ -99,18 +99,13 @@ export function create(canvas) {
       if (car.dir === 0 && dr === 0) {
         const dir = dc > 0 ? 1 : -1;
         if (canMove(car, 0, dir)) {
-          // Check all cells in the path are clear
           let clear = true;
-          const checkDir = dc > 0 ? 1 : -1;
-          for (let i = 1; i <= Math.abs(dc); i++) {
-            const nc = car.dir ? car.c : car.c + (checkDir > 0 ? car.len - 1 + i : -i);
-            const nr = car.dir ? car.r + (checkDir > 0 ? car.len - 1 + i : -i) : car.r;
-            if (nr >= 0 && nr < g && nc >= 0 && nc < g) {
-              if (gd[nr * g + nc] !== -1 && gd[nr * g + nc] !== car.id) { clear = false; break; }
-            }
+          const nc = dir > 0 ? car.c + car.len : car.c - 1;
+          if (nc >= 0 && nc < g) {
+            if (gd[car.r * g + nc] !== -1 && gd[car.r * g + nc] !== car.id) clear = false;
           }
           if (clear) {
-            if (checkDir > 0) { car.c += 1; moves++; if (car.id === 0 && car.c + car.len >= g) won = true; }
+            if (dir > 0) { car.c += 1; moves++; if (car.id === 0 && car.c + car.len >= g) won = true; }
             else { car.c -= 1; moves++; }
           }
         }
@@ -118,12 +113,9 @@ export function create(canvas) {
         const dir = dr > 0 ? 1 : -1;
         if (canMove(car, dir, 0)) {
           let clear = true;
-          for (let i = 1; i <= Math.abs(dr); i++) {
-            const nr = car.dir ? car.r + (dir > 0 ? car.len - 1 + i : -i) : car.r + (dir > 0 ? dir * i : -i);
-            const nc = car.dir ? car.c : car.c;
-            if (nr >= 0 && nr < g && nc >= 0 && nc < g) {
-              if (gd[nr * g + nc] !== -1 && gd[nr * g + nc] !== car.id) { clear = false; break; }
-            }
+          const nr = dir > 0 ? car.r + car.len : car.r - 1;
+          if (nr >= 0 && nr < g) {
+            if (gd[nr * g + car.c] !== -1 && gd[nr * g + car.c] !== car.id) clear = false;
           }
           if (clear) { car.r += dir > 0 ? 1 : -1; moves++; }
         }
@@ -136,11 +128,128 @@ export function create(canvas) {
     if (hit >= 0) { selected = hit; draw(); }
   }
 
+  // ── BFS solver ──────────────────────────────────────────────
+  let solveTimer = null;
+
+  function carStateKey(cars) {
+    return cars.map(c => c.r + "," + c.c).join(";");
+  }
+
+  function bfsSolve(startCars) {
+    const startKey = carStateKey(startCars);
+    const parent = new Map();
+    parent.set(startKey, null);
+    const queue = [startCars.map(c => ({ ...c }))];
+    let qIdx = 0;
+    const maxNodes = 500000;
+    const startTime = Date.now();
+
+    while (qIdx < queue.length && qIdx < maxNodes && Date.now() - startTime < 5000) {
+      const cur = queue[qIdx++];
+      // Check if red car can exit
+      const red = cur[0];
+      if (red.c + red.len >= g) {
+        // Reconstruct path
+        const path = [];
+        let ck = carStateKey(cur);
+        while (parent.get(ck) !== null) {
+          const entry = parent.get(ck);
+          path.unshift(entry);
+          ck = entry.fromKey;
+        }
+        return path;
+      }
+      // For each car, try all possible moves
+      for (let bi = 0; bi < cur.length; bi++) {
+        const car = cur[bi];
+        const dirs = car.dir === 0 ? [[0,-1],[0,1]] : [[-1,0],[1,0]];
+        for (const [dr, dc] of dirs) {
+          // Slide as far as possible in this direction
+          let steps = 0;
+          while (true) {
+            const nr = car.r + dr * (steps + 1);
+            const nc = car.c + dc * (steps + 1);
+            // Check bounds
+            if (car.dir === 0) {
+              if (nc < 0 || (bi === 0 && nc + car.len >= g + 1)) break;
+              // For non-red cars, check right bound
+              if (bi !== 0 && nc + car.len > g) break;
+            } else {
+              if (nr < 0 || nr + car.len > g) break;
+            }
+            // Check no overlap
+            let ok = true;
+            for (let i = 0; i < car.len; i++) {
+              const cr = car.dir ? nr + i : nr;
+              const cc = car.dir ? nc : nc + i;
+              if (bi === 0 && cr >= 0 && cr < g && cc >= g) { /* red car exiting */ continue; }
+              if (cr < 0 || cr >= g || cc < 0 || cc >= g) { ok = false; break; }
+              // Check other cars
+              for (let oj = 0; oj < cur.length; oj++) {
+                if (oj === bi) continue;
+                const oc = cur[oj];
+                for (let oi = 0; oi < oc.len; oi++) {
+                  const or2 = oc.dir ? oc.r + oi : oc.r;
+                  const oc2 = oc.dir ? oc.c : oc.c + oi;
+                  if (or2 === cr && oc2 === cc) { ok = false; break; }
+                }
+                if (!ok) break;
+              }
+              if (!ok) break;
+            }
+            if (!ok) break;
+            steps++;
+          }
+          if (steps === 0) continue;
+          // Apply the full slide as one BFS step (greedy: take the furthest valid move)
+          const newCars = cur.map(c => ({ ...c }));
+          newCars[bi].r += dr * steps;
+          newCars[bi].c += dc * steps;
+          const nk = carStateKey(newCars);
+          if (!parent.has(nk)) {
+            parent.set(nk, { fromKey: carStateKey(cur), blockId: bi, dr: dr * steps, dc: dc * steps });
+            queue.push(newCars);
+          }
+        }
+      }
+    }
+    return null;
+  }
+
   canvas.addEventListener("click", handleClick);
   draw();
 
   return {
-    destroy() { canvas.removeEventListener("click", handleClick); ctx.clearRect(0, 0, size, size); },
-    restart() { reset(); draw(); }
+    destroy() { canvas.removeEventListener("click", handleClick); if (solveTimer) { clearInterval(solveTimer); solveTimer = null; } ctx.clearRect(0, 0, size, size); },
+    restart() { reset(); draw(); },
+    solve() {
+      if (won || solveTimer) return;
+      statusEl.textContent = "solving…";
+      draw();
+      setTimeout(() => {
+        const path = bfsSolve(cars);
+        if (!path) { draw(); statusEl.textContent = "no solution found"; return; }
+        // Animate from current position
+        selected = null;
+        draw();
+        let i = 0;
+        solveTimer = setInterval(() => {
+          if (i >= path.length) {
+            clearInterval(solveTimer);
+            solveTimer = null;
+            won = true;
+            draw();
+            return;
+          }
+          const step = path[i];
+          const car = cars[step.blockId];
+          car.r += step.dr;
+          car.c += step.dc;
+          moves++;
+          draw();
+          i++;
+        }, 150);
+      }, 50);
+    }
   };
 }

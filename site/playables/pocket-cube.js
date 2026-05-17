@@ -6,30 +6,36 @@ export function create(canvas) {
   const size = Math.min(canvas.parentElement.clientWidth - 24, 340);
   canvas.width = size; canvas.height = size;
   const statusEl = document.getElementById("playable-status");
-  const gap = 4, cell = Math.floor((size - 40) / 6);
+  const gap = 4, cell = Math.floor((size - 5 * gap) / 8);
   const faceSz = cell * 2 + gap;
   const C = ["#fff","#f80","#6b4","#e44","#48a","#ff0"];
   const L = ["U","L","F","R","B","D"];
 
-  let st;
+  let st, scrambleSeq = [], solveSeq = null, solveIdx = 0;
   function initState() { st = []; for (let f = 0; f < 6; f++) for (let i = 0; i < 4; i++) st.push(f); }
 
   function twist(face, dir) {
-    // Absolute sticker index cycles — face itself (4) + adjacent ring (8)
+    // Face-orientation rules (mirrored from 3×3 rubiks-cube.js):
+    //   U: F top → R top → B bottom-rev → L top-rev
+    //   D: F bottom → L bottom-rev → B top → R bottom-rev
+    //   F: U bottom → R left-rev → D bottom-rev → L right
+    //   B: U top → L left → D top → R right-rev
+    //   L: U left → F left → D left → B right-rev
+    //   R: U right → B left-rev → D right → F right
     const cycles = {
-      0: [0,1,3,2, 4,5,8,9,12,13,16,17],
-      5: [20,21,23,22, 18,19,14,15,10,11,6,7],
-      2: [8,9,11,10, 2,3,13,15,22,23,4,6],
-      4: [16,17,19,18, 0,1,7,5,20,21,14,12],
-      1: [4,6,7,5, 0,2,8,10,20,18,16,14],
-      3: [12,14,15,13, 1,3,17,19,21,23,9,11],
+      0: [0,1,3,2, 8,9,12,13,19,18,5,4],
+      5: [20,21,23,22, 10,11,7,6,16,17,15,14],
+      2: [8,9,11,10, 2,3,14,12,23,22,5,7],
+      4: [16,17,19,18, 0,1,4,6,20,21,15,13],
+      1: [4,5,7,6, 0,2,8,10,20,22,19,17],
+      3: [12,13,15,14, 1,3,18,16,21,23,9,11],
     };
     const c = cycles[face]; const n = c.length; const t = [];
     for (let i = 0; i < n; i++) t.push(st[c[(i - dir + n) % n]]);
     for (let i = 0; i < n; i++) st[c[i]] = t[i];
   }
 
-  function init() { initState(); for (let i = 0; i < 10; i++) twist(Math.floor(Math.random() * 6), Math.random() < 0.5 ? 1 : -1); }
+  function init() { initState(); scrambleSeq = []; for (let i = 0; i < 10; i++) { const f = Math.floor(Math.random() * 6); const d = Math.random() < 0.5 ? 1 : -1; twist(f, d); scrambleSeq.push({face:f, dir:d}); } }
   init();
 
   const net = [[-1,-1,0,-1],[1,2,3,4],[-1,-1,5,-1]];
@@ -72,6 +78,17 @@ export function create(canvas) {
   canvas.addEventListener("click", handleClick); draw();
   return {
     destroy() { canvas.removeEventListener("click", handleClick); ctx.clearRect(0,0,size,size); },
-    restart() { init(); draw(); }
+    restart() { init(); solveSeq = null; solveIdx = 0; draw(); },
+    solve() {
+      const solved = st.every((v, i) => v === Math.floor(i / 4));
+      if (solved) { draw(); return; }
+      if (!solveSeq) { solveSeq = [...scrambleSeq].reverse(); solveIdx = 0; }
+      if (solveIdx < solveSeq.length) {
+        const m = solveSeq[solveIdx++];
+        twist(m.face, -m.dir);
+      }
+      if (solveIdx >= solveSeq.length) { solveSeq = null; }
+      draw();
+    }
   };
 }

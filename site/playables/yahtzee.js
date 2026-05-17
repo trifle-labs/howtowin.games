@@ -214,6 +214,45 @@ export function create(canvas) {
       canvas.removeEventListener("click", handleClick);
       ctx.clearRect(0, 0, size, size);
     },
-    restart() { reset(); }
+    restart() { reset(); },
+    solve() {
+      if (gameOver) return;
+      // Strategy: roll all dice first
+      if (rollCount === 0) {
+        held.fill(false);
+        roll();
+        draw();
+        return;
+      }
+      // Find the best available category
+      let bestCat = -1, bestScore = -1;
+      for (let i = 0; i < 6; i++) {
+        if (scores[i] !== null) continue;
+        const s = scoreForCategory(i);
+        if (s > bestScore) { bestScore = s; bestCat = i; }
+      }
+      // Hold dice matching the best category's face value
+      const face = bestCat + 1;
+      for (let i = 0; i < 5; i++) held[i] = dice[i] === face;
+      if (rollCount < 3) {
+        roll();
+        draw();
+        return;
+      }
+      // After 3 rolls, score in the best category
+      if (bestCat >= 0 && scores[bestCat] === null) {
+        scores[bestCat] = bestScore;
+        total += bestScore;
+        round++;
+        if (round < 6) {
+          dice.fill(0);
+          held.fill(false);
+          rollCount = 0;
+        } else {
+          gameOver = true;
+        }
+        draw();
+      }
+    }
   };
 }

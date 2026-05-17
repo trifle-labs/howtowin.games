@@ -13,7 +13,7 @@ export function create(canvas) {
   // Face orientations (row-major within each face, 0=top-left):
   // U: top layer, D: bottom, F: front, B: back, L: left, R: right
   // Sticker layout: face*9 + i, where i is row*3 + col, 4=center
-  let st;
+  let st, scrambleSeq = [], solveSeq = null, solveIdx = 0;
 
   function initState() { st = []; for (let f = 0; f < 6; f++) for (let i = 0; i < 9; i++) st.push(f); }
 
@@ -42,7 +42,7 @@ export function create(canvas) {
     for (let i = 0; i < n; i++) st[c[i]] = t[i];
   }
 
-  function init() { initState(); for (let i = 0; i < 20; i++) twist(Math.floor(Math.random() * 6), Math.random() < 0.5 ? 1 : -1); }
+  function init() { initState(); scrambleSeq = []; for (let i = 0; i < 20; i++) { const f = Math.floor(Math.random() * 6); const d = Math.random() < 0.5 ? 1 : -1; twist(f, d); scrambleSeq.push({face:f, dir:d}); } }
   init();
 
   const net = [[-1,-1,0,-1],[1,2,3,4],[-1,-1,5,-1]];
@@ -85,6 +85,17 @@ export function create(canvas) {
   canvas.addEventListener("click", handleClick); draw();
   return {
     destroy() { canvas.removeEventListener("click", handleClick); ctx.clearRect(0,0,size,size); },
-    restart() { init(); draw(); }
+    restart() { init(); solveSeq = null; solveIdx = 0; draw(); },
+    solve() {
+      const solved = st.every((v, i) => v === Math.floor(i / 9));
+      if (solved) { draw(); return; }
+      if (!solveSeq) { solveSeq = [...scrambleSeq].reverse(); solveIdx = 0; }
+      if (solveIdx < solveSeq.length) {
+        const m = solveSeq[solveIdx++];
+        twist(m.face, -m.dir);
+      }
+      if (solveIdx >= solveSeq.length) { solveSeq = null; }
+      draw();
+    }
   };
 }

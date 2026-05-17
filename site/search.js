@@ -68,8 +68,13 @@ function fmtInline(text) {
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
     .replace(/(?<!\w)\*(?!\*)(.+?)(?<!\*)\*(?!\w)/g, "<em>$1</em>")
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (m, t, u) => {
-      if (u.startsWith("games/") || u.startsWith("lexicon/")) return `<a href="#game/${u.replace(/\.md$/, "")}" class="game-link">${t}</a>`;
-      return `<a href="${u}" target="_blank" rel="noopener">${t}</a>`;
+      if (u.startsWith("http://") || u.startsWith("https://") || u.startsWith("mailto:"))
+        return `<a href="${u}" target="_blank" rel="noopener">${t}</a>`;
+      if (u.startsWith("#"))
+        return `<a href="${u}" class="local-anchor">${t}</a>`;
+      // Internal .md → unified game route (openGame handles multi-path resolution)
+      const clean = u.replace(/^\.\.\//, "").replace(/^\.\//, "").replace(/^games\//, "").replace(/\.md(?=#|$)/, "");
+      return `<a href="#game/${clean}" class="game-link">${t}</a>`;
     });
 }
 
@@ -79,11 +84,21 @@ function renderMd(text) {
   let paragraph = [];
   let inTable = false;
   let inList = false;
+  let inBlockquote = false;
+  let blockquoteBuf = [];
 
   function flushParagraph() {
     if (paragraph.length) {
       out.push(`<p>${paragraph.join(" ")}</p>`);
       paragraph = [];
+    }
+  }
+
+  function flushBlockquote() {
+    if (inBlockquote) {
+      out.push(`<blockquote>${blockquoteBuf.join(" ")}</blockquote>`);
+      blockquoteBuf = [];
+      inBlockquote = false;
     }
   }
 
@@ -108,6 +123,7 @@ function renderMd(text) {
       const cells = trimmed.split("|").slice(1, -1).map(c => c.trim());
       if (cells.every(c => /^:?-+:?$/.test(c))) continue;
       flushParagraph();
+      flushBlockquote();
       closeList();
       if (!inTable) { out.push("<table>"); inTable = true; }
       out.push("<tr>" + cells.map(c => `<td>${fmtInline(esc(c))}</td>`).join("") + "</tr>");
@@ -119,6 +135,7 @@ function renderMd(text) {
 
     if (/^---/.test(trimmed)) {
       flushParagraph();
+      flushBlockquote();
       closeList();
       out.push('<hr class="md-hr">');
       continue;
@@ -126,32 +143,49 @@ function renderMd(text) {
 
     if (!trimmed) {
       flushParagraph();
+      flushBlockquote();
       closeList();
     } else if (/^# /.test(trimmed)) {
       flushParagraph();
+      flushBlockquote();
       closeList();
     } else if (/^##+\s+/.test(trimmed)) {
       flushParagraph();
+      flushBlockquote();
       closeList();
-      out.push(`<h2>${line.replace(/^##+\s+/, "")}</h2>`);
+      const hText = line.replace(/^##+\s+/, "");
+      const hId = hText.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+      out.push(`<h2 id="${hId}">${hText}</h2>`);
     } else if (/^>\s+/.test(trimmed)) {
       flushParagraph();
       closeList();
-      out.push(`<blockquote>${line.replace(/^>\s+/, "")}</blockquote>`);
+      blockquoteBuf.push(line.replace(/^>\s+/, ""));
+      inBlockquote = true;
     } else if (/^[-*]\s/.test(trimmed)) {
       flushParagraph();
+      flushBlockquote();
       if (!inList) openList(false);
       out.push(`<li>${line.replace(/^[-*]\s+/, "")}</li>`);
     } else if (/^\d+[.)]\s/.test(trimmed)) {
       flushParagraph();
+      flushBlockquote();
       if (!inList) openList(true);
       out.push(`<li>${line.replace(/^\d+[.)]\s+/, "")}</li>`);
+    } else if (inList && trimmed) {
+      if (out.length) {
+        const last = out[out.length - 1];
+        if (last.endsWith('</li>')) {
+          out[out.length - 1] = last.slice(0, -5) + line + '</li>';
+        }
+      }
     } else {
+      flushBlockquote();
       closeList();
       paragraph.push(line);
     }
   }
   flushParagraph();
+  flushBlockquote();
   closeTable();
   closeList();
   return out.join("\n");
@@ -247,7 +281,10 @@ function gameItem(g) {
       const mlabel = m.solution_status?.length > 25
         ? m.solution_status.slice(0, 22) + "…"
         : m.solution_status || "Unknown";
-      return `<li><a href="#game/${m.slug}">${esc(m.title)}</a><span class="sol-badge ${mbc}">${esc(mlabel)}</span></li>`;
+      let mhtml = `<li><a href="#game/${m.slug}">${esc(m.title)}</a>`;
+      if (m.playable) mhtml += `<span class="playable-dot" title="playable demo">▶</span>`;
+      mhtml += `<span class="sol-badge ${mbc}">${esc(mlabel)}</span></li>`;
+      return mhtml;
     }).join("");
     html += `</ul>`;
   }
@@ -301,16 +338,19 @@ let currentPath = null;
 let currentPlayable = null;
 
 async function openGame(path, fromHash) {
-  // Normalize: strip .md
+  // Normalize: strip .md and extract anchor
   path = path.replace(/\.md$/, "");
+  let anchor = null;
+  const hashIdx = path.indexOf("#");
+  if (hashIdx >= 0) {
+    anchor = path.slice(hashIdx + 1);
+    path = path.slice(0, hashIdx);
+  }
 
   // Resolve to a file path for fetching
-  let filePath;
-  if (path.startsWith("games/") || path.startsWith("lexicon/")) {
-    filePath = path + ".md";
-  } else {
-    filePath = "games/" + path + ".md";
-  }
+  // Try games/ first (game entries), fall back to root (refs, etc.)
+  let filePath = "games/" + path + ".md";
+  let pagePath = path + ".md";
 
   if (!fromHash) navigate(`game/${path}`);
 
@@ -330,8 +370,15 @@ async function openGame(path, fromHash) {
       <canvas id="playable-canvas"></canvas>
       <div class="playable-controls">
         <button id="playable-restart">↺ restart</button>
+        <button id="playable-solve" class="hidden">⟳ solve</button>
         <span id="playable-status"></span>
       </div>
+      <div id="playable-seed-row" class="playable-seed-row hidden">
+        <label for="playable-seed">seed:</label>
+        <input id="playable-seed" type="text" maxlength="30" size="10" placeholder="random" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <button id="playable-new-game">new game</button>
+      </div>
+      <div id="playable-hint" class="playable-hint"></div>
     </div>
     <div class="detail-body"><p style="color:var(--fg-muted)">loading…</p></div>
   `;
@@ -344,17 +391,29 @@ async function openGame(path, fromHash) {
   currentPath = path;
 
   try {
-    const r = await fetch(filePath);
+    // Try games/ path first, fall back to root (references.md, etc.)
+    const cb = '?v=' + Date.now();
+    let r = await fetch(filePath + cb);
+    if (!r.ok) { r = await fetch(pagePath + cb); filePath = pagePath; }
     if (!r.ok) throw new Error(`${r.status}`);
     const md = await r.text();
     const title = md.split("\n")[0].replace(/^#\s*/, "") || path;
     $detail.querySelector(".detail-title").textContent = title;
     $detail.querySelector(".detail-body").innerHTML = renderMd(md);
 
-    // Check for playable implementation
+    // Move the summary table above the playable area so rules are visible alongside the game
     const playableMatch = md.match(/^\|\s*\*\*Playable\*\*\s*\|\s*(.+?)\s*\|/m);
     const playableSlug = playableMatch ? playableMatch[1].trim() : null;
     if (playableSlug && playableSlug !== "—" && playableSlug !== "N/A") {
+      const table = $detail.querySelector('.detail-body table');
+      if (table) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'detail-summary';
+        table.replaceWith(wrapper);
+        wrapper.appendChild(table);
+        const area = document.getElementById('playable-area');
+        area.parentNode.insertBefore(wrapper, area);
+      }
       loadPlayable(playableSlug);
     }
 
@@ -367,6 +426,22 @@ async function openGame(path, fromHash) {
         if (m) openGame(m[1], false);
       });
     });
+
+    // Wire local same-page anchors
+    $detail.querySelectorAll(".local-anchor").forEach(a => {
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        const id = a.getAttribute("href").slice(1);
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      });
+    });
+
+    // Scroll to anchor if present
+    if (anchor) {
+      const el = document.getElementById(anchor);
+      if (el) setTimeout(() => el.scrollIntoView({ behavior: "smooth" }), 100);
+    }
 
     window.scrollTo(0, 0);
   } catch (e) {
@@ -385,16 +460,198 @@ function hideDetail() {
 
 async function loadPlayable(slug) {
   try {
-    const mod = await import(`./playables/${slug}.js`);
+    const mod = await import(`./playables/${slug}.js?v=68`);
     const canvas = document.getElementById("playable-canvas");
     if (!canvas) return;
     const area = document.getElementById("playable-area");
     area.classList.remove("hidden");
     if (currentPlayable) currentPlayable.destroy();
+
+    // Set interaction hint for this game
+    const hint = document.getElementById("playable-hint");
+    const hints = {
+      "fifteen-puzzle": "click a tile next to the gap to slide it — press ⟳ solve for AI",
+      "pocket-cube": "click a face to twist it — press ⟳ solve for AI",
+      "rubiks-cube": "click a face to twist (Shift+click = CCW) — press ⟳ solve for AI",
+      "klondike-solitaire": "click stock to draw (or redeal); click a card to select — press ⟳ solve for AI",
+      "klotski": "click a block to select it, then click a direction to slide — press ⟳ solve for AI",
+      "lights-out": "click a light to toggle it and its neighbours — press ⟳ solve for AI",
+      "minesweeper": "click to reveal; Shift+click to flag a mine — press ⟳ solve for AI",
+      "peg-solitaire": "click a peg to select it — green dots show where you can jump — press ⟳ solve for AI",
+      "conways-soldiers": "click a peg to select it — green dots show where you can jump — press ⟳ solve for AI",
+      "sokoban": "arrow keys to move the worker; push all boxes onto targets — press ⟳ solve for AI",
+      "rush-hour": "click a car to select it, then a direction arrow to move — press ⟳ solve for AI",
+      "samegame": "click a group of 2 or more same-colour blocks to clear them — press ⟳ solve for AI",
+      "tower-of-hanoi": "click a peg to pick up the top disk; click another to drop it — press ⟳ solve for AI",
+      "tic-tac-toe": "click an empty cell to place X; press ⟳ solve to make O move",
+      "nonograms": "click to fill a cell; right-click (or Ctrl+click) to mark X — press ⟳ solve for AI",
+      "sudoku": "click a cell to select it, then type a number 1–9 — press ⟳ solve for AI",
+      "yahtzee": "click dice to hold them; click Roll to roll — press ⟳ solve for AI",
+      "nim": "click stones to mark how many to take from one heap — click again to confirm",
+      "wythoffs-game": "click stones in one heap (or both for a diagonal move) — press ⟳ solve for optimal play",
+      "hexapawn": "click your white pawn, then the highlighted target — press ⟳ solve to play perfectly",
+      "subtract-a-square": "click a −k² button to remove that many stones — press ⟳ solve for optimal play",
+      "mu-torere": "click your white piece, then an adjacent empty point — press ⟳ solve for optimal play",
+      "three-mens-morris": "place 3 pieces, then slide along lines — press ⟳ solve for optimal play",
+      "pong-hau-ki": "click your white piece, then an adjacent empty point — press ⟳ solve for optimal play",
+      "fibonacci-nim": "click a −k button (limited by the doubling rule) — press ⟳ solve for optimal play",
+      "misere-nim": "click stones to mark how many to take, then base to confirm — taking the LAST stone loses",
+      "picaria": "place 3 pieces, then slide along lines — press ⟳ solve for optimal play",
+      "tapatan": "place 3 pieces, then slide along lines — press ⟳ solve for optimal play",
+      "nine-holes": "place 3 pieces, then slide along rows/columns — press ⟳ solve for optimal play",
+      "achi": "place 4 pieces, then slide along lines — press ⟳ solve for optimal play",
+      "shisima": "click a white stone, then an adjacent empty point — win by 3-in-a-row through the centre",
+      "chomp": "click a cell to chomp it + everything below/right — DON'T eat the poison ☠",
+      "kayles": "click a pin, then choose remove-1 or remove-2 — last pin wins",
+      "treblecross": "click an empty cell to mark X — three in a row WINS",
+      "tribonacci-nim": "click a −k button (limited by 3× the opponent's last move)",
+      "grundys-game": "click a heap (size ≥ 3), then a split — must be unequal non-empty parts",
+      "euclids-game": "click a k= button to subtract k × smaller from larger — reduce a pile to 0 to win",
+      "domineering": "click a cell to place a VERTICAL domino (extends downward) — AI places horizontal",
+      "cram": "click one empty cell, then an adjacent empty cell — places a domino in either orientation",
+      "notakto": "click an empty cell to mark X — completing a three-in-a-row LOSES",
+      "toads-and-frogs": "click a Toad, then a highlighted cell — step right or jump over a Frog into empty",
+      "turning-turtles": "click 1 or 2 coins (rightmost must be heads), double-click to flip — XOR positions = nim heaps",
+      "mock-turtles": "click 1–3 coins (rightmost must be heads), double-click to flip — XOR M(i) of heads",
+      "northcotts-game": "click a W stone, then a target cell — slide without jumping the opponent (gaps = nim heaps)",
+      "poker-nim": "click a heap to take/add 1 (toggle mode with T/A) — adds from reserve are reversible",
+      "clobber": "click your B stone, then an adjacent W stone to capture — last to move wins",
+      "wild-tic-tac-toe": "click an empty cell to place — toggle symbol with X/O; any 3-in-a-row wins",
+      "col": "click a green node to colour blue — no two same-colour neighbours allowed",
+      "snort": "click a green node to place blue — cannot be adjacent to a red node",
+      "dawsons-chess": "click an empty cell — your X also blocks both adjacent cells; last to move wins",
+      "mastermind": "click a peg to cycle colour; click submit (or press ⟳ for Knuth's minimax guess)",
+      "mnk-games": "click an empty cell to place X — 3 in a row on this 4×4 board wins",
+      "node-kayles": "click a vertex — it and all its neighbours are removed; last to move wins",
+      "hare-and-hounds": "click a Hound, then an adjacent empty node — never backward; trap the Hare",
+      "wolves-and-sheep": "click a sheep, then a forward-diagonal cell — pen the wolf",
+      "hex": "click an empty hex to place red — connect TOP to BOTTOM; no draws possible",
+      "tac-tix": "click cells along ONE row or column, then click TAKE — misère: last counter loses",
+      "whim": "take 1 from any heap, or click DECLARE WHIM to flip normal/misère (one-time only)",
+      "triplets": "click 1/2/3 below any heap to take that many stones — last stone wins",
+      "tant-fant": "click your stone, then a neighbouring empty cell — 3-in-line OFF your home row wins",
+      "rock-paper-scissors": "click rock / paper / scissors — AI plays the Nash mixed strategy (uniform random)",
+      "l-game": "click 4 cells to form your L in a NEW position, then click PLACE L — opponent stuck = win",
+      "sim": "click an edge to colour it blue — but completing a blue triangle LOSES",
+      "dao": "click your blue stone, then a direction cell — stone slides to the edge",
+      "konane": "click a black stone, then a cell 2 squares away with an enemy in between — jump captures",
+      "connect-four": "click a column to drop your blue piece — four in a row wins",
+      "shove": "click a BLUE piece — its run shoves one cell right; the rightmost piece falls off",
+      "teeko": "place 4 stones, then slide one to a neighbour — win = 4-in-line or 2×2 block",
+      "pente": "click an empty cell — 5-in-a-row OR 5 captures wins (flank an enemy pair to capture)",
+      "gomoku": "click an empty cell to place a black stone — 5-in-a-row wins",
+      "pentago": "place a marble, then click a quadrant rotation button — 5-in-a-row wins",
+      "othello": "click a green-tinted cell to flip flanked enemy stones — most stones at end wins",
+      "quoridor": "click MOVE then a green cell, or click H/V-WALL then a cell to drop a wall",
+      "quixo": "click a green border cube, then a direction button to slide that row/column",
+      "breakthrough": "click your blue piece, then a green destination — reach the top row wins",
+      "bridg-it": "click an empty cell to draw a BLUE NW-SE diagonal — connect TOP to BOTTOM",
+      "hackenbush": "click a blue edge — it and everything above it is removed; last to move wins",
+      "score-four": "click a peg — your bead drops to the lowest empty slot; 4-in-line in the 4×4×4 cube wins",
+      "qubic": "click any empty cell across the 4 layers — 4-in-a-line anywhere in the 4×4×4 cube wins",
+      "anti-reversi": "click a green-tinted cell to flip enemy stones — FEWER discs wins!",
+      "dots-and-boxes": "click between two dots to draw an edge — complete a box for a bonus turn",
+      "connect6": "place 1 stone on the first turn, 2 per turn after — 6-in-a-row wins",
+      "caro": "place a black stone — 5-in-a-row wins, but NOT if blocked at both ends",
+      "kalah": "click one of your pits — sow seeds counter-clockwise; land in your store for an extra turn",
+      "awari": "click one of your pits — sow seeds; land in opponent's row to capture 2s and 3s",
+      "brussels-sprouts": "click two free ends to connect them — game length is FIXED by starting count",
+      "mock-wythoff": "click mode + amount + GO — take from a pile, or diagonal (k, k+1)",
+      "mogul": "click two coins to flip both — rightmost MUST be heads",
+      "ultimate-tic-tac-toe": "click a cell in the active board — your cell picks the opponent's next board",
+      "toppling-dominoes": "click a blue or green domino, then ◀ LEFT or RIGHT ▶ to topple it",
+      "y": "click any empty hex to place a black stone — connect ALL three sides",
+      "shannon-switching-game": "click a grey edge to SECURE it — make a blue path from A to B",
+      "ruler-game": "click 'take 1', 'take 2', or 'take 3' under any heap — last to move wins",
+      "push": "click a blue piece to slide it right — pushes everything in its run",
+      "red-blue-green-hackenbush": "click any BLUE or GREEN edge to chop it (and everything above)",
+      "six-mens-morris": "place 6 stones, then slide them along lines — three in a row removes an enemy",
+      "twixt": "click a hole to place a black peg — knight-move links auto-form; connect TOP↔BOTTOM",
+      "renju": "click an intersection to place a black stone — five-in-a-row wins, but no double-3, double-4, or overline",
+      "quarto": "place the piece your opponent gave you, then click a remaining piece to give them",
+      "order-and-chaos": "pick X or O, click an empty cell — get 5-in-a-row of either symbol to win",
+      "dobutsu-shogi": "click your piece, then a destination cell — capture the Lion or march yours to the top row",
+      "nine-mens-morris": "place 9 stones, then slide them — three-in-a-row removes an enemy",
+      "fox-and-geese": "click a goose then an empty adjacent down/sideways cell — pen the fox to win",
+      "slitherlink": "click an edge to cycle line → × → blank. Click SOLVE to reveal the loop.",
+      "hashiwokakero": "click two islands to add a bridge; click pair again for a double bridge",
+      "brandubh": "click your defender or the king, then a destination — escape the king to a corner",
+      "pylos": "click a green-outlined hole — supported holes only; place the apex sphere to win",
+      "halatafl": "click a goose then an empty adjacent down/sideways cell — fox must jump to capture",
+      "lasker-morris": "click empty point to place OR click your piece then adjacent empty — three-in-a-row removes enemy",
+      "crossway": "click an empty cell to place a black stone — connect TOP↔BOTTOM (no 2×2 cross pattern)",
+      "gonnect": "click an empty intersection — Go rules. Connect TOP↔BOTTOM or capture to win.",
+      "liars-dice": "click a quantity then a face, or click LIAR! to challenge",
+      "dara": "place 12, then slide. Three-in-a-row removes an enemy — but no four-in-a-row allowed.",
+      "maze-conway": "click a green-outlined neighbour — Left moves ↑/← ; last to move wins",
+      "undirected-vertex-geography": "click a green-outlined neighbour — move the token to an unvisited vertex",
+      "geography": "click a green-outlined successor — directed edges; unvisited only",
+      "cherries": "click a BLUE cherry to remove it and everything to the right of it",
+      "atropos": "click an empty interior vertex, then a color — avoid monochrome triangles",
+      "catch-the-hare": "click a hound then a green-outlined neighbour — hounds move forward or sideways only",
+      "catchup": "click empty hexes to place stones — largest connected group at end wins",
+      "sungka": "click one of YOUR lower pits to sow shells counterclockwise; last shell in own home = another turn",
+      "twelve-mens-morris": "place 12 stones, then slide. Diagonals count as mills too.",
+      "eleven-mens-morris": "place 11 stones, then slide. Three-in-a-row removes an enemy.",
+      "einstein-wurfelt-nicht": "die rolls — click a green-outlined cell to move toward the opposite corner",
+      "amazons": "click your amazon → queen-move → shoot an arrow queen-wise. Last to move wins.",
+      "lines-of-action": "click your piece → move along a line exactly as many squares as there are pieces on it",
+      "lasca": "click your blue tower → diagonal step or jump. Captures stack under you.",
+      "ninuki-renju": "click an intersection — five-in-a-row OR 5 pair-captures wins (X**OO**X removes the pair)",
+      "fanorona": "click your piece → click a green-outlined target. Captures are mandatory.",
+      "havannah": "click an empty hex — win by RING, BRIDGE (2 corners), or FORK (3 edges)",
+      "pallanguzhi": "click YOUR (lower) pit — chain sowing; capture pit beyond an empty chain-end",
+      "four-d-tic-tac-toe": "click a cell — align THREE along any 4D line to win",
+      "atoll": "click an empty hex — connect your two green-bordered ISLANDS with your colour",
+      "seega": "place 12 stones (centre forbidden), then 1-step orthogonal moves; sandwich to capture",
+      "surakarta": "click your blue piece — 1-step ortho/diag move OR long straight-line capture",
+      "slither": "PLACE or SLIDE — connect TOP↔BOTTOM. No same-colour diagonal pair without an orthogonal connector",
+      "dvonn": "click your stack — slides distance = its height; orphans (no DVONN red dot) drop off",
+      "tablut": "you defend; rook-move the king to a CORNER to win. Sandwich captures.",
+      "yote": "drop a stone from reserve, OR move/jump. Jump captures + remove one extra enemy.",
+      "tigers-and-goats": "place 20 goats one at a time, then move them. Trap all 4 tigers to win.",
+      "star": "click any hex — score is (perimeter cells in own group − 3) summed across groups",
+      "poly-y": "click any hex — own ≥3 of 5 highlighted corners with your connected group",
+      "unlur": "click any hex — touch any 3 of 6 edges with one group (AI wants 2 opposite edges)",
+      "minichess": "Gardner 5×5 chess — click your piece, click destination. Capture king to win.",
+      "tic-tac-chec": "click a pool piece to bring (or your piece to move). Line up 4 of your colour.",
+      "phutball": "drop a MAN, OR click the ball to start a chain JUMP. Reach top row to win.",
+      "songo": "click your (green) pit — sow CCW; last seed at opponent pit @ 2/3 captures (chain back)",
+      "onyx": "click any empty cell — connect TOP↔BOTTOM. 3-sided sandwich removes an enemy.",
+      "checkers": "click your piece, click target diagonal. Captures are mandatory; promote at last row.",
+      "brazilian-draughts": "8×8 international rules — flying kings; men capture backwards",
+      "shatranj": "click your piece — chess's ancestor: queen=1sq diag, bishop jumps 2 diag",
+      "backgammon": "click a point to move your stone that many spaces (single die per turn)",
+      "xiangqi": "click an intersection to select; capture the general (將) to win",
+      "battleship": "click the enemy waters (right grid) to fire. Sink all enemy ships to win.",
+      "losing-chess": "captures are MANDATORY. Lose all pieces (or get stalemated) to win.",
+      "makruk": "Thai chess — Met (◆) moves 1 diagonal; Khon (△) moves 1 diag or 1 forward",
+      "international-draughts": "10×10 — men capture forward AND backward; flying kings",
+      "atomic-chess": "captures EXPLODE a 3×3 area (pawns survive); king cannot capture",
+      "king-of-the-hill": "move your king to d4/e4/d5/e5 to win — standard chess moves",
+      "horde-chess": "32 white pawns vs standard black army — capture the king (white) or survive (black)",
+      "italian-draughts": "men cannot capture kings; capture the MOST pieces when multiple captures available",
+      "los-alamos-chess": "6×6 chess variant — no bishops, no castling, no en passant",
+      "shogi": "click your piece or hand piece, then a destination. Drops & promotion — capture the king to win.",
+      "janggi": "click your piece, click destination. Elephant = 1 ortho + 2 diag. Cannon jumps a screen.",
+      "courier-chess": "12×8 medieval chess — Courier = bishop, Mann = 1-step king. Capture the king to win.",
+      "capablanca-chess": "10×8 chess with Archbishop (B+N) and Chancellor (R+N). Capture the king to win.",
+      "crazyhouse": "captured pieces go to your hand — click a piece in hand, then drop square. Checkmate to win.",
+      "maharajah-and-the-sepoys": "you command the army — capture the ⛃ (Q+N superpiece) to win. Sepoys move first.",
+    };
+    hint.textContent = hints[slug] || "";
+
     currentPlayable = mod.create(canvas);
     document.getElementById("playable-restart").addEventListener("click", () => {
       if (currentPlayable && currentPlayable.restart) currentPlayable.restart();
     });
+    const solveBtn = document.getElementById("playable-solve");
+    if (currentPlayable.solve) {
+      solveBtn.classList.remove("hidden");
+      solveBtn.onclick = () => { if (currentPlayable.solve) currentPlayable.solve(); };
+    } else {
+      solveBtn.classList.add("hidden");
+    }
   } catch (e) {
     console.warn(`playable "${slug}" not available:`, e);
   }

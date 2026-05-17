@@ -96,14 +96,105 @@ export function create(canvas) {
     draw();
   }
 
+  // ── Greedy solver (largest group, backtrack 1 level) ─────
+  let solveTimer = null;
+
+  function cloneBoard(b) { return b.map(r => [...r]); }
+
+  function floodBoard(b, r, c, color, visited) {
+    if (r < 0 || r >= rows || c < 0 || c >= cols) return;
+    const k = r * cols + c;
+    if (visited.has(k) || b[r][c] !== color) return;
+    visited.add(k);
+    floodBoard(b, r - 1, c, color, visited);
+    floodBoard(b, r + 1, c, color, visited);
+    floodBoard(b, r, c - 1, color, visited);
+    floodBoard(b, r, c + 1, color, visited);
+  }
+
+  function solveFromBoard(b, path) {
+    const remaining = b.flat().filter(v => v !== -1).length;
+    if (remaining === 0) return path;
+    // Find all groups
+    const groups = [];
+    const visited = new Set();
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        if (b[r][c] === -1) continue;
+        const k = r * cols + c;
+        if (visited.has(k)) continue;
+        const grp = new Set();
+        floodBoard(b, r, c, b[r][c], grp);
+        for (const gk of grp) visited.add(gk);
+        if (grp.size >= 2) groups.push({ cells: [...grp], size: grp.size });
+      }
+    }
+    if (groups.length === 0) return null;
+    // Sort by size descending
+    groups.sort((a, b2) => b2.size - a.size);
+    // Try each group (limited backtracking)
+    const tryLimit = Math.min(groups.length, groups[0].size >= 6 ? 1 : 4);
+    for (let gi = 0; gi < tryLimit; gi++) {
+      const g = groups[gi];
+      const nb = cloneBoard(b);
+      for (const k of g.cells) nb[Math.floor(k / cols)][k % cols] = -1;
+      // Collapse
+      for (let c = 0; c < cols; c++) {
+        let wr = rows - 1;
+        for (let r = rows - 1; r >= 0; r--) if (nb[r][c] !== -1) nb[wr--][c] = nb[r][c];
+        for (let r = wr; r >= 0; r--) nb[r][c] = -1;
+      }
+      let wc = 0;
+      for (let c = 0; c < cols; c++) {
+        if (nb[rows - 1][c] !== -1) {
+          if (c !== wc) for (let r = 0; r < rows; r++) { nb[r][wc] = nb[r][c]; nb[r][c] = -1; }
+          wc++;
+        }
+      }
+      const sub = solveFromBoard(nb, path.concat([g.cells]));
+      if (sub !== null) return sub;
+    }
+    return null;
+  }
+
   canvas.addEventListener("click", handleClick);
   draw();
 
   return {
     destroy() {
       canvas.removeEventListener("click", handleClick);
+      if (solveTimer) { clearInterval(solveTimer); solveTimer = null; }
       ctx.clearRect(0, 0, size, size);
     },
-    restart() { init(); won = false; draw(); }
+    restart() { init(); won = false; draw(); },
+    solve() {
+      if (won || solveTimer) return;
+      statusEl.textContent = "solving…";
+      draw();
+      setTimeout(() => {
+        const boardCopy = cloneBoard(board);
+        const path = solveFromBoard(boardCopy, []);
+        if (!path) { draw(); statusEl.textContent = "no solution found"; return; }
+        // Animate from current position
+        let i = 0;
+        solveTimer = setInterval(() => {
+          if (i >= path.length) {
+            clearInterval(solveTimer);
+            solveTimer = null;
+            // Check if board is cleared
+            if (board.flat().filter(v => v !== -1).length === 0) won = true;
+            draw();
+            return;
+          }
+          const cells = path[i];
+          for (const k of cells) board[Math.floor(k / cols)][k % cols] = -1;
+          collapse();
+          const remaining = board.flat().filter(v => v !== -1).length;
+          if (remaining === 0 && i === path.length - 1) won = true;
+          draw();
+          i++;
+        }, 150);
+      }, 50);
+    }
   };
 }
