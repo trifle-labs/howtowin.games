@@ -135,7 +135,6 @@ export function create(canvas) {
 
   function draw(){
     ctx.fillStyle = "#fafaf7"; ctx.fillRect(0, 0, W, H);
-    ctx.font = "13px sans-serif"; ctx.textAlign = "center"; ctx.fillStyle = "#444";
 
     // diagonals
     for (let cr = 0; cr < CELLS; cr++) for (let cc = 0; cc < CELLS; cc++){

@@ -90,7 +90,6 @@ export function create(canvas) {
 
   function draw(){
     ctx.fillStyle = "#fafaf7"; ctx.fillRect(0, 0, W, H);
-    ctx.font = "13px sans-serif"; ctx.textAlign = "center"; ctx.fillStyle = "#444";
     ctx.fillStyle = "#888"; ctx.fillRect(20, 320, W - 40, 4);
 
     for (let s = 0; s < stalks.length; s++){

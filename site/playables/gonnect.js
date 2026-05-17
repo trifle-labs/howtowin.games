@@ -117,7 +117,6 @@ export function create(canvas) {
 
   function draw(){
     ctx.fillStyle = "#f5e0b8"; ctx.fillRect(0, 0, W, H);
-    ctx.font = "13px sans-serif"; ctx.textAlign = "center"; ctx.fillStyle = "#444";
 
     const cs = cellPos(0, 1).x - cellPos(0, 0).x;
     ctx.strokeStyle = "#822"; ctx.lineWidth = 1;

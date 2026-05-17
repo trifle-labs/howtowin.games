@@ -76,7 +76,6 @@ export function create(canvas) {
 
   function draw(){
     ctx.fillStyle = "#fafaf7"; ctx.fillRect(0, 0, W, H);
-    ctx.font = "13px sans-serif"; ctx.textAlign = "center"; ctx.fillStyle = "#444";
 
     for (let b = 0; b < branches.length; b++){
       const row = branches[b];

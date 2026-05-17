@@ -104,7 +104,6 @@ export function create(canvas) {
 
   function draw(){
     ctx.fillStyle = "#fafaf7"; ctx.fillRect(0, 0, W, H);
-    ctx.font = "13px sans-serif"; ctx.textAlign = "center"; ctx.fillStyle = "#444";
 
     const moves = (turn === "you" && !winner && sel >= 0) ? legal(board, 'b').filter(m => m[0] === sel).map(m => m[1]) : [];
     for (let r = 0; r < N; r++) for (let c = 0; c < N; c++){

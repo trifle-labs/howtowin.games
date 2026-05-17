@@ -122,7 +122,6 @@ export function create(canvas) {
 
   function draw(){
     ctx.fillStyle = "#f5e0b8"; ctx.fillRect(0, 0, W, H);
-    ctx.font = "13px sans-serif"; ctx.textAlign = "center"; ctx.fillStyle = "#222";
 
     // grid lines
     const cs = (size - 40) / (N - 1);
