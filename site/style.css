@@ -389,6 +389,8 @@ a:hover { text-decoration: underline; }
   font-weight: 600;
 }
 
+.header-top.hidden { display: none; }
+
 /* ── filters panel ────────────────────────────────── */
 
 .filters {
@@ -412,6 +414,7 @@ a:hover { text-decoration: underline; }
 .grid-q:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(187,51,51,0.15); }
 .grid-q::placeholder { color: var(--fg-muted); }
 
+.filters.hidden { display: none; }
 .filter-group {
   border: 1px solid var(--border);
   border-radius: 8px;

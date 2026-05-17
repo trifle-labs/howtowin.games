@@ -86,10 +86,11 @@ export function create(canvas) {
   }
 
   function hexCenter(q, r){
-    const s = 22;
-    const cx = W/2 + (s * 1.5) * q;
-    const cy = (size/2 + 30) + s * Math.sqrt(3) * (r + q/2);
-    return { x: cx, y: cy };
+    const s = Math.min(W, size) / 14;
+    const cx = W/2, cy = 30 + (size - 30)/2;
+    const x = cx + (s * 1.5) * q;
+    const y = cy + s * Math.sqrt(3) * (r + q/2);
+    return { x, y };
   }
   function drawHex(cx, cy, s){
     ctx.beginPath();

@@ -11,7 +11,7 @@ export function create(canvas) {
 
   const size = Math.min(canvas.parentElement.clientWidth - 24, 400);
   canvas.width = size;
-  canvas.height = size + 30;
+  canvas.height = Math.ceil(size * 1.05);
   const W = canvas.width, H = canvas.height;
   const statusEl = document.getElementById("playable-status");
 
@@ -84,8 +84,8 @@ export function create(canvas) {
   }
 
   function hexPos(q, r){
-    const cx = W/2, cy = 30 + (size - 30)/2;
-    const s = Math.min(W, size - 30) / (2*S + 1);
+    const s = Math.min(W, size) / 13;
+    const cx = W/2, cy = H/2;
     const x = cx + s * Math.sqrt(3) * (q + r/2);
     const y = cy + s * 1.5 * r;
     return { x, y, s };
@@ -94,7 +94,6 @@ export function create(canvas) {
 
   function draw(){
     ctx.fillStyle = "#fafaf7"; ctx.fillRect(0, 0, W, H);
-    ctx.font = "12px sans-serif"; ctx.textAlign = "center"; ctx.fillStyle = "#444";
     for (const [q, r] of cells){
       const p = hexPos(q, r);
       ctx.beginPath();

@@ -112,10 +112,11 @@ export function create(canvas) {
   }
 
   function hexCenter(q, r){
-    const s = 22;
-    const cx = W/2 + (s * 1.5) * q;
-    const cy = (size/2 + 30) + s * Math.sqrt(3) * (r + q/2);
-    return { x: cx, y: cy };
+    const s = Math.min(W, size) / 14;
+    const cx = W/2, cy = 30 + (size - 30)/2;
+    const x = cx + (s * 1.5) * q;
+    const y = cy + s * Math.sqrt(3) * (r + q/2);
+    return { x, y, s };
   }
   function drawHex(cx, cy, s){
     ctx.beginPath();
@@ -125,11 +126,9 @@ export function create(canvas) {
 
   function draw(){
     ctx.fillStyle = "#fafaf7"; ctx.fillRect(0, 0, W, H);
-    ctx.font = "13px sans-serif"; ctx.textAlign = "center"; ctx.fillStyle = "#444";
-
     for (let i = 0; i < CELLS.length; i++){
-      const [q, r] = CELLS[i]; const { x, y } = hexCenter(q, r);
-      drawHex(x, y, 20);
+      const [q, r] = CELLS[i]; const { x, y, s } = hexCenter(q, r);
+      drawHex(x, y, s);
       ctx.fillStyle = board[i] === 'B' ? "#39c" : board[i] === 'W' ? "#e60" : (isCorner(q, r) ? "#ffe9c8" : isEdge(q, r) >= 0 ? "#f0f0f0" : "#fff");
       ctx.fill(); ctx.strokeStyle = "#222"; ctx.stroke();
     }
