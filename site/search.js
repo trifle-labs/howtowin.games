@@ -286,7 +286,7 @@ function mountTile(card) {
   if (!card.dataset.playable) return; // not a playable
   const canvas = document.createElement("canvas");
   holder.appendChild(canvas);
-  import(`./playables/${slug}.js?v=69`).then(mod => {
+  import(`./playables/${slug}.js?v=70`).then(mod => {
     if (!holder.isConnected) return;
     try {
       const inst = mod.create(canvas);
@@ -300,7 +300,9 @@ function mountTile(card) {
 function unmountTile(card) {
   const slug = card.dataset.slug;
   const inst = tilePlayables.get(slug);
-  if (inst) { try { inst.destroy(); } catch (e) {} tilePlayables.delete(slug); }
+  if (!inst) return;
+  try { inst.destroy(); } catch (e) {}
+  tilePlayables.delete(slug);
   const holder = card.querySelector(".tile-canvas-holder");
   if (holder) holder.innerHTML = "";
 }
@@ -529,7 +531,7 @@ function hideDetail() {
 
 async function loadPlayable(slug) {
   try {
-    const mod = await import(`./playables/${slug}.js?v=69`);
+    const mod = await import(`./playables/${slug}.js?v=70`);
     const canvas = document.getElementById("playable-canvas");
     if (!canvas) return;
     const area = document.getElementById("playable-area");
