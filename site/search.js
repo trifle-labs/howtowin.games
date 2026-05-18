@@ -70,7 +70,31 @@ function onHashChange() {
     openGame(route.path, true);
   } else {
     hideDetail();
+    // Apply any pending filter from a detail-view filter-link click
+    const pending = sessionStorage.getItem('pendingFilter');
+    if (pending) {
+      sessionStorage.removeItem('pendingFilter');
+      try { const {kind, value} = JSON.parse(pending); toggleFilter(kind, value); }
+      catch (e) { /* ignore malformed */ }
+    }
   }
+}
+
+function toggleFilter(kind, value) {
+  if (kind === 'playable') {
+    document.getElementById('chk-playable').checked = true;
+    document.getElementById('filter-playable').classList.add('active');
+    currentFilters.playable = true;
+    applyFilters();
+    return;
+  }
+  const input = document.querySelector(`#filters input[type=checkbox][data-fkind="${kind}"][value="${CSS.escape(value)}"]`);
+  if (!input) return;
+  input.checked = true;
+  input.closest('.filter-chip').classList.add('active');
+  currentFilters[kind].add(value);
+  updateFilterCounts();
+  applyFilters();
 }
 
 // ── markdown renderer ────────────────────────────────────────────────────
@@ -286,7 +310,7 @@ function mountTile(card) {
   if (!card.dataset.playable) return; // not a playable
   const canvas = document.createElement("canvas");
   holder.appendChild(canvas);
-  import(`./playables/${slug}.js?v=86`).then(mod => {
+  import(`./playables/${slug}.js?v=90`).then(mod => {
     if (!holder.isConnected) return;
     try {
       const inst = mod.create(canvas);
@@ -490,6 +514,48 @@ async function openGame(path, fromHash) {
       loadPlayable(playableSlug);
     }
 
+    // Wire summary-table filter links (Players → 2-player filter, etc.)
+    const summaryTable = $detail.querySelector('.detail-summary table');
+    if (summaryTable) {
+      const filterMap = {
+        'players': 'players',
+        'solution status': 'status',
+        'family': 'family',
+        'mechanic': 'mechanic',
+      };
+      summaryTable.querySelectorAll('tr').forEach(row => {
+        const cells = row.querySelectorAll('td');
+        if (cells.length < 2) return;
+        const key = cells[0].textContent.trim().toLowerCase().replace(/\s+/g, ' ');
+        // Skip header row
+        if (key === 'field' || key === 'value') return;
+        const kind = filterMap[key];
+        if (!kind) return;
+        let val = cells[1].textContent.trim();
+        if (kind === 'status') {
+          const s = val.toLowerCase();
+          if (s.includes('unsolved') || s.includes('open') || s.includes('unknown')) val = 'unsolved';
+          else if ((s.includes('solved') || s.includes('complete')) && !(s.includes('partial') || s.includes('partially'))) val = 'solved';
+          else if (s.includes('partial') || s.includes('analysed') || s.includes('pspace') || s.includes('np-')) val = 'partial';
+          else return;
+        } else if (kind === 'players') { const m = val.match(/\d+/); if (m) val = m[0]; else return; }
+        if (!val || val === '—' || val === '') return;
+        const link = document.createElement('a');
+        link.href = '#';
+        link.textContent = cells[1].textContent;
+        link.className = 'filter-link';
+        link.dataset.filterKind = kind;
+        link.dataset.filterValue = val;
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          sessionStorage.setItem('pendingFilter', JSON.stringify({kind, value: val}));
+          navigate('');
+        });
+        cells[1].textContent = '';
+        cells[1].appendChild(link);
+      });
+    }
+
     // Wire game links inside detail
     $detail.querySelectorAll(".game-link").forEach(a => {
       a.addEventListener("click", (e) => {
@@ -535,7 +601,7 @@ function hideDetail() {
 
 async function loadPlayable(slug) {
   try {
-    const mod = await import(`./playables/${slug}.js?v=86`);
+    const mod = await import(`./playables/${slug}.js?v=90`);
     const canvas = document.getElementById("playable-canvas");
     if (!canvas) return;
     const area = document.getElementById("playable-area");

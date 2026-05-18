@@ -373,9 +373,13 @@ a:hover { text-decoration: underline; }
 
 .detail-summary {
   margin: 1rem 0;
+  padding: 0 0.75rem;
 }
 .detail-summary table {
   width: 100%;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
   border-collapse: collapse;
   font-size: 0.88rem;
 }
@@ -387,6 +391,15 @@ a:hover { text-decoration: underline; }
 .detail-summary th {
   background: var(--card);
   font-weight: 600;
+}
+.detail-summary .filter-link {
+  color: var(--accent);
+  cursor: pointer;
+  border-bottom: 1px dashed var(--border-strong);
+}
+.detail-summary .filter-link:hover {
+  text-decoration: underline;
+  border-bottom-style: solid;
 }
 
 .header-top.hidden { display: none; }
