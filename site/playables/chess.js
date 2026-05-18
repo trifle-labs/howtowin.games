@@ -11,7 +11,7 @@ export function create(canvas) {
   const dpr = window.devicePixelRatio || 1;
   if (dpr > 1) {
     const w = canvas.width, h = canvas.height;
-    canvas.style.width = w + 'px';    canvas.width = w * dpr; canvas.height = h * dpr; ctx.scale(dpr, dpr);
+    canvas.style.width = w + 'px'; canvas.style.height = h + 'px'; canvas.width = w * dpr; canvas.height = h * dpr; ctx.scale(dpr, dpr);
   }
   const statusEl = document.getElementById("playable-status");
 
@@ -308,7 +308,7 @@ export function create(canvas) {
       // Piece
       const p=board[r][c];
       if(p){
-        ctx.font=`${Math.floor(cs*0.75)}px sans-serif`; ctx.textAlign="center"; ctx.textBaseline="middle";
+        ctx.fillStyle="#1a1a1a"; ctx.font=`${Math.floor(cs*0.75)}px "Segoe UI Symbol","Apple Symbols",sans-serif`; ctx.textAlign="center"; ctx.textBaseline="middle";
         ctx.fillText(GLYPHS[p.color][p.type],rc.x+rc.w/2,rc.y+rc.h/2+2);
         ctx.textBaseline="alphabetic";
       }

@@ -286,7 +286,7 @@ function mountTile(card) {
   if (!card.dataset.playable) return; // not a playable
   const canvas = document.createElement("canvas");
   holder.appendChild(canvas);
-  import(`./playables/${slug}.js?v=85`).then(mod => {
+  import(`./playables/${slug}.js?v=86`).then(mod => {
     if (!holder.isConnected) return;
     try {
       const inst = mod.create(canvas);
@@ -535,7 +535,7 @@ function hideDetail() {
 
 async function loadPlayable(slug) {
   try {
-    const mod = await import(`./playables/${slug}.js?v=85`);
+    const mod = await import(`./playables/${slug}.js?v=86`);
     const canvas = document.getElementById("playable-canvas");
     if (!canvas) return;
     const area = document.getElementById("playable-area");
