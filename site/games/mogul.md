@@ -1,6 +1,6 @@
 # Mogul
 
-> An octal-game cousin of Mock Turtles — its nim-values are tabulated.
+> A coin-turning game related to Mock Turtles. All of its position values are known from a table.
 
 | Field | Value |
 |-------|-------|
@@ -19,22 +19,15 @@
 
 ## Description
 
-A "turning-coins" game in the *Winning Ways* tradition: a row of coins is given,
-each face-up or face-down, and players take turns flipping coins under
-constraints chosen so the resulting nim-sequence is rich and irregular.
+A coin-flipping game from the book *Winning Ways*. A row of coins sits in front of you, some heads up and some tails up. Players take turns flipping coins according to specific rules, chosen so that the resulting game values form a rich and interesting sequence.
 
 ## Rules
 
-1. A row of n coins, each "heads" or "tails," is laid out in positions
-   1, 2, ..., n.
-2. On your turn, choose one of the allowed flipping patterns from the octal
-   code defining Mogul (turning 2 or 3 coins at chosen positions, subject to
-   the rightmost flipped coin going from heads to tails). The exact octal code
-   is **.55... [verify]** — different sources differ on the precise digit.
-3. The player who cannot move loses (normal play).
+1. A row of n coins, each showing heads or tails, in positions 1, 2, ..., n.
+2. On your turn, pick one of the allowed flipping patterns from the game's "octal code" (a code that defines which flips are allowed). You flip 2 or 3 coins at chosen positions, and the rightmost coin you flip must go from heads to tails. The exact octal code is **.55... [verify]** — different sources give slightly different digits.
+3. The player who cannot make a legal move loses (normal play).
 
-Turning-game positions decompose by **Mock-Turtles theorem**: the nim-value of a
-position is the nim-sum of the nim-values of single heads-coins.
+Like other turning games, the value of any position is found by taking the values of each heads coin separately and XOR-ing them together.
 
 ## Solution status
 
@@ -45,11 +38,11 @@ heads-coins. Optimal play follows.
 
 ## Consensus on optimal play
 
-- **Precompute the single-coin nim-value table** — the nim-value of a single heads-coin in position n is determined by the game's octal code via the mex recurrence; tabulate these values for n = 0, 1, 2, ... up to the board size.
-- **XOR all single-coin values to get the position value** — once the table is available, XOR (nim-sum) the values for every heads-coin position; if the result is non-zero you are in a winning (N-) position.
-- **Winning move: find a flip that reduces the nim-sum to 0** — among all legal moves (flipping 2 or 3 coins, rightmost going from heads to tails), choose the one that makes the nim-sum of the resulting position equal to 0.
-- **The rightmost flipped coin constraint is the key tactical limitation** — every legal move must flip at least one coin from heads to tails (the rightmost in the chosen group); this is what makes the game finite and the nim-sequence well-defined.
-- **Use the Mock-Turtles decomposition principle** — positions decompose into independent single-coin games; updating only the affected single-coin values after each move (rather than recomputing from scratch) makes calculation efficient over the board.
+- **Make a table of values for each coin position** — the value of a single heads-up coin at position n is found by the game's octal code. Write these values down for positions 0, 1, 2, ... up to the board size.
+- **XOR all the single-coin values to get the position's total** — once you have the table, XOR together the values for every coin that shows heads. If the result is not zero, you are in a winning position.
+- **Winning move: pick flips that make the XOR total become 0** — among all legal moves (flipping 2 or 3 coins, with the rightmost going from heads to tails), choose one that makes the XOR of the new position equal to 0.
+- **The rightmost-coin rule is the key limitation** — every move must flip at least one coin from heads to tails (the rightmost one in your chosen group). This keeps the game finite and makes the value sequence well-defined.
+- **Update only what changes** — after each move, you only need to recalculate the values for the coins you flipped, not the whole board. This makes in-game calculation fast.
 
 ## Engines & current best play
 

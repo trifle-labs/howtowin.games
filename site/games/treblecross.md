@@ -1,7 +1,6 @@
 # Treblecross
 
-> A one-dimensional "three-in-a-row" game that is secretly an impartial octal
-> game.
+> A one-row game where both players mark X's and the first to make three in a row wins. It is fully solved.
 
 | Field | Value |
 |-------|-------|
@@ -20,11 +19,7 @@
 
 ## Description
 
-Played on a 1×*n* strip of cells. **Both** players mark cells with the same
-symbol (an X). A player who completes three consecutive X's *wins immediately*.
-Because the players share the marking symbol, the game is
-[impartial](../lexicon/README.md#impartial-game): the moves available depend
-only on the position, not on whose turn it is.
+Played on a single row of cells. Both players mark cells with the same symbol (an X). A player who completes three X's in a row wins immediately. Because both players use the same symbol, the game is impartial — the available moves depend only on the position, not on whose turn it is.
 
 ## Solution status
 
@@ -41,11 +36,11 @@ both players use the same symbol.
 
 ## Consensus on optimal play
 
-- **Consult the nim-value table** — the nim-value sequence for strip segments is eventually periodic (period 34); look up the nim-value for each independent segment, XOR them all, and move to make the total XOR equal to zero.
-- **Never fill the third cell of three adjacent marked cells yourself** — completing three-in-a-row wins for you, so equally it means you must not place a mark that gives your opponent a winning three-in-a-row next turn.
-- **Leave nim-value-zero segments for the opponent** — a segment of length n with nim-value 0 is a losing position for the player to move; whenever possible, transfer control so your opponent must act in a nim-zero segment.
-- **Multiple segments combine by nim-sum** — when the strip has been split into several independent marked fragments, XOR the nim-values; a non-zero XOR means the player to move wins, and the winning move is the one that makes the XOR zero.
-- **Small strips (n ≤ 4) are trivially losing for the mover** — on strips of length 1, 2, or 4 any mark risks completing or setting up three-in-a-row; the correct response often fills the position that minimises the opponent's threat.
+- **Learn the winning and losing segment sizes** — for each separate segment of empty cells, know whether it is a winning or losing position for the player whose turn it is. This has been completely calculated and follows a repeating pattern.
+- **Never complete three in a row for the opponent** — finishing three in a row wins the game, so you must never place a mark that gives the opponent a winning three-in-a-row on their next turn.
+- **Leave losing segments for the opponent** — a segment of a certain length is a losing position for the player to move. Whenever possible, give the opponent a position where they can only play in a losing segment.
+- **When the row is split, add up the values of all segments** — when the row has been broken into several independent segments, the game is decided by combining the values of all segments using a special math operation (binary XOR, also called nim-sum). If the result is non-zero, you can win. If it is zero, you are losing.
+- **Small segments are tricky** — on very short segments (1, 2, or 4 cells), any mark risks giving the opponent a win. The correct response is often to play in the way that gives the opponent the fewest threats.
 
 ## Engines & current best play
 

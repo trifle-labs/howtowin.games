@@ -1,6 +1,6 @@
 # Capablanca chess
 
-> 10×8 chess variant with added "archbishop" and "chancellor" pieces — unsolved.
+> A chess variant played on a 10×8 board with two new pieces: the archbishop and the chancellor. Unsolved.
 
 | Field | Value |
 |-------|-------|
@@ -19,21 +19,20 @@
 
 ## Description
 
-Capablanca chess (José Raúl Capablanca, ~1925) is played on a 10×8 board with
-two new pieces in addition to the standard chess army: the **archbishop**
-(bishop+knight) and the **chancellor** (rook+knight). Capablanca proposed it
-as a way to reduce draws he found inevitable in orthodox chess.
+Capablanca chess was invented by world chess champion Jose Raul Capablanca
+around 1925. It is played on a 10×8 board with two new pieces added to the
+normal chess pieces: the **archbishop** (moves like a bishop or a knight) and
+the **chancellor** (moves like a rook or a knight). Capablanca suggested this
+variant to reduce the number of draws he thought were too common in standard
+chess.
 
 ## Rules
 
-1. Board: 10 files × 8 ranks. Each side has the usual chess pieces plus one
-   archbishop and one chancellor, placed in the back rank between minor pieces
-   and rooks (specific placement varies).
-2. **Archbishop**: moves either as a bishop or as a knight.
-3. **Chancellor**: moves either as a rook or as a knight.
-4. All other pieces move as in orthodox chess. Pawns promote on the 8th rank.
-5. Castling is defined to span the wider board; standard check/checkmate and
-   draw rules apply.
+1. Board: 10 columns by 8 rows. Each side has the usual chess pieces plus one archbishop and one chancellor, placed in the back row between the minor pieces (bishops/knights) and rooks (exact placement varies by version).
+2. **Archbishop**: can move like either a bishop or a knight.
+3. **Chancellor**: can move like either a rook or a knight.
+4. All other pieces move as in regular chess. Pawns promote when reaching the 8th row.
+5. Castling rules are adjusted for the wider board. The standard check, checkmate, and draw rules apply.
 
 ## Solution status
 
@@ -42,12 +41,12 @@ analysis significantly more expensive than chess.
 
 ## Consensus on optimal play
 
-- **The chancellor is roughly rook+knight in value (~8.5 pawns), the archbishop bishop+knight (~7 pawns)** — knowing these rough values (stronger than a queen) prevents naive piece trades that give up massive material; avoid exchanging a chancellor or archbishop for a queen without compensation.
-- **Control open files for your chancellor immediately** — the chancellor's rook component is dominant on open files; getting it active early (similar to a rook in orthodox chess) is a top priority.
-- **The archbishop is a long-range fork machine** — it can threaten squares a queen cannot reach; be alert to archbishop forks that simultaneously attack king and rook (or two pieces), since the knight component adds non-linear attack patterns to the bishop's long diagonals.
-- **Pawn structure principles from chess carry over** — doubled pawns, isolated pawns, and open-file weaknesses all function as in chess; the extra files (9th and 10th) simply provide more terrain for these structures to form.
-- **Opening development is less codified** — there is no large body of grandmaster-level theory; developing the powerful compound pieces quickly toward the centre and ensuring king safety (castling is available on the wide board) are the reliable fundamentals.
-- **Watch for back-rank threats from chancellors** — a chancellor on the 7th/8th rank is even more dangerous than a queen owing to its knight leap; the back-rank mate motifs from chess apply but with greater range.
+- **Know the piece values** — the chancellor is worth about as much as a rook and knight combined (roughly 8.5 pawns), the archbishop about as much as a bishop and knight (roughly 7 pawns). Both are stronger than a queen. Avoid trading either for a queen without good reason.
+- **Get your chancellor onto open columns right away** — the chancellor's rook-like powers are strongest on open columns (files with no pawns). Getting it active early is a top priority, just like a rook in regular chess.
+- **The archbishop is great at fork attacks** — it can threaten squares a queen cannot reach. Watch for archbishop forks that attack the king and rook (or two other pieces) at the same time, since its knight movement adds surprise attacks to the bishop's long-range diagonals.
+- **Pawn structure rules from chess still apply** — doubled pawns, isolated pawns, and open-file weaknesses all work the same way. The extra columns just give more room for these structures to form.
+- **Opening theory is less developed** — there are no grandmaster-level books to follow. Develop your powerful new pieces quickly toward the center and make sure your king is safe (castling works on the wider board).
+- **Watch for chancellor threats on the back row** — a chancellor on the 7th or 8th row is even more dangerous than a queen because of its knight-like leap. The back-rank checkmate patterns from regular chess apply but with greater range.
 
 ## Engines & current best play
 

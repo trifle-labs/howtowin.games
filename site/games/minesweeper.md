@@ -1,6 +1,6 @@
 # Minesweeper
 
-> Logic-deduction puzzle — inference problem is NP-complete.
+> A logic puzzle where you find hidden mines using number clues. The figuring-it-out part is NP-complete.
 
 | Field | Value |
 |-------|-------|
@@ -19,22 +19,15 @@
 
 ## Description
 
-Minesweeper is the well-known Windows-era logic puzzle: numeric clues on
-uncovered cells indicate the count of adjacent mines, and the solver must
-flag all mines without detonating one. Kaye (2000) proved that the
-**Minesweeper Consistency Problem** — given a partial board, can it be
-completed consistently? — is **NP-complete**.
+Minesweeper is the classic computer logic puzzle: when you click a cell, a number appears telling you how many mines are in the eight cells around it. You must mark all the mines without clicking on one. Kaye (2000) proved that figuring out whether a partly-revealed board can even be solved logically is NP-complete (a very hard class of problems).
 
 ## Rules
 
-1. Board: rectangular grid of hidden cells; a fixed number of mines are
-   placed randomly.
+1. Board: rectangular grid of hidden cells; a fixed number of mines are placed randomly.
 2. On a turn the solver clicks one cell:
    - If the cell contains a mine, the game ends in loss.
-   - Otherwise it reveals a number 0–8 indicating the count of adjacent
-     mines; if the number is 0 the cell auto-clears its neighbours.
-3. The solver may **flag** a cell as a suspected mine (no consequence except
-   marker).
+   - Otherwise it reveals a number 0–8 telling how many mines are in the eight cells around it; if the number is 0 the cell automatically opens all of its surrounding cells.
+3. The solver may **flag** a cell as a suspected mine (just a marker, no consequence).
 4. The puzzle is solved when every non-mine cell has been revealed.
 
 ## Solution status
@@ -45,12 +38,12 @@ require guesses on configurations where inference cannot decide.
 
 ## Consensus on optimal play
 
-- **Exhaust constraint propagation before guessing** — assign mines and safe cells using basic constraint logic (if a "3" has exactly 3 unrevealed neighbours, all are mines; if a "1" has exactly 1 unrevealed neighbour, it is a mine); never guess when deduction is possible.
-- **Use set-difference deduction** — if the constraint of one cell is a subset of another's constraint region, the difference gives exact mine/safe information; e.g., if cells A and B each constrain a shared area plus unique cells, subtract to determine the unique cells.
-- **When forced to guess, choose the cell with the lowest mine probability** — compute approximate mine probabilities for ambiguous regions using the remaining mine count and configuration; open the cell with the smallest chance of being a mine.
-- **The corners and edges are riskier for opening guesses** — the first click is conventionally mine-free in most implementations; open in the centre area to maximise the auto-clear cascade and expose the most cells early.
-- **Mine-counting constraints span the whole board** — the global mine count minus flagged mines limits how many mines remain; when the remaining mine count equals the number of unrevealed cells, all remaining cells are mines and can be flagged without further deduction.
-- **Guessing is sometimes unavoidable** — in approximately 1–3% of standard Expert games, even perfect play requires a 50/50 guess to complete; accept this and choose the lower-probability cell systematically.
+- **Use logic before guessing** — if a "3" has exactly 3 unrevealed cells next to it, all three must be mines; if a "1" has exactly 1 unrevealed cell next to it, that cell is a mine. Never guess when deduction is possible.
+- **Compare overlapping clues** — if one number's area of effect is fully inside another's, the leftover cells give you extra information. For example, if cell A and cell B both look over a shared area plus some unique cells, the difference tells you about the unique ones.
+- **When forced to guess, pick the cell least likely to be a mine** — figure out approximate mine chances for unclear regions using how many mines are left and which cells are still hidden; open the cell with the smallest chance of holding a mine.
+- **Start in the middle for the first click** — most versions make the first click safe anyway; open near the centre to get a big cleared area and reveal many cells at once.
+- **Track the total mine count** — the number of mines left equals the total mines minus the ones you have flagged. When that number matches the number of unrevealed cells, every remaining cell is a mine — flag them all.
+- **Guessing is sometimes unavoidable** — about 1–3% of standard Expert games require a 50/50 guess even with perfect play; accept this and pick the lower-risk cell when it happens.
 
 ## Engines & current best play
 

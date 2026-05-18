@@ -1,7 +1,6 @@
 # 15 puzzle
 
-> The classic sliding-tile puzzle — its solvability is fully characterised and
-> the worst-case optimal solution length ("God's Number") is known to be 80.
+> The classic sliding tile puzzle. We know exactly which starting positions can be solved and that the hardest one takes 80 moves.
 
 | Field | Value |
 |-------|-------|
@@ -20,11 +19,11 @@
 
 ## Description
 
-Fifteen numbered tiles in a 4×4 frame with one empty space; a tile orthogonally
-adjacent to the gap can slide into it. The goal is to reach the ordered
-configuration. As a puzzle it has no game-theoretic value; the meaningful results
-are **which** scrambles are solvable and **how far** the hardest solvable one is
-from solved.
+Fifteen numbered tiles sit in a 4×4 frame with one empty space. A tile next to
+the empty space (up, down, left, or right) can slide into it. The goal is to
+get the tiles in order from 1 to 15. Since this is a puzzle, not a game, the
+interesting questions are **which** scrambled positions can be solved and
+**how many moves** the hardest solvable one takes.
 
 ## Solution status
 
@@ -42,11 +41,11 @@ The 15 puzzle is **strongly solved** as a puzzle:
 
 ## Consensus on optimal play
 
-- **First, check solvability with the parity test** — count the number of inversions in the tile sequence, then add the row number of the blank (counting from the bottom); if that sum is even, the puzzle is solvable; if odd, it is unsolvable (famously, a 14-15 swap produces an unsolvable configuration).
-- **For humans: solve row by row, top to bottom, then column by column** — the standard human method (fill rows 1 and 2, then columns, then solve the last 2×4 or 2×3 block with known sequences) is far from optimal but tractable to learn and apply.
-- **For computers: use IDA* with a 6-6-3 or 5-5-5 pattern database heuristic** — iterative deepening A* with a precomputed lower-bound heuristic (summing taxicab distances of disjoint tile subsets) finds optimal solutions efficiently; this is the standard benchmark algorithm for the 15-puzzle and sliding-tile puzzles generally.
-- **The maximum optimal solution is 80 moves** — any solvable position can be solved in at most 80 single-tile slides; a solver that exceeds 80 moves is suboptimal.
-- **Memorise a few "commutator" sequences for 2×2 and 2×3 blocks** — the hardest part of the puzzle for humans is the final 3-tile block; several short sequences (typically 8–12 moves) cycle tiles without disturbing the rest of the board and can be combined to solve any configuration.
+- **First, check if your puzzle can be solved** — count how many pairs of tiles are out of order (inversions), then add the row number of the empty space (counting from the bottom). If the total is even, the puzzle can be solved. If odd, it cannot (the famous "14-15 swap" produces an impossible puzzle).
+- **For humans: solve row by row, top to bottom** — the standard method (fill rows 1 and 2 first, then solve the last rows as columns) is not the shortest path, but it is easy to learn and use.
+- **For computers: use a smart search algorithm** — computers use IDA* (a search algorithm) with precomputed lookup tables to find the shortest solution for any position efficiently.
+- **The hardest puzzle takes 80 moves** — any solvable position can be solved in at most 80 single-tile slides. If your solver takes more than 80 moves, it is not finding the shortest path.
+- **Learn a few key move sequences for the final block** — the hardest part for humans is the last 3-tile block. Several short sequences (usually 8-12 moves) can cycle tiles without disturbing the rest of the board and can solve any final position.
 
 ## Engines & current best play
 

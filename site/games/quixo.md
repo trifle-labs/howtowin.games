@@ -1,6 +1,6 @@
 # Quixo
 
-> A sliding-cube tic-tac-toe-like on a 5×5 board — solved in 2020 as a draw.
+> A sliding-cube game like tic-tac-toe on a 5x5 board. Solved in 2020: the result is a draw.
 
 | Field | Value |
 |-------|-------|
@@ -19,12 +19,7 @@
 
 ## Description
 
-Played with a 5×5 grid of cubes, each face blank, marked X, or marked O. On a
-turn a player takes a blank or own-marked cube **from the border**, sets it to
-their mark, and pushes it back into a row or column from one end — sliding the
-other cubes along. The winner is the first to form a line of five of their
-marks. (A move that would complete a line of *both* marks counts for the
-opponent, discouraging some pushes.)
+Played with a 5x5 grid of cubes, where each face is either blank, marked X, or marked O. On your turn you take a blank or your own marked cube **from the border**, set it to your mark, and push it back into a row or column from one end — sliding all the other cubes along. The winner is the first to make a line of five of their marks. (A move that would complete a line of *both* marks at the same time counts for the opponent, which discourages certain pushes.)
 
 ## Solution status
 
@@ -38,11 +33,11 @@ game could in principle continue indefinitely, which the analysis accounts for.
 
 ## Consensus on optimal play
 
-- **Only take from the border** — pieces can only be drawn from the perimeter; keep your inner pieces (which cannot be moved) in positions that resist line completion for the opponent.
-- **Use push direction to disrupt opponent lines** — inserting from one end of a row slides all existing pieces one step; calculate whether the insertion breaks an opponent's near-complete line or, worse, completes one.
-- **Avoid completing lines for both players simultaneously** — the rule that a move completing both players' five-in-a-row scores for the opponent is a critical trap; always check the pushed-row result for unintended opponent wins.
-- **Claim blank border cubes before the opponent** — a blank cube can be turned to either player's mark; securing border blanks early gives flexibility and denies conversion opportunities.
-- **Draw is the correct result** — with perfect play neither side wins; practical play exploits small inaccuracies rather than trying to find a theoretical forced win.
+- **Only take cubes from the border** — you can only take pieces from the outer edge. Keep your inner pieces (which cannot be moved) in positions that do not help the opponent make a line.
+- **Use push direction to break opponent lines** — inserting a cube from one end of a row slides all pieces one step. Think about whether your push will break an opponent's near-complete line or, worse, complete one for them.
+- **Do not complete lines for both players at once** — if a move completes a line for both players, it counts as a win for the opponent. Always check before pushing.
+- **Claim blank border cubes before the opponent does** — a blank cube can become either player's mark. Taking border blanks first gives you flexibility and stops the opponent from using them.
+- **Draw with perfect play** — neither side can force a win. Practical play exploits small mistakes instead of looking for a theoretical forced win.
 
 ## Engines & current best play
 

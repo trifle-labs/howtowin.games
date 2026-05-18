@@ -1,7 +1,6 @@
 # Kalah
 
-> The Western commercial mancala — weakly solved for many board sizes, and
-> mostly a big first-player win.
+> A Western commercial version of the ancient mancala (sowing) game. Solved for most common board sizes. The first player almost always wins.
 
 | Field | Value |
 |-------|-------|
@@ -20,11 +19,7 @@
 
 ## Description
 
-Played on two rows of pits plus a scoring "store" (kalah) for each player.
-Players sow seeds counter-clockwise; landing the last seed in your own store
-grants an **extra turn**, and landing in an empty pit on your side **captures**
-the opposite pit. The game is parameterised by *h* holes per side and *s* seeds
-per hole — "Kalah(6,4)" is the common commercial version.
+Played on two rows of pits plus a scoring store (kalah) for each player. Players sow (distribute) seeds counter-clockwise. If the last seed lands in your own store, you get an extra turn. If the last seed lands in an empty pit on your side, you capture the opposite pit. The game is described by the number of holes per side and seeds per hole — "Kalah(6,4)" is the common commercial version.
 
 ## Solution status
 
@@ -40,12 +35,12 @@ genuinely depends on (*h*,*s*).)
 
 ## Consensus on optimal play
 
-- **The first extra-turn chain is decisive** — chains of extra turns (last seed lands in your store) can empty your side before the opponent moves much; counting seeds to maximise your opening chain length is the most important skill.
-- **Capture the opponent's largest pit whenever possible** — the capture rule (land last seed in an empty pit on your side, take opposite pit) is a high-value action; preferentially set up captures from pits facing full opponent pits.
+- **The first extra-turn chain is decisive** — chains of extra turns (when the last seed lands in your store) can empty your side before the opponent moves much. Counting seeds to maximize your opening chain length is the most important skill.
+- **Capture the opponent's largest pit whenever possible** — the capture rule (if the last seed lands in an empty pit on your side, take the opposite pit) is high-value. Set up captures from your pits that face full opponent pits.
 - **Deplete pits that enable opponent chains** — if the opponent has a pit whose count lands in their store, emptying or disrupting that pit before they can use it breaks their chain.
-- **Keep your store count ahead early** — the game ends when one side's pits are all empty; if your store is well ahead when this happens you win regardless of the opponent sweeping their remaining seeds.
-- **Avoid leaving a full strip for your opponent** — if your side has many seeds scattered evenly, the opponent can set up a series of captures; unevenness on your side (some full, some empty) is harder to exploit.
-- **For Kalah(6,4) the first-player winning line starts with pit 3 or 4** — computer analysis shows specific first moves that initiate winning chains; knowing even one winning opening line is sufficient for a human to win against non-computer opponents.
+- **Keep your store count ahead early** — the game ends when one side's pits are all empty. If your store is well ahead when this happens you win regardless of the opponent sweeping their remaining seeds.
+- **Avoid leaving a full strip for your opponent** — if your side has many seeds scattered evenly, the opponent can set up a series of captures. Unevenness on your side (some full, some empty) is harder to exploit.
+- **For Kalah(6,4) the first-player winning line starts with pit 3 or 4** — computer analysis shows specific first moves that start winning chains. Knowing even one winning opening line is enough for a human to win against non-computer opponents.
 
 ## Engines & current best play
 

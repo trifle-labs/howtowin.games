@@ -1,6 +1,6 @@
 # Janggi
 
-> Korean chess — closely related to xiangqi, and likewise unsolved.
+> Korean chess, closely related to Chinese chess (xiangqi). Also unsolved.
 
 | Field | Value |
 |-------|-------|
@@ -19,12 +19,7 @@
 
 ## Description
 
-Played on a 9×10 board derived from [xiangqi](xiangqi.md), but with several rule
-differences: there is **no river**, pieces sit and move on intersections, the
-Elephant has a longer move, players may **pass**, and a distinctive opening
-"setup" choice lets each side swap the starting squares of their horse and
-elephant on either wing. A bare-general "draw by counting" (material score)
-rule resolves long endgames.
+Played on a 9x10 board derived from Chinese chess (xiangqi), but with several rule differences: there is no river (the empty zone that divides the board in Chinese chess), pieces sit and move on intersections, the Elephant has a longer move, players may pass, and a distinctive opening setup choice lets each side swap the starting squares of their horse and elephant on either wing. A "draw by counting" rule (based on material score) resolves long endgames.
 
 ## Solution status
 
@@ -37,12 +32,12 @@ attention than chess, shogi, or xiangqi.
 
 ## Consensus on optimal play
 
-- **Opening setup choice sets the character of the game** — choosing "horse-elephant" vs. "elephant-horse" order on each wing changes attack patterns for the whole game; standard competitive practice favours specific setup pairings based on what the opponent selects.
-- **The pass rule is a tempo weapon** — unlike xiangqi or chess, a legal pass is allowed; passing to force the opponent into zugzwang (a position where any move worsens their position) is a key endgame and certain middlegame technique.
-- **Elephants are stronger in Janggi than in xiangqi** — the Janggi elephant has a slightly different leap and is more active; treat it as a major piece and don't trade it casually.
-- **Palace diagonals are critical attack lines** — the general (king) moves freely within the nine-cell palace, including diagonally; threatening the general along a palace diagonal forces defensive responses and can enable back-rank tactics.
-- **Material count resolves long endgames** — the draw-by-counting rule means a player with more material can claim a draw after 100 moves; know the piece values and when to invoke or avoid this rule.
-- **Cannons weaken as pieces are traded** — cannons must jump over exactly one piece to capture; in open positions with few pieces, cannons become passive; plan exchanges with cannon activity in mind.
+- **Opening setup choice sets the character of the game** — choosing "horse-elephant" vs. "elephant-horse" order on each wing changes attack patterns for the whole game. Standard competitive practice favors specific setup pairings based on what the opponent selects.
+- **The pass rule is a tempo weapon** — unlike Chinese chess or regular chess, you are allowed to pass your turn. Passing to force the opponent into a position where any move they make worsens their situation is a key endgame technique.
+- **Elephants are stronger in Janggi than in Chinese chess** — the Janggi elephant has a slightly different leap and is more active. Treat it as a major piece and do not trade it casually.
+- **Palace diagonals are critical attack lines** — the general (king) moves freely within the nine-cell palace, including diagonally. Threatening the general along a palace diagonal forces defensive responses and can enable back-rank tactics.
+- **Material count resolves long endgames** — the draw-by-counting rule means a player with more material can claim a draw after 100 moves. Know the piece values and when to invoke or avoid this rule.
+- **Cannons weaken as pieces are traded** — cannons must jump over exactly one piece to capture. In open positions with few pieces, cannons become passive. Plan exchanges with cannon activity in mind.
 
 ## Engines & current best play
 

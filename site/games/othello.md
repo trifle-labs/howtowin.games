@@ -1,6 +1,6 @@
 # Othello
 
-> The disc-flipping classic — and, since 2023, a weakly solved draw.
+> The classic disc-flipping game. Since 2023 it has been solved: the result is a draw.
 
 | Field | Value |
 |-------|-------|
@@ -19,10 +19,7 @@
 
 ## Description
 
-Played on an 8×8 board. Players alternately place a disc of their colour so
-that it brackets one or more straight lines of enemy discs between the new disc
-and another of their own; all bracketed discs flip colour. A player with no
-legal move passes. When neither can move, the player with more discs wins.
+Played on an 8x8 board. Players take turns placing a disc of their own colour so that it traps one or more straight lines of the opponent's discs between the new disc and another of the player's own discs; all trapped discs flip over to the player's colour. If you have no legal move, you pass. When neither player can move, the player with more discs on the board wins.
 
 ## Solution status
 
@@ -39,12 +36,12 @@ win** (by 4 discs) via exhaustive search.
 
 ## Consensus on optimal play
 
-- **Corners are permanent** — a disc in a corner can never be flipped; obtaining corners is the single most valuable strategic objective and drives almost all high-level play.
-- **Edges adjacent to corners are dangerous** — placing in the "C-square" (one step diagonally inward from a corner) or "X-square" (diagonally adjacent) gives the opponent a path to take the corner; avoid these early.
-- **Minimise your opponent's mobility** — leaving the opponent with few legal moves is more important than maximising your disc count mid-game; a player who must pass has surrendered tempo.
-- **Disc count mid-game is misleading** — having fewer discs in the middle game often gives better positional control; a small disc count mid-game with good edge access tends to win in the endgame flip cascade.
-- **Endgame is exact calculation** — in the last 15–20 moves the position resolves by forced sequences; strong players and engines calculate this phase exhaustively.
-- **Draw with perfect play** — the 2023 Takizawa solution confirms neither side can force a win from the standard opening; practical play aims to deviate from balanced lines.
+- **Corners are permanent** — a disc in a corner can never be flipped over. Getting corners is the single most valuable goal and drives almost all high-level play.
+- **Be careful near corners** — placing a disc one step diagonally inward from a corner (the "C-square" or "X-square") gives the opponent a way to take the corner. Avoid these early.
+- **Limit the opponent's options** — leaving the opponent with few legal moves is more important than having lots of discs in the middle of the game. A player with no moves has to pass and loses control.
+- **Mid-game disc count can fool you** — having fewer discs in the middle often gives you better positional control. A small disc count with good access to edges tends to win in the endgame when many discs flip at once.
+- **Calculate the endgame exactly** — in the last 15-20 moves, the position resolves into forced sequences. Strong players and computers calculate this phase completely.
+- **Draw with perfect play** — the 2023 solution (Takizawa) confirms that neither side can force a win from the standard opening with perfect play. In practice, players try to steer away from balanced positions.
 
 ## Engines & current best play
 

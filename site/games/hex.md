@@ -1,7 +1,6 @@
 # Hex
 
-> The connection game that *cannot* be drawn — proven a first-player win, but
-> the proof refuses to say how.
+> A connection game that cannot end in a draw. We know the first player can always win, but we do not know the winning strategy.
 
 | Field | Value |
 |-------|-------|
@@ -20,9 +19,7 @@
 
 ## Description
 
-Played on a rhombic board of hexagons (commonly 11×11). One player connects the
-top and bottom edges with a chain of their stones, the other connects left and
-right. Players alternately place one stone; stones are never moved or removed.
+Played on a rhombic (diamond-shaped) board of hexagons, commonly 11x11. One player tries to connect the top and bottom edges with a chain of their stones; the other tries to connect left and right. Players take turns placing one stone, and stones are never moved or removed.
 
 ## Solution status
 
@@ -49,12 +46,12 @@ advantage.)
 
 ## Consensus on optimal play
 
-- **Virtual connections are the currency of Hex** — two groups of the same colour are "virtually connected" if they can be joined regardless of the opponent's next move; maintaining virtual connections across the board is the core calculation.
-- **The acute corners belong to no one, and to both** — the corner cells are weak entry points for both sides; the critical real estate is the cells adjacent to the corner that control the corner approaches.
-- **Ladders and ladder escapes decide games** — a ladder (a forced sequence pushing a chain along an edge) is unavoidable unless a pre-placed "escape" stone breaks it; recognising potential ladders and placing escape stones early is essential.
-- **Take the short-path cells** — cells that lie on most shortest winning paths between your two sides have the highest value; prioritise them and contest the opponent's equivalent cells.
-- **The swap rule changes first-move selection** — with swap in effect, the first move should be on a moderately strong cell; too-central or too-corner openings will be swapped; the classic swappable cell is the exact centre.
-- **Block by building, not by responding** — placing a stone that advances your own connection while also threatening the opponent's chain is more efficient than pure defence; pure response play cedes tempo.
+- **Virtual connections are the key concept** — two groups of the same color are "virtually connected" if they can be joined no matter what the opponent does next. Maintaining virtual connections across the board is the core calculation.
+- **The corner cells are weak for both sides** — the critical real estate is the cells next to the corner that control the approaches to the corner.
+- **Ladders and ladder escapes decide games** — a ladder (a forced sequence pushing a chain along an edge) is unstoppable unless a pre-placed "escape" stone breaks it. Recognizing potential ladders and placing escape stones early is essential.
+- **Take the short-path cells** — cells that lie on most shortest winning paths between your two sides have the highest value. Prioritize them and contest the opponent's equivalent cells.
+- **The swap rule changes first-move selection** — with the swap (pie) rule in effect, the first move should be on a moderately strong cell. Too-central or too-corner openings will be swapped. The classic swappable cell is the exact center.
+- **Block by building, not by responding** — placing a stone that advances your own connection while also threatening the opponent's chain is more efficient than pure defense. Pure response play cedes the initiative.
 
 ## Engines & current best play
 

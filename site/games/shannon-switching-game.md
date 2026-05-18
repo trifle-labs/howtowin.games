@@ -1,7 +1,6 @@
 # Shannon switching game
 
-> An abstract graph game, completely solved by matroid theory — the winner is
-> decided by the graph's structure before play begins.
+> An abstract game played on a network of points. Completely solved by mathematics — the winner is decided by the structure of the network before the game even starts.
 
 | Field | Value |
 |-------|-------|
@@ -20,10 +19,7 @@
 
 ## Description
 
-Played on a graph with two distinguished vertices, A and B. One player, **Short**,
-"secures" edges; the other, **Cut**, deletes edges. Short wins by securing a
-path of edges connecting A and B; Cut wins by deleting enough edges that no such
-path can exist. (Bridg-it is the special case where the graph is a grid.)
+Played on a graph (a network of points connected by lines) with two special points, A and B. One player, **Short**, claims lines; the other, **Cut**, deletes lines. Short wins by claiming a path of lines that connects A to B. Cut wins by deleting enough lines so that no such path can exist. (Bridg-it is a special version where the network is a grid.)
 
 ## Solution status
 
@@ -45,11 +41,11 @@ mathematics" results in game theory.
 
 ## Consensus on optimal play
 
-- **Check the two edge-disjoint spanning trees condition** — before playing, determine whether the graph contains two edge-disjoint trees (spanning trees) each connecting A to B; if yes, Short wins as second player.
-- **Short's strategy: maintain a spanning tree** — Short should always claim the edge that "saves" one of their two target spanning trees; whenever Cut deletes an edge from one tree, Short claims an edge that rebuilds the other.
-- **Cut's strategy: target the bridge** — Cut wins by finding a "bridge" edge (one whose deletion disconnects A from B) and deleting it; if no such bridge exists in the secured subgraph, Cut must try to prevent Short from completing a path.
-- **The outcome is determined before play** — since the winner is decided purely by graph structure (a polynomial-time check), the strategic value of the game is entirely in computing the matroid condition, not in tactical play.
-- **Bridg-it is the canonical instance** — the special case on a grid graph (Bridg-it) is the most studied; Short wins as second player by the pairing strategy on the symmetric grid.
+- **Check for two separate spanning trees between A and B** — before playing, check whether the graph contains two trees (branching networks) that each connect A to B and do not share any lines. If yes, Short wins even as second player.
+- **Short: always protect at least one tree** — Short should always claim a line that "saves" one of their two target trees. Whenever Cut deletes a line from one tree, Short claims a line that fixes the other.
+- **Cut: look for the bridge** — Cut wins by finding a single "bridge" line (one whose removal disconnects A from B) and deleting it. If no such bridge exists in the part Short has claimed, Cut must try to stop Short from completing any path.
+- **The winner is decided before anyone moves** — the outcome depends purely on the graph's structure, which can be checked quickly. The real strategy is in the setup, not in the moves.
+- **Bridg-it is the classic example** — the special case played on a grid (Bridg-it) is the most studied. Short wins as second player using a pairing strategy on the symmetric grid.
 
 ## Engines & current best play
 

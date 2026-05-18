@@ -1,7 +1,6 @@
 # Y
 
-> A connection game even purer than Hex — every game has a winner, so the first
-> player provably wins.
+> A connection game on a triangular board where a player must connect all three sides. It can never end in a draw, so the first player has a proven winning strategy.
 
 | Field | Value |
 |-------|-------|
@@ -20,10 +19,7 @@
 
 ## Description
 
-Played on a triangular board tiled with hexagons, with three sides. Players
-alternately place stones of their colour; a player wins by forming a single
-connected chain that touches **all three sides** of the triangle. Hex is in fact
-a special case of Y played on a corner of the board.
+Played on a triangular board made of hexagons, with three sides. Players take turns placing stones of their color. A player wins by forming a single connected chain that touches all three sides of the triangle. Hex is actually a special case of Y, played on just one corner of the board.
 
 ## Solution status
 
@@ -42,11 +38,11 @@ boards. Small boards are weakly solved by exhaustive search. Y is described in
 
 ## Consensus on optimal play
 
-- **Aim for the board's centroid, not its centre cell** — unlike Hex, where the exact centre point is on the shortest path between two sides, Y's three-way connection requirement means the ideal "hub" is roughly equidistant from all three sides; pieces near the board's centre of mass anchor a spanning structure efficiently.
-- **Virtual connections reduce the number of required moves** — a virtual connection between two stones (a bridge using two pivots that the opponent cannot simultaneously block) effectively extends your chain safely; maintain virtual connections toward all three sides.
-- **All three sides must be reached, so balance your expansion** — focusing on a two-side connection early is wasteful if the third side is unaddressed; ensure your extending stones stay roughly equidistant from all three sides.
-- **Cutting the opponent's bridge is often the best move** — taking the single pivot of an opponent's virtual connection destroys their only clean route to a side; identify these pivots and contest them before the opponent solidifies.
-- **The swap (pie) rule addresses the first-mover advantage** — Y is typically played with a swap rule; open with a stone that you would be content to defend from either side, usually near the centroid.
+- **Aim for the center of mass, not the exact center cell** — unlike Hex, where the center is on the shortest path between two sides, Y's three-sided win condition means the best spot is roughly equal distance from all three sides. Pieces near the board's center serve as a hub for all three connections.
+- **Use virtual connections to extend safely** — a virtual connection (a bridge using two key cells that the opponent cannot block at the same time) lets you extend your chain safely. Keep building virtual connections toward all three sides.
+- **Balance your expansion toward all three sides** — focusing on only two sides early is wasteful if the third side is not addressed. Keep your extending stones roughly equal distance from all three sides.
+- **Cut the opponent's bridges** — identifying and taking the key cell of the opponent's virtual connection destroys their only clean path to a side. Fight for these key cells before the opponent locks them down.
+- **Use the swap rule to balance first-move advantage** — Y is usually played with a swap rule. Open with a stone near the center of mass that you would be happy to defend from either side.
 
 ## Engines & current best play
 

@@ -1,7 +1,6 @@
 # Unlur
 
-> An asymmetric connection game — the two players win in different ways,
-> on different sides.
+> A connection game where the two players have different win conditions: one connects opposite sides, the other forms a closed loop. It has not been solved.
 
 | Field | Value |
 |-------|-------|
@@ -20,23 +19,15 @@
 
 ## Description
 
-Unlur (Jorge Gómez Arrausi, 2002) is a hexagonal-board connection game in
-which **the two players have different victory conditions**. One player ("Black")
-wins by connecting opposite sides; the other ("White") wins by *preventing*
-the connection and forming any closed loop of their own stones. A bidding
-opening rule sets the handicap.
+Unlur (Jorge Gomez Arrausi, 2002) is a connection game on a hexagonal board where the two players have different win conditions. One player (Black) wins by connecting two opposite sides of the board with their stones. The other player (White) wins by forming a closed loop (a ring) of their own stones. A bidding system at the start sets the handicap to balance the game.
 
 ## Rules
 
-1. Hexagonal grid board (commonly side 6 or 7).
-2. **Bidding opening**: one player offers a handicap (a number of free Black
-   moves); the other chooses which side to play. This sets up a near-fair
-   starting position.
-3. Players then alternate placing one stone on an empty cell.
-4. **Black** wins by connecting their two opposite sides with a chain of their
-   own stones.
-5. **White** wins by making a closed loop ("ring") of their own stones — any
-   cycle that fully encloses one or more cells.
+1. Hexagonal grid board (commonly 6 or 7 cells per side).
+2. Bidding opening: one player offers a handicap (a number of free Black moves). The other player then chooses which side to play. This creates a roughly fair starting position.
+3. Players then take turns placing one stone on an empty cell.
+4. Black wins by connecting their two opposite sides of the board with a chain of their own stones.
+5. White wins by making a closed loop (a ring) of their own stones — any cycle that fully surrounds one or more cells.
 
 ## Solution status
 
@@ -46,11 +37,11 @@ published solution.
 
 ## Consensus on optimal play
 
-- **Black (connector) must maintain a spanning threat** — as in Hex, Black needs a connection path from side to side; virtual connections (two half-connections sharing a pivot cell) allow Black to advance efficiently and are harder for White to cut.
-- **White (ring-maker) aims for enclosing loops, not just blocking** — White wins by forming any closed cycle, not by preventing Black's connection per se; White should aim for triangular or small hexagonal loops in the centre-board while still disrupting Black's path.
-- **The bidding handicap sets the tempo for the entire game** — in Unlur's bidding opening, assess whether a large Black handicap gives Black too many pre-placed stones; bid the minimum that keeps the position balanced.
-- **Black should route through the central corridor** — the centre of the hexagonal board offers the shortest path from side to side; detouring to the edge to avoid White's pieces usually costs more moves than the detour saves in safety.
-- **White's loop can form anywhere, so defend globally** — Black cannot simply block one cluster; White can build a loop in any corner, so Black must watch the whole board and cut White's forming cycles before they close.
+- **Black must keep a connection threat across the board** — as in Hex, Black needs a path from one side to the other. Creating virtual connections (two partial connections that share a key cell) lets Black advance efficiently and is harder for White to cut.
+- **White should aim for loops, not just blocking** — White wins by forming any closed loop, not just by stopping Black's connection. White should aim for triangular or small hexagonal loops in the center while still disrupting Black's path.
+- **The bidding handicap sets the pace** — when setting the handicap in the opening bid, judge whether a large Black handicap would give Black too many pre-placed stones. Bid the smallest number that keeps the game balanced.
+- **Black should go through the center** — the center of the hexagonal board offers the shortest path from side to side. Going around the edges to avoid White's pieces usually costs more moves than it saves.
+- **White can form a loop anywhere, so Black must watch the whole board** — White can build a loop in any corner. Black must pay attention to the entire board and cut off White's forming cycles before they close.
 
 ## Engines & current best play
 

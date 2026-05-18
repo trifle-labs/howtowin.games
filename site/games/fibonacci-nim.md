@@ -1,7 +1,6 @@
 # Fibonacci Nim
 
-> A one-heap take-away game with a moving limit, solved via the Zeckendorf
-> (Fibonacci) representation of numbers.
+> A game where you take objects from a pile, with a limit that changes each turn. Solved using Fibonacci numbers.
 
 | Field | Value |
 |-------|-------|
@@ -20,10 +19,10 @@
 
 ## Description
 
-A single heap of *n* objects. The first player may remove any positive number
-of objects but **not the entire heap**. Thereafter a player may remove at most
-*twice* the number their opponent just removed (and at least one). The player
-taking the last object wins.
+The game starts with a single pile of *n* objects. The first player can take
+any number of objects but **cannot take the whole pile**. After that, each
+player can take at most *twice* as many objects as the opponent just took
+(and must take at least one). The player who takes the last object wins.
 
 ## Solution status
 
@@ -41,11 +40,11 @@ analogously.
 
 ## Consensus on optimal play
 
-- **If *n* is a Fibonacci number, you are in a P-position (second player wins)** — being first to move from any Fibonacci heap size is losing with optimal opponent play; your only strategy is to hope for opponent error.
-- **Otherwise, write *n* in its Zeckendorf representation and take the smallest Fibonacci summand** — the Zeckendorf representation of *n* is its unique sum of non-consecutive Fibonacci numbers; removing that smallest Fibonacci piece leaves the opponent in a P-position (a Fibonacci number remainder), and every response they make allows you to apply the same rule again.
-- **Never take so many that your move number doubles to the opponent's desired response** — the doubling-limit rule means your opponent can respond with up to twice your removal; after your Zeckendorf move, the remaining pile is a Fibonacci number, and any removal from a Fibonacci number leads to a non-Fibonacci position — which is an N-position for the next player. The strategy self-reinforces.
-- **On the first move, take only the smallest Fibonacci summand of *n*** — the restriction that you cannot take the entire heap on the first move is the only special constraint; the Zeckendorf rule already handles this because the smallest Fibonacci summand of any non-Fibonacci *n* is always less than *n*.
-- **Fibonacci pairs in Wythoff's game are the analogous safe positions** — the golden-ratio structure here (Fibonacci P-positions) mirrors Wythoff's game; players familiar with one can read across to the other.
+- **If *n* is a Fibonacci number (1, 2, 3, 5, 8, 13, 21...), you are in a losing position** — going first from any Fibonacci-sized pile means you lose against a perfect opponent. Your only hope is that the opponent makes a mistake.
+- **Otherwise, write *n* as a sum of non-consecutive Fibonacci numbers (its Zeckendorf representation) and take the smallest one** — this unique way of breaking down a number leaves the opponent with a Fibonacci-sized pile (a losing position for them). Every response they make lets you apply the same rule again.
+- **Never take too many** — the doubling limit means the opponent can take up to twice what you took. After you make your Zeckendorf move, the remaining pile is a Fibonacci number, and any move the opponent makes from a Fibonacci number gives you a winning position. The strategy takes care of itself.
+- **On your first move, take only the smallest Fibonacci part of *n*** — the rule that you cannot take the whole pile on the first move is the only special limit. The Zeckendorf method handles this naturally because the smallest Fibonacci part of a non-Fibonacci number is always smaller than the whole pile.
+- **This works like Wythoff's game** — the golden ratio pattern here (Fibonacci numbers as losing positions) is similar to Wythoff's game. If you know one, you can understand the other.
 
 ## Engines & current best play
 

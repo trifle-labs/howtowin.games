@@ -1,7 +1,6 @@
 # Dots and Boxes
 
-> A childhood classic with surprisingly deep theory — solved for small grids,
-> open in general.
+> A childhood classic with surprisingly deep strategy. Solved for small grids, open for large ones.
 
 | Field | Value |
 |-------|-------|
@@ -20,9 +19,9 @@
 
 ## Description
 
-On a grid of dots, players alternately draw one unit edge between adjacent dots.
-Completing the fourth side of a 1×1 box scores that box **and grants another
-move**. When all boxes are claimed, the player with more boxes wins.
+On a grid of dots, players take turns drawing one line between two neighboring
+dots. If you draw the fourth side of a 1×1 box, you claim that box **and get
+another turn**. When all boxes are claimed, the player with more boxes wins.
 
 ## Solution status
 
@@ -43,11 +42,11 @@ boards and for endgames, open for full-size competition play.
 
 ## Consensus on optimal play
 
-- **Avoid completing the third side of any box until forced** — drawing the third side "opens" a chain for the opponent to sweep; expert play delays entering chains as long as possible and aims to force the opponent to open them.
-- **Count long chains and control their parity** — a "long chain" is a sequence of 3+ boxes that, once opened, can all be captured in one turn; Berlekamp's long-chain rule: if the number of long chains is odd, the first player wins (in normal play); use this parity count to guide your moves.
-- **Use the double-cross sacrifice to control chain parity** — when forced to give up a chain, you can sacrifice two boxes by leaving a "double-cross" (cross instead of completing the end of the chain); this hands the opponent two boxes but lets you close the chain yourself and take the rest, while changing the chain-parity count in your favour.
-- **Never take a 3-chain without considering the sacrifice** — automatically sweeping a 3-box chain may give your opponent the winning parity; the sacrifice (give 2, take the rest) is often the correct play to maintain favourable chain parity.
-- **In the opening, create loops not chains** — closed loops are harder to exploit offensively than open chains; preferring loop-forming moves over chain-creating moves in the midgame gives more endgame flexibility.
+- **Avoid drawing the third side of any box until you have to** — drawing the third side "opens" a chain for the opponent to take. Expert players delay opening chains as long as possible and try to force the opponent to open them instead.
+- **Count long chains and control whether they are odd or even** — a "long chain" is a line of 3 or more connected boxes that, once opened, can all be taken in one turn. Berlekamp's rule: if the number of long chains is odd, the first player wins. Use this count to guide your moves.
+- **Use the double-cross sacrifice to control chain count** — when forced to give up a chain, you can sacrifice two boxes by leaving what is called a "double-cross." This gives the opponent two boxes but lets you close the chain yourself and take the rest, while changing the chain count in your favor.
+- **Never take a 3-chain without thinking about the sacrifice** — automatically taking a 3-box chain may give the opponent the winning chain count. The sacrifice (give 2, take the rest) is often the right move to keep the chain count favorable.
+- **In the opening, create loops instead of chains** — closed loops are harder for the opponent to exploit. Preferring loop-forming moves over chain-creating moves in the midgame gives you more endgame flexibility.
 
 ## Engines & current best play
 

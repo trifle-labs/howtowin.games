@@ -1,7 +1,6 @@
 # Pente
 
-> Five-in-a-row with custodial captures — the capture rule makes it richer than
-> Gomoku, and it remains unsolved.
+> Five-in-a-row with captures by surrounding. The capture rule makes it deeper than Gomoku, and it is still unsolved.
 
 | Field | Value |
 |-------|-------|
@@ -20,12 +19,7 @@
 
 ## Description
 
-Played on a 19×19 grid. Players alternately place stones, aiming for **five in
-a row**. The twist is **custodial capture**: a pair of your stones flanked
-exactly on both ends by enemy stones is captured and removed. A player can also
-win by making **five captures** (ten captured stones). The capture rule means
-stones are not permanent — distinguishing Pente sharply from
-[Gomoku](gomoku.md).
+Played on a 19x19 grid. Players take turns placing stones, trying to get **five in a row**. The special rule is **custodial capture**: if two of your stones are surrounded on both ends by enemy stones (in a straight line), those two stones are captured and removed. A player can also win by making **five captures** (capturing ten stones total). Because stones can be removed, Pente is very different from [Gomoku](gomoku.md) where stones stay put.
 
 ## Solution status
 
@@ -39,11 +33,11 @@ early moves — but no game-theoretic value has been proven.
 
 ## Consensus on optimal play
 
-- **Keep a dual win-threat alive** — always maintain at least one viable path to five-in-a-row AND a realistic race to five capture-pairs; an opponent who must defend both simultaneously will fail to stop one.
-- **Control the 5-capture race** — captures simultaneously remove opponent material, advance your win counter, and reduce the opponent's capture count; threatening a capture on every other move pressures the opponent continuously.
-- **Build immune rows** — a potential five-in-a-row where both flanks are guarded against bracketing is "immune" to capture disruption; look for patterns where the endpoint stones cannot be sandwiched.
-- **Opening restriction exists because first player is too strong** — tournament rules restrict the first player's third stone to the fifth intersection or further out; respect this by not trivially exploiting the opening in casual play.
-- **Defend captures with counter-captures** — when the opponent threatens to bracket your pair, the fastest defence is often a counter-threat that forces them to protect their own pair rather than execute the capture.
+- **Keep both winning paths alive** — always have at least one path to five-in-a-row AND a realistic race to five captures. If the opponent has to defend both at the same time, they will fail to stop one.
+- **Control the capture race** — captures remove enemy stones, bring you closer to winning by captures, and reduce the opponent's capture count. Threatening a capture on every other move puts constant pressure on the opponent.
+- **Build capture-proof rows** — if a five-in-a-row is protected at both ends so it cannot be surrounded, it is immune to capture disruption. Look for patterns where the end stones cannot be sandwiched.
+- **The opening is restricted because the first player is too strong** — tournament rules force the first player's third stone to be placed at least five intersections away or further. Do not try to exploit the opening trivially in casual play.
+- **Counter-capture to defend** — when the opponent is about to surround your pair, the fastest defence is often to threaten a capture of your own, forcing them to protect their own pair instead.
 
 ## Engines & current best play
 

@@ -1,7 +1,6 @@
 # Fox and Geese
 
-> A classic asymmetric hunt game on a cross-shaped board — solved in the
-> combinatorial-game-theory literature as a win for the geese with correct play.
+> An uneven chase game on a cross-shaped board. The geese can always win if they play correctly.
 
 | Field | Value |
 |-------|-------|
@@ -20,13 +19,7 @@
 
 ## Description
 
-Played on a cross-shaped (plus-shaped) subset of a checkers board. One player
-controls a single **fox**, the other controls a group of **geese** (commonly 13,
-though counts vary by tradition). The fox moves like a checkers king and may, in
-some rule sets, capture geese by jumping; the geese move forward/sideways only
-and never capture. The geese win by hemming the fox in so it cannot move; the
-fox wins by breaking through the goose formation (or reducing the geese below a
-threshold where they can no longer trap it).
+Played on a cross-shaped (plus-shaped) board made from a checkers board. One player controls a single fox, and the other controls a group of geese (usually 13, though the number varies). The fox moves like a checkers king (any direction, any distance diagonally) and may be allowed to capture geese by jumping over them. The geese can only move forward or sideways and never capture. The geese win by trapping the fox so it cannot move. The fox wins by breaking through the geese formation (or by reducing the number of geese below what they need to trap it).
 
 ## Solution status
 
@@ -40,12 +33,12 @@ state space is tiny, the game is also trivially solvable by exhaustive search.
 
 ## Consensus on optimal play
 
-- **Maintain an unbroken front** — the geese must advance as a solid, gapless line; any hole lets the fox slip through and the game is lost.
-- **Never retreat a goose** — geese can only move forward or sideways, so a goose committed to the wrong square can create permanent weaknesses; plan each step.
-- **Advance the centre geese first** — building a convex front that pushes the fox toward the corners before compressing it minimises the chance of a flank break.
-- **Fox: probe the flanks** — the fox's only winning chance is an edge or corner escape; head for the sides and look for the slightest gap in the formation.
-- **Fox: force pace changes** — threatening a rush can bait geese into out-of-sync moves; the fox should use the entire board to disrupt the rhythm of the advancing wall.
-- **Endgame: geese aim to corner, not just stop** — hemming the fox against a wall without a second row of geese behind can allow a diagonal escape; the trap needs depth.
+- **Keep a solid, unbroken line** — the geese must advance as a single, gap-free wall. Any hole lets the fox slip through, and the game is lost.
+- **Never move a goose backward** — geese can only move forward or sideways, so putting a goose in the wrong spot creates permanent weaknesses. Plan each step.
+- **Advance the center geese first** — build a curved front that pushes the fox toward the corners before closing in. This minimizes the chance of the fox breaking out on the side.
+- **Fox: test the edges** — the fox's only winning chance is an escape along the edge or into a corner. Head for the sides and look for the smallest gap in the geese formation.
+- **Fox: change speed to cause mistakes** — threatening a fast rush can trick the geese into moving out of sync. Use the whole board to disrupt the rhythm of the advancing wall.
+- **Endgame: don't just trap the fox, pin it in a corner** — stopping the fox against a wall without a second row of geese behind it can let the fox escape diagonally. The trap needs depth.
 
 ## Engines & current best play
 

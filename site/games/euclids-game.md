@@ -1,7 +1,6 @@
 # Euclid's game
 
-> A two-pile subtraction game whose winning positions are governed by the
-> golden ratio.
+> A subtraction game with two piles of numbers. The winning positions follow the golden ratio. Fully solved.
 
 | Field | Value |
 |-------|-------|
@@ -20,19 +19,16 @@
 
 ## Description
 
-A small impartial game with a number-theoretic flavour: it strips down the
-Euclidean algorithm into a two-player contest. Despite its tiny rules, the
-losing-position structure is exactly the [Wythoff](wythoffs-game.md)-style
-golden-ratio one.
+A small math game that turns the Euclidean algorithm (the method for finding
+the greatest common divisor of two numbers) into a two-player contest. Despite
+its simple rules, the losing positions follow the golden ratio, just like
+[Wythoff's game](wythoffs-game.md).
 
 ## Rules
 
-1. The position is an ordered pair of positive integers (a, b).
-2. On your turn, you must subtract a positive multiple of the smaller from the
-   larger — i.e. replace (a, b) with (a, b − ka) for some k ≥ 1 with b − ka ≥ 0.
-3. The player who reduces one pile to zero (or who cannot move, equivalently)
-   *wins* under the standard convention (alt: the player who makes the last
-   legal move wins — same outcomes).
+1. The game starts with two positive whole numbers (a, b).
+2. On your turn, you must subtract a positive multiple of the smaller number from the larger one. For example, if the numbers are (3, 14), you could subtract 3 × 4 = 12 from 14 to get (3, 2).
+3. The player who reduces one number to zero wins.
 
 ## Solution status
 
@@ -45,11 +41,11 @@ P-position.
 
 ## Consensus on optimal play
 
-- **Check whether b/a ≥ φ (≈ 1.618) — if yes, you win; if no, you are in a P-position** — this single inequality is the complete decision rule; from a winning (N-position) you can always move to a P-position; from a P-position any move leads to an N-position for your opponent.
-- **From an N-position, your winning move crosses the golden-ratio boundary** — find k such that b − ka satisfies a/(b − ka) ≥ φ (i.e., leave the ratio below φ); there is exactly one such valid k in any N-position (or occasionally two, if b is an exact multiple of a).
-- **When b/a < φ, you are in a P-position — only one move is legal** — there is only one integer multiple k available (k = floor(b/a) = 1), so you have no choice; you will hand your opponent an N-position. There is nothing to optimise here.
-- **The game terminates quickly** — because each move strips the larger pile by at least the smaller pile, the position shrinks like the Euclidean algorithm: at most O(log(max(a,b))) moves total. A game starting from (8, 13) or any Fibonacci pair is a P-position.
-- **Fibonacci pairs are the canonical P-positions** — (1,1), (1,2), (2,3), (3,5), (5,8)… (consecutive Fibonacci numbers) all satisfy b/a → φ from below and are second-player wins; recognise these to avoid playing into them.
+- **Check if the bigger divided by the smaller is at least about 1.618 — if yes, you win; if no, you are in a losing position** — this single math check is the complete rule. From a winning position you can always move to a losing one for your opponent. From a losing position, any move you make gives the opponent a winning position.
+- **From a winning position, your move must cross the golden ratio boundary** — find a multiple to subtract so that the new ratio of the numbers falls below 1.618. There is always exactly one such move (or two if the bigger is an exact multiple of the smaller).
+- **When the ratio is below 1.618, you are in a losing position and only one move is legal** — you have no real choice. You will hand the opponent a winning position.
+- **The game ends fast** — each move cuts the larger number by at least the smaller, so the game shrinks quickly, like the Euclidean algorithm. A game starting from (8, 13) or any consecutive Fibonacci numbers is a losing position for the first player.
+- **Fibonacci pairs are the classic losing positions** — (1,1), (1,2), (2,3), (3,5), (5,8)... (consecutive Fibonacci numbers) are all losing for the first player. Learn to recognize these so you do not move into them.
 
 ## Engines & current best play
 

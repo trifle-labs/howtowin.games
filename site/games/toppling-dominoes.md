@@ -1,7 +1,6 @@
 # Toppling Dominoes
 
-> A row-of-dominoes game whose values cover a clean range of switches and
-> infinitesimals — a beloved CGT teaching example.
+> A game played on a row of colored dominoes. Players topple dominoes to remove them while trying to be the one who makes the last move. It is solved as a theory.
 
 | Field | Value |
 |-------|-------|
@@ -20,20 +19,14 @@
 
 ## Description
 
-A simple partisan game played on a row of coloured dominoes. The CGT analysis
-yields a value structure of "switches" and "integers" that demonstrates several
-core ideas — atomic weight, temperature, and the values of "hot" games — in
-miniature.
+A game played on a row of colored dominoes. Each domino is blue (belongs to one player), red (belongs to the other), or green (either player can topple it). A player topples a domino in either direction, which removes that domino and all others that would fall in that direction. The player who cannot move loses.
 
 ## Rules
 
-1. A row of dominoes, each coloured **blue (L)**, **red (R)**, or **green
-   (either)**.
-2. **Left** moves: pick a blue or green domino and topple it **left** or
-   **right** — toppling a domino removes it together with every domino that
-   would fall in the chosen direction (contiguous tiles in that direction).
-3. **Right** moves: pick a red or green domino and topple it left or right.
-4. The player unable to move loses (normal play).
+1. A row of dominoes, each colored blue (one player's color), red (the other player's color), or green (either player can topple it).
+2. One player (Left) moves by picking a blue or green domino and toppling it left or right. Toppling removes that domino together with every domino that would fall in that direction.
+3. The other player (Right) moves by picking a red or green domino and toppling it left or right.
+4. The player who cannot move loses.
 
 ## Solution status
 
@@ -45,11 +38,11 @@ its value computations stay tractable while exhibiting nontrivial structure
 
 ## Consensus on optimal play
 
-- **Compute each row's CGT value independently** — Toppling Dominoes is a disjunctive sum; evaluate each separate row segment, then sum the values and use standard CGT move selection.
-- **Play the hottest component first** — in a multi-row game, the row with the highest temperature gives the largest advantage to whichever player moves in it; always respond to the opponent's hot move in the same-hot or next-hottest row.
-- **Toppling left vs. right changes which pieces remain** — the direction of topple determines which dominoes are eliminated; choose the direction that leaves a row with the most favourable remaining value for you.
-- **Green (either-player) dominoes are often the key** — green dominoes can be toppled by either side; a green domino sitting between large blue and red blocks can swing the game; contest or use them before pure-colour dominoes.
-- **Switches favour the player who moves in them last** — a row that is a "switch" (value {a | b} with a ≠ b) favours the player who gets the last topple there; count the parity of remaining moves in each switch row to decide whether to enter it now or wait.
+- **Think about each row on its own** — the game is made up of separate rows. Evaluate each row on its own and then consider the whole picture. Play in the row where you have the most to gain.
+- **Play in the most valuable row first** — when there are multiple rows, one row is usually much more valuable than the others. Always respond to the opponent's move in the most valuable row.
+- **Choose your topple direction carefully** — toppling left vs. right determines which dominoes stay on the board. Choose the direction that leaves the best position for you.
+- **Green dominoes are critical** — green dominoes can be toppled by either player. A green domino sitting between large blue and red sections can swing the game. Contest them before the plain-colored dominoes.
+- **Watch the parity in switch positions** — some row positions give an advantage to whichever player makes the last topple there. Count how many remaining moves are left in each such row to decide whether to play there now or wait.
 
 ## Engines & current best play
 

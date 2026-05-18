@@ -1,7 +1,6 @@
 # Pentago
 
-> Five-in-a-row with a twist — literally: each move rotates a quadrant of the
-> board. Strongly solved in 2014.
+> Five-in-a-row with a twist: after each move you rotate a quarter of the board. Solved in 2014.
 
 | Field | Value |
 |-------|-------|
@@ -20,12 +19,7 @@
 
 ## Description
 
-Played on a 6×6 board divided into four 3×3 quadrants. A turn has two parts:
-place one marble of your colour on any empty cell, **then rotate any one
-quadrant 90°** (either direction). The winner is the first to get five of their
-marbles in a row — horizontally, vertically, or diagonally — at any point,
-including immediately after a rotation. If the board fills with no line, it is a
-draw.
+Played on a 6x6 board divided into four 3x3 quadrants. Each turn has two parts: place one marble of your colour on any empty cell, **then rotate any one of the four quadrants by 90 degrees** (either direction). The winner is the first to get five of their marbles in a row — horizontally, vertically, or diagonally — at any point, including right after a rotation. If the board fills up with no line, it is a draw.
 
 ## Solution status
 
@@ -42,11 +36,11 @@ interacts with eight possible rotations.
 
 ## Consensus on optimal play
 
-- **Rotation is a weapon, not an afterthought** — rotating a quadrant can simultaneously extend your own row and disrupt an opponent's near-complete row; always evaluate rotation options as aggressively as placement options.
-- **Avoid the rotational rebound** — placing a marble that creates a three-in-a-row also gives the opponent a quadrant-rotation that can break it; never commit to a near-complete line without considering how the opponent's next rotation interacts.
-- **Build in two quadrants at once** — rows and diagonals that span two quadrants are rotation-resistant, because the opponent would need to twist the same quadrant you are building in to disrupt both paths.
-- **Centre cells of each quadrant** — the centre of a 3×3 quadrant remains adjacent to the most cells after any rotation; place there early to maximise the reach of your chain.
-- **First player wins with correct play** — the 2014 solution confirms first-player advantage; practical play requires exploiting that advantage aggressively from move one.
+- **Rotation is just as important as placement** — rotating a quadrant can extend your own row and break an opponent's near-complete row at the same time. Always think about rotation options as carefully as where to place.
+- **Watch out for the rotation rebound** — when you place a marble to make three in a row, the opponent can rotate a quadrant to break it. Never commit to a near-complete line without thinking about how the opponent's next rotation will affect it.
+- **Build across two quadrants** — rows and diagonals that cross from one quadrant into another are harder to break, because the opponent would need to rotate the same quadrant you are building in to disrupt both paths.
+- **Take the centre of each quadrant** — the centre cell of each 3x3 quadrant stays next to the most cells after any rotation. Place there early to maximise the reach of your chain.
+- **First player wins with correct play** — the 2014 solution confirms the first player has a winning advantage. In real games, you must press that advantage aggressively from move one.
 
 ## Engines & current best play
 

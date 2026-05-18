@@ -1,7 +1,6 @@
 # Bridg-it
 
-> A connection game with a complete, elegant solution — the first player wins,
-> and we know exactly how.
+> A connection game with a complete, elegant solution. The first player wins, and we know exactly how.
 
 | Field | Value |
 |-------|-------|
@@ -20,11 +19,11 @@
 
 ## Description
 
-Bridg-it (David Gale's game, marketed in the 1960s) is played on two
-interleaved grids of dots — one for each player. Players alternately draw a
-short edge connecting two adjacent dots of their own colour, never crossing an
-opponent's edge. One player tries to build a connected path between the top and
-bottom, the other between left and right. It is a specific instance of the
+Bridg-it (David Gale's game, sold in the 1960s) is played on two overlapping
+grids of dots — one grid for each player. Players take turns drawing a short
+line connecting two neighboring dots of their own color, without crossing the
+opponent's lines. One player tries to build a path from top to bottom, the
+other from left to right. It is a specific version of the
 [Shannon switching game](shannon-switching-game.md).
 
 ## Solution status
@@ -46,10 +45,10 @@ strategy — the definition of strongly solved.
 
 ## Consensus on optimal play
 
-- **First player makes one strong opening move, then mirrors using the pairing strategy** — after the opening, every edge on the board (except the one already played) can be paired with a partner edge; whenever the opponent plays one edge of a pair, the first player immediately plays its partner, guaranteeing a connected path regardless of what the opponent does.
-- **The pairing strategy is the complete answer** — there is no need for heuristic reasoning; the pairing strategy is a mathematically proven winning strategy and can be executed move-by-move without lookahead.
-- **Second player cannot win against the pairing strategy** — the game is decided; playing second in Bridg-it is a losing position with no recourse, making the swap (pie) rule essential for competitive fair play.
-- **The game has no draws** — by the parity of the board construction, one player must form a winning connection before the other; this is guaranteed by a topological argument (similar to Hex's no-draw proof).
+- **First player makes one strong opening move, then mirrors using the pairing strategy** — after the opening, every line on the board (except the one already played) can be paired with a partner line. Whenever the opponent plays one line of a pair, the first player immediately plays its partner. This guarantees a winning path no matter what the opponent does.
+- **The pairing strategy is all you need** — no need for guesswork. The pairing strategy is a mathematically proven winning method that can be followed move by move without any lookahead.
+- **Second player cannot win against the pairing strategy** — the game is decided. Playing second in Bridg-it is a losing position with no way out, which is why the swap (pie) rule is needed for fair competitive play.
+- **The game has no draws** — because of how the board is built, one player must form a winning connection before the other. This is guaranteed by a topological proof (similar to Hex's no-draw proof).
 
 ## Engines & current best play
 

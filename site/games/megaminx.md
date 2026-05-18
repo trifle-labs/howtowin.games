@@ -1,6 +1,6 @@
 # Megaminx
 
-> Dodecahedral twist puzzle — God's number not yet established.
+> A 12-sided twist puzzle like a Rubik's Cube but much larger. The hardest position has not yet been determined.
 
 | Field | Value |
 |-------|-------|
@@ -18,17 +18,13 @@
 
 ## Description
 
-The Megaminx is a dodecahedral analogue of Rubik's Cube: 12 pentagonal
-faces, 30 edges, 20 corners. Its state space is roughly 10^68 positions —
-many orders of magnitude beyond the Rubik's Cube — so the exact diameter
-("God's number") of its move graph has not been pinned down.
+The Megaminx is a 12-sided (dodecahedral) version of the Rubik's Cube: 12 five-sided faces, 30 edges, 20 corners. Its state space is roughly 10^68 positions — many steps beyond the Rubik's Cube — so the longest shortest solution (God's number) has not been determined.
 
 ## Rules
 
-1. Puzzle: dodecahedron with each of 12 faces rotatable by 72°.
-2. On a move the solver rotates one face by 72° clockwise or
-   counterclockwise.
-3. The puzzle is solved when every face shows a single colour.
+1. Puzzle: a 12-sided (dodecahedron) shape with each face rotatable by 72 degrees.
+2. On a move the solver rotates one face by 72 degrees clockwise or counterclockwise.
+3. The puzzle is solved when every face shows a single color.
 
 ## Solution status
 
@@ -38,11 +34,11 @@ elusive. **[verify]** the current authoritative best bound.
 
 ## Consensus on optimal play
 
-- **Use layer-by-layer methods adapted for 12 faces** — the standard speed-solving approach solves the top face and top layer first, then proceeds layer by layer to the bottom, using F2L (first two layers) and OLL/PLL analogues adapted for pentagonal faces.
-- **Learn commutators for edge and corner insertion** — the Megaminx has the same piece types as the Rubik's Cube (corners, edges, centres) and the same commutator/conjugate technique for inserting a piece without disturbing already-solved pieces; the pattern is the same, just more of it.
-- **Solve "star" on the first face first** — the first face plus its five adjacent edge pieces (the "star" pattern) is the natural starting sub-goal; getting the star right sets up the entire first layer.
-- **Last layer algorithms: carry over cube knowledge** — the OLL and PLL algorithms for the Rubik's Cube last layer translate to Megaminx last-layer cases; a speed-cuber with advanced cube knowledge can apply the same patterns with adapted move sequences.
-- **For speedsolving: learn fewer algorithms, use insertions** — because the Megaminx has more cases than the cube, beginners solve it with longer human-friendly methods; competitive solvers use full-algorithm sets, but efficient insertions reduce move count.
+- **Use layer-by-layer methods adapted for 12 faces** — the standard speed-solving approach solves the top face and top layer first, then proceeds layer by layer to the bottom, using methods adapted for five-sided faces.
+- **Learn commutators for edge and corner insertion** — the Megaminx has the same piece types as the Rubik's Cube (corners, edges, centers) and the same technique for inserting a piece without disturbing already-solved pieces. The pattern is the same, just more of it.
+- **Solve the "star" on the first face first** — the first face plus its five neighboring edge pieces (the "star" pattern) is the natural starting sub-goal. Getting the star right sets up the entire first layer.
+- **Last layer algorithms: carry over cube knowledge** — the algorithms for the Rubik's Cube last layer translate to Megaminx last-layer cases. A speed-solver with advanced cube knowledge can apply the same patterns with adapted move sequences.
+- **For speed-solving: learn fewer algorithms, use insertions** — because the Megaminx has more cases than the cube, beginners solve it with longer, easier-to-learn methods. Competitive solvers use full algorithm sets, but efficient insertions reduce move count.
 
 ## Engines & current best play
 

@@ -1,6 +1,6 @@
 # Tapatan
 
-> A Filipino three-in-a-row game — strongly solved as a draw.
+> A Filipino three-in-a-row game played on a 3x3 grid with diagonals. With perfect play it always ends in a draw.
 
 | Field | Value |
 |-------|-------|
@@ -19,20 +19,15 @@
 
 ## Description
 
-A traditional Filipino game in the [Three Men's Morris](three-mens-morris.md)
-family: nine points in a 3×3 lattice (with diagonals), three stones per player,
-and a two-phase placement-then-movement structure.
+A traditional Filipino game similar to Three Men's Morris. It is played on a 3x3 grid of dots (with diagonal lines included), with three stones per player. There is a placement phase followed by a movement phase.
 
 ## Rules
 
-1. Board: 3×3 grid of points connected by lines including both diagonals.
+1. Board: a 3x3 grid of points connected by lines, including both diagonals.
 2. Each player has 3 stones.
-3. **Placement**: players alternate placing stones on empty points. Three in a
-   row wins.
-4. **Movement**: once all six stones are placed, players alternate sliding a
-   stone along a line to an adjacent empty point.
-5. A player making three-in-a-row wins. If no progress is being made (typical
-   repetition rule: 30 moves without a three-in-a-row), the game is a draw.
+3. Placement: players take turns placing stones on empty points. Three in a row wins immediately.
+4. Movement: once all six stones are placed, players take turns sliding a stone along a line to a neighboring empty point.
+5. A player making three in a row wins. If neither player can win (typically after 30 moves without a three-in-a-row), the game is a draw.
 
 ## Solution status
 
@@ -44,11 +39,11 @@ correct value is a draw.
 
 ## Consensus on optimal play
 
-- **Take the centre on the first move** — the centre point lies on four of the eight possible lines (row, column, and both diagonals); occupying it first maximises winning threats and forces the opponent to respond defensively.
-- **If the centre is taken, reply with a corner** — corners lie on three lines each, more than edge points (two lines each); owning two corners connected through the centre is the most common winning setup.
-- **Block every two-in-a-row immediately** — with only 3 stones per side and a tiny board, any unblocked double threat wins in one move; defence is non-negotiable.
-- **In the movement phase, shuttle rather than over-commit** — with draws available by repetition, the key is to create a double threat (fork) where one stone will complete a row regardless of the opponent's block.
-- **Avoid giving the opponent a fork** — a fork occurs when one player threatens two different three-in-a-rows simultaneously; in the movement phase, never step your stone to a position that creates a fork for your opponent.
+- **Take the center on the first move** — the center point sits on four of the eight possible lines (row, column, and both diagonals). Taking it first gives you the most winning threats and forces the opponent to play defensively.
+- **If the center is taken, take a corner** — corners sit on three lines each, more than edge points (which sit on two lines each). Owning two corners connected through the center is the most common winning setup.
+- **Block every two-in-a-row immediately** — with only 3 stones per side and a tiny board, an unblocked two-in-a-row wins in one move. Defense is absolutely necessary.
+- **In the movement phase, create double threats** — try to create a fork where one stone threatens to complete a row in two different ways. Even if the opponent blocks one, the other wins.
+- **Do not give the opponent a fork** — a fork means a player threatens two different three-in-a-rows at the same time. Never move your stone to a position that creates a fork for the opponent.
 
 ## Engines & current best play
 

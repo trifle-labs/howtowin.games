@@ -1,7 +1,6 @@
 # Quarto
 
-> A four-in-a-row game with a devious twist — *your opponent* chooses the piece
-> you must place. Reported solved as a draw.
+> A four-in-a-row game with a tricky twist: your opponent chooses the piece you have to place. Reported solved as a draw.
 
 | Field | Value |
 |-------|-------|
@@ -20,12 +19,7 @@
 
 ## Description
 
-Played on a 4×4 board with 16 distinct pieces, each having four binary
-attributes (tall/short, light/dark, round/square, solid/hollow). The twist: on
-your turn you place the piece **your opponent hands you**, then hand them the
-piece they must place next. A player wins by completing a line of four pieces
-that **share at least one attribute**. (A common variant also counts 2×2
-squares.)
+Played on a 4x4 board with 16 different pieces, each with four yes/no qualities (tall or short, light or dark, round or square, solid or hollow). The twist: on your turn you place the piece **your opponent gives you**, then you give them the piece they have to place next. A player wins by getting four pieces in a row that **share at least one quality**. (A common variant also counts 2x2 squares.)
 
 ## Solution status
 
@@ -43,11 +37,11 @@ over.
 
 ## Consensus on optimal play
 
-- **Never hand over a "quarto-completing" piece** — before handing the opponent their next piece, check all partial lines of three with a shared attribute; if any such line exists and the piece completes it, find a different piece to hand over.
-- **Build lines that require rare attributes** — a partial row of three "tall round" pieces needs one more tall round piece to complete it; if only one such piece remains unplaced, control of that piece is decisive.
-- **Force the opponent to hand you a dangerous piece** — by holding the board in a state where almost every remaining piece completes some line, you corner the opponent into handing over a winner.
-- **The 2×2 square variant is harder to defend** — if playing with the 2×2 square win condition, also track partial 2×2 groups; the extra winning conditions sharply limit the "safe" pieces to hand over.
-- **Midgame piece selection matters as much as placement** — placing optimally but handing over a game-losing piece is the same as playing a losing move; the hand-over decision is half the game.
+- **Never hand the opponent a piece that would let them win** — before giving the opponent their next piece, check all rows of three that share a quality. If any such line exists and the piece you are about to hand over would complete it, give them a different piece.
+- **Build lines that need rare pieces** — a partial row of three "tall round" pieces needs one more tall round piece to finish. If only one such piece is left unplaced, controlling that piece is decisive.
+- **Trap the opponent into handing you a winning piece** — set up the board so that almost every remaining piece completes some line. This corners the opponent into giving you a piece that wins.
+- **The 2x2 square variant is harder to defend** — if playing with the 2x2 square win condition, also watch for partial 2x2 groups. The extra winning conditions sharply cut down the number of "safe" pieces to hand over.
+- **Choosing what to give is half the game** — you can place pieces perfectly but still lose by handing over a bad piece. The hand-over decision is just as important as where you place.
 
 ## Engines & current best play
 

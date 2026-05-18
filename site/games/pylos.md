@@ -1,7 +1,6 @@
 # Pylos
 
-> A 4×4 stacking pyramid game — reported weakly solved as a first-player win
-> by distributed retrograde analysis.
+> A stacking pyramid game on a 4x4 base. Reported solved: the first player wins with perfect play.
 
 | Field | Value |
 |-------|-------|
@@ -20,29 +19,18 @@
 
 ## Description
 
-Pylos (David Parlett, 1990s) is played on a 4×4 base of indentations that
-support a pyramid; each layer up has one fewer row and column. Players
-alternately place balls of their colour on empty positions; balls placed on
-**four square-adjacent same-level balls** can be played on top, stacking up
-the pyramid. The player forced to place the apex ball loses.
+Pylos (David Parlett, 1990s) is played on a 4x4 base of holes that support a pyramid. Each layer above has one fewer row and column. Players take turns placing balls of their colour on empty spots. If you place a ball on top of **four same-level balls that form a square**, you can stack up the pyramid. The player who is forced to place the very top (apex) ball loses.
 
 ## Rules
 
-1. Board: 4×4 base; balls form a stable pyramid as 4×4 + 3×3 + 2×2 + 1×1 = 30
-   positions.
-2. Each player has 15 balls of their colour, held off-board in reserve.
-3. On a turn, a player either:
+1. Board: 4x4 base with layers above getting smaller: 4x4 + 3x3 + 2x2 + 1x1 = 30 total positions.
+2. Each player has 15 balls of their colour, kept off the board in reserve.
+3. On your turn, you can do one of these:
    - **Place** a new ball on any empty base position; **or**
-   - **Place** a new ball on top of any 2×2 square of balls (regardless of
-     colour) that is fully filled — *promotion*; **or**
-   - **Move up**: take one of your own balls from a *lower* level (where its
-     removal doesn't undermine an upper ball) and replay it onto a 2×2 square
-     it can be promoted to.
-4. **Bonus**: forming a row of four same-coloured balls (horizontally or
-   vertically) on any layer lets the player remove one or two of their own
-   balls back to reserve.
-5. The player who places the **apex** ball loses (it is the 30th ball, and the
-   loser is the one who has no playable move except the apex).
+   - **Place** a new ball on top of any fully-filled 2x2 square of balls (no matter what colour they are) — called a *promotion*; **or**
+   - **Move up**: take one of your own balls from a lower level (where removing it will not make a higher ball fall) and replay it onto a 2x2 square it can be promoted to.
+4. **Bonus**: if you make a row of four same-coloured balls (horizontally or vertically) on any layer, you may remove one or two of your own balls back to your reserve.
+5. The player who places the **apex** (very top) ball loses. It is the 30th and last ball, and the loser is the one with no other legal move.
 
 ## Solution status
 
@@ -53,11 +41,11 @@ write-up.
 
 ## Consensus on optimal play
 
-- **Avoid being the one to complete a 2×2 square the opponent can promote from** — promoting is free tempo for the opponent; completing the last side of a 2×2 square only to hand promotion rights to the opponent is a common beginner error.
-- **Earn row bonuses aggressively** — forming a four-in-a-row on any layer allows you to reclaim one or two balls; this conserves your reserve and extends your options, especially in the endgame when the apex approaches.
-- **Control the upper layers** — placing on higher levels early locks in the pyramid structure; the player who places at level 2 and 3 has earlier visibility of the apex position and can manoeuvre to force the opponent to fill it.
-- **Reclaim before the apex is forced** — use bonus reclaims to avoid running out of balls just as the apex becomes the only legal move.
-- **The loser places the apex ball** — therefore force the opponent to take the last available non-apex slot; count remaining empty positions carefully in the endgame.
+- **Do not complete a 2x2 square for the opponent** — filling in the last side of a 2x2 square gives the opponent a free promotion (they can place on top of it). A common beginner mistake.
+- **Go for row bonuses aggressively** — making four in a row on any layer lets you take one or two of your balls back. This saves your reserve and gives you more options, especially near the end when the apex approaches.
+- **Control the higher levels** — placing on upper layers early locks in the structure. The player who gets pieces on levels 2 and 3 first can see the apex coming and force the opponent to place it.
+- **Reclaim balls before you run out** — use row bonuses to keep balls in reserve so you are not forced into placing the apex when no other moves remain.
+- **The loser places the apex** — count the remaining empty spots carefully. Force the opponent to take the last non-apex position so they are the one stuck with the apex.
 
 ## Engines & current best play
 

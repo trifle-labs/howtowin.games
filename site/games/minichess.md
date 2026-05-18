@@ -1,7 +1,6 @@
 # Minichess
 
-> Chess on a smaller board — several variants exist, and at least one (Gardner's
-> 5×5) is weakly solved.
+> Chess on a smaller board. Several variants exist, and at least one (Gardner's 5x5) has been solved.
 
 | Field | Value |
 |-------|-------|
@@ -20,11 +19,11 @@
 
 ## Description
 
-"Minichess" covers a family of chess variants on reduced boards, designed to
-keep chess's pieces and rules while shrinking the search space. The best-known
-solving target is **Gardner Minichess**: a 5×5 board with a full set of chess
-piece types per side. Others include **Los Alamos chess** (6×6, no bishops),
-**MicroChess** (4×5), and various 5×6 and 4×8 layouts.
+"Minichess" is a family of chess-like games played on smaller boards. The rules
+and pieces are the same as regular chess, but because the board is smaller the
+game is shorter and easier to analyze. The best-known version is **Gardner
+Minichess**: a 5x5 board with all the usual chess pieces. Others include **Los
+Alamos chess** (6x6, no bishops), **MicroChess** (4x5), and various other sizes.
 
 ## Solution status
 
@@ -44,12 +43,12 @@ chess tactics.
 
 ## Consensus on optimal play
 
-- **Gardner 5×5: perfect play is a draw** — both sides can avoid losing with correct play; humans who know the basic tactical patterns (forks, pins in a tiny space) should aim to draw against any opponent.
-- **The small board amplifies tactical immediacy** — in Gardner 5×5, there is almost no "quiet" development phase; pieces come into contact immediately and threats must be calculated from move one; tactical alertness matters more than strategic manoeuvring.
-- **Knight forks are especially powerful on a 5×5 board** — the knight's L-shaped jump covers a significant fraction of the entire board; a misplaced piece can be forked from many squares; keep pieces out of knight-fork range of the opponent's knight.
-- **Pawns promote very quickly** — with only a few ranks to traverse, pawn races to promotion are a constant danger; count pawn-race outcomes before making other moves.
-- **Los Alamos (6×6, no bishops): open files and rooks dominate** — without bishops, the open diagonal game disappears; rooks and queens control open files, and knights cover diagonal weaknesses; seize open files early.
-- **For larger unsolved variants, use standard chess heuristics** — development, king safety, and control of the centre apply; engines based on standard chess evaluation functions play these variants well despite the absence of a formal solution.
+- **Gardner 5x5: perfect play leads to a draw** — both sides can avoid losing if they play correctly. If you know the basic tactics (forks, pins in a tiny space), aim for a draw against any opponent.
+- **Every move matters immediately on a small board** — in Gardner 5x5 there is almost no quiet opening; pieces meet right away and you must calculate threats from move one. Quick thinking matters more than long-term strategy.
+- **Knight forks are extra powerful on 5x5** — the knight's L-shaped jump can reach a big part of the board from almost anywhere. Keep your pieces out of range of the opponent's knight.
+- **Pawns promote fast** — with only a few rows to travel, pawns can become queens very quickly. Always count who would win a pawn race before making other moves.
+- **Los Alamos (6x6, no bishops): rooks rule** — without bishops, the diagonal game disappears. Rooks and queens control the straight lines, and knights cover diagonal gaps. Take control of open rows and columns early.
+- **For larger unsolved variants, use normal chess strategy** — develop your pieces, keep your king safe, and control the center. Chess engines adapted for these variants play well even without a formal solution.
 
 ## Engines & current best play
 

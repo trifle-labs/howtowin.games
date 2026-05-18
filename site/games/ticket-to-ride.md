@@ -1,6 +1,6 @@
 # Ticket to Ride
 
-> The modern railway-route board game — unsolved due to card randomness and mapping complexity.
+> A board game where players collect train cards and claim railway routes. It is unsolved due to randomness in card draws.
 
 | Field | Value |
 |-------|-------|
@@ -18,16 +18,7 @@
 
 ## Description
 
-Ticket to Ride is a turn-based strategy railway game designed by Alan R. Moon
-and published by Days of Wonder in 2004. Players collect coloured train-car
-cards and claim routes on a map to connect cities shown on their destination
-tickets. On each turn, a player may draw two train cards, draw additional
-destination tickets, or claim a route by discarding matching coloured cards.
-Shorter routes (1–3 segments) score modestly; longer routes (4–6 segments)
-score disproportionately higher. The game ends when a player's train pieces
-run low, after which all other players take one final turn. The highest total
-score — route points plus completed-ticket values minus uncompleted-ticket
-penalties, plus bonuses — wins.
+Ticket to Ride is a strategy board game designed by Alan R. Moon and published in 2004. Players collect colored train cards and claim railway routes on a map to connect cities shown on their destination tickets. On each turn, a player may draw two train cards, draw additional destination tickets, or claim a route by discarding matching colored cards. Shorter routes (1-3 segments) give modest points, while longer routes (4-6 segments) give much higher points. The game ends when a player's train pieces run low, and then each other player takes one final turn. The highest total score wins — points from routes plus completed ticket values minus any uncompleted ticket penalties, plus bonuses.
 
 ## Solution status
 
@@ -41,24 +32,12 @@ analysis is computationally prohibitive. What exists instead is strong
 
 ## Consensus on optimal play
 
-- **Claim long routes early** — longer routes (4+ segments) score more points
-  per card and also block opponents from using those paths; claiming a 6-length
-  route early is almost always correct.
-- **Collect cards of one or two colours** — focusing your draw on a small
-  palette increases the probability of completing your tickets; spreading across
-  many colours leaves you short of every route.
-- **Draw face-up cards when the colour helps, draw blind when it doesn't** —
-  face-up cards give colour certainty, but blind draws offer a chance at
-  locomotives (wilds). Snapping a face-up locomotive costs your second draw.
-- **Keep some flexibility in your ticket hand** — holding 3–4 destination
-  tickets gives fallback options if one route is blocked; don't discard tickets
-  to the point where only one path to victory remains.
-- **Watch opponents' builds to infer their tickets** — when an opponent claims
-  an otherwise-odd route, they are almost certainly connecting two cities on
-  one of their tickets; use that information to block them.
-- **The 10-point longest-road bonus shapes the whole game** — plan a continuous
-  chain across the board; even if you don't win the bonus, a connected network
-  is usually the most efficient way to complete tickets.
+- **Claim long routes early** — longer routes (4+ segments) give more points per card and also block opponents from using those paths. Claiming a 6-length route early is almost always the right move.
+- **Collect cards of just one or two colors** — focusing your draws on a small set of colors makes it more likely you can complete your tickets. Spreading across many colors leaves you short of every route.
+- **Draw face-up cards when the color helps, draw blind when it does not** — face-up cards give you a certain color, while blind draws might give you locomotives (wild cards). Taking a face-up locomotive costs both of your draws.
+- **Keep some flexibility in your ticket hand** — holding 3-4 destination tickets gives you backup options if one route gets blocked. Do not discard tickets to the point where only one path to victory remains.
+- **Watch what the opponent builds to guess their tickets** — when an opponent claims an otherwise unusual route, they are probably connecting two cities on one of their tickets. Use that information to block them.
+- **The 10-point longest-road bonus shapes the whole game** — plan a continuous chain across the board. Even if you do not win the bonus, a connected network is usually the most efficient way to complete your tickets.
 
 ## References
 

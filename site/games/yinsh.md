@@ -1,7 +1,6 @@
 # YINSH
 
-> A flipping-discs connection-and-capture game on a hexagonal board —
-> unsolved.
+> A game where players flip rings and remove rows of markers on a hexagonal board. It has not been solved.
 
 | Field | Value |
 |-------|-------|
@@ -16,6 +15,7 @@
 | Solved by | — |
 | State-space complexity | Large |
 | Game-tree complexity | Large |
+| **Playable** | yinsh |
 
 ## Description
 

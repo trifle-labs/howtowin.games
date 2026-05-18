@@ -1,6 +1,6 @@
 # Lights Out
 
-> Linear-algebra puzzle: toggle lights to turn them all off.
+> Press lights to turn them all off. The puzzle is solved using linear algebra.
 
 | Field | Value |
 |-------|-------|
@@ -19,19 +19,14 @@
 
 ## Description
 
-Lights Out (Tiger Electronics, 1995) is a 5×5 grid of buttons; pressing a
-button toggles itself and its orthogonal neighbours. The goal is to turn off
-every light from a given initial pattern. The puzzle reduces to solving a
-linear system over GF(2).
+Lights Out (Tiger Electronics, 1995) is a 5x5 grid of buttons. Pressing a button toggles (switches on/off) itself and its neighbors up, down, left, and right. The goal is to turn off every light from a given starting pattern. The puzzle can be solved using simple math (linear algebra).
 
 ## Rules
 
-1. Board: 5×5 grid; each cell is either lit or dark.
-2. On a move the player presses one cell; that cell and its orthogonal
-   neighbours (up, down, left, right, if any) toggle on/off.
+1. Board: 5x5 grid. Each cell is either lit or dark.
+2. On a move the player presses one cell. That cell and its neighbors up, down, left, and right (if any) toggle on/off.
 3. The objective is to reach the all-dark configuration.
-4. The order in which cells are pressed does not matter (each cell needs only
-   to be pressed 0 or 1 times in total).
+4. The order in which cells are pressed does not matter (each cell needs only to be pressed 0 or 1 times in total).
 
 ## Solution status
 
@@ -42,11 +37,11 @@ exactly 2^23 of the 2^25 initial states on the 5×5 board are solvable. For
 
 ## Consensus on optimal play
 
-- **"Chase the lights" row by row** — working from row 1 to row 4, press the cell in the current row that toggles the lit cell in the row above; this systematically eliminates lights one row at a time.
-- **Order of presses does not matter** — because toggling is an XOR operation, each button needs to be pressed 0 or 1 times total; rearranging the order gives the same result; simplify by planning a press-set, not a sequence.
-- **Check the bottom row after chasing** — after chasing through rows 1–4, the bottom row will have a specific lit pattern; there are only 5 cells (32 possible patterns); a lookup table maps each pattern to the required top-row presses that correct it (a second sweep solves).
-- **First check solvability** — approximately 1/4 of random 5×5 initial states are unsolvable (outside the image of the toggle matrix); if the puzzle does not resolve after the standard procedure, it may be genuinely unsolvable.
-- **For the minimum-press solution, use Gaussian elimination** — the linear-algebra formulation over GF(2) finds not just a solution but the minimum-button-press solution directly.
+- **"Chase the lights" row by row** — working from row 1 to row 4, press the cell in the current row that toggles the lit cell in the row above. This systematically eliminates lights one row at a time.
+- **Order of presses does not matter** — each button needs to be pressed 0 or 1 times total. Rearranging the order gives the same result. Simplify by planning which buttons to press, not what order to press them.
+- **Check the bottom row after chasing** — after chasing through rows 1-4, the bottom row will have a specific lit pattern. There are only 5 cells (32 possible patterns). A lookup table maps each pattern to the required top-row presses that correct it.
+- **First check solvability** — about 1/4 of random 5x5 starting states cannot be solved. If the puzzle does not resolve after the standard procedure, it may be genuinely impossible.
+- **For the minimum-press solution, use the math method** — the linear algebra approach finds not just any solution but the one that uses the fewest button presses.
 
 ## Engines & current best play
 

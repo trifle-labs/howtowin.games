@@ -1,6 +1,6 @@
 # Eleven Men's Morris
 
-> A larger morris variant — not formally solved.
+> A larger morris variant with 11 stones per player. Not formally solved.
 
 | Field | Value |
 |-------|-------|
@@ -19,23 +19,20 @@
 
 ## Description
 
-A morris variant intermediate between [Nine Men's Morris](nine-mens-morris.md)
-and [Twelve Men's Morris](twelve-mens-morris.md): an extended board with 24
-points (or 32, depending on the regional variant) and **11 stones per player**.
-It is documented historically in several European traditions but is much less
-played and analysed than the 9- or 12-stone games. **[verify]** — the exact
-board geometry varies by source.
+Eleven Men's Morris is a morris variant that sits between
+[Nine Men's Morris](nine-mens-morris.md) and
+[Twelve Men's Morris](twelve-mens-morris.md). It is played on a larger board
+with 24 points (or 32, depending on the version) and **11 stones per player**.
+It appears in several European historical traditions but is much less played
+and studied than the 9- or 12-stone games.
 
 ## Rules
 
-1. Board: typically the standard 24-point morris board, possibly with extra
-   connections (diagonals) added to enable mills along extra lines. **[verify]**
+1. Board: usually the standard 24-point morris board, sometimes with extra diagonal lines added so mills can be made along more lines.
 2. Each player has **11 stones**.
-3. **Placement phase**: players alternate placing stones on empty points,
-   removing an opponent's stone for each mill (three-in-a-row) formed.
-4. **Movement phase**: when all 22 stones are placed, players alternate sliding
-   stones to adjacent empty points; mills again remove opponent stones.
-5. A player reduced below 3 stones, or unable to move, loses.
+3. **Placement phase**: Players take turns placing stones on empty points. When you make a mill (three in a row), you remove one opponent stone.
+4. **Movement phase**: After all 22 stones are placed, players take turns sliding stones to neighboring empty points. Mills remove opponent stones as before.
+5. A player who has fewer than 3 stones left, or cannot move, loses.
 
 ## Solution status
 
@@ -46,11 +43,11 @@ canonicalisation rather than feasibility. Treat as **unsolved** and **[verify]**
 
 ## Consensus on optimal play
 
-- **Form mills while denying opponent mills during placement** — the placement phase is decisive; placing a stone that creates your mill (removing an opponent stone) while blocking a near-mill of theirs simultaneously is the highest-value move type.
-- **Remove opponent stones that support multiple potential mills** — when you make a mill, target the opponent stone that participates in the most of their potential mill lines; this cripples their future attack options most efficiently.
-- **Create double-mill "hammers"** — a piece that can slide back and forth between two mill-forming positions creates a mill on every other turn; setting up this oscillating structure with 11 stones is the key winning technique.
-- **Maintain at least 4 stones to avoid the "flying" endgame** — in most morris variants, a player with 3 stones gains the right to jump anywhere; if you have exactly 3 stones you lose this deterrent; keep well above 3 while grinding the opponent down toward the 3-stone threshold.
-- **Nine Men's Morris strategy carries over** — principles proven for the solved 9-stone game (e.g., Gasser 1996) apply here: controlling corner and T-junction points, building crossed mill threats, and forcing zugzwang in the movement phase are all valid strategic goals.
+- **Make mills while blocking opponent mills during placement** — the placement phase decides the game. The best move is one that makes a mill for you (removing an opponent stone) while also blocking a near-mill of theirs.
+- **When you get a mill, remove the opponent's most connected stone** — when you make three in a row, take the opponent stone that is part of the most of their potential mill lines. This cripples their future attacks most efficiently.
+- **Create double-mill "hammers"** — a piece that can slide back and forth between two mill positions creates a mill every other turn. Setting up this swinging structure with 11 stones is a key winning technique.
+- **Keep at least 4 stones to avoid the "flying" phase** — in most morris games, a player with 3 stones gets to jump anywhere on the board. If you have exactly 3 stones you lose this advantage. Keep well above 3 while wearing the opponent down toward that 3-stone threshold.
+- **Nine Men's Morris strategy carries over** — principles proven for the solved 9-stone game also apply here: control corner and T-junction points, build crossed mill threats, and force the opponent into bad positions in the movement phase.
 
 ## Engines & current best play
 

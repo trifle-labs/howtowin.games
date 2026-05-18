@@ -1,7 +1,6 @@
 # Shisima
 
-> The Kenyan three-in-a-row game on an octagonal board — strongly solved as a
-> draw.
+> A Kenyan three-in-a-row game on an octagonal board. Solved with perfect play: it is a draw.
 
 | Field | Value |
 |-------|-------|
@@ -20,21 +19,14 @@
 
 ## Description
 
-A traditional Tiriki (Kenyan) game played on an octagonal board: a central
-point and eight points around it, with lines from the centre to each outer
-point and between adjacent outer points. "Shisima" means "body of water" — the
-centre is "the pond."
+A traditional Tiriki (Kenyan) game played on an octagonal board: a centre point and eight points around it, with lines from the centre to each outer point and between neighboring outer points. "Shisima" means "body of water" — the centre is called "the pond."
 
 ## Rules
 
-1. Board: 9 points (1 centre + 8 around it) connected by lines from the centre
-   and around the ring.
-2. Each player has 3 stones; the **placement phase** is skipped — both players
-   start with three stones already on opposite outer "starting" positions, and
-   the centre is empty.
-3. Players alternate sliding one of their stones along a line to an adjacent
-   empty point.
-4. A player wins by making **three in a row through the centre**.
+1. Board: 9 points (1 centre + 8 around it) connected by lines from the centre and around the ring.
+2. Each player has 3 stones. There is no placement phase — both players start with three stones already on opposite outer starting positions, and the centre is empty.
+3. Players take turns sliding one of their stones along a line to a neighboring empty point.
+4. A player wins by making **three in a row that goes through the centre**.
 
 ## Solution status
 
@@ -44,11 +36,11 @@ centre give an easy pairing strategy for whichever player is on the defensive.
 
 ## Consensus on optimal play
 
-- **All winning lines pass through the centre** — only a three-in-a-row that includes the centre point wins; this means controlling or denying the centre is the single most important positional concern.
-- **Block the centre when the opponent threatens it** — if the opponent has two stones aligned to use the centre for a winning line, move into the centre immediately to block.
-- **Keep your stones within one move of the centre** — stones placed on outer ring points adjacent to the centre can enter the centre on the next move; staying "one step away" keeps winning threats alive.
-- **The pairing strategy guarantees the draw** — the defender can always mirror the attacker's approach using a pairing of ring positions; understanding this means you need never lose against a correct defender.
-- **Draw is the correct result** — neither player can force a win with correct play; competitive play aims to induce the opponent's error.
+- **All winning lines go through the centre** — only a three-in-a-row that includes the centre point wins. Controlling or blocking the centre is the most important thing.
+- **Block the centre when the opponent threatens** — if the opponent has two stones lined up to use the centre for a winning line, move into the centre right away to block.
+- **Keep your stones one step from the centre** — stones on outer ring points next to the centre can enter it in one move. Staying "one step away" keeps your winning threats alive.
+- **Use the pairing strategy to force a draw** — the defender can always mirror the attacker using a pairing of ring positions. If you understand this, you never have to lose against a correct defender.
+- **Draw is the right result** — neither player can force a win with perfect play. Real games are about getting the opponent to make a mistake.
 
 ## Engines & current best play
 

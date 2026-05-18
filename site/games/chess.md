@@ -1,7 +1,6 @@
 # Chess
 
-> The most-studied game in history — superhuman engines, complete 7-piece
-> endgame tables, and still nowhere near solved.
+> The most-studied game in history. Computers play better than any human, we have perfect endgame data for up to 7 pieces, and it is still nowhere near solved.
 
 | Field | Value |
 |-------|-------|
@@ -18,12 +17,17 @@
 | Game-tree complexity | ~10^120 (the "Shannon number") |
 | **Family** | — |
 | **Is head** | Yes |
+| **Playable** | chess |
 
 ## Description
 
-The standard 8×8 game with six piece types per side, castling, en passant, and
-promotion. Checkmate wins; stalemate and several rules (threefold repetition,
-fifty-move rule, insufficient material) produce draws.
+The standard 8×8 board game with six types of pieces per side. Special moves
+include castling (moving the king and rook together), en passant (a special
+pawn capture), and pawn promotion (turning a pawn into a stronger piece when it
+reaches the far end). Checkmate wins. Draws can happen through stalemate (no
+legal moves but not in check), threefold repetition (same position three times),
+the fifty-move rule (no captures or pawn moves in 50 turns), or insufficient
+material (not enough pieces left to checkmate).
 
 ## Solution status
 
@@ -48,8 +52,8 @@ it proves nothing about the game-theoretic value of the initial position.
 
 ## Consensus on optimal play
 
-The overwhelming expert and engine consensus is that chess is a **draw** with
-best play — but this is a belief supported by evidence, not a proof.
+Almost all experts and chess engines agree that chess is a **draw** with perfect
+play — but this is a strong belief based on evidence, not a mathematical proof.
 
 ## Engines & current best play
 

@@ -1,7 +1,6 @@
 # TZAAR
 
-> The combat-focused GIPF-project game with three piece types — widely held
-> to be the "deepest" abstract game of the family.
+> A GIPF-project game where each player has three types of pieces and can win by eliminating one of the opponent's piece types. It has not been solved.
 
 | Field | Value |
 |-------|-------|
@@ -16,30 +15,20 @@
 | Solved by | — |
 | State-space complexity | Large |
 | Game-tree complexity | Large |
+| **Playable** | tzaar |
 
 ## Description
 
-TZAAR (Kris Burm, 2007) is the sixth and arguably deepest GIPF-project game.
-Each player has three types of pieces (TZAARs, TZARRAs, TOTTs) and must protect
-*all three* types from being captured below a threshold while attacking the
-opponent's pieces.
+TZAAR (Kris Burm, 2007) is the sixth game in the GIPF project and is considered by many to be the deepest. Each player has three types of pieces: TZAARs, TZARRAs, and TOTTs. You must protect all three types from being eliminated while trying to eliminate one of the opponent's piece types.
 
 ## Rules
 
-1. Board: hexagonal grid of 30 cells, pre-filled at game start with all 30
-   pieces (15 per player: 6 TZAARs, 9 TZARRAs, 15 TOTTs **[verify]** the exact
-   counts).
-2. On each turn (after the first), a player makes **two** actions in order:
-   1. **Capture**: move one of your stacks along a straight line of empty
-      cells to a cell occupied by an opposing stack of **equal or smaller
-      total height**, removing the opposing stack and stacking yours on its
-      cell.
-   2. Either **capture again** (same rule) **or** **stack on a friendly
-      piece** (move a stack onto a friendly stack to consolidate).
-3. The first player's first move is a single capture only.
-4. A player **loses** if at the start of their turn they have **zero pieces
-   left of any one type** (TZAAR, TZARRA, or TOTT) — *or* if they cannot
-   capture.
+1. Board: a hexagonal grid of 30 cells, already filled at the start with all 30 pieces (15 per player: 6 TZAARs, 9 TZARRAs, and 15 TOTTs).
+2. On each normal turn, a player makes two actions in order:
+   1. Capture: move one of your stacks along a straight line of empty cells to a cell occupied by an opponent's stack of equal or smaller total height. Remove the opponent's stack and place yours on that cell.
+   2. Either capture again (same rule) or stack one of your stacks onto one of your other stacks to combine them.
+3. The first player's very first move is a single capture only (no second action).
+4. A player loses if at the start of their turn they have zero pieces left of any one type (TZAAR, TZARRA, or TOTT), or if they cannot make a capture.
 
 ## Solution status
 
@@ -49,12 +38,12 @@ engines (including neural-network players) but no published solution.
 
 ## Consensus on optimal play
 
-- **Never let any piece type drop to zero** — losing all TZAARs, TZARRAs, or TOTTs is an immediate loss regardless of total piece count; guarding your minority piece type is always the highest priority.
-- **Target the opponent's rarest piece type** — if the opponent has many TOTTs but few TZAARs, relentlessly capture TZAARs; this exploits the loss condition more directly than capturing by strength.
-- **Use stacking to make pieces invulnerable** — tall stacks can only be captured by equally or taller stacks; stack your smallest or most-threatened piece type to price it out of capture range.
-- **Two actions per turn means you can both attack and consolidate** — a strong pattern is to capture an opponent piece on action 1 and then stack two friendly pieces on action 2 to grow a tall defensive stack; this simultaneously reduces the opponent and strengthens your position.
-- **Control the central hexes** — pieces in the centre of the board can threaten in six straight lines, while edge pieces threaten in fewer; central stacks are both more threatening and harder to isolate.
-- **Count piece-type totals before every turn** — the game can flip from winning to lost in a single turn; tracking each player's count of all three types prevents surprises and reveals the opponent's vulnerabilities.
+- **Never let any piece type drop to zero** — losing all of one type (TZAARs, TZARRAs, or TOTTs) is an instant loss, no matter how many other pieces you have. Protecting your rarest piece type is always your top priority.
+- **Target the opponent's rarest piece type** — if the opponent has many TOTTs but only a few TZAARs, keep capturing their TZAARs. This attacks their loss condition more directly than going after their strongest pieces.
+- **Stack pieces to make them invulnerable** — tall stacks can only be captured by stacks of equal or greater height. Stack your smallest or most-threatened piece type to protect it from capture.
+- **Use your two actions to attack and consolidate** — a strong pattern is to capture an opponent piece with your first action, then stack two of your pieces together with your second action to build a tall defensive stack. This attacks the opponent while strengthening your own position.
+- **Control the center of the hex board** — pieces in the center can attack in six different directions, while edge pieces have fewer options. Central stacks are both more threatening and harder to surround.
+- **Count piece types before every turn** — the game can go from winning to losing in a single turn. Track each player's count of all three piece types to avoid surprises and spot the opponent's weaknesses.
 
 ## Engines & current best play
 

@@ -1,6 +1,6 @@
 # Nada!
 
-> A real-time pattern-recognition dice game — unsolved as a competitive speed game.
+> A fast-paced dice game where everyone races to spot matching symbols. It cannot be solved because it depends on speed and reflexes.
 
 | Field | Value |
 |-------|-------|
@@ -15,17 +15,11 @@
 | Solved by | — |
 | State-space complexity | Tractable per roll (6 face values × up to 12 dice) |
 | Game-tree complexity | N/A (real-time simultaneous play) |
+| **Playable** | nada |
 
 ## Description
 
-Nada! is a fast-paced dice game for 2–4 players designed by Thierry Denoual and
-first published in 2013 by Blue Orange Games. Players simultaneously race to
-match symbols across a pool of 12 dice (6 white and 6 orange). On each turn,
-all dice are rolled in the centre. Every player searches for a symbol that
-appears on at least one white die and one orange die; the first to spot a match
-calls it out and collects all dice showing that symbol. If no match exists at
-all, the first player to shout "Nada!" collects the entire pool. The player
-with the most dice after three rounds wins.
+Nada! is a fast dice game for 2 to 4 players designed by Thierry Denoual and first published in 2013 by Blue Orange Games. Everyone plays at the same time. On each turn, 12 dice (6 white and 6 orange) are rolled in the centre. Every player looks for a symbol that appears on at least one white die and one orange die at the same time. The first person to spot a match calls it out and collects all dice showing that symbol. If there is no match at all, the first player to shout "Nada!" takes the whole pool. The player who collects the most dice after three rounds wins.
 
 ## Solution status
 
@@ -38,17 +32,10 @@ formal framework for solving a real-time pattern-matching speed game.
 
 ## Consensus on optimal play
 
-- **Scan systematically** — train your eyes to sweep the dice in a consistent
-  pattern (e.g., left-to-right across whites, then left-to-right across oranges,
-  or focus on a single symbol at a time) rather than randomly glancing.
-- **Know the symbols** — memorise the set of symbols so recognition becomes
-  automatic; hesitation costs a beat.
-- **Use the Nada call aggressively** — if a quick scan shows no obvious match,
-  call Nada immediately rather than verifying exhaustively; a wrong call sits
-  you out but a successful Nada wins the whole pool.
-- **Watch opponents' gaze** — if another player looks ready to call, treat that
-  as a cue to check whether they might be right or whether you can beat them to
-  a different match.
+- **Scan in a consistent pattern** — train your eyes to sweep the dice the same way every time (for example, left to right across the white dice, then left to right across the orange ones, or focus on one symbol at a time) rather than glancing around randomly.
+- **Know the symbols by heart** — memorize the full set of symbols so you recognize them instantly. Any hesitation costs precious time.
+- **Shout "Nada!" aggressively** — if a quick look shows no obvious match, call Nada right away instead of checking thoroughly. A wrong call forces you to sit out that round, but a correct Nada wins the whole pool.
+- **Watch what other players are doing** — if someone looks like they are about to call, use that as a signal to check whether they might be right or whether you can call a different match faster.
 
 ## References
 

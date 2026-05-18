@@ -1,6 +1,6 @@
 # Songo
 
-> West African mancala with mandatory captures — unsolved.
+> A West African seed-sowing game where capturing seeds is required whenever possible.
 
 | Field | Value |
 |-------|-------|
@@ -19,25 +19,16 @@
 
 ## Description
 
-Songo is a West African mancala variant in the broader Awari/Oware family,
-played on a two-row board with six pits per side. Local variants differ on
-sowing direction, capture conditions, and end-game rules. **[verify]** the
-specific regional ruleset documented here.
+Songo is a West African mancala game in the broader Awari/Oware family. It is played on a board with two rows of six pits each. Different regions have different rules for sowing seeds, capturing, and ending the game.
 
 ## Rules
 
-1. Board: 6 pits per side; no large home stores (captured seeds are held off-
-   board by each player).
-2. Each pit begins with 4 seeds.
-3. On a turn the player picks up all seeds in one of their own pits and sows
-   them counterclockwise, one per pit, including across opponent's row.
-4. **Capture**: if the last seed sown lands in an opponent's pit and brings
-   the count there to 2 or 3, those seeds are captured; captures propagate
-   backward to previous opponent pits that also reach 2 or 3.
-5. A move that would leave the opponent with no seeds at all is illegal
-   unless no other move is available.
-6. The game ends when one side cannot move; the player with the most captured
-   seeds wins.
+1. Board: 6 pits per side, with no large home stores (captured seeds are kept off the board by each player).
+2. Each pit starts with 4 seeds.
+3. On a turn, the player picks up all seeds from one of their own pits and sows (distributes) them counterclockwise, one seed per pit, including across the opponent's row.
+4. Capture: if the last seed sown lands in an opponent's pit and brings the count there to 2 or 3, those seeds are captured. Captures also spread backward to previous opponent pits that also reach 2 or 3.
+5. A move that would leave the opponent with no seeds at all is illegal unless no other move is available.
+6. The game ends when one side cannot move. The player with the most captured seeds wins.
 
 ## Solution status
 
@@ -47,11 +38,11 @@ ruleset has no published value.
 
 ## Consensus on optimal play
 
-- **Keep opponent's pits lean** — preventing opponents from holding large piles reduces their capture threats; spreading their seeds thin limits their options.
-- **Maintain seed flow on your side** — emptying too many of your own pits leaves you without legal moves; try to keep at least two or three pits occupied.
-- **Trigger backward-capture chains** — the propagating-capture rule rewards sowing the last seed into a pit that sets up a chain of 2-or-3 pits behind it on the opponent's side; plan the full chain before moving.
-- **Do not starve your opponent early** — moves that would leave the opponent with no seeds are illegal unless unavoidable; learn which configurations force that situation so you can steer toward it legitimately late in the game.
-- **Endgame seed count matters more than tempo** — once most pits are thinly seeded, securing a cumulative advantage in captured seeds outweighs positional refinements.
+- **Keep the opponent's pits thin** — stopping the opponent from building large seed piles reduces their capture threats. Spreading their seeds thinly limits their options.
+- **Keep seeds flowing on your side** — if you empty too many of your own pits, you will run out of legal moves. Try to keep at least two or three pits with seeds.
+- **Set up capture chains backward from the landing pit** — the rule that captures spread backward rewards landing your last seed in a pit that turns a chain of pits with 2 or 3 seeds on the opponent's side. Plan the full chain before you move.
+- **Do not starve the opponent early** — moves that would leave the opponent with no seeds are illegal unless no other move is possible. Learn which setups force this situation so you can steer toward it late in the game.
+- **Endgame: count seeds, not moves** — once most pits are thinly seeded, having more captured seeds overall matters more than making the "best" positional move.
 
 ## Engines & current best play
 

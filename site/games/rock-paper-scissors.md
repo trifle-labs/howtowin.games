@@ -1,8 +1,6 @@
 # Rock-paper-scissors
 
-> The textbook example of a game with no pure-strategy solution — its unique
-> Nash equilibrium is the uniform mixed strategy, and the game is a draw under
-> equilibrium play.
+> The classic example of a game with no single best move. The only solution is to play all three options equally at random.
 
 | Field | Value |
 |-------|-------|
@@ -21,11 +19,7 @@
 
 ## Description
 
-Both players simultaneously choose rock, paper, or scissors. Rock beats scissors,
-scissors beats paper, paper beats rock; identical choices draw. It is the
-canonical **simultaneous-move zero-sum game** — there is no "first player," and
-because moves are revealed at once it is technically a game of imperfect
-information.
+Both players pick rock, paper, or scissors at the same time. Rock beats scissors, scissors beats paper, paper beats rock. If you both pick the same thing, it is a draw. This is the classic example of a game where both players move at once and one player's gain is the other's loss.
 
 ## Solution status
 
@@ -40,11 +34,11 @@ optimal play can require randomisation.
 
 ## Consensus on optimal play
 
-- **Play uniformly at random (⅓, ⅓, ⅓)** — this is the unique Nash equilibrium; it guarantees expected payoff 0 against any opponent and cannot be exploited.
-- **Any deviation from uniform is exploitable** — if you play rock even slightly more than ⅓ of the time, an opponent who detects this can profitably shift toward paper; the uniform strategy is the only strategy with no counter.
-- **Against humans, exploit pattern biases** — people are notoriously non-random; studies consistently show that humans throw rock most often after a loss, repeat wins, and cycle R→P→S; pattern-exploitation beats equilibrium play against imperfect opponents.
-- **After a loss, most humans switch** — if an opponent just threw rock and lost, they are statistically less likely to throw rock again; updating on this prior can give an edge in competitive human play.
-- **Competitive RPS is a psychology game** — at the highest level (e.g. World RPS Society tournaments) players attempt to "level" each other's meta-reasoning, making the equilibrium a baseline to deviate from rather than a target to achieve.
+- **Play rock, paper, and scissors equally at random** — this is the only strategy that cannot be exploited. It guarantees that, on average, you will neither win nor lose against any opponent.
+- **Any predictable pattern can be exploited** — if you play rock even slightly more than one third of the time, an opponent who notices can play paper more often to beat you.
+- **Use your knowledge of human habits** — people are bad at being random. Studies show that humans tend to play rock more after a loss, repeat winning moves, and cycle rock-paper-scissors. Taking advantage of these patterns beats pure random play against real people.
+- **After losing, most people change** — if your opponent just threw rock and lost, they are less likely to throw rock again. Adjust your prediction based on this.
+- **Top-level play is about psychology** — in tournaments, players try to out-think each other's thinking. The random strategy is a safety net, not a way to win.
 
 ## Engines & current best play
 

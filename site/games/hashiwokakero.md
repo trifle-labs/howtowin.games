@@ -1,6 +1,6 @@
 # Hashiwokakero
 
-> Bridge-building logic puzzle — NP-complete.
+> A logic puzzle where you build bridges between numbered islands. Creating hard puzzles is extremely difficult, but published puzzles are fair.
 
 | Field | Value |
 |-------|-------|
@@ -19,23 +19,17 @@
 
 ## Description
 
-Hashiwokakero (橋をかけろ — "build bridges"; Nikoli, 1990) is a logic puzzle
-on a grid of "islands" each labelled with a number. The solver draws straight
-horizontal or vertical bridges connecting islands; each island's degree must
-equal its number, the bridge graph must be connected, and bridges may not
-cross.
+Hashiwokakero ("build bridges"; Nikoli, 1990) is a logic puzzle on a grid of islands, each labeled with a number. The solver draws straight horizontal or vertical bridges connecting islands. Each island's number of bridge connections must equal its label, the bridge network must be connected, and bridges may not cross.
 
 ## Rules
 
-1. Board: rectangular grid with some cells marked as islands; each island
-   carries a label 1–8.
+1. Board: rectangular grid with some cells marked as islands; each island has a number from 1 to 8.
 2. The solver draws bridges between islands subject to:
-   - Bridges run only **horizontally or vertically** between two distinct
-     islands.
-   - **At most two** bridges may connect the same pair of islands.
+   - Bridges run only horizontally or vertically between two different islands.
+   - At most two bridges may connect the same pair of islands.
    - Bridges may not cross other bridges and may not pass through islands.
-3. The number of bridge endpoints at each island must equal its label.
-4. The graph formed by all bridges must be **connected** (single component).
+3. The number of bridge connections at each island must equal its number.
+4. The network formed by all bridges must be connected (a single group).
 
 ## Solution status
 
@@ -43,12 +37,12 @@ Hashiwokakero is **NP-complete** (Andersson 2009 and others).
 
 ## Consensus on optimal play
 
-- **Max-capacity islands first** — an island labelled 8 in the interior must have exactly two bridges in all four directions; resolve these immediately with no deduction required.
-- **Force-fill constrained islands** — an island labelled N that has exactly N/2 neighbours (where each can bear at most 2 bridges) must use both bridges to every neighbour; identify and fill these early.
-- **Avoid premature isolation** — never draw bridges that would create a connected component cut off from the rest of the grid (no further bridge can reach in or out); connectivity is the hardest global constraint to undo.
-- **Use "must connect" logic near the boundary** — corner and edge islands have fewer neighbour directions; a label of 3 in a corner with only two neighbours forces at least one double-bridge.
-- **Propagate through chains** — once one bridge is placed, update all islands in both the row and column, rechecking forced moves from high-label islands; many puzzles cascade-solve with pure propagation.
-- **Branch only as a last resort** — well-designed Hashiwokakero puzzles are solvable without backtracking; if forced to guess, pick the choice that most constrains subsequent islands.
+- **Start with the highest-numbered islands** — an island labeled 8 in the interior must have exactly two bridges in all four directions. Fill these in immediately with no guesswork needed.
+- **Force-fill constrained islands** — an island labeled N that has exactly N/2 neighbors (where each can have at most 2 bridges) must use both bridges to every neighbor. Find and fill these early.
+- **Avoid cutting off parts of the board** — never draw bridges that would create a connected group cut off from the rest of the grid (no further bridge can reach in or out). Keeping the whole network connected is the hardest rule to undo.
+- **Use corner logic** — corner and edge islands have fewer neighbor directions. A label of 3 in a corner with only two neighbors forces at least one double-bridge.
+- **Propagate through chains** — once one bridge is placed, update all islands in both the row and column, rechecking forced moves from high-label islands. Many puzzles solve through pure propagation.
+- **Only guess as a last resort** — well-designed Hashiwokakero puzzles can be solved without guessing. If forced to guess, pick the choice that most constrains subsequent islands.
 
 ## Engines & current best play
 

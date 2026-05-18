@@ -1,7 +1,6 @@
 # ZÈRTZ
 
-> A "shrinking-board" GIPF-project game where rings are removed as the game
-> progresses — unsolved.
+> A game where the board gets smaller as players place marbles and remove rings from the edge. It has not been solved.
 
 | Field | Value |
 |-------|-------|
@@ -16,6 +15,7 @@
 | Solved by | — |
 | State-space complexity | Moderate (shrinks during play) |
 | Game-tree complexity | Moderate-large |
+| **Playable** | zertz |
 
 ## Description
 

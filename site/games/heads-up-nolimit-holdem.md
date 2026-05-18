@@ -1,7 +1,6 @@
 # Heads-up no-limit hold'em
 
-> Superhuman AI exists and beat top professionals — but the game itself, with
-> its continuum of bet sizes, is far from formally solved.
+> Superhuman AI exists and has beaten top professionals, but the game itself — with unlimited bet sizes — is far from solved.
 
 | Field | Value |
 |-------|-------|
@@ -19,11 +18,7 @@
 
 ## Description
 
-Two-player Texas hold'em with **no-limit betting**: at any point a player may bet
-any amount up to their entire stack. Like the limit version it has hidden hole
-cards and a shuffled deck, but the **unrestricted bet sizing** makes the action
-space effectively continuous, exploding the game tree far beyond the limit
-variant.
+Two-player Texas hold'em with no-limit betting: at any point a player may bet any amount up to their entire stack. Like the limit version, it has hidden hole cards and a shuffled deck, but the unrestricted bet sizes make the game tree effectively infinite, far beyond the limit variant.
 
 ## Solution status
 
@@ -42,12 +37,12 @@ reached.
 
 ## Consensus on optimal play
 
-- **Use solvers to build range-balanced strategies** — modern GTO solvers (PioSOLVER, GTO+, etc.) solve abstracted bet-tree versions of specific spots; professional players study solver outputs and internalise frequency-based strategies rather than playing purely by feel.
-- **Bet-size selection is a strategic weapon** — unlike limit hold'em, choosing between small, medium, and pot-sized bets lets you polarise or protect your range; solvers show that different board textures call for different sizing menus.
-- **Balance your bluffs with your value bets** — a player who bets the river only with strong hands is exploited by folding; the equilibrium mixes bluffs into every bet size so that the opponent cannot profitably deviate.
-- **Positional advantage is amplified by stack depth** — acting last post-flop allows the IP (in-position) player to control pot size and choose when to bluff; deep stacks magnify this advantage because the threat of large future bets is more credible.
-- **3-bet / 4-bet ranges must include bluffs** — preflop re-raising ranges that contain only strong hands are easily countered by folding everything below the threshold; mix in suited connectors and suited aces as bluff candidates.
-- **Exploit population leaks, not GTO** — against recreational players, pure GTO play leaves money on the table; identify systematic over-folds or over-calls and deviate from equilibrium to maximise expected value against that specific opponent.
+- **Use solvers to build balanced strategies** — modern GTO solvers (PioSOLVER, GTO+, etc.) solve simplified versions of specific situations. Professional players study solver outputs and learn frequency-based strategies, not playing purely by feel.
+- **Bet-size selection is a strategic weapon** — unlike limit hold'em, choosing between small, medium, and pot-sized bets lets you vary your strategy. Solvers show that different board types call for different bet sizes.
+- **Balance your bluffs with your value bets** — a player who only bets the river (final betting round) with strong hands gets exploited by opponents who fold. The equilibrium mixes bluffs into every bet size so the opponent cannot profitably deviate.
+- **Positional advantage is bigger with deeper stacks** — acting last after the flop allows the player in position to control pot size and choose when to bluff. Deep stacks magnify this advantage because the threat of large future bets is more credible.
+- **3-bet / 4-bet ranges must include bluffs** — pre-flop re-raising ranges that contain only strong hands are easily countered by folding everything below the threshold. Mix in suited connectors and suited aces as bluff candidates.
+- **Exploit weak opponents instead of playing perfect GTO** — against recreational players, pure GTO play leaves money on the table. Identify systematic over-folds or over-calls and deviate from equilibrium to maximize value against that specific opponent.
 
 ## Engines & current best play
 

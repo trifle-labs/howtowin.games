@@ -1,6 +1,6 @@
 # Turkish draughts
 
-> Orthogonal draughts where pieces move along ranks and files — unsolved.
+> A checkers variant played on an 8x8 board where pieces move forward, sideways, or backward instead of diagonally. It has not been solved.
 
 | Field | Value |
 |-------|-------|
@@ -19,21 +19,16 @@
 
 ## Description
 
-Turkish draughts is played on an 8×8 board where pieces move **orthogonally**
-rather than diagonally. The starting position fills the 2nd and 3rd ranks
-with 16 men per side, and kings are long-range orthogonal movers.
+Turkish draughts is played on an 8x8 board where pieces move forward, sideways, or backward (up, down, left, right) instead of diagonally. The starting position fills the 2nd and 3rd rows with 16 pieces per side. Kings can move any distance along a row or column.
 
 ## Rules
 
-1. Board: 8×8. Each side has 16 men on the 2nd and 3rd ranks (or 7th and 6th).
-2. Men move one square forward or sideways (never backward, never diagonally).
-3. Men capture by jumping an adjacent enemy piece **forward or sideways** to
-   the next empty square; captures are mandatory.
-4. Multiple captures chain; the player must take the maximum number of pieces.
-5. A man reaching the far rank becomes a **king**, which moves and captures
-   any number of squares along a rank or file in one move (like a rook).
-6. A side with no pieces or no legal moves loses; a single king vs. a single
-   king is drawn.
+1. Board: 8x8. Each side has 16 pieces on the 2nd and 3rd rows (or 7th and 6th, depending on perspective).
+2. Pieces move one square forward or sideways (never backward, never diagonally).
+3. Pieces capture by jumping over a neighboring enemy piece forward or sideways to the next empty square. Captures are required (mandatory).
+4. Multiple captures chain together. The player must take the maximum number of pieces possible.
+5. A piece reaching the far row becomes a king, which moves and captures any number of squares along a row or column in one move (like a rook in chess).
+6. A player with no pieces or no legal moves loses. A single king against a single king is a draw.
 
 ## Solution status
 
@@ -42,11 +37,11 @@ state-graph distinct from diagonal draughts variants.
 
 ## Consensus on optimal play
 
-- **Trade men for kings aggressively** — a king in Turkish draughts is vastly more powerful than a man (full rook movement); accepting an unfavourable man trade to promote is usually correct if the resulting king cannot be quickly captured.
-- **Mandatory multi-capture is the dominant tactic** — a chain capture that removes two or three men is almost always better than a positional move; position pieces to enable or threaten long chains, and watch for your opponent setting a trap with an apparent capture bait.
-- **Occupy the centre ranks early** — controlling ranks 4 and 5 with men allows forward-and-sideways threats in multiple directions; edge men are hemmed in and contribute to fewer captures.
-- **Never allow a sideways blockade** — because men can move sideways, a wall of men along a rank can be attacked from both sides; spread your men slightly to avoid a single orthogonal sweep stripping an entire rank.
-- **King vs. king endings often draw** — a lone king against a lone king is explicitly drawn; if losing material, steer for a single-king-vs.-single-king endgame to secure a half-point.
+- **Aim to get kings as soon as possible** — a king in Turkish draughts is much more powerful than a regular piece (it can move any distance along rows and columns). Accepting a bad trade of pieces to get a king is usually worth it, as long as the king cannot be captured right away.
+- **Chain captures are the most important tactic** — a capture chain that removes two or three pieces is almost always better than making a positional move. Set up your pieces to create or threaten long capture chains, and watch for the opponent doing the same.
+- **Control the center rows early** — controlling rows 4 and 5 with your pieces lets you attack in multiple directions. Pieces on the edges are trapped and have fewer capture opportunities.
+- **Do not let the opponent block a whole row** — because pieces can move sideways, a wall of pieces along a row can be attacked from both sides. Keep your pieces slightly spread to avoid losing an entire row in one capture chain.
+- **King versus king is a draw** — a single king against a single king is always a draw. If you are losing pieces, aim for this endgame to secure a draw.
 
 ## Engines & current best play
 

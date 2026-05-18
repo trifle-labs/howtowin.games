@@ -1,7 +1,6 @@
 # Toads and Frogs
 
-> A one-dimensional partisan game devised by Conway as a CGT teaching example;
-> some position families are solved, a general theory is not.
+> A one-row game where Toads move right and Frogs move left. Some starting positions are solved, but no general solution exists.
 
 | Field | Value |
 |-------|-------|
@@ -20,11 +19,7 @@
 
 ## Description
 
-Played on a 1×*n* strip. One player owns "Toads" (which move rightward), the
-other "Frogs" (which move leftward). A piece may step into an adjacent empty
-cell in its direction, or **jump** over a single opposing piece into an empty
-cell beyond. A player unable to move loses
-([normal play](../lexicon/README.md#normal-play-convention)).
+Played on a single row of spaces. One player controls Toads (which move to the right), and the other controls Frogs (which move to the left). A piece may step into a neighboring empty cell in its direction, or jump over a single opposing piece into an empty cell beyond. A player who cannot move loses.
 
 ## Solution status
 
@@ -39,11 +34,11 @@ well-studied partially-solved case.
 
 ## Consensus on optimal play
 
-- **Compute the CGT value of each segment independently** — the strip often splits into independent sub-games separated by gaps; evaluate each sub-game's surreal-number or nimber value, sum them, and play in the hottest component.
-- **Jumps are usually stronger than steps** — a jump removes the jumped piece from blocking your future moves while also advancing your own piece two cells; prioritise jumps unless the step sets up a future jump chain.
-- **Avoid deadlock configurations** — a Toad and a Frog facing each other with no room to jump are permanently frozen; do not create a head-to-head standoff in a sub-strip unless it benefits you (e.g., locks in an opponent's piece).
-- **Temperature guides endgame priorities** — as the strip fills, identify which remaining moves have the highest temperature (i.e., whose value differs most depending on who goes next); always answer your opponent's move in the highest-temperature remaining component.
-- **Symmetric positions are second-player wins** — if the strip is symmetric (equal number of Toads and Frogs in mirror arrangement), the second player can often mirror to maintain balance; the first player must break symmetry profitably.
+- **Break the row into separate sections** — the row often splits into independent segments separated by gaps. Think about each segment on its own, and play in the segment where you have the most to gain.
+- **Jumps are usually better than steps** — a jump removes the jumped piece as a blocker while also advancing your piece two spaces. Prioritize jumps unless a step sets up a future jump chain.
+- **Avoid head-to-head deadlocks** — when a Toad and Frog face each other with no room to jump, they are both stuck. Do not create this situation unless it benefits you (for example, by locking in an opponent's piece).
+- **Focus on the most valuable remaining moves** — as the row fills up, some moves are much more valuable than others. Always respond to the opponent's most valuable available move.
+- **Symmetric positions favor the second player** — if the row is symmetric (equal numbers of Toads and Frogs arranged as mirror images), the second player can often mirror the first player's moves to keep control. The first player must break the symmetry to gain an advantage.
 
 ## Engines & current best play
 

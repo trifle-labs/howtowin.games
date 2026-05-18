@@ -1,6 +1,6 @@
 # Connect Four
 
-> The classic dropping-disc game — weakly solved in 1988 as a first-player win.
+> The classic game where you drop discs into a vertical grid. Solved in 1988: first player wins.
 
 | Field | Value |
 |-------|-------|
@@ -19,9 +19,10 @@
 
 ## Description
 
-Played on a vertical 7-column × 6-row grid. Players alternately drop a disc into
-a column; it falls to the lowest empty cell. The winner is the first to get four
-of their discs in a line — horizontally, vertically, or diagonally.
+Played on a vertical board with 7 columns and 6 rows. Players take turns
+dropping a disc into a column; it falls to the lowest empty space in that
+column. The first player to get four of their discs in a row — horizontally,
+vertically, or diagonally — wins.
 
 ## Solution status
 
@@ -40,11 +41,11 @@ also solved many non-standard board sizes.
 
 ## Consensus on optimal play
 
-- **Always open column 4 (the centre)** — the centre column is the unique winning first move; every other first-column choice either loses or draws with perfect opponent play; this is the most famous single-move result in solved game theory.
-- **Control the centre columns (3–5) throughout the game** — pieces in the centre participate in more potential four-in-a-row lines (horizontal, diagonal, vertical) than edge columns; central presence denies the opponent threats from multiple directions.
-- **Create odd-row threats** — in Connect Four, who wins depends partly on the parity of the threat row; first player benefits from threats on odd rows (1, 3, 5 from the bottom) because the disc sequence means first player tends to fill odd rows; second player should aim for even-row threats.
-- **Set up zugzwang with a "double threat"** — threatening four-in-a-row in two different places simultaneously forces the opponent to block only one; building positions where your opponent must fill a column on their turn that activates your second threat is the primary winning technique.
-- **Avoid filling columns under an opponent threat** — dropping into a column can hand the opponent a free four-in-a-row if they are waiting for a disc in that column on the next row up; count ahead which columns trigger threats before committing.
+- **Always open in column 4 (the center)** — the center column is the only winning first move. Every other first move either loses or draws against perfect play. This is the most famous single-move result in solved game theory.
+- **Control the center columns (3-5) throughout the game** — pieces in the center are part of more possible four-in-a-row lines (horizontal, diagonal, vertical) than pieces on the edges. Control of the center also stops the opponent from threatening from multiple directions.
+- **Create threats on odd-numbered rows** — who wins partly depends on which rows you threaten. The first player benefits from threats on odd rows (1, 3, 5 from the bottom) because of how turns work. The second player should aim for even-row threats.
+- **Use double threats** — threatening four-in-a-row in two places at once forces the opponent to block only one. Creating positions where your opponent has to fill a column on their turn that activates your second threat is the main winning technique.
+- **Don't fill columns below an opponent threat** — dropping a disc into a column can give the opponent a free win if they are waiting to place their disc on the row above. Count ahead which columns trigger threats before committing.
 
 ## Engines & current best play
 

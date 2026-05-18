@@ -1,7 +1,6 @@
 # Twelve Men's Morris
 
-> The largest classic morris game — the Nine Men's Morris board plus diagonals —
-> and the least definitively settled of the family.
+> The largest classic morris game, played on the Nine Men's Morris board with added diagonal lines. Its solution status is not firmly established.
 
 | Field | Value |
 |-------|-------|
@@ -20,12 +19,7 @@
 
 ## Description
 
-Played on the 24-point [Nine Men's Morris](nine-mens-morris.md) board **with the
-four diagonal lines added**, so corner points connect across the diagonals. Each
-player has twelve pieces. Rules otherwise follow Nine Men's Morris: a placement
-phase, then a movement phase, with mills removing enemy pieces. With twelve
-pieces on 24 points the board is very full after placement, so the game often
-hinges sharply on the placement phase.
+Played on the same board as Nine Men's Morris (24 points) but with the four diagonal lines added, so corner points connect across the diagonals. Each player has twelve pieces. The rules follow Nine Men's Morris: a placement phase followed by a movement phase, with mills (three in a row) letting you remove an opponent's piece. With twelve pieces on 24 points, the board is very full after placement, so the game often hinges on the placement phase.
 
 ## Solution status
 
@@ -43,11 +37,11 @@ definite game-theoretic value.
 
 ## Consensus on optimal play
 
-- **Diagonal points are high-value in Twelve Men's Morris** — adding the four diagonals means corner points now participate in three lines (two sides of the square plus one diagonal); securing corners during placement is more important than in Nine Men's Morris.
-- **Placement phase is decisive** — with 12 pieces filling 24 points the board is fully occupied after placement; forming a mill during the placement phase and removing a key opponent piece can decide the game before movement begins.
-- **Close two mills simultaneously if possible** — any mill lets you remove an opponent piece; threatening to close two mills with one placement forces the opponent to choose which to prevent, and you complete the other.
-- **Protect pieces not in a mill** — pieces that are not part of any current or imminent mill can be removed if the opponent closes a mill; keep non-mill pieces in safe positions or use them to block opponent mill formations.
-- **In the movement phase, open and close mills repeatedly** — sliding a piece one step out of a mill, then back, re-closes the mill and earns another removal each cycle; the opponent must disrupt the pattern or face steady piece loss.
+- **Diagonal points are extra valuable** — because the four diagonals are added, corner points now sit on three lines (two sides of the square plus one diagonal). Securing corners during placement is even more important than in Nine Men's Morris.
+- **The placement phase decides the game** — with 12 pieces filling 24 points, the board is completely full after placement. Forming a mill during placement and removing a key opponent piece can decide the game before the movement phase even starts.
+- **Threaten two mills at once** — any mill lets you remove an opponent piece. If you can threaten to close two mills with a single placement, the opponent can only block one, and you complete the other.
+- **Protect pieces that are not in a mill** — pieces not part of any mill can be removed if the opponent closes a mill nearby. Keep non-mill pieces in safe positions or use them to block the opponent's mill formations.
+- **Open and close mills repeatedly in the movement phase** — sliding a piece one step out of a mill and then back in re-creates the mill and earns another removal each cycle. The opponent must disrupt this pattern or keep losing pieces.
 
 ## Engines & current best play
 

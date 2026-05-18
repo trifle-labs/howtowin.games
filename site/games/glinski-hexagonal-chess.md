@@ -1,6 +1,6 @@
 # Glinski hexagonal chess
 
-> Chess on a hexagonal board with three pawn directions — unsolved.
+> Chess adapted for a hexagonal (six-sided) board. Pawns have three forward directions instead of one.
 
 | Field | Value |
 |-------|-------|
@@ -18,24 +18,15 @@
 
 ## Description
 
-Glinski hexagonal chess (Władysław Gliński, 1936) maps chess onto a 91-cell
-hexagonal board. The classical chess pieces are redefined for hex geometry:
-bishops move along three diagonal directions, rooks along three orthogonal
-ones, and there are three bishops per side (one per cell colour).
+Glinski hexagonal chess (Wladyslaw Glinski, 1936) adapts chess to a board made of 91 hexagons arranged in a hexagon shape. The usual chess pieces are reimagined for the hexagonal geometry: bishops move along three diagonal directions, rooks along three straight (not diagonal) directions, and each player has three bishops (one for each cell color).
 
 ## Rules
 
-1. Board: 91 hexagons arranged as a regular hexagon of side 6.
-2. Each side has 9 pawns, 2 rooks, 2 knights, 3 bishops (one per cell colour),
-   1 queen, 1 king.
-3. Pieces move along the natural hex generalisations: rooks along the three
-   orthogonal axes, bishops along the three diagonal axes, queen as both;
-   knights have a defined leap; pawns move straight forward and capture
-   diagonally forward (three directions).
-4. Pawns promote on the far edge; there is no castling and no en-passant in
-   Glinski's original rules.
-5. Win is by checkmate; standard stalemate/draw rules apply with Glinski's
-   adjustments.
+1. Board: 91 hexagons arranged as a regular hexagon with sides of 6 cells.
+2. Each player has 9 pawns, 2 rooks, 2 knights, 3 bishops (one per cell color), 1 queen, 1 king.
+3. Pieces move along hexagonal directions: rooks move along the three straight directions, bishops along the three diagonal directions, the queen can do both. Knights have a defined leap. Pawns move straight forward and capture diagonally forward (in three directions).
+4. Pawns are promoted when they reach the far edge. There is no castling or en-passant (capturing a pawn that just moved two squares forward) in Glinski's original rules.
+5. A player wins by checkmate. Normal stalemate and draw rules apply with Glinski's adjustments.
 
 ## Solution status
 
@@ -44,11 +35,11 @@ developed than orthodox chess.
 
 ## Consensus on optimal play
 
-- **The third bishop matters** — with three bishops of different cell colours, each player can attack every hex; keeping all three active prevents colour-blind defensive setups that work in orthodox chess.
-- **Centre control has six axes** — the hex board has three orthogonal and three diagonal directions; centralised pieces threaten more of the board than in square chess, making central occupation even more valuable.
-- **Pawns are weaker than in orthodox chess** — three forward capture directions make pawn chains harder to form and easier to disrupt; avoid pawn-heavy positional play and favour piece activity.
-- **Knights are relatively stronger** — knights leap, bypassing the six-directional flow; their fixed jump pattern is harder to anticipate on a hex board, making them excellent for surprise attacks.
-- **King safety requires guarding six directions** — the hex king is approached from six rather than eight squares; ensure at least four of those approaches are covered by your own pieces.
+- **The third bishop matters** — with three bishops of different cell colors, each player can attack every hex. Keeping all three active prevents the "color-blind" defensive setups that work in regular chess.
+- **Center control means controlling six directions** — the hex board has three straight and three diagonal directions. Central pieces threaten more of the board than in square chess, making center control even more important.
+- **Pawns are weaker than in regular chess** — three forward capture directions make pawn chains harder to form and easier to break. Favor piece activity over pawn-heavy positional play.
+- **Knights are relatively stronger** — knights jump over pieces, bypassing the six-directional flow. Their fixed jump pattern is harder to predict on a hex board, making them good for surprise attacks.
+- **King safety means guarding six directions** — the hex king can be approached from six directions (not eight as in regular chess). Make sure at least four of those approaches are covered by your own pieces.
 
 ## Engines & current best play
 

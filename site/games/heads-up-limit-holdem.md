@@ -1,7 +1,6 @@
 # Heads-up limit hold'em
 
-> The first competitively-played imperfect-information game to be essentially
-> solved — a near-draw with a tiny dealer edge.
+> The first poker variant to be essentially solved by a computer. The game is a near-draw, with a tiny advantage for the dealer.
 
 | Field | Value |
 |-------|-------|
@@ -19,12 +18,7 @@
 
 ## Description
 
-Two-player Texas hold'em with **fixed bet sizes** (limit betting): each player is
-dealt two private cards, five community cards are revealed across four betting
-rounds, and bets/raises are capped per round. Because hole cards are hidden and
-the deck is shuffled, this is a game of both **imperfect information** and
-**chance** — "solving" it means computing a Nash-equilibrium strategy, not a
-single win/lose/draw value.
+Two-player Texas hold'em with fixed bet sizes (limit betting): each player is dealt two private cards, five community cards are revealed across four betting rounds, and bets and raises are capped per round. Because hole cards (the private cards) are hidden and the deck is shuffled, this is a game of both hidden information and chance. "Solving" it means computing a Nash equilibrium strategy (a strategy that cannot be exploited), not a single win/lose/draw value.
 
 ## Solution status
 
@@ -42,12 +36,12 @@ standard.
 
 ## Consensus on optimal play
 
-- **Mix your actions to stay unexploitable** — Nash-equilibrium play requires randomising bet/call/fold frequencies so that the opponent cannot profitably deviate; pure strategies (always bet with X, always fold with Y) are exploitable.
-- **The dealer (BTN) has a persistent edge** — acting last on every post-flop street is a structural advantage; the button should play a slightly wider range and apply more pressure in position.
-- **Defend big blind wide in limit** — because pot odds in limit are fixed and generous when facing a raise, the big blind must call with a wide range to prevent the button from profitably raising with any two cards.
-- **Thin value bets are correct** — in limit hold'em, the fixed bet-to-pot ratio is small; betting one pair for thin value on the river is correct far more often than in no-limit, where sizing risk is larger.
-- **Cepheus's equilibrium mixes heavily on the river** — even with strong hands the correct equilibrium strategy sometimes checks back to protect checking ranges; don't polarise bet ranges completely.
-- **Statistical exploitability over a human lifetime is near zero** — the Cepheus solution proved that even a slightly sub-optimal strategy (within ε of equilibrium) cannot be beaten with statistical significance in any realistic number of hands.
+- **Mix your actions to stay unexploitable** — Nash equilibrium play requires randomizing your bet/call/fold frequencies so the opponent cannot exploit you. Pure strategies (always bet with X, always fold with Y) can be taken advantage of.
+- **The dealer (BTN) has a persistent edge** — acting last on every betting round after the flop is a structural advantage. The button should play a slightly wider range and apply more pressure when in position.
+- **Defend the big blind wide in limit** — because the pot odds in limit are fixed and favorable when facing a raise, the big blind must call with a wide range to keep the button from profitably raising with any two cards.
+- **Thin value bets are correct** — in limit hold'em, the fixed bet-to-pot ratio is small. Betting one pair for thin value on the river (the final betting round) is correct far more often than in no-limit, where sizing risk is larger.
+- **Cepheus's equilibrium mixes heavily on the river** — even with strong hands, the correct equilibrium strategy sometimes checks back to protect checking ranges. Do not polarize your bet ranges completely.
+- **Statistical exploitability over a human lifetime is near zero** — the Cepheus solution proved that even a slightly sub-optimal strategy cannot be beaten with statistical significance in any realistic number of hands.
 
 ## Engines & current best play
 

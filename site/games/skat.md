@@ -1,6 +1,6 @@
 # Skat
 
-> German three-player trick-taking game — declarer-side double-dummy values tabulated.
+> A German three-player card game where players bid to become the solo player and try to win more points than the two opponents.
 
 | Field | Value |
 |-------|-------|
@@ -18,25 +18,15 @@
 
 ## Description
 
-Skat is the German national card game: three players, a 32-card deck, and a
-complex bidding-and-play system. Kupferschmid & Helmert (2006) computed the
-**double-dummy value of every possible Skat deal** — i.e., perfect-play
-outcomes assuming open hands — establishing a kind of perfect-information
-solving of the play-out phase.
+Skat is the national card game of Germany. It uses a 32-card deck and a complex system of bidding and play. In 2006, researchers computed the result of every possible deal assuming all cards are visible (called "double-dummy"), effectively solving the card-play phase of the game as a perfect-information problem.
 
 ## Rules
 
-1. Deck: 32 cards (7, 8, 9, 10, J, Q, K, A in four suits).
-2. Each player is dealt 10 cards; 2 cards form the **skat** (talon).
-3. **Bidding**: players bid for the right to be declarer; the high bidder
-   takes the skat (in standard contracts), discards two cards, and chooses a
-   game (suit, grand, null, etc.).
-4. **Play**: 10 tricks of three cards each; standard trick-taking rules
-   (follow suit; trump card winners; jacks are trumps in suit and grand
-   games).
-5. The declarer plays against the partnership of the other two players.
-   Scoring depends on contract value, the *Spitzen* (jack sequence), points
-   captured, and bidding milestones.
+1. Deck: 32 cards (7, 8, 9, 10, Jack, Queen, King, Ace in four suits).
+2. Each player is dealt 10 cards; 2 cards form the skat (a separate pile, also called the talon).
+3. Bidding: players bid for the right to become the declarer (the solo player). The highest bidder takes the skat, discards two cards, and chooses what type of game to play (suit, grand, null, etc.).
+4. Play: 10 tricks of three cards each. Standard trick-taking rules apply — players must follow suit when possible, and certain cards act as trumps. Jacks are always trumps in suit and grand games.
+5. The declarer plays alone against the other two players as a team. Scoring depends on the contract value, the sequence of jacks (called Spitzen), the points captured, and the bidding level reached.
 
 ## Solution status
 
@@ -46,11 +36,11 @@ game (bidding + uncertain card play) is **not solved**.
 
 ## Consensus on optimal play
 
-- **Jacks are universal trumps** — the four jacks are the highest trumps in suit and grand contracts; building your hand around them provides the most powerful top-of-trump sequences (Spitzen) and increases contract value.
-- **Count Spitzen accurately before bidding** — the multiplier for Spitzen (the unbroken sequence from club jack down) directly affects game value; overbidding because of a Spitzen miscalculation is the most common bidding error.
-- **Null contracts need perfect "anti-patterns"** — in Null the declarer must take zero tricks; any card that forces a win is fatal; hold only "dodging" cards (low suits where you can safely pass to opponents).
-- **The partnership coordinates with signals** — the two defenders should signal suit length on opening leads; getting a ruff set up or establishing a long suit requires communication through card choice.
-- **Use double-dummy analysis for post-mortem** — after the game, check whether the declarer's play matched the DD-optimal line; systematic deviation from DD recommendations reveals technical leaks.
+- **Jacks are universal trumps** — the four jacks are the highest trumps in most game types. Building your hand around them gives you the strongest trump sequences and increases your potential score.
+- **Count your running jacks (Spitzen) accurately before bidding** — the number of consecutive jacks you hold (starting from the club jack) affects the game's multiplier value. Overbidding because you miscounted your jack sequence is the most common bidding mistake.
+- **Null contracts need perfect dodging** — in Null, the declarer must take zero tricks. Any card that forces you to win a trick is fatal. Hold only low cards in suits where you can safely pass the lead to opponents.
+- **The two defenders coordinate with signals** — on opening leads, defenders should signal which suits they have length in. Setting up a winning long suit or getting a ruff requires communication through card choice.
+- **Check double-dummy analysis after the game** — after playing, compare your play to the perfect play line assuming all cards were visible. If you often deviate from the optimal line, you have a technical weakness to work on.
 
 ## Engines & current best play
 

@@ -8,8 +8,7 @@ export function create(canvas) {
   const dpr = window.devicePixelRatio || 1;
   if (dpr > 1) {
     const w = canvas.width, h = canvas.height;
-    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
-    canvas.width = w * dpr; canvas.height = h * dpr; ctx.scale(dpr, dpr);
+    canvas.style.width = w + 'px';    canvas.width = w * dpr; canvas.height = h * dpr; ctx.scale(dpr, dpr);
   }
   const statusEl = document.getElementById("playable-status");
   const gap = 3, cell = Math.floor((size - 40) / (4 * 3 + 3));

@@ -1,8 +1,6 @@
 # Klondike solitaire
 
-> The default Windows card game — its exact win rate under perfect play is still
-> unknown, though "thoughtful" Klondike has been estimated to be winnable ~82%
-> of the time.
+> The classic single-player card game. Even with perfect play, the exact win rate is still unknown. About 82% of deals can be won if you know where all the cards are.
 
 | Field | Value |
 |-------|-------|
@@ -21,11 +19,7 @@
 
 ## Description
 
-A standard 52-card deck is dealt into seven tableau piles (with face-down cards),
-a stock, and four empty foundations. The player builds the foundations up by suit
-from Ace to King, moving cards among the tableau in alternating colours. Standard
-Klondike has **hidden information** (face-down tableau cards) and **chance** (the
-shuffle), so it sits apart from the perfect-information games in this archive.
+A standard 52-card deck is dealt into seven tableau piles (with some face-down cards), a stock, and four empty foundations. The player builds the foundations up by suit from Ace to King, moving cards among the tableau in alternating colors. Standard Klondike has hidden information (face-down tableau cards) and chance (the shuffle), so it is different from the perfect-information games in this archive.
 
 ## Solution status
 
@@ -45,11 +39,11 @@ exact fraction of deals winnable — remains unknown, a situation sometimes call
 
 ## Consensus on optimal play
 
-- **Expose face-down cards as the first priority** — uncovering buried face-down cards gives information and new options; always prefer a move that flips a new card over a move of equal apparent value that does not.
-- **Delay sending cards to the foundation if they may be needed** — moving a card to the foundation is often irreversible in practice; a black 6 sent to the foundation cannot be used to unblock a red 5 later; only move foundations when it does not restrict future tableau moves.
-- **Build tableau columns down in alternating colours** — this is mandatory, but strategically prefer keeping columns orderly so that longer ordered sequences can be moved as blocks.
-- **Empty a short column to create a free space** — an empty tableau column is a temporary holding spot for a card or sequence; clearing the shortest pile first is usually faster.
-- **When in doubt, play the move that gives the most options next turn** — in the hidden-information game, uncertainty about face-down cards means "maximise future options" is the best guide; avoid moves that commit the tableau to a dead-end arrangement.
+- **Expose face-down cards as the first priority** — uncovering buried face-down cards gives you information and new options. Always prefer a move that flips a new card over a move of equal apparent value that does not.
+- **Delay sending cards to the foundation if they may be needed** — moving a card to the foundation is often irreversible in practice. A black 6 sent to the foundation cannot be used later to unblock a red 5. Only move to foundations when it does not restrict future tableau moves.
+- **Build tableau columns down in alternating colors** — this is the rule, but strategically prefer keeping columns orderly so that longer ordered sequences can be moved as blocks.
+- **Empty a short column to create a free space** — an empty tableau column is a temporary holding spot for a card or sequence. Clearing the shortest pile first is usually faster.
+- **When in doubt, play the move that gives the most options next turn** — in the hidden-information game, uncertainty about face-down cards means "maximize future options" is the best guide. Avoid moves that commit the tableau to a dead-end arrangement.
 
 ## Engines & current best play
 

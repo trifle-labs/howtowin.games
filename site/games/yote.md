@@ -1,6 +1,6 @@
 # Yote
 
-> West African capture game with mandatory return of captured pieces — unsolved.
+> A West African game where after capturing a piece, you get to remove an additional opponent piece of your choice. It has not been solved.
 
 | Field | Value |
 |-------|-------|

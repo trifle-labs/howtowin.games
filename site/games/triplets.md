@@ -1,7 +1,6 @@
 # Triplets
 
-> An impartial three-pile subtraction game related to ternary nimbers — solved
-> via Sprague–Grundy theory.
+> A three-pile game where players remove 1, 2, or 3 tokens from a pile. It is fully solved.
 
 | Field | Value |
 |-------|-------|
@@ -20,20 +19,13 @@
 
 ## Description
 
-Triplets is one of the take-and-break games catalogued in the
-Sprague–Grundy / octal-game literature. Its rules deliberately mix three heaps
-to produce a nim-sequence with ternary structure.
+Triplets is played with three piles of tokens. On each turn, a player chooses one pile and removes 1, 2, or 3 tokens from it. The player who cannot move loses.
 
 ## Rules
 
-1. Three heaps of tokens.
-2. A move chooses one heap and removes one, two, or three tokens (so this is
-   the "Subtract {1,2,3}" rule), with the additional constraint inherent to
-   "Triplets" that **all three heaps must be touched** by some move under the
-   chosen rule code. (Different sources define Triplets slightly differently —
-   the octal-game tables give the canonical version. **[verify]** the exact
-   variant.)
-3. The player who cannot move loses (normal play).
+1. Three piles of tokens.
+2. A move chooses one pile and removes 1, 2, or 3 tokens from it.
+3. The player who cannot move loses.
 
 ## Solution status
 
@@ -44,11 +36,11 @@ nim-values.
 
 ## Consensus on optimal play
 
-- **Look up the nim-value for each pile** — the single-pile nim-values follow a period-3 cycle; determine the cycle phase for each pile's size with a simple modular computation, then read off the nim-value from the short table.
-- **XOR the nim-values (nim-sum)** — combine the three piles' nim-values with bitwise XOR; if the result is non-zero you are in a winning position and a winning move exists.
-- **Make the nim-sum zero** — find a pile whose nim-value you can reduce to bring the total XOR to zero; this is always possible from an N-position and gives the unique (or one of several) optimal moves.
-- **Do not leave a nim-sum of zero** — handing the opponent a position with XOR = 0 is the only error; avoid it on every move.
-- **In period-3 nim, a pile of size divisible by 3 has nim-value 0** — such a pile contributes nothing to the XOR and can be safely ignored when looking for the winning move in the other piles.
+- **Each pile has a value based on its size** — each pile's value follows a simple three-step repeating pattern based on its size. Piles with size divisible by 3 have value 0. Piles where size divided by 3 leaves remainder 1 have value 1. Piles where size divided by 3 leaves remainder 2 have value 2.
+- **Add up the pile values using nim-sum** — combine the three pile values using the nim-sum (binary XOR) method. If the result is not zero, you are in a winning position and a winning move exists.
+- **Make the total nim-sum zero** — find a pile whose value you can change to make the total nim-sum become zero. This is always possible from a winning position.
+- **Never leave a nim-sum of zero for the opponent** — giving the opponent a position with a total nim-sum of zero gives them a winning position. Always check before you move.
+- **A pile of size divisible by 3 is irrelevant** — such a pile has value 0 and contributes nothing to the nim-sum. You can ignore it when looking for the winning move in the other piles.
 
 ## Engines & current best play
 

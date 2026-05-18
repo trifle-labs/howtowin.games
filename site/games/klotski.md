@@ -1,6 +1,6 @@
 # Klotski
 
-> Sliding-block puzzle whose generalisation is PSPACE-complete.
+> A sliding-block puzzle where you move blocks to get the big block out the bottom. The general version is extremely hard.
 
 | Field | Value |
 |-------|-------|
@@ -19,20 +19,14 @@
 
 ## Description
 
-Klotski (commonly the *L'Âne Rouge* / Huarong Pass puzzle) is a sliding-block
-puzzle in a 4×5 frame: one 2×2 block plus rectangular and square pieces must
-be rearranged to slide the 2×2 block out the bottom opening. The generalised
-sliding-block puzzle is **PSPACE-complete** (Hearn & Demaine 2005).
+Klotski (commonly the L'Ane Rouge / Huarong Pass puzzle) is a sliding-block puzzle in a 4x5 frame: one 2x2 block plus rectangular and square pieces must be rearranged to slide the 2x2 block out the bottom opening. The general sliding-block puzzle is PSPACE-complete (extremely hard for large boards).
 
 ## Rules
 
-1. Board: 4×5 frame (in the classical Huarong Pass version) containing one
-   2×2 piece, four 1×2 pieces (vertical or horizontal), and four 1×1 pieces.
-2. The 4×5 frame has a 2-cell opening on the bottom edge.
-3. On a move the solver slides one piece one cell orthogonally to an empty
-   space (no rotation, no jumping).
-4. The puzzle is solved when the 2×2 piece reaches the bottom-centre and can
-   slide out the opening.
+1. Board: 4x5 frame (in the classical Huarong Pass version) containing one 2x2 piece, four 1x2 pieces (vertical or horizontal), and four 1x1 pieces.
+2. The 4x5 frame has a 2-cell opening on the bottom edge.
+3. On a move the solver slides one piece one cell up/down/left/right to an empty space (no rotation, no jumping).
+4. The puzzle is solved when the 2x2 piece reaches the bottom-center and can slide out the opening.
 
 ## Solution status
 
@@ -42,11 +36,11 @@ sliding-block problem** (with arbitrary block shapes on an n×n board) is
 
 ## Consensus on optimal play
 
-- **Minimise moves by planning the 2×2 block's route first** — identify the path the 2×2 block must travel from its start to the exit; then work out which other pieces must move out of the way for each step, in reverse order.
-- **Create space at the top before pushing down** — in *L'Âne Rouge* / Huarong Pass the 2×2 block starts near the top; the 1×2 and 1×1 pieces must be rotated out of the block's path by first consolidating them in corners.
-- **Cycle small pieces through corners** — the four 1×1 squares are the most flexible pieces; route them into corners to open lanes for the larger pieces.
-- **BFS gives the provably shortest solution** — for the classical 4×5 Huarong Pass layout, BFS finds the minimum-move solution (81 moves) exactly; hand-solving is only a puzzle challenge, not strategically interesting beyond the minimum.
-- **Generalised instances: plan "corridors" for big pieces** — in arbitrary sliding-block puzzles, long pieces need unobstructed corridors; identifying corridor-blocking pieces and clearing them is the key sub-problem.
+- **Plan the 2x2 block's route first** — identify the path the 2x2 block must travel from its start to the exit. Then work out which other pieces must move out of the way for each step, working backward from the goal.
+- **Create space at the top before pushing down** — in L'Ane Rouge / Huarong Pass the 2x2 block starts near the top. The 1x2 and 1x1 pieces must be moved out of the block's path by first consolidating them in corners.
+- **Cycle small pieces through corners** — the four 1x1 squares are the most flexible pieces. Route them into corners to open lanes for the larger pieces.
+- **BFS gives the shortest solution** — for the classical 4x5 Huarong Pass layout, BFS (breadth-first search) finds the minimum-move solution (81 moves) exactly. Hand-solving is just a puzzle challenge, not strategically interesting beyond the minimum.
+- **General instances: plan "corridors" for big pieces** — in arbitrary sliding-block puzzles, long pieces need unobstructed corridors. Identifying corridor-blocking pieces and clearing them is the key sub-problem.
 
 ## Engines & current best play
 

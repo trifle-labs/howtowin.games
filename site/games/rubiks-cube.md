@@ -1,7 +1,6 @@
 # Rubik's Cube
 
-> The most famous mechanical puzzle — strongly solved in the sense that "God's
-> Number" (the worst-case optimal solution length) is proven to be 20.
+> The most famous mechanical puzzle. Solved: God's Number (the longest shortest solution anyone needs) is proven to be 20.
 
 | Field | Value |
 |-------|-------|
@@ -20,12 +19,7 @@
 
 ## Description
 
-A 3×3×3 cube whose six faces can each be rotated. The 26 visible "cubies" can be
-scrambled into about 4.3 × 10^19 distinct reachable configurations; the goal is
-to return every face to a single colour. As a single-player puzzle it has no
-game-theoretic value — the meaningful question is the **diameter** of its
-configuration graph: the largest number of moves ever needed to solve a position
-optimally.
+A 3x3x3 cube whose six faces can each be rotated. The 26 visible pieces can be scrambled into about 4.3 x 10^19 different reachable positions. The goal is to return every face to a single colour. Since this is a solo puzzle, there is no winner or loser — the interesting question is the **diameter** of the puzzle: the largest number of moves that is ever needed to solve any position in the shortest possible way.
 
 ## Solution status
 
@@ -40,11 +34,11 @@ corresponding number is 26.)
 
 ## Consensus on optimal play
 
-- **CFOP (Fridrich method) for beginners to advanced** — solve the cross (bottom layer edges), then four first-layer corners, then the second layer edges, then orient and permute the top layer; most speedcubers use this 4-phase approach and average 50–60 moves.
-- **Roux method reduces move count** — build two 1×2×3 blocks on left and right, then finish the top with M-slice and last-six-edges algorithms; requires fewer moves than CFOP but is harder to learn.
-- **Kociemba's two-phase algorithm (computers)** — reduce to a subgroup using phase 1 (≤20 moves), then solve the reduced position in phase 2; finds near-optimal solutions (usually ≤22 moves) in milliseconds.
-- **Optimal IDA* solver** — search with the Korf (1997) IDA* algorithm using pattern-database heuristics; finds a provably minimal-move solution for any position but can take seconds for deep scrambles.
-- **God's Number is 20 (half-turn metric)** — no position requires more than 20 moves; any solver claiming more than 20 moves is sub-optimal.
+- **CFOP method (beginner to advanced)** — solve the cross on the bottom, then the four first-layer corners, then the second-layer edges, then the top layer. Most speedcubers use this 4-step method and average 50-60 moves per solve.
+- **Roux method uses fewer moves** — build two 1x2x3 blocks on the left and right sides, then finish the top. Uses fewer moves than CFOP but is harder to learn.
+- **Kociemba's two-phase algorithm (computers)** — first reduce the cube to a smaller set of positions (phase 1, 20 moves or fewer), then solve from there (phase 2). Finds near-optimal solutions (usually 22 moves or fewer) in milliseconds.
+- **Optimal IDA* solver** — searches all possibilities using pattern databases to find the shortest possible solution. Can prove a solution is the shortest, but may take seconds for scrambled positions.
+- **No position needs more than 20 moves** — God's Number is 20. If any method claims to need more than 20 moves, it is not optimal.
 
 ## Engines & current best play
 

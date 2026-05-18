@@ -1,7 +1,6 @@
 # Quoridor
 
-> A race game where you also build walls to slow your opponent — solved only on
-> reduced boards.
+> A race game where you also build walls to slow down your opponent. Only solved on smaller boards.
 
 | Field | Value |
 |-------|-------|
@@ -20,11 +19,7 @@
 
 ## Description
 
-Played on a 9×9 grid of cells. Each player has a pawn starting on opposite edges
-and a supply of wall pieces (10 each in the two-player game). On a turn a player
-either moves their pawn one cell or places a wall segment between cells. Walls
-block movement but **may never completely seal a player off** from their goal
-edge. The first pawn to reach the opposite edge wins.
+Played on a 9x9 grid of cells. Each player has a pawn starting on opposite edges and a supply of wall pieces (10 each in the two-player game). On your turn, you either move your pawn one cell or place a wall segment between cells. Walls block movement but **you may never completely block a player** from reaching their goal edge. The first pawn to reach the opposite edge wins.
 
 ## Solution status
 
@@ -42,11 +37,11 @@ path-preservation.
 
 ## Consensus on optimal play
 
-- **Advance while you have the shorter path** — count shortest path to your goal vs. the opponent's at every turn; as long as your path is shorter, just move and don't waste walls.
-- **Walls are a finite resource — save them for pivotal moments** — 10 walls per player run out quickly; placing walls to gain only one or two steps over the pawn-move alternative wastes this resource.
-- **Use walls to lengthen the opponent's path, not just to block** — a well-placed wall can add 3–4 moves to the opponent's shortest path; do the pathfinding calculation (BFS) before placing.
-- **Never let the opponent's pawn get ahead without using walls** — if the opponent's pawn is closer to their goal and you have walls remaining, this is the time to spend them; waiting too long is fatal.
-- **Horizontal walls near the opponent's starting side are usually stronger** — early walls placed deep in the opponent's territory are hard for them to route around and force long detours.
+- **Move forward when your path is shorter** — compare the shortest path to your goal versus the opponent's each turn. If your path is shorter, just move and save your walls for later.
+- **Walls are limited — save them for important moments** — 10 walls per player run out fast. Placing a wall that only gains you one or two steps over just moving is a waste.
+- **Use walls to make the opponent's path longer, not just to block one spot** — a well-placed wall can add 3-4 moves to the opponent's shortest route. Do the pathfinding calculation before placing.
+- **Use walls when the opponent is ahead** — if the opponent's pawn is closer to their goal and you still have walls, now is the time to use them. Waiting too long is fatal.
+- **Place walls deep in the opponent's territory** — early walls placed near the opponent's starting side are hard for them to route around and force long detours.
 
 ## Engines & current best play
 

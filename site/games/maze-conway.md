@@ -1,6 +1,6 @@
 # Maze (Conway)
 
-> Conway's "Maze" — a partisan path-tracing game from *On Numbers and Games*.
+> A path-tracing game from John Conway's book On Numbers and Games. Fully solved using combinatorial game theory.
 
 | Field | Value |
 |-------|-------|
@@ -19,17 +19,14 @@
 
 ## Description
 
-A short, instructive partisan game from [Conway's *On Numbers and Games*](../references.md#conway1976):
-players take turns moving a token through a small directed maze with edges
-coloured for Left, Right, or either.
+A short instructional game from John Conway's book On Numbers and Games. Players take turns moving a token through a small maze with colored arrows that only certain players may use.
 
 ## Rules
 
-1. A directed graph with edges coloured **blue (L)**, **red (R)**, or **green
-   (either)** is given, with a token on a designated start node.
-2. Left moves: traverse a blue or green out-edge from the current node.
-3. Right moves: traverse a red or green out-edge.
-4. The player unable to move loses (normal play).
+1. A directed graph (a network of connected points with arrows) with edges colored blue (L), red (R), or green (either) is given, with a token on a designated start point.
+2. Left's moves: follow a blue or green arrow from the current point.
+3. Right's moves: follow a red or green arrow.
+4. The player unable to move loses.
 
 ## Solution status
 
@@ -38,11 +35,11 @@ recursively; the value algebra is the standard one of *On Numbers and Games*.
 
 ## Consensus on optimal play
 
-- **Compute the position value bottom-up from the terminal nodes** — nodes with no out-edges are losses for the player to move (value 0 for the player without moves, computed as a CGT value); work backwards from these to assign exact values to each node.
-- **Move to the node with the most negative value (for Left) or most positive value (for Right)** — Left wants to reach a position with the highest Left-advantage; always move to the successor node with the CGT value most favourable to you.
-- **Green edges are shared resources** — a green edge that both players can traverse is a flexible move option; capturing it (by traversing it yourself) denies the opponent a future move, which may be strategically important even if it leads to a less favourable node for you.
-- **Terminal paths of only one colour are decisive** — if one player's only remaining moves lead to a dead end while the other still has options, the game is effectively won by the one with remaining moves; identify such colour-exclusive dead ends early.
-- **The value is an exact CGT number** — unlike heuristic games, every Conway Maze position has an exact surreal-number or nimber value; two positions with the same value are interchangeable, which allows simplification of compound mazes.
+- **Compute the position value from the end backwards** — points with no outgoing arrows are losses for the player whose turn it is. Work backward from these to assign exact values to each point.
+- **Move to the point with the most favorable value** — Left wants to reach a position with the highest Left advantage. Always move to the next point with the value most favorable to you.
+- **Green arrows are shared resources** — a green arrow that both players can follow is a flexible move option. Using it yourself denies the opponent a future move, which may be strategically important even if it leads to a less favorable point for you.
+- **Dead-end paths for only one player are decisive** — if one player's only remaining moves lead to a dead end while the other still has options, the game is effectively won by the one with remaining moves. Identify such exclusive dead ends early.
+- **Every position has an exact game value** — unlike games with luck or hidden information, every Conway Maze position has an exact mathematical value. Two positions with the same value are interchangeable, which allows simplification of compound mazes.
 
 ## Engines & current best play
 

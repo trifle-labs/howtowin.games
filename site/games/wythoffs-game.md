@@ -1,7 +1,6 @@
 # Wythoff's game
 
-> A two-heap Nim variant whose losing positions are governed by the golden
-> ratio.
+> A two-pile game where you can remove tokens from one pile or the same number from both piles. The losing positions follow the golden ratio. It is fully solved.
 
 | Field | Value |
 |-------|-------|
@@ -20,10 +19,7 @@
 
 ## Description
 
-Two heaps of objects. On a turn a player either removes any positive number
-from one heap, **or** removes the *same* positive number from both heaps. Under
-[normal play](../lexicon/README.md#normal-play-convention) the player taking the
-last object(s) wins.
+Two piles of objects. On a turn, a player either removes any positive number of objects from one pile, or removes the same positive number from both piles. The player who takes the last object(s) wins.
 
 ## Solution status
 
@@ -40,11 +36,11 @@ move to the nearest P-position wins.
 
 ## Consensus on optimal play
 
-- **Check if the start is a P-position using the golden-ratio formula** — compute n = min(a, b) if the heaps are (a, b); if (a, b) = (⌊nφ⌋, ⌊nφ²⌋) for some integer n, you are in a losing position; otherwise you are in a winning position.
-- **Win by moving to the nearest P-position** — from any N-position (a,b) there exists at least one move (either reduce one heap, or reduce both by the same amount) that reaches a P-position; find it using the formula and make that move.
-- **Nim XOR does not work here** — Wythoff's game adds the diagonal move (remove equal amounts from both heaps); unlike ordinary Nim, the losing positions are *not* characterised by XOR = 0 and the golden-ratio Beatty-sequence formula is the only clean characterisation.
-- **Diagonal moves close the gap** — if the two heaps differ by Δ and the pair is not already a P-position, the diagonal move can adjust both heaps simultaneously to hit the P-position; this is often the winning move when the heaps are close in size.
-- **Single-heap moves suffice when heaps are very unequal** — when one heap is much larger, reducing only that heap (as in standard Nim) can land directly on the nearest P-position; check single-heap options before computing diagonal moves.
+- **Check if the starting position is a losing position using the golden ratio formula** — for piles of sizes (a, b), find n = the smaller of a and b. If the pair equals (floor(n times phi), floor(n times phi squared)) for some integer n (where phi is the golden ratio, about 1.618), you are in a losing position. Otherwise, you can win.
+- **Win by moving to a losing position** — from any winning position, there is always a move (either reduce one pile, or reduce both by the same amount) that reaches a losing position. Find it using the formula and make that move.
+- **The standard Nim XOR method does not work here** — Wythoff's game adds the option to remove the same number from both piles (the diagonal move). Unlike ordinary Nim, the losing positions are not found by XOR. The golden ratio formula is the only clean way to identify them.
+- **Use diagonal moves when piles are close in size** — when the two piles differ by a small amount and the pair is not already a losing position, the diagonal move can adjust both piles at once to reach a losing position. This is often the winning move when the piles are near each other in size.
+- **Use single-pile moves when piles are very unequal** — when one pile is much larger than the other, reducing just that pile (like in regular Nim) can land directly on a losing position. Check single-pile options before working out diagonal moves.
 
 ## Engines & current best play
 

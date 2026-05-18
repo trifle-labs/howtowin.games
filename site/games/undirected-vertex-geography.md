@@ -1,7 +1,6 @@
 # Undirected Vertex Geography
 
-> The polynomial-time twin of generalised Geography — solved by maximum
-> matching.
+> A game where players move a token along the edges of a graph without revisiting vertices. It has been fully solved using matching theory.
 
 | Field | Value |
 |-------|-------|
@@ -20,16 +19,13 @@
 
 ## Description
 
-The undirected analogue of [Generalised Geography](geography.md). Where the
-directed problem is PSPACE-complete, the undirected version yields to a
-beautiful **matching argument**.
+This is the undirected version of Generalised Geography. While the directed version is extremely hard for computers to solve in general, the undirected version has an elegant solution using a mathematical concept called maximum matching.
 
 ## Rules
 
-1. An undirected graph G and a starting vertex v are given.
-2. A token starts at v. Players alternate moving the token along an edge to an
-   unvisited vertex.
-3. The player unable to move loses (normal play).
+1. An undirected graph (a set of points connected by lines) and a starting point are given.
+2. A token starts at the starting point. Players take turns moving the token along a line to a point that has not been visited before.
+3. The player who cannot move loses.
 
 ## Solution status
 
@@ -46,11 +42,11 @@ that includes v.
 
 ## Consensus on optimal play
 
-- **Determine whether the start vertex is essential to a maximum matching** — compute any maximum matching of the graph; if the start vertex v is covered by every maximum matching, the first player wins; if some maximum matching leaves v uncovered, the second player wins.
-- **First player: always move along an edge of a fixed maximum matching** — pick a maximum matching M that covers v; on every turn, move the token along an M-edge to its M-matched partner vertex. This strategy guarantees a win by matching-theoretic argument.
-- **Second player: stay off matching edges if possible** — as the second player (in a position where some maximum matching leaves v uncovered), respond to each first-player move by moving along a matching edge in your chosen maximum matching; this ensures you are never stranded.
-- **The key structural insight** — the value of the game is entirely determined by a single maximum-matching computation; no game-tree search is needed beyond that O(V·E) calculation.
-- **Edge direction is the complexity switch** — in the directed version (Generalised Geography) the same problem is PSPACE-complete; the undirected case is solvable in polynomial time, making UVG the standard textbook example of how undirecting edges can collapse game complexity.
+- **Check if the starting point is in every possible maximum matching** — compute the largest possible pairing of connected points (called a maximum matching). If the starting point is in every possible maximum matching, the first player wins. If some maximum matching leaves the starting point out, the second player wins.
+- **First player: always move along a matched edge** — pick one maximum matching that includes the starting point. On every turn, move the token from its current point to the point it is paired with in that matching. This guarantees a win.
+- **Second player: avoid matched edges when possible** — if the starting point is not in all maximum matchings, respond to each first player move by staying on the matching path. This ensures you always have a safe move.
+- **The entire game is decided by one calculation** — whether the first or second player wins depends entirely on a single matching computation. No need to search through game states.
+- **Direction matters enormously** — in the directed version (edges have arrows), the same problem is extremely hard (PSPACE-complete). Simply removing the direction makes it easy to solve, making this a classic example of how edge direction can flip a game's complexity.
 
 ## Engines & current best play
 

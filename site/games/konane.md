@@ -1,7 +1,6 @@
 # Kōnane
 
-> Hawaiian checkers — a capture-by-jump game that is a prime testbed for
-> combinatorial game theory.
+> Hawaiian checkers where you capture by jumping over enemy stones. A favorite game for studying combinatorial game theory.
 
 | Field | Value |
 |-------|-------|
@@ -20,11 +19,7 @@
 
 ## Description
 
-Played on a rectangular board initially filled with black and white stones in a
-checkerboard pattern. After two opening removals, a player moves by **jumping
-one of their stones over an orthogonally adjacent enemy stone** into an empty
-cell, capturing the jumped stone; multi-jumps in a straight line are allowed.
-A player with no legal move loses ([normal play](../lexicon/README.md#normal-play-convention)).
+Played on a rectangular board initially filled with black and white stones in a checkerboard pattern. After two opening removals (one by each player), a player moves by jumping one of their stones over a neighboring enemy stone (up, down, left, or right) into an empty cell, capturing the jumped stone. Multiple jumps in a straight line are allowed. A player with no legal move loses.
 
 ## Solution status
 
@@ -40,11 +35,11 @@ computational-complexity standpoint.
 
 ## Consensus on optimal play
 
-- **Multi-jump chains are decisive** — a stone that can jump multiple enemy stones in a straight line removes several opponents in one move; seek positions that set up long chains and deny the opponent similar opportunities.
-- **Preserve jumping ability for your key stones** — once a stone has no orthogonally adjacent enemy stone it can no longer move; avoid allowing your active stones to become isolated islands with no targets.
-- **Opening removal choice shapes the game** — the two opening removals (one from each player) determine which lanes become active; removing an edge stone opens a long jump lane along that side; central removals create more branching paths.
-- **In endgame, apply CGT value analysis** — late Kōnane positions decompose into independent rectangular regions; compute the CGT value of each region (often a small integer or fraction) and nim-sum them to find the winning move.
-- **Temperature of components guides move selection** — in decomposed endgames, play in the highest-temperature (hottest) component first; deferring hot moves is a losing strategy in CGT-valued games.
+- **Multi-jump chains are decisive** — a stone that can jump multiple enemy stones in a straight line removes several opponents in one move. Seek positions that set up long chains and deny the opponent similar opportunities.
+- **Preserve jumping ability for your key stones** — once a stone has no neighboring enemy stone in a straight line (up/down/left/right), it can no longer move. Avoid allowing your active stones to become isolated with no targets.
+- **Opening removal choice shapes the game** — the two opening removals (one from each player) determine which lanes become active. Removing an edge stone opens a long jump lane along that side. Central removals create more branching paths.
+- **In the endgame, analyze independent regions separately** — late game positions break into separate rectangular areas. Calculate the game value of each region (often a small number) and combine them to find the winning move.
+- **Play in the "hottest" region first** — in the endgame, the most urgent region to play in is the one with the highest value. Deferring in that region is a losing strategy.
 
 ## Engines & current best play
 

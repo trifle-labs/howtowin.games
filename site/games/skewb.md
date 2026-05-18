@@ -1,6 +1,6 @@
 # Skewb
 
-> Corner-rotation twist puzzle — fully solved: God's number is 11.
+> A corner-rotating cube puzzle. Any scramble can be solved in 11 or fewer moves.
 
 | Field | Value |
 |-------|-------|
@@ -15,20 +15,17 @@
 | Solved by | Tomas Rokicki and others |
 | State-space complexity | 3,149,280 positions |
 | Game-tree complexity | Solved by exhaustive table |
+| **Playable** | skewb |
 
 ## Description
 
-The Skewb (Tony Durham, 1982; popularised by Uwe Mèffert) is a corner-turning
-cube puzzle. The state graph contains 3,149,280 positions and **God's
-number** is 11 turns.
+The Skewb (Tony Durham, 1982; popularised by Uwe Mèffert) is a puzzle cube that turns at its corners instead of its faces. The puzzle has 3,149,280 possible positions, and any scramble can be solved in 11 turns or fewer (this is called God's number).
 
 ## Rules
 
-1. Puzzle: cube whose 8 corners are connected to one of two interlocking
-   tetrahedra; the moveable axes are the 4 body diagonals.
-2. On a move the solver rotates a corner-axis by 120° or 240°; this twists
-   half the cube around that diagonal.
-3. The puzzle is solved when every face shows a single colour.
+1. Puzzle: a cube whose 8 corners are connected to one of two interlocking tetrahedra (four-sided pyramids). The moving parts turn along the 4 body diagonals of the cube.
+2. On a move, the solver rotates a corner by 120 or 240 degrees, which twists half the cube around that diagonal.
+3. The puzzle is solved when every face shows a single color.
 
 ## Solution status
 
@@ -37,11 +34,11 @@ metric).
 
 ## Consensus on optimal play
 
-- **Sarah's Advanced Method** — the dominant speedsolving approach: orient the bottom face and centres in the first phase, then permute and orient the top layer corners; achieves average times well under 5 seconds.
-- **Corner-axis intuition is key** — unlike face-turning puzzles, each Skewb move rotates half the cube; building intuition for which corners are affected by each axis move is the first skill to develop.
-- **Top layer last** — solve the four corners of one face and all six centres by intuition, then use algorithms to place the remaining four corners; this two-phase approach is easier to learn than global strategies.
-- **Optimal solve ≤ 11 moves** — with only 3,149,280 states, the complete optimal lookup table fits in a few MB; any correct search of the full state space confirms 11 as God's number.
-- **Parity does not exist** — unlike the 3×3, the Skewb has no parity algorithms needed; any scramble is always solvable in a single consistent layer-by-layer approach.
+- **Sarah's Advanced Method** — the most popular speedsolving method: first orient the bottom face and the centers, then position and rotate the top layer corners. This can achieve solve times well under 5 seconds.
+- **Understand how corner turns work** — unlike face-turning puzzles, each Skewb move rotates half the cube. Learning which corners are affected by each turn is the first skill to develop.
+- **Solve the top layer last** — solve the four corners of one face and all six centers by intuition first, then use memorized sequences to place the remaining four corners. This two-phase approach is easier than learning a single global method.
+- **Optimal solve is 11 moves or fewer** — the puzzle has only 3,149,280 positions, so a complete lookup table easily fits on a computer. Any correct search confirms that 11 moves is the most needed.
+- **No parity errors** — unlike the standard 3x3 Rubik's Cube, the Skewb never runs into impossible configurations. Any scramble can be solved using a single consistent layer-by-layer method.
 
 ## Engines & current best play
 

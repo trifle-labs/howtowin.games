@@ -1,7 +1,6 @@
 # International draughts
 
-> Draughts on a 10×10 board with flying kings — much bigger than English
-> checkers, and unsolved.
+> International checkers on a 10x10 board with flying kings (kings that slide any distance). Much bigger than English checkers and unsolved.
 
 | Field | Value |
 |-------|-------|
@@ -20,10 +19,7 @@
 
 ## Description
 
-Played on the 50 dark squares of a 10×10 board, 20 pieces per side. Men capture
-both forward and backward; captures are compulsory and the **maximum capture**
-must be taken; kings are "flying" — they move and capture any distance along a
-diagonal. These rules make captures long and forcing.
+Played on the 50 dark squares of a 10x10 board, 20 pieces per side. Pieces capture both forward and backward. Captures are compulsory and the maximum capture must be taken. Kings are "flying" — they move and capture any distance along a diagonal. These rules make captures long and forcing.
 
 ## Solution status
 
@@ -38,12 +34,12 @@ proven.
 
 ## Consensus on optimal play
 
-- **Maximum-capture obligation is a tactical fulcrum** — you must take the largest number of pieces in a capture sequence; skilled play involves setting up "shots" that force the opponent into a long capture that leaves their pieces badly positioned after it completes.
-- **Flying kings control the long diagonals** — a king on an open diagonal threatens pieces at any range and restricts the opponent's movement; centralise kings to long diagonals that cross the board.
-- **Guard against backwards captures on your men** — unlike English checkers, men must capture backwards; leaving a man that can be captured backwards while extending your own chain weakens your structure.
-- **Endgame: king vs. two or three men is tablebase-decided** — many such endings are well-studied; knowing the theoretical outcome from your endgame tables prevents wasting moves in drawn or lost positions.
-- **Avoid isolated men on the wings** — wing pieces are harder to retreat to safety and easier to surround; maintain a connected front that can shift laterally.
-- **Tempo in the opening determines midgame piece activity** — losing tempo by retreating or making obligatory bad captures early lets the opponent seize the long diagonals; opening systems focus on compact, tempo-preserving development.
+- **Maximum-capture rule is a tactical weapon** — you must take the largest number of pieces in a capture sequence. Skilled play involves setting up "shots" that force the opponent into a long capture that leaves their pieces badly positioned afterward.
+- **Flying kings control the long diagonals** — a king on an open diagonal threatens pieces at any range and restricts the opponent's movement. Centralize kings to long diagonals that cross the board.
+- **Watch for backward captures on your pieces** — unlike English checkers, pieces must capture backward. Leaving a piece that can be captured backward while extending your own chain weakens your structure.
+- **Endgame: king vs. two or three pieces is tablebase-decided** — many such endings are well-studied. Knowing the theoretical outcome from endgame tables prevents wasting moves in drawn or lost positions.
+- **Avoid isolated pieces on the edges** — edge pieces are harder to retreat to safety and easier to surround. Maintain a connected front that can shift sideways.
+- **The opening determines midgame piece activity** — losing the initiative by retreating or making forced bad captures early lets the opponent seize the long diagonals. Opening systems focus on compact development.
 
 ## Engines & current best play
 

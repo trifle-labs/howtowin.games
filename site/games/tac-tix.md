@@ -1,6 +1,6 @@
 # Tac-Tix (Bynum)
 
-> Piet Hein's misère row-removing Nim variant on a 5×5 grid — fully solved.
+> A game where players remove counters from rows and columns of a 5x5 grid. The player forced to take the last counter loses. It has been fully solved.
 
 | Field | Value |
 |-------|-------|
@@ -19,17 +19,13 @@
 
 ## Description
 
-Tac-Tix was invented by Piet Hein in the 1950s and popularised in Martin
-Gardner's column. It is a **misère** take-away game on a 5×5 grid of counters:
-on each turn a player removes any contiguous run of counters from a single row
-or column; the player forced to remove the last counter **loses**.
+Tac-Tix was invented by Piet Hein in the 1950s and popularised in Martin Gardner's column. It is played on a 5x5 grid of counters. On each turn, a player removes any connected group of counters from a single row or column. The player forced to take the last counter loses.
 
 ## Rules
 
-1. Set up: a 5×5 grid filled with 25 counters.
-2. On your turn, choose a **single row or column** and remove any contiguous
-   subsequence of counters within it (at least one counter).
-3. Misère play: the player who takes the **last** counter loses.
+1. Set up: a 5x5 grid filled with 25 counters.
+2. On your turn, choose a single row or column and remove any connected group of counters within it (at least one counter).
+3. The player who takes the last counter loses.
 
 ## Solution status
 
@@ -41,11 +37,11 @@ is straightforward to construct.
 
 ## Consensus on optimal play
 
-- **Mirror strategy wins for the second player from the start** — on the symmetric 5×5 board the second player can mirror every first-player move about the board's centre; this forces the first player to make the last move and lose.
-- **Symmetry breaks only when a centre-row move is made** — the mirror strategy fails if the first player takes from the exact centre of the central row/column; Bynum's solution handles this case explicitly via table lookup.
-- **Take large runs to destroy rows quickly** — clearing whole rows/columns early limits future opportunities for both players; the player who can force the last remaining counter onto their opponent wins.
-- **Avoid leaving isolated single counters** — a position with only individual isolated counters in distinct rows/columns is a pure misère counting problem; the player facing an odd number of such counters must take the last one and loses.
-- **Do not split rows carelessly** — removing a middle segment of a row creates two separate fragments in the same row; each fragment is an independent sub-game, complicating the misère analysis for the opponent.
+- **Second player can use a mirror strategy from the start** — on the symmetric 5x5 board, the second player can mirror every first-player move across the center of the board. This forces the first player to take the last counter and lose.
+- **Symmetry breaks only with a center move** — the mirror strategy fails if the first player takes counters from the exact center of the board. The known solution handles this case using a lookup table.
+- **Take large runs to clear rows quickly** — clearing whole rows or columns early limits future options for both players. The player who can force the last remaining counter onto the opponent wins.
+- **Avoid leaving isolated single counters** — when only isolated single counters remain in different rows and columns, it becomes a pure counting game. The player facing an odd number of such counters must take the last one and loses.
+- **Do not split rows carelessly** — removing a middle segment of a row creates two separate groups in the same row, which creates complications for the analysis of who must take the last counter.
 
 ## Engines & current best play
 

@@ -1,7 +1,6 @@
 # Push
 
-> A small one-dimensional partisan game from *Winning Ways* — a teaching
-> example for "switches" and game arithmetic.
+> A small one-dimensional game from the book Winning Ways. A teaching example for how game values work.
 
 | Field | Value |
 |-------|-------|
@@ -20,20 +19,14 @@
 
 ## Description
 
-Push is a partisan one-row game in the same spirit as [Toads and Frogs](toads-and-frogs.md)
-and [Shove](shove.md): pieces of two colours slide along a track, with each
-player controlling pieces of one colour. Its compact rules produce a rich
-catalogue of CGT values.
+Push is a game played on a single row, similar to [Toads and Frogs](toads-and-frogs.md) and [Shove](shove.md). Pieces of two colours slide along a track, and each player controls pieces of their own colour. Its simple rules produce a surprising variety of game values.
 
 ## Rules
 
-1. A row of squares, with some squares occupied by blue or red checkers.
-2. **Left** (blue) moves: slide a blue piece **one square right**, pushing any
-   contiguous run of pieces ahead of it (including red pieces) over by one;
-   the rightmost piece of any such run that would fall off the end is removed.
-3. **Right** (red) moves: mirror-image — slide a red piece **one square left**
-   under the same pushing rule.
-4. The player unable to move loses (normal play).
+1. A row of squares, some filled with blue or red checkers.
+2. **Left** (blue) moves: slide a blue piece **one square to the right**, pushing any pieces in a row ahead of it (including red pieces) one square over. If a piece would be pushed off the end, it is removed.
+3. **Right** (red) moves: the mirror image — slide a red piece **one square to the left** under the same pushing rule.
+4. The player who cannot move loses (normal play).
 
 ## Solution status
 
@@ -44,11 +37,11 @@ positions add by ordinary CGT arithmetic.
 
 ## Consensus on optimal play
 
-- **Compute the CGT value of each component** — each independent stretch of the row has a well-defined surreal-number or switch value; calculate it by evaluating Left's and Right's best moves recursively.
-- **Combine components by CGT addition** — a sum of independent Push positions has value equal to the sum of their individual values; play in the component with the most temperature (hottest game first).
-- **Push to eliminate rather than to advance** — using the push-and-remove rule to remove an opponent's piece is usually worth more than gaining a square, since it permanently reduces their move count.
-- **Exploit switches** — a position with value {a | b} is a "switch"; the player who moves there gains temperature (a − b)/2; left should move in positive-value switches, right in negative-value ones.
-- **Pass to your opponent when the sum is fuzzy** — in a sum of hot games, forcing the opponent to move when all remaining games are positive for them is sometimes the correct "Nim-like" endgame strategy.
+- **Figure out the value of each separate section** — each independent stretch of the row has a game value that you can calculate by looking at what moves Left and Right can make and what the results are worth.
+- **Add the values of separate sections together** — if the row has multiple independent sections, the total value is the sum of their individual values. Play in the section with the biggest immediate effect first.
+- **Push pieces off the board** — using the push-and-remove rule to make an opponent's piece fall off is usually better than just moving forward, because it permanently reduces the opponent's options.
+- **Use switch positions** — some positions have a "switch" value where the first player to move there gets a big advantage. Play in switches that favour you.
+- **Force the opponent to move when the overall position is close** — when several sections are still active, making the opponent move first in a position that looks good for them can sometimes backfire on them.
 
 ## Engines & current best play
 

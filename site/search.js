@@ -286,7 +286,7 @@ function mountTile(card) {
   if (!card.dataset.playable) return; // not a playable
   const canvas = document.createElement("canvas");
   holder.appendChild(canvas);
-  import(`./playables/${slug}.js?v=72`).then(mod => {
+  import(`./playables/${slug}.js?v=85`).then(mod => {
     if (!holder.isConnected) return;
     try {
       const inst = mod.create(canvas);
@@ -535,11 +535,13 @@ function hideDetail() {
 
 async function loadPlayable(slug) {
   try {
-    const mod = await import(`./playables/${slug}.js?v=72`);
+    const mod = await import(`./playables/${slug}.js?v=85`);
     const canvas = document.getElementById("playable-canvas");
     if (!canvas) return;
     const area = document.getElementById("playable-area");
     area.classList.remove("hidden");
+    // Force reflow so clientWidth is accurate before create() reads it
+    area.offsetHeight;
     if (currentPlayable) currentPlayable.destroy();
 
     // Set interaction hint for this game
@@ -685,7 +687,7 @@ async function loadPlayable(slug) {
       "tablut": "you defend; rook-move the king to a CORNER to win. Sandwich captures.",
       "yote": "drop a stone from reserve, OR move/jump. Jump captures + remove one extra enemy.",
       "tigers-and-goats": "place 20 goats one at a time, then move them. Trap all 4 tigers to win.",
-      "star": "click any hex — score is (perimeter cells in own group − 3) summed across groups",
+      "star": "click a hex to place a blue stone — press ⏭ pass to skip your turn. Both pass = game ends",
       "poly-y": "click any hex — own ≥3 of 5 highlighted corners with your connected group",
       "unlur": "click any hex — touch any 3 of 6 edges with one group (AI wants 2 opposite edges)",
       "minichess": "Gardner 5×5 chess — click your piece, click destination. Capture king to win.",
@@ -716,6 +718,13 @@ async function loadPlayable(slug) {
       "capablanca-chess": "10×8 chess with Archbishop (B+N) and Chancellor (R+N). Capture the king to win.",
       "crazyhouse": "captured pieces go to your hand — click a piece in hand, then drop square. Checkmate to win.",
       "maharajah-and-the-sepoys": "you command the army — capture the ⛃ (Q+N superpiece) to win. Sepoys move first.",
+      "cathedral": "click a piece in your hand, then click the board to place it — re-click to rotate. Press ⟳ solve for AI",
+      "sprouts": "click a degree-2+ spot, then another spot to draw a curve — loops allowed. Press ⟳ solve for AI",
+      "three-check-chess": "click your piece, then a destination — 8×8 chess with a check counter. Win by king capture OR 3 checks",
+      "pyraminx": "click a face to twist it (Shift+click = CCW) — press ⟳ solve to unscramble",
+      "skewb": "click a face to twist around it (Shift+click = CCW) — press ⟳ solve to unscramble",
+      "conhex": "click a grey peg dot to place red — claim tiles by majority. Connect top↔bottom (you) or left↔right (AI)",
+      "hive": "click a green hex to place a piece, or click your piece to see valid moves. Surround the opponent's queen to win.",
     };
     hint.textContent = hints[slug] || "";
 
@@ -860,7 +869,11 @@ for (const c of categories) {
     }
   }
 }
-flatGames.sort((a, b) => a.title.localeCompare(b.title));
+// Fisher-Yates shuffle for random ordering on each load
+for (let i = flatGames.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [flatGames[i], flatGames[j]] = [flatGames[j], flatGames[i]];
+}
 
 setupTileObserver();
 renderGrid(flatGames);

@@ -1,7 +1,6 @@
 # L game
 
-> Edward de Bono's minimalist game on a 4×4 board — tiny, elegant, and a
-> complete draw with perfect play.
+> Edward de Bono's minimalist game on a 4x4 board. With perfect play, the game is always a draw.
 
 | Field | Value |
 |-------|-------|
@@ -20,11 +19,7 @@
 
 ## Description
 
-Played on a 4×4 board. Each player has one L-shaped piece (covering 4 squares);
-there are also two 1×1 neutral pieces. On a turn a player **must** pick up their
-L-piece and place it back in a different position (any orientation, including
-flipped), and **may** then move one neutral piece to any empty square. A player
-who cannot move their L-piece to a new position loses.
+Played on a 4x4 board. Each player has one L-shaped piece (covering 4 squares), and there are also two 1x1 neutral pieces. On a turn a player must pick up their L-piece and place it back in a different position (any orientation, including flipped), and may then move one neutral piece to any empty square. A player who cannot move their L-piece to a new position loses.
 
 ## Solution status
 
@@ -39,11 +34,11 @@ game, and its complete solvability is part of the point.
 
 ## Consensus on optimal play
 
-- **You can always draw with correct play** — the full position graph (2,296 positions) confirms that from any reachable position, the player to move can find at least one drawing response; losing requires an actual error.
-- **Move your L-piece before considering the neutrals** — evaluate all legal L-piece placements first, identify which ones are safe (no immediate losing response), then use neutral placement to maximise your flexibility or restrict the opponent's next L-placement.
-- **Neutral pieces are powerful blockers** — placing a neutral in a cell that an opponent's L-piece would need can cut off many of the opponent's legal moves; use neutrals proactively to reduce the opponent's options, not just to "waste" the option.
-- **Avoid leaving only one legal L-placement** — if your next position has only one legal L-placement, the opponent can potentially block it next turn with a neutral; maintain at least two valid placements from any position you enter.
-- **Symmetry traps are the main winning motif** — most wins in the L game occur when one player reduces the other to a single legal L-placement and then blocks it with a neutral; recognising when you are one neutral-move away from this is the core tactical pattern.
+- **You can always draw with correct play** — the full set of 2,296 positions confirms that from any reachable position, the player to move can find at least one drawing response. Losing requires an actual mistake.
+- **Move your L-piece before considering the neutrals** — evaluate all legal L-piece placements first, identify which ones are safe (no immediate losing response), then use neutral placement to maximize your flexibility or restrict the opponent's next L-placement.
+- **Neutral pieces are powerful blockers** — placing a neutral in a cell that an opponent's L-piece would need can cut off many of the opponent's legal moves. Use neutrals proactively to reduce the opponent's options.
+- **Avoid leaving only one legal L-placement** — if your next position has only one legal L-placement, the opponent can potentially block it next turn with a neutral. Maintain at least two valid placements from any position you enter.
+- **Symmetry traps are the main winning motif** — most wins in the L game occur when one player reduces the other to a single legal L-placement and then blocks it with a neutral. Recognizing when you are one neutral-move away from this is the core tactical pattern.
 
 ## Engines & current best play
 

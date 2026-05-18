@@ -1,7 +1,6 @@
 # Shove
 
-> The "destructive" twin of Push — sliding a piece pushes the leading piece
-> off the board.
+> The destructive cousin of Push — sliding a piece pushes the leading piece off the board.
 
 | Field | Value |
 |-------|-------|
@@ -20,18 +19,14 @@
 
 ## Description
 
-A close relative of [Push](push.md): pieces slide on a row of squares, but
-**the leading piece is shoved off** every time a contiguous run is pushed —
-making Shove faster and noisier in value.
+A close relative of [Push](push.md). Pieces slide on a row of squares, but **the piece at the front is pushed off the board** every time a group is shoved. This makes Shove faster and creates bigger swings in value.
 
 ## Rules
 
-1. A row of squares with some squares occupied by blue or red checkers.
-2. **Left** (blue) moves: slide a blue piece **one square right**, pushing the
-   adjacent contiguous run of pieces ahead of it. Whatever lies at the right
-   end of that run is shoved off the board permanently.
-3. **Right** (red) moves: the mirror image.
-4. The player unable to move loses (normal play).
+1. A row of squares, some filled with blue or red checkers.
+2. **Left** (blue) moves: slide a blue piece **one square to the right**, pushing any line of pieces ahead of it. Whatever is at the far right end of that line is pushed off the board for good.
+3. **Right** (red) moves: the mirror image — slide a red piece **one square to the left**.
+4. The player who cannot move loses (normal play).
 
 ## Solution status
 

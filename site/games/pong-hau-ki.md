@@ -1,7 +1,6 @@
 # Pong hau k'i
 
-> A tiny traditional blocking game — small enough to solve completely by hand;
-> with correct play it is a draw.
+> A tiny traditional blocking game. Small enough to solve completely by hand — with perfect play it is a draw.
 
 | Field | Value |
 |-------|-------|
@@ -20,10 +19,7 @@
 
 ## Description
 
-Played on a board of 5 points connected by lines (the classic shape has a square
-of 4 points with a diagonal, plus a 5th apex point). Each player has 2 pieces;
-one point is empty. Players alternate sliding a piece along a line into the empty
-point. A player who cannot move loses (their pieces are blocked).
+Played on a board with 5 points connected by lines (the classic shape is a square of 4 points with a diagonal line through it, plus a 5th point at the top). Each player has 2 pieces; one point is always empty. Players take turns sliding a piece along a line into the empty point. A player who cannot move loses (their pieces are blocked).
 
 ## Solution status
 
@@ -36,11 +32,11 @@ single page.
 
 ## Consensus on optimal play
 
-- **Never slide into a corner where both exits are blocked** — the only way to lose is to allow your two pieces to simultaneously occupy points with no shared empty neighbour; always check that at least one of your pieces has an exit.
-- **Use the apex point to prevent opponent blockade** — the 5th apex point is adjacent to more connections than the four square corners; controlling it gives your pieces more routing options.
-- **Mirror the opponent's move when possible** — if the board has a symmetry your opponent just exploited, sliding the mirrored piece preserves your own mobility and denies theirs.
-- **Draw by cycling** — both players can maintain the cycle indefinitely; a player at risk of being blocked should immediately retreat to the safe cycle of positions rather than trying to trap the opponent.
-- **The game is decided entirely by blocking** — there is no scoring or capture; the sole goal is to retain at least one legal move at all times.
+- **Never get trapped in a corner** — the only way to lose is to let both of your pieces sit on points with no empty neighbor between them. Always make sure at least one of your pieces has a way out.
+- **Use the top point to avoid being blocked** — the 5th point at the top connects to more lines than the four square points. Controlling it gives your pieces more escape routes.
+- **Mirror the opponent when you can** — if the board has a symmetry the opponent just used, sliding the matching piece preserves your own options and limits theirs.
+- **Draw by cycling** — both players can keep the game going in a cycle forever. If you are at risk of being blocked, retreat to the safe cycle rather than trying to trap the opponent.
+- **The game is all about blocking** — there is no scoring or capturing. The only goal is to keep at least one legal move at all times.
 
 ## Engines & current best play
 

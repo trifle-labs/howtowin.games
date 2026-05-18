@@ -1,7 +1,6 @@
 # Xiangqi
 
-> Chinese chess — comparable in complexity to Western chess, and likewise
-> unsolved.
+> The Chinese version of chess, played on a 9x10 board with a river in the middle. It has not been solved.
 
 | Field | Value |
 |-------|-------|
@@ -20,10 +19,7 @@
 
 ## Description
 
-Played on a 9×10 board, with pieces placed on line intersections. Distinctive
-elements include the **river** dividing the board, the **palace** that confines
-each general, and pieces such as the Cannon (which captures by jumping). The
-generals may not face each other directly along an open file.
+Played on a 9x10 board, with pieces placed on line intersections (like in Go). Distinctive features include the river dividing the board in half, the palace that restricts each general's movement, and pieces like the Cannon (which captures by jumping over another piece). The two generals may not face each other directly along the same column with no pieces between them.
 
 ## Solution status
 
@@ -36,12 +32,12 @@ game-theoretic value of the standard opening position is not known.
 
 ## Consensus on optimal play
 
-- **Cannon forks before crossing the river** — a Cannon on the back rank can pivot to attack along ranks and files using friendly or enemy screens; establishing early cannon pressure (especially targeting the palace) constrains the opponent before they can develop.
-- **Control the river-crossing with Horses** — Horses (which move like a knight but can be blocked) are most effective once they cross the river; the two central river-crossing points are natural staging areas; occupy them to threaten the opponent's back ranks.
-- **Protect the General from "facing" (Flying General)** — two generals may not stand on the same open file; always verify that advancing a piece does not open a check via the Flying General rule, and use it offensively to threaten the opponent's General on an open file.
-- **Restrict the opponent's Elephants early** — Elephants (which move exactly two points diagonally and cannot cross the river) are purely defensive; attacking the squares that would block their paths limits the opponent's palace defence.
-- **Palace control wins the endgame** — the 3×3 palace confines each General to only 9 squares; in endgames a Rook supported by a Cannon or Horse in or near the palace is usually decisive; aim to penetrate the palace with a supported piece.
-- **Rooks belong on open files and the palace approach** — as in chess, doubled Rooks on an open central file or aimed at the palace are dominant; connect Rooks as early as possible.
+- **Use the Cannon for early pressure** — a Cannon on your back row can attack along rows and columns by using other pieces as screens. Setting up early Cannon pressure, especially aimed at the opponent's palace, limits their options before they can develop their pieces.
+- **Control the river crossings with Horses** — Horses (which move like a knight in chess but can be blocked by pieces in their path) are most effective once they cross the river. The two central crossing points are natural staging areas. Occupy them to threaten the opponent's back rows.
+- **Watch the Flying General rule** — the two generals may not stand on the same open column with no pieces between them. Check that your move does not open a check through this rule, and use it offensively to threaten the opponent's general.
+- **Restrict the opponent's Elephants early** — Elephants move exactly two points diagonally and cannot cross the river. They are purely defensive. Attack the squares that would block their movement to limit the opponent's palace defense.
+- **Control the palace to win the endgame** — the 3x3 palace limits each general to only 9 squares. In the endgame, a Rook supported by a Cannon or Horse in or near the palace is usually decisive. Aim to break into the palace with a supported piece.
+- **Rooks on open files and aimed at the palace** — as in chess, doubled Rooks on an open central file or aimed at the palace are very powerful. Connect your Rooks as early as possible.
 
 ## Engines & current best play
 

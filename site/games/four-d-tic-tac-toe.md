@@ -1,7 +1,6 @@
 # 4-D tic-tac-toe
 
-> Tic-tac-toe on a 4-D 4×4×4×4 board — a known first-player win by
-> Hales–Jewett-style pairing analysis.
+> Tic-tac-toe on a 4-dimensional board. The first player can always win by using a mathematical pairing strategy.
 
 | Field | Value |
 |-------|-------|
@@ -20,23 +19,14 @@
 
 ## Description
 
-The natural higher-dimensional generalisation of tic-tac-toe: a 4×4×4×4
-hypercube of 256 cells. Players alternately place X or O; the first to align
-four in a row along any of the many available "lines" (axis-, plane-, or
-hyperplane-aligned) wins. This is the canonical example of how raising the
-dimension dwarfs the winning sets and shifts the game decisively toward the
-first player.
+Tic-tac-toe played on a 4-dimensional 4×4×4×4 grid — imagine a cube of cubes, with 256 cells in total. Players take turns placing X or O on empty cells. The first player to get four in a row — along any straight line through the 4-D space — wins. Because the board has so many possible winning lines, the first player has a huge advantage, and a draw is impossible.
 
 ## Rules
 
-1. Board: 4×4×4×4 hypercube of cells, with the 4^4 = 256 cells indexed by
-   (i, j, k, l) with each coordinate in {1, 2, 3, 4}.
-2. Players alternate placing X or O on any empty cell.
-3. The first player to **align four of their marks along any straight line** in
-   the hypercube wins. (Many more lines than in 3-D Qubic; total counts derive
-   from the geometry of the 4-D hypercube.)
-4. If the board fills with no four-in-a-line, the game is a draw (in this
-   particular setting, draws are not achievable under optimal play).
+1. Board: a 4×4×4×4 hypercube — 256 cells arranged like a tesseract (a 4-D cube), with each cell identified by four coordinates (i, j, k, l), each from 1 to 4.
+2. Players take turns placing their symbol (X or O) on any empty cell.
+3. The first player to get four of their symbols in a straight line — along any of the many lines that exist in 4-D space — wins. (There are far more possible lines than in the 3-D version, Qubic.)
+4. If the board fills up with no four-in-a-row, the game is a draw (but with perfect play, a draw never happens in this version).
 
 ## Solution status
 
@@ -49,11 +39,11 @@ found. **[verify]** the precise solver attribution.
 
 ## Consensus on optimal play
 
-- **The first player wins — any solid opening in the centre region is correct** — unlike standard tic-tac-toe, draws are not achievable in the 4×4×4×4 setting; the first player's task is to find any of the many winning threat sequences, not to avoid traps.
-- **Exploit the huge number of winning lines** — the 4-D hypercube contains many more collinear 4-tuples than 3-D Qubic; first-player advantage is overwhelming because simultaneous threats along multiple dimensions (axis lines, plane diagonals, space diagonals, hyperplane diagonals) are impossible to block all at once.
-- **Create threats along multiple dimensional axes simultaneously** — placing a piece at a cell that lies on 2-D, 3-D, and 4-D diagonals simultaneously creates more threats per stone than any edge or axis-only placement.
-- **Winning is achieved through a "threat tree"** — the practical first-player strategy involves building a tree of forcing threats (create-threat, force-block, create-another-threat) until the opponent cannot cover all branches simultaneously; this is how the computer analysis confirmed the win.
-- **The Hales–Jewett theorem guarantees no draw is possible** — for any position that fills completely with no winner, that would contradict the theorem; there is no need to play for a draw.
+- **The first player wins — any solid opening in the center area is fine** — unlike regular tic-tac-toe, draws cannot happen in the 4×4×4×4 game. The first player just needs to find any of the many winning move sequences, not avoid traps.
+- **Use the huge number of winning lines** — the 4-D board has many more ways to line up four pieces than even the 3-D version. The first player's advantage is huge because threats along multiple dimensions are impossible for the opponent to block all at once.
+- **Create threats along multiple dimensions at once** — placing a piece on a cell that lies on several different types of diagonals (through planes, cubes, and the whole 4-D space) creates more threats per move than an edge or axis-only placement.
+- **Build a chain of forcing threats** — the winning strategy is to keep making threats; the opponent blocks one, you create another, until the opponent cannot cover all of them at once. This is how computer analysis proved the first-player win.
+- **The Hales-Jewett theorem guarantees no draw is possible** — so there is no need to play for a draw.
 
 ## Engines & current best play
 

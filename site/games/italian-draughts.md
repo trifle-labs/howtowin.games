@@ -1,6 +1,6 @@
 # Italian draughts
 
-> 8×8 draughts variant with men that cannot capture kings — unsolved.
+> An Italian checkers variant where regular pieces cannot capture kings. The special "majority rule" affects which captures you must take.
 
 | Field | Value |
 |-------|-------|
@@ -19,21 +19,15 @@
 
 ## Description
 
-Italian draughts is played on an 8×8 board with the dark squares oriented to
-the right of each player (a 90° rotation of English placement). Men cannot
-capture kings, and the rules require players to capture the maximum number of
-pieces possible.
+Italian draughts (Italian checkers) is played on an 8x8 board with the dark squares oriented to the right of each player (a 90-degree rotation of the English setup). Regular pieces cannot capture kings, and the rules require players to capture the maximum number of pieces possible, with ties broken by preferring sequences that capture more kings.
 
 ## Rules
 
-1. Board: 8×8, with dark squares to each player's right. Each side has 12 men.
-2. Men move and capture diagonally forward only; capture is mandatory.
-3. **A man may never capture a king.**
-4. When multiple captures are available, the player must choose the line that
-   captures the **most pieces**; ties are broken by preferring sequences with
-   more kings captured (the "majority rule").
-5. Men reaching the back rank promote to king; kings move one square in any
-   diagonal direction (short kings — not flying).
+1. Board: 8x8, with dark squares to each player's right. Each side has 12 pieces.
+2. Pieces move and capture diagonally forward only. Capture is mandatory.
+3. A regular piece may never capture a king.
+4. When multiple captures are available, the player must choose the line that captures the most pieces. Ties are broken by preferring sequences with more kings captured (the "majority rule").
+5. Pieces reaching the back row promote to king. Kings move one square in any diagonal direction (short kings — not flying).
 6. A player who cannot move loses.
 
 ## Solution status

@@ -12,7 +12,7 @@ export function create(canvas) {
   canvas.height = size + 130;
   const W = canvas.width, H = canvas.height;
   const dpr = window.devicePixelRatio || 1;
-  if (dpr > 1) { canvas.style.width = W + 'px'; canvas.style.height = H + 'px'; canvas.width = W * dpr; canvas.height = H * dpr; ctx.scale(dpr, dpr); }
+  if (dpr > 1) { canvas.style.width = W + 'px'; canvas.width = W * dpr; canvas.height = H * dpr; ctx.scale(dpr, dpr); }
   const statusEl = document.getElementById("playable-status");
 
   // Each piece is a 4-bit integer 0..15: bit0=tall, bit1=dark, bit2=square, bit3=hollow.

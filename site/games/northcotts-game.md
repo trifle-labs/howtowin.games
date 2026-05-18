@@ -1,6 +1,6 @@
 # Northcott's game
 
-> A checkers-like game on strips that is, once again, Nim wearing a costume.
+> A checkers-like game on rows that is really just Nim in disguise.
 
 | Field | Value |
 |-------|-------|
@@ -19,11 +19,7 @@
 
 ## Description
 
-On each row of a board sit two checkers, one belonging to each player. On a turn
-a player slides **their own** checker along its row any number of empty squares,
-left or right, **without jumping or passing** the opponent's checker. Under
-[normal play](../lexicon/README.md#normal-play-convention) the player who cannot
-move loses.
+On each row of the board there are two checkers, one for each player. On your turn you slide **your own** checker along its row any number of empty squares, left or right, **without jumping over or going past** the opponent's checker. Under normal play, the player who cannot move loses.
 
 > Note: Northcott's game is nominally [partisan](../lexicon/README.md#partisan-game)
 > — each player moves only their own pieces — but its analysis reduces exactly
@@ -45,11 +41,11 @@ move backwards" need not change the game value.
 
 ## Consensus on optimal play
 
-- **Map gaps to heaps** — on each row, count the empty squares between the two checkers; that number is your "heap" for Nim purposes.
-- **XOR all gaps** — compute the nim-sum of the gaps across all rows; if it is non-zero you are in a winning position and must move to make it 0.
-- **Mirror retreats** — if your opponent retreats (increases a gap), immediately re-shrink that same row's gap to restore nim-sum 0; retreats cannot help the losing player.
-- **Never increase your losing row's gap needlessly** — in a losing position (nim-sum 0), any move breaks the balance; all you can do is hope for an opponent error.
-- **Reduce the dominating row** — the standard Nim technique of isolating the single row whose gap exceeds the XOR target applies directly.
+- **Treat each gap as a Nim pile** — on each row, count the empty squares between the two checkers. That number is like a pile of objects in Nim.
+- **XOR all gaps** — compute the XOR of the gaps across all rows. If the result is not zero, you are in a winning position and should make a move that makes it 0.
+- **If the opponent retreats, shrink it back** — if your opponent moves backward (increasing a gap), immediately reduce that same row's gap to bring the XOR back to 0. Retreats cannot save a losing player.
+- **In a losing position, any move loses** — if the XOR is already 0, any move you make will break the balance. All you can do is hope for the opponent to make a mistake.
+- **Focus on the row with the biggest gap** — the standard Nim trick of finding the one row whose gap is larger than the XOR target works the same way here.
 
 ## Engines & current best play
 

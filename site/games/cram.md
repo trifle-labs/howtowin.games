@@ -1,7 +1,6 @@
 # Cram
 
-> The impartial version of Domineering: both players place dominoes in either
-> orientation.
+> The impartial version of Domineering: both players place dominoes, either horizontally or vertically.
 
 | Field | Value |
 |-------|-------|
@@ -21,8 +20,9 @@
 ## Description
 
 Played on a rectangular grid. **Both** players place 1×2 dominoes in **either**
-orientation (horizontal or vertical). Since both have the same moves, Cram is
-[impartial](../lexicon/README.md#impartial-game). The player unable to move loses.
+direction (horizontal or vertical). Since both players have the same moves,
+Cram is an [impartial game](../lexicon/README.md#impartial-game). The player
+who cannot make a legal move loses.
 
 ## Solution status
 
@@ -41,11 +41,11 @@ symmetry.
 
 ## Consensus on optimal play
 
-- **On even×even boards, second player wins by central-reflection** — after any first-player domino placement, the second player places the rotationally symmetric (180°) domino; this strategy guarantees the second player always has a legal move as long as the first player does.
-- **On odd×even boards (one dimension odd, one even), first player wins by playing the centre domino first, then reflecting** — placing the domino on the central axis removes the symmetry centre and lets first player adopt the same reflection strategy for the remainder.
-- **For odd×odd boards, consult computed nim-value tables** — parity arguments do not directly settle these; the winner is determined by the nim-value of the position, which has been computed by machine for many specific sizes.
-- **Blocking open spaces is as important as placing efficiently** — a domino that creates two isolated single squares (unable to fit a 1×2 domino) is often a strong move because it reduces the opponent's future options significantly.
-- **In late-game tight positions, count remaining placements** — when only a few regions remain, count exactly how many dominoes can fit in each; the player who leaves the opponent with an even total of remaining moves wins.
+- **On even-by-even boards, the second player wins by mirroring** — after the first player places a domino, the second player places one in the position exactly opposite (rotated 180 degrees). This guarantees the second player always has a legal move as long as the first player does.
+- **On odd-by-even boards (one side odd, one even), the first player wins by playing the center domino first, then mirroring** — placing a domino on the center point removes the symmetry and lets the first player use the same mirroring strategy for the rest of the game.
+- **For odd-by-odd boards, look up computed results** — simple mirroring does not work here. The winner is determined by the nim-value of the position, which has been calculated by computer for many board sizes.
+- **Blocking open spaces matters as much as placing efficiently** — a domino that leaves two isolated single squares (too small for another 1×2 domino) is often a strong move because it reduces the opponent's future options.
+- **In tight endgames, count remaining placements** — when only a few areas are left, count exactly how many dominoes can fit in each. The player who leaves the opponent with an even number of remaining moves wins.
 
 ## Engines & current best play
 

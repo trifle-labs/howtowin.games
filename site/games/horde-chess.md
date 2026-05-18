@@ -1,6 +1,6 @@
 # Horde chess
 
-> Asymmetric chess variant: a single army versus a horde of pawns — unsolved.
+> An uneven chess game where one side has a normal army and the other has 36 pawns. The pawn side has no king.
 
 | Field | Value |
 |-------|-------|
@@ -19,20 +19,14 @@
 
 ## Description
 
-In Horde chess, Black plays a standard chess army and White plays 36 pawns
-(four ranks of pawns). White wins by checkmating the Black king; Black wins
-by capturing every White pawn.
+In Horde chess, Black plays a standard chess army and White plays 36 pawns (four rows of pawns). White wins by checkmating the Black king. Black wins by capturing every White pawn.
 
 ## Rules
 
-1. Setup: Black has the orthodox starting army; White has 36 pawns occupying
-   ranks 1–4 (with the second rank shifted to fill out the 36-pawn pattern in
-   the common online variant).
-2. White moves first. White pawns move and capture as ordinary pawns; pawns on
-   their starting rank may move one or two squares.
-3. White has **no king** — White is not checked, and is mated only when no
-   pawns remain.
-4. Black plays orthodox chess; Black wins by removing all White pawns.
+1. Setup: Black has the normal chess starting army. White has 36 pawns occupying rows 1-4 (with the second row shifted to fill the 36-pawn pattern in the common online variant).
+2. White moves first. White pawns move and capture as ordinary pawns. Pawns on their starting row may move one or two squares.
+3. White has no king — White is never in check, and can only lose when no pawns remain.
+4. Black plays normal chess. Black wins by removing all White pawns.
 5. White wins by delivering checkmate to the Black king.
 6. Draws by stalemate are draws as usual.
 
@@ -43,13 +37,11 @@ material imbalance defeat standard endgame theory.
 
 ## Consensus on optimal play
 
-Heuristics from strong play (Black, the chess side, is widely judged to win at top level despite material deficit):
-
-- **For Black: never trade pieces for pawns one-for-one** — Black is outnumbered 36-to-16; even-material trades favour the horde. Black must use pieces as long-range mowing machines, often with knights and bishops attacking *backward* into the horde from outside its reach.
-- **For Black: target the back ranks** — the horde must keep its front line intact to threaten promotions; piling up rooks behind enemy lines forces it to concede tempo.
-- **For Black: blockade promotion squares** — a knight on the seventh rank stops a file of pawns indefinitely.
-- **For White (horde): march in waves, not lines** — keep the front rank advancing only when the second can immediately fill gaps; isolated advanced pawns get plucked.
-- **For White: prefer captures that gain tempo over promotions** — promoting a pawn is only valuable when the new queen survives the next move.
+- **For Black: never trade pieces for pawns one-for-one** — Black is outnumbered 36-to-16. Even trades of material favor the horde. Black must use pieces as long-range attackers, often with knights and bishops attacking backward into the horde from outside its reach.
+- **For Black: target the back ranks** — the horde must keep its front line intact to threaten promotions. Getting rooks behind enemy lines forces the horde to waste moves.
+- **For Black: blockade promotion squares** — a knight on the seventh row stops a column of pawns indefinitely.
+- **For White (horde): march in waves, not lines** — keep the front row advancing only when the second can immediately fill gaps. Isolated advanced pawns get picked off.
+- **For White: prefer captures that gain time over promotions** — promoting a pawn is only valuable when the new queen survives the next move.
 
 ## Engines & current best play
 

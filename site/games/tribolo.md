@@ -1,6 +1,6 @@
 # Tribolo
 
-> A three-player area-capture game on a hex grid — unsolved.
+> A three-player game on a hexagonal grid where stones flip when surrounded. It has not been solved.
 
 | Field | Value |
 |-------|-------|
@@ -15,27 +15,18 @@
 | Solved by | — |
 | State-space complexity | Moderate |
 | Game-tree complexity | Moderate |
+| **Playable** | tribolo |
 
 ## Description
 
-Tribolo (Christian Freeling, 1980s/90s) is one of the few well-known three-
-player abstract games with Othello-like capture mechanics: stones flip when
-surrounded, and the player who has the most stones at the end wins. As a
-multi-player game it lies outside the usual two-player solving framework —
-"optimal play" requires non-equilibrium reasoning about alliances and
-threats.
+Tribolo (Christian Freeling, 1980s/90s) is one of the few well-known three-player abstract games. Stones flip to your color when they are surrounded, similar to Othello. The player with the most stones on the board at the end wins. Being a three-player game, it falls outside the usual two-player solving framework — optimal play involves thinking about alliances and threats between multiple opponents.
 
 ## Rules
 
-1. Board: hexagonal grid of cells.
-2. Three players take turns in fixed order, placing a stone of their colour on
-   an empty cell adjacent to at least one stone of a different colour. (Exact
-   placement and flipping rules vary by sub-variant — **[verify]**.)
-3. When a stone is placed, neighbouring runs of one opposing colour bracketed
-   by the placer and one other colour are flipped to the placer's colour, in
-   an Othello-style sandwich rule generalised to three colours.
-4. When no legal moves remain for any player, the game ends and the player
-   with the most stones on the board wins.
+1. Board: a hexagonal grid of cells.
+2. Three players take turns in fixed order, placing a stone of their color on an empty cell that is next to at least one stone of a different color.
+3. When a stone is placed, any neighboring line of one opponent's color that is bracketed by the placer's stone and another color flips to the placer's color (similar to Othello's sandwich rule, but with three colors).
+4. When no player can make a legal move, the game ends. The player with the most stones on the board wins.
 
 ## Solution status
 
@@ -45,11 +36,11 @@ equilibria, of which there may be many. No published solution exists.
 
 ## Consensus on optimal play
 
-- **Avoid leaving a clear leader unopposed** — in any three-player game, if one player pulls ahead while the other two compete, the leader usually wins; target the current leader's stones with your placements to maintain a balanced stone count.
-- **Create chains along multiple flanks** — placing a stone that can bracket long runs in more than one direction simultaneously is stronger than a one-direction flip; multi-directional flips maximise your stone gain per move.
-- **Be the kingmaker only under duress** — if you genuinely cannot win, the next goal is deciding which of the remaining players wins; flipping stones toward the weaker opponent is a form of tactical control even in apparent defeat.
-- **Control the centre of the hex grid** — central cells on a hex board adjoin more cells, so centre stones can be brackets for flips across multiple hex directions; peripheral stones can only bracket in fewer directions.
-- **Protect large clusters by caging them** — a group of your stones entirely surrounded by your own stones (so no opponent can bracket them) is safe from flipping; building enclosed territories early secures a floor on your score.
+- **Do not let one player get too far ahead** — in a three-player game, if one player pulls ahead while the other two fight each other, the leader will probably win. Target the leader's stones to keep the stone counts balanced.
+- **Flip stones in multiple directions at once** — placing a stone that flips runs in more than one direction is stronger than flipping in just one direction. Multi-directional flips give you the most stones per move.
+- **Play kingmaker only when you must** — if you genuinely cannot win, your next goal is deciding which of the other players wins. Flipping stones toward the weaker player gives you tactical control even when losing.
+- **Control the center of the hex grid** — center cells on a hex board touch more cells, so center stones can be used for flips in more directions. Edge stones can only flip in fewer directions.
+- **Protect large groups by surrounding them** — a group of your stones that is completely surrounded by your own stones (so no opponent can flip them) is safe. Build enclosed areas early to secure a minimum score.
 
 ## Engines & current best play
 

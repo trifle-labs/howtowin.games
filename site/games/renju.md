@@ -1,7 +1,6 @@
 # Renju
 
-> Professional five-in-a-row: handicaps on the first player tame Gomoku's
-> advantage — but the first player still wins.
+> Professional five-in-a-row with rules that handicap the first player. The first player still wins.
 
 | Field | Value |
 |-------|-------|
@@ -20,11 +19,7 @@
 
 ## Description
 
-Renju is [Gomoku](gomoku.md) on a 15×15 board with rules that **handicap the
-first player (Black)**: Black is forbidden to make "double-three," "double-four,"
-or "overline" (six or more) — these are all losing fouls for Black — while White
-has no such restrictions. The handicaps were introduced precisely because
-free-style Gomoku is a clear first-player win.
+Renju is [Gomoku](gomoku.md) played on a 15x15 board with rules that **handicap the first player (Black)**: Black is not allowed to make "double-three" (two open threes at once), "double-four" (two open fours at once), or "overline" (six or more in a row) — these are all fouls that make Black lose. White has no such restrictions. These handicaps were added because free-style Gomoku is too easy for the first player to win.
 
 ## Solution status
 
@@ -41,11 +36,11 @@ which is why modern competitive Renju also layers on opening-move protocols.
 
 ## Consensus on optimal play
 
-- **Avoid Black's forbidden patterns** — as Black, never place a stone that creates a double-three (two open threes simultaneously), double-four (two open fours simultaneously), or overline (six or more in a row); these are immediate fouls.
-- **White should force Black into foul situations** — as White, direct play toward positions where every Black winning move is also a foul; this "forbidden trap" strategy is uniquely available in Renju.
-- **Five-in-a-row beats the foul for Black** — if Black can form exactly five-in-a-row in the same move that would create a forbidden pattern, the five-in-a-row wins; this requires precise counting.
-- **Threat-space search drives strong play** — both humans and programs build winning strategies by iteratively discovering forced-win tree paths (VCF = victory by consecutive fours, VCT = victory by consecutive threats).
-- **Opening protocols matter in practice** — competitive play adds swap2 or other opening neutralisations; prepare specific openings that steer into positions the Wágner–Virág winning tree covers.
+- **As Black, avoid the forbidden patterns** — never make a move that creates double-three (two open threes at once), double-four (two open fours at once), or overline (six or more in a row). These are immediate fouls that make you lose.
+- **As White, try to trap Black into a foul** — steer the game toward positions where every winning move Black has is also a foul. This "forbidden trap" strategy is unique to Renju.
+- **Five-in-a-row beats a foul for Black** — if Black makes exactly five in a row while also creating a forbidden pattern, the five-in-a-row counts as a win. This requires exact counting.
+- **Build chains of forced moves** — the strongest players and programs build winning sequences by chaining together moves that force the opponent to block four-in-a-row over and over (VCF = victory by consecutive fours, VCT = victory by consecutive threats).
+- **Opening rules matter in real play** — competitive Renju adds swap2 or other opening rules to balance the game. Practice specific openings that lead into positions covered by the Wagner-Virag winning tree.
 
 ## Engines & current best play
 

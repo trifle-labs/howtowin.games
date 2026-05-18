@@ -1,6 +1,6 @@
 # Russian draughts
 
-> 8×8 draughts variant with flying kings and backward man-captures — unsolved.
+> An 8x8 draughts variant where kings can fly across the board and men can capture backward. It has not been solved.
 
 | Field | Value |
 |-------|-------|
@@ -19,22 +19,15 @@
 
 ## Description
 
-Russian draughts is the dominant 8×8 draughts variant in the former Soviet
-sphere. Unlike English draughts it allows men to capture backward, kings move
-any distance along a diagonal ("flying king"), and a man that reaches the back
-rank during a capture sequence is immediately promoted.
+Russian draughts is the main 8x8 draughts game played in the former Soviet countries. Unlike English draughts (checkers), men can capture backward, kings can move any distance along a diagonal (called a "flying king"), and if a man reaches the back row during a capture sequence it becomes a king right away.
 
 ## Rules
 
-1. Board: 8×8 standard draughts board. Each player has 12 men on dark squares.
+1. Board: standard 8x8 draughts board. Each player has 12 men on the dark squares.
 2. Men move one square diagonally forward to an empty square.
-3. Men **capture** by jumping diagonally forward **or backward** over an
-   adjacent enemy piece onto an empty square; captures are mandatory and may
-   chain.
-4. A man reaching the far rank becomes a **king**. If the man reaches the far
-   rank during a chain capture and can continue capturing as a king, it does
-   so immediately as a king.
-5. Kings move and capture any number of squares along an unblocked diagonal.
+3. Men **capture** by jumping diagonally forward **or backward** over a neighboring enemy piece onto an empty square. Captures are required and may chain together (multiple captures in one turn).
+4. A man reaching the far row becomes a **king**. If it reaches the far row during a chain capture and can continue capturing as a king, it does so right away as a king.
+5. Kings can move and capture any number of squares along an unblocked diagonal (flying king).
 6. A player who cannot move loses.
 
 ## Solution status
@@ -45,11 +38,11 @@ the value has been published.
 
 ## Consensus on optimal play
 
-- **Flying kings dominate endgames** — a king can traverse the entire board in one move; securing a king promotion radically changes the position and is the primary strategic goal once material is reduced.
-- **Backward captures extend man mobility** — unlike English draughts, men can capture backward; use this to set up multi-jump combinations that English-draughts players would overlook.
-- **Mid-capture promotion is critical** — if a man reaches the back rank during a forced capture chain and can continue as a king, it does so immediately; calculate capture sequences carefully to see whether mid-chain crowning is available.
-- **Centralise to control diagonals** — pieces in the centre of the board control more capture options and cannot be easily cornered; pieces on the edge have fewer diagonals available.
-- **Build breakthrough structures** — getting two or three men in a diagonal cluster toward the promotion rank forces captures that thin the opponent's defence, a key attacking motif in Shashki grandmaster games.
+- **Flying kings rule the endgame** — a king can cross the whole board in one move. Getting a king changes the game completely and is the main goal once pieces are few.
+- **Use backward captures** — unlike English draughts, men can capture backward. Use this to set up multi-jump combinations that English checkers players would not expect.
+- **Watch for mid-capture promotion** — if a man reaches the back row during a forced capture chain and can keep jumping as a king, it does so immediately. Plan capture sequences carefully to see if you can promote mid-chain.
+- **Keep pieces in the centre** — pieces in the centre of the board have more capture options and are harder to trap. Pieces on the edge have fewer diagonal paths.
+- **Build breakthrough groups** — lining up two or three men in a diagonal toward the promotion row forces captures that thin the opponent's defence. This is a key attacking idea in top-level Russian draughts.
 
 ## Engines & current best play
 

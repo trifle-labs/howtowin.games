@@ -1,6 +1,6 @@
 # Seega
 
-> Egyptian custodian-capture game on a 5×5 board — unsolved.
+> An Egyptian game where you capture by surrounding your opponent's pieces on a 5x5 board. It has not been solved.
 
 | Field | Value |
 |-------|-------|
@@ -19,25 +19,15 @@
 
 ## Description
 
-Seega is a traditional Egyptian board game played on a 5×5 grid (other sizes
-exist). Players first place their stones in a drop phase, then move and
-capture by **custodianship** — sandwiching an opposing stone between two of
-their own.
+Seega is a traditional Egyptian board game played on a 5x5 grid (other sizes also exist). Players first place their stones in a placement phase, then move and capture by **custodianship** — trapping an opponent's stone between two of their own.
 
 ## Rules
 
-1. Board: 5×5 (other sizes 7×7 or 9×9 exist). Each player has 12 (or
-   appropriate) stones.
-2. **Placement phase**: starting player drops two stones on any empty cells
-   (except the centre), opponent does likewise, alternating until all stones
-   are placed. The centre remains empty after placement.
-3. **Movement phase**: players alternate; each turn a player moves one of
-   their stones one cell orthogonally to an empty cell.
-4. **Capture**: whenever a player's move sandwiches an opposing stone
-   between two of their own along an orthogonal line, the sandwiched stone is
-   captured and removed. Multiple captures can occur on the same move.
-5. A player who cannot move loses; the player who captures all opposing
-   stones wins.
+1. Board: 5x5 (other sizes like 7x7 or 9x9 also exist). Each player has 12 (or the right number of) stones.
+2. **Placement phase**: the starting player puts two stones on any empty cells (except the centre), the opponent does the same, and they take turns until all stones are placed. The centre cell stays empty after placement.
+3. **Movement phase**: players take turns moving one of their stones one cell up, down, left, or right to an empty cell.
+4. **Capture**: whenever your move traps an opponent's stone between two of your own in a straight line (up, down, left, or right), the trapped stone is captured and removed. Multiple captures can happen on the same move.
+5. A player who cannot move loses. The player who captures all of the opponent's stones wins.
 
 ## Solution status
 
@@ -46,11 +36,11 @@ modern compute but no published proof exists.
 
 ## Consensus on optimal play
 
-- **Placement phase: pair your stones for mutual flanking** — placing two stones that share a flank with each other sets up immediate custodial captures in the movement phase; isolated stones are vulnerable to being sandwiched themselves.
-- **Keep the centre empty at the start — then contest it** — the centre cell is left empty after placement; moving into the centre early in the movement phase gives orthogonal reach in all four directions, maximising custodial threat potential.
-- **Avoid lone stones on the edge** — a single stone on the edge has only three orthogonal neighbours; being sandwiched on an edge requires the opponent to control only two of those, which is easier to arrange.
-- **Advance in pairs** — two stones moving together along adjacent parallel rows create a rolling custodial threat; the opponent must address both simultaneously or lose a piece to the flanking motion.
-- **The player who runs out of pieces first loses** — do not enter capture trades where you lose more pieces than the opponent; maintain numerical parity until you can set up a finishing trap.
+- **Pair your stones during placement** — put two stones so they can trap an opponent's piece between them. This sets up quick captures in the movement phase. Isolated stones are easy targets.
+- **Leave the centre empty at first, then take it** — the centre cell stays empty after the placement phase. Moving into the centre early in the movement phase gives you reach in all four directions, creating more capture threats.
+- **Do not put lone stones on the edge** — a single stone on the edge only has three neighbors up/down/left/right. The opponent only needs two of those to trap it.
+- **Move in pairs** — two stones moving together along parallel rows create a rolling capture threat. The opponent has to deal with both at once or lose a piece.
+- **Do not fall behind on pieces** — do not trade captures where you lose more pieces than the opponent. Keep even numbers until you can set up a winning trap.
 
 ## Engines & current best play
 

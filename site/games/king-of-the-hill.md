@@ -1,6 +1,6 @@
 # King of the Hill
 
-> Chess variant where the king reaching the centre wins — unsolved.
+> A chess variant where you win by moving your king to the center of the board. Not solved.
 
 | Field | Value |
 |-------|-------|
@@ -19,19 +19,14 @@
 
 ## Description
 
-King of the Hill keeps orthodox chess unchanged except that a player wins
-immediately by safely moving the king to one of the four central squares
-(d4, e4, d5, e5). The new objective makes king activity matter from move one.
+King of the Hill keeps normal chess unchanged except that a player wins immediately by safely moving the king to one of the four central squares (d4, e4, d5, e5). This new objective makes the king's activity matter from the very first move.
 
 ## Rules
 
 1. Standard chess setup, movement, and rules.
-2. Additional winning condition: a player wins immediately if they move (or
-   leave) their own king onto **d4, e4, d5, or e5** such that the king is not
-   in check on that square.
+2. Additional winning condition: a player wins immediately if they move (or leave) their own king onto d4, e4, d5, or e5 such that the king is not in check on that square.
 3. Standard checkmate, stalemate, and draw rules also apply.
-4. A move that would place the king on a central square while in check is
-   illegal as usual.
+4. A move that would place the king on a central square while in check is illegal as usual.
 
 ## Solution status
 
@@ -40,12 +35,10 @@ lines are deeply analysed but no formal value is proven.
 
 ## Consensus on optimal play
 
-Heuristics from strong online play:
-
-- **Restrain the centre, then race** — the same four central squares that decide chess strategically now win the game outright. Standard openings that fight for d4/e4/d5/e5 (1.e4, 1.d4) carry over, but the priority shifts toward controlling those squares with pieces (not just pawns) so the opposing king cannot safely walk there.
-- **Don't castle into a wall** — long castling moves the king *away* from the hill; short castling keeps it within striking distance later in the endgame.
-- **Trade the queens early** — without queens, sending the king to the centre becomes safe. Strong players often happily trade queens once the centre is locked.
-- **King marches in the endgame** — the classical chess maxim that the king is a strong endgame piece becomes a primary winning plan.
+- **Restrain the center, then race** — the same four central squares that decide chess strategically now win the game outright. Standard openings that fight for d4/e4/d5/e5 carry over, but the priority shifts toward controlling those squares with pieces (not just pawns) so the opposing king cannot safely walk there.
+- **Don't castle into a wall** — long castling moves the king away from the center. Short castling keeps it within striking distance later in the endgame.
+- **Trade the queens early** — without queens, sending the king to the center becomes safe. Strong players often happily trade queens once the center is locked.
+- **King marches in the endgame** — the classical chess idea that the king is a strong endgame piece becomes a primary winning plan.
 
 ## Engines & current best play
 

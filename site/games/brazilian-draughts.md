@@ -1,6 +1,6 @@
 # Brazilian draughts
 
-> 8×8 international draughts — flying kings on a small board, unsolved.
+> International draughts rules on an 8×8 board, with flying kings. Unsolved.
 
 | Field | Value |
 |-------|-------|
@@ -19,23 +19,20 @@
 
 ## Description
 
-Brazilian draughts is essentially international draughts (Polish draughts)
-played on an 8×8 board: men capture backward, kings fly, and capture
-sequences must take the maximum number of pieces.
+Brazilian draughts is basically international draughts (Polish draughts) but
+played on an 8×8 board. Key differences from regular checkers: pieces can
+capture backward as well as forward, kings can move any number of squares
+along a diagonal (they "fly"), and when you capture, you must take the
+maximum number of pieces possible.
 
 ## Rules
 
-1. Board: 8×8 with dark squares to the player's left. Each side has 12 men.
-2. Men move one square diagonally forward; men capture by jumping enemy
-   pieces forward or backward.
-3. Captures are mandatory and must take the **maximum number of pieces**
-   available.
-4. Men promoting on the back rank during a chain capture continue as kings if
-   they can still capture.
-5. Kings move and capture any distance along a diagonal (flying king); they
-   must land on the square immediately past the captured piece's row, but may
-   choose any empty square along the line.
-6. Loss conditions: no legal moves available.
+1. Board: 8×8 squares, with dark squares on the player's left. Each side starts with 12 pieces ("men").
+2. Men move one square forward diagonally. Men capture by jumping over enemy pieces either forward or backward.
+3. If you can capture, you must. You must take the **maximum number of pieces** possible in a capture sequence.
+4. When a man reaches the opponent's back row during a multi-jump capture and gets promoted to a king, it continues as a king if it can still capture more pieces.
+5. Kings can move and capture any distance along a diagonal (called a "flying king"). After jumping a piece, the king must land on the square just past that piece along the same diagonal line, but may stop on any empty square further along that line.
+6. You lose if you have no legal moves.
 
 ## Solution status
 
@@ -44,11 +41,11 @@ engines are strong but no full proof exists.
 
 ## Consensus on optimal play
 
-- **Maximum-capture rule dominates tactics** — all legal captures are mandatory and you must take the maximum number of pieces; your entire tactical calculation must start by finding the longest capture chain available to each side before considering positional moves.
-- **Promote to flying king as fast as possible** — a king that can sweep diagonals is vastly more powerful than a man; advancing pieces toward the back rank while blocking opponent promotions is the primary strategic objective.
-- **Control the long diagonal** — as in international draughts, the long diagonal is a key highway for flying kings; anchoring a man or king on the central long diagonal squares restricts opponent king mobility.
-- **Maintain piece balance; avoid forced-exchange disadvantage** — the maximum-capture rule means exchanges can be forced; make sure your capture chains do not leave you with fewer or weaker pieces after the sequence resolves.
-- **Tempo matters in king endings** — king vs. king endings often hinge on who has the opposition (the right diagonal relationship); flying kings make triangulation manoeuvres important in pure king endgames.
+- **The maximum-capture rule controls everything** — if you can capture, you must, and you have to take the most pieces possible. Always start by finding the longest capture chain available to each side before thinking about positioning.
+- **Get kings as fast as possible** — a king that can fly along diagonals is much more powerful than a regular piece. Moving pieces toward the back row while blocking the opponent from doing the same is your main goal.
+- **Control the long diagonal** — the long diagonal is the main highway for flying kings. Putting a piece on the central long diagonal squares limits the opponent's king movement.
+- **Keep piece count even; avoid bad trades** — because you must capture the most pieces possible, trades can be forced. Make sure your capture chains don't leave you with fewer or weaker pieces afterward.
+- **In king endings, turn order matters** — when only kings are left, who has the better diagonal position often decides the game. Flying kings make positioning tricks important in these endgames.
 
 ## Engines & current best play
 

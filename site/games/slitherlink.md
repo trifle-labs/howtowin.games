@@ -1,6 +1,6 @@
 # Slitherlink
 
-> Loop-drawing logic puzzle — NP-complete in general.
+> A logic puzzle where you draw a single closed loop based on number clues. General puzzles are NP-complete.
 
 | Field | Value |
 |-------|-------|
@@ -19,21 +19,16 @@
 
 ## Description
 
-Slitherlink (Nikoli, 1989) is a logic puzzle in which the solver draws a
-single, simple closed loop on the edges of a rectangular dot lattice. Numeric
-clues in some cells indicate how many of the cell's four edges are part of
-the loop.
+Slitherlink (Nikoli, 1989) is a logic puzzle in which the solver draws a single closed loop along the edges of a rectangular grid of dots. Numbers in some cells tell you how many of that cell's four edges are part of the loop.
 
 ## Rules
 
-1. Board: rectangular grid of cells. Each cell may carry a clue 0, 1, 2, or 3.
+1. Board: a rectangular grid of cells. Each cell may contain a clue number 0, 1, 2, or 3.
 2. The solver draws a single closed loop along grid edges so that:
-   - The loop is **simple** (no branching, no self-crossing).
-   - Every clued cell has **exactly that many** of its four bordering edges
-     belonging to the loop.
-3. Edges not in the loop may be either drawn as crosses (deductions) or left
-   blank.
-4. A well-formed puzzle has a unique solution.
+   - The loop does not branch or cross itself.
+   - Every cell with a number has exactly that many of its four edges used by the loop.
+3. Edges not part of the loop may be marked with X's or left blank.
+4. A well-formed puzzle has exactly one correct solution.
 
 ## Solution status
 
@@ -43,12 +38,12 @@ solvers in negligible time.
 
 ## Consensus on optimal play
 
-- **Clue-zero cells are fully blocked** — mark all four edges of any 0-cell as "no edge" immediately; this cascades into adjacent cells.
-- **Clue-three cells are nearly complete** — three of four edges must be used; the single missing edge is heavily constrained by neighbours, so resolve these early.
-- **Corner and edge clues are more constrained** — a clue-2 cell in a grid corner has only two possible shapes; the forced pattern often propagates far.
-- **Parity rule at junctions** — every dot on the grid must have an even number (0 or 2) of loop segments meeting it; violations prune branches early.
-- **Avoid early loops** — adding a closing edge that would form a proper sub-loop before all clues are satisfied is immediately illegal; use this to block otherwise ambiguous branches.
-- **Region-based analysis** — consider which cells are inside vs. outside the loop (Jordan curve theorem); when a partial loop already divides the grid, propagate inside/outside labels to force remaining edges.
+- **Zero clues block all edges** — immediately mark all four edges of any cell with a 0 as "not used." This often forces decisions in neighboring cells.
+- **Three clues are nearly complete** — three of four edges must be used, and the one missing edge is heavily restricted by neighbors. Solve these cells early.
+- **Corner and edge clues have fewer possibilities** — a cell with clue 2 in a corner has only two possible edge patterns. The forced shape often affects many nearby cells.
+- **Even junctions rule** — every dot on the grid must have either 0 or 2 loop lines meeting at it. If a dot already has 1 line, you must add exactly 1 more. Use this to eliminate wrong possibilities.
+- **Avoid making small loops too early** — forming a closed loop before all clues are satisfied is illegal. Use this rule to rule out otherwise ambiguous branches.
+- **Think about inside vs. outside** — once part of the loop is drawn, it divides the grid into inside and outside areas. Use this to determine which remaining edges are possible.
 
 ## Engines & current best play
 

@@ -1,7 +1,6 @@
 # Hexapawn
 
-> A 3×3 pawns-only chess miniature, famous as the game a matchbox computer can
-> learn to play perfectly.
+> A tiny chess-like game on a 3x3 board with only pawns. Famous because a matchbox computer can learn to play it perfectly.
 
 | Field | Value |
 |-------|-------|
@@ -20,11 +19,7 @@
 
 ## Description
 
-Played on a 3×3 board, each side starting with three pawns on its back rank.
-Pawns move and capture exactly as chess pawns (one step forward, capture one
-step diagonally). A player wins by advancing a pawn to the far rank, by
-capturing all enemy pawns, or by leaving the opponent with no legal move.
-Introduced by [Gardner (1962)](../references.md#gardner-hexapawn1962).
+Played on a 3x3 board, each side starting with three pawns on its back row. Pawns move and capture exactly as chess pawns (one step forward, capture one step diagonally forward). A player wins by advancing a pawn to the far rank, by capturing all enemy pawns, or by leaving the opponent with no legal move. Introduced by Martin Gardner (1962).
 
 ## Solution status
 
@@ -40,10 +35,10 @@ games — an early, tangible demonstration of reinforcement learning.
 
 ## Consensus on optimal play
 
-- **Second player's core defence: mirror or block** — in the standard 3×3 start, White (first player) has only three opening moves; for each one the optimal Black response is known and can be memorised; Black's goal is to either advance a pawn to promotion or leave White with no legal move.
-- **Avoid diagonal captures that open lanes for promotion** — capturing an opponent's pawn can clear a path for their adjacent pawn to advance; count promotable pawn lines before capturing.
-- **Block all three advance lanes** — with three files, controlling the path of each opposing pawn is the whole game; a pawn that reaches the far rank wins immediately, so no lane can be left open.
-- **The second player wins by steering into the unique drawn/winning lines** — the full game tree is tiny; memorise the three or four key branching points and the correct response at each; there is nothing more.
+- **Second player's core defense: mirror or block** — in the standard 3x3 start, White (first player) has only three opening moves. For each one the best Black response is known and can be memorized. Black's goal is to either advance a pawn to promotion or leave White with no legal move.
+- **Avoid diagonal captures that open lanes for promotion** — capturing an opponent's pawn can clear a path for their neighboring pawn to advance. Count promotable pawn lines before capturing.
+- **Block all three advance lanes** — with three columns, controlling the path of each opposing pawn is the whole game. A pawn that reaches the far rank wins immediately, so no lane can be left open.
+- **The second player wins by steering into the right lines** — the full game tree is tiny. Memorize the three or four key branching points and the correct response at each. There is nothing more.
 
 ## Engines & current best play
 

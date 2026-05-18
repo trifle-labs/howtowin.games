@@ -1,7 +1,6 @@
 # Turning Turtles
 
-> The simplest coin-turning game — and it turns out to be exactly Nim in
-> disguise.
+> A coin-turning game that is secretly the same game as Nim. It is fully solved.
 
 | Field | Value |
 |-------|-------|
@@ -20,11 +19,7 @@
 
 ## Description
 
-A row of coins, each heads or tails, positions numbered 1, 2, 3, …. On a turn a
-player turns over **one or two** coins, with the constraint that the
-**rightmost coin turned must go from heads to tails**. Under
-[normal play](../lexicon/README.md#normal-play-convention) the last player to
-move wins.
+A row of coins, each showing heads or tails, with positions numbered 1, 2, 3, and so on. On a turn, a player flips over one or two coins. The rightmost coin that is flipped must go from heads to tails. The player who makes the last move wins.
 
 ## Solution status
 
@@ -41,11 +36,11 @@ framework: it shows that "turn coins" games inherit the entire
 
 ## Consensus on optimal play
 
-- **Treat every heads coin as a Nim heap** — a heads coin at position n is exactly a Nim heap of size n; the entire row is the disjunctive sum of those heaps.
-- **Compute the nim-sum (XOR) of all heads positions** — XOR together the positions of every heads coin; if the result is 0 you are in a losing position, otherwise you are in a winning position.
-- **Win by turning one or two coins to zero-out the XOR** — find a heads coin at position n and a way to turn it (and optionally one earlier coin) such that the XOR of the remaining heads positions becomes 0; this is the unique (or one of the) winning moves.
-- **Flipping two coins can increase or decrease the effective nim-heap** — when you turn a coin from tails to heads (the leftward coin in a two-coin move) you are adding a new heap; use this to reach the target XOR when a single-coin flip cannot.
-- **Opponent must always flip the rightmost coin from heads to tails** — this constraint is the "Nim heap removal" analogue; every legal move reduces the position of at least one heads coin, guaranteeing the game terminates.
+- **Each heads-up coin acts like a pile in Nim** — a coin showing heads at position n behaves like a pile of n tokens in the game of Nim. The whole row is the combination of all these piles.
+- **Calculate the nim-sum of all heads positions** — write each heads coin's position number in binary and add them without carrying (called XOR). If the result is 0, you are in a losing position. If it is not 0, you can win.
+- **Find a move that makes the XOR zero** — look for a way to flip one or two coins so that the XOR of the remaining heads positions becomes 0. This is the winning move.
+- **Flipping two coins is sometimes necessary** — when you flip two coins (the rightmost from heads to tails, and an earlier coin from tails to heads), you are effectively changing two piles at once. Use this when flipping a single coin cannot make the XOR zero.
+- **The rightmost flipped coin must always go from heads to tails** — this rule ensures the game always progresses toward an end. Each move reduces the value of at least one heads coin.
 
 ## Engines & current best play
 

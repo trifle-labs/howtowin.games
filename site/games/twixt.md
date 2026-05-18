@@ -1,6 +1,6 @@
 # TwixT
 
-> A connection game of pegs and links; popular, elegant, and unsolved.
+> A connection game where players place pegs and connect them with links. Unlike most connection games, it can end in a draw. It has not been solved.
 
 | Field | Value |
 |-------|-------|
@@ -19,12 +19,7 @@
 
 ## Description
 
-Played on a square grid of holes (commonly 24×24). Players alternately place a
-peg of their colour; whenever two of your pegs are a chess-knight's-move apart
-with no crossing link in the way, you may connect them with a link. Each player
-tries to build a continuous linked chain between their two opposite edges.
-Unlike [Hex](hex.md), **TwixT can be drawn** — links can block each other so
-that neither side completes a connection.
+Played on a square grid of holes (commonly 24x24). Players take turns placing a peg of their color on the board. Whenever two of your pegs are a knight's move apart in chess (two steps in one direction and one step perpendicular) with no link crossing the path, you may connect them with a link. Each player tries to build a continuous linked chain between their two opposite edges of the board. Unlike Hex, TwixT can end in a draw — links can block each other so that neither side completes a connection.
 
 ## Solution status
 
@@ -37,12 +32,12 @@ play, but the standard board's game-theoretic value is not known.
 
 ## Consensus on optimal play
 
-- **Use the swap rule to correct for first-mover advantage** — TwixT is typically played with a swap (pie) rule: if the second player considers the first move too strong, they can swap colours; always open with a move you would be happy to defend from either side.
-- **Build diagonal ladders along the 3/4-column** — chains running at a ~45-degree angle are the most space-efficient routes; experienced players route through the 3rd or 4th column from each edge to leave room for defensive detours.
-- **Block by crossing links, not just placing pegs** — a link between two of your pegs permanently blocks any link that would cross it; strategic link placement can cut off the opponent's entire routing corridor without adding a peg directly in their path.
-- **Avoid isolated pegs far from your chain** — a peg not already connected to your chain offers no immediate benefit and requires future moves to incorporate; keep pegs within knight's-move range of your existing links.
-- **Contest the narrow "bridging" points** — the grid has certain bottleneck squares where both sides' optimal paths converge; placing a peg at such a pivot forces the opponent to route around, often gaining a column of space.
-- **Draws arise from deadlocked links** — if the midgame produces a fully cut-off corridor for both players, accept a draw; do not weaken your own formation chasing a win that is geometrically impossible.
+- **Use the swap rule to balance first-move advantage** — TwixT is usually played with a swap rule: if the second player thinks the first move is too strong, they can swap colors. Always start with a move you would be comfortable defending from either side.
+- **Build diagonal chains along the 3rd or 4th column** — chains running at about a 45-degree angle are the most space-efficient routes. Experienced players build through the 3rd or 4th column from each edge to leave room for defensive detours.
+- **Block by crossing the opponent's links, not just placing pegs** — a link between two of your pegs permanently blocks any link that would cross it. Placing links strategically can cut off the opponent's routing paths without needing to put a peg directly in their way.
+- **Keep pegs close to your main chain** — a peg not connected to your chain offers no immediate benefit and needs future moves to connect. Keep pegs within a knight's move of your existing links.
+- **Fight for the bottleneck points** — the grid has certain key squares where both players' optimal paths cross. Placing a peg at such a point forces the opponent to go around, often gaining you a whole column of space.
+- **Know when to accept a draw** — if the game reaches a point where both sides have fully blocked corridors, accept a draw. Do not weaken your own formation chasing a geometrically impossible win.
 
 ## Engines & current best play
 

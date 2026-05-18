@@ -1,7 +1,6 @@
 # Poker Nim
 
-> Nim with the added option to *replace* removed tokens — still equivalent to
-> ordinary Nim by the Sprague–Grundy theory.
+> Like Nim, but you can also put tokens back. It still works out to be the same as ordinary Nim.
 
 | Field | Value |
 |-------|-------|
@@ -20,21 +19,15 @@
 
 ## Description
 
-Poker Nim is the classic example of a "loopy" impartial game that nevertheless
-reduces cleanly to ordinary Nim. Each player has a private reserve of removed
-tokens; the option to *add* tokens back is real but ultimately a "reversible"
-move that the opponent can simply mirror.
+Poker Nim is a classic example of a game that seems tricky (you can put tokens back!) but actually works exactly like ordinary Nim. Each player has their own private stash of tokens they have removed. You can *add* tokens back to a pile from your stash, but the opponent can always undo this by immediately taking the same number back.
 
 ## Rules
 
-1. Set up several heaps of tokens, as in [Nim](nim.md). Each player has a
-   private reserve, initially with some finite number of tokens.
-2. On your turn, either:
-   - Take any positive number of tokens from one heap (Nim move), placing them
-     in your reserve; **or**
-   - Add any positive number of tokens from your reserve back to a single heap.
-3. The player who cannot move loses (normal play). Note that since the reserve
-   is finite, the game cannot go on forever.
+1. Set up several piles of tokens, like in [Nim](nim.md). Each player has a private stash of tokens, starting with some set number.
+2. On your turn, you can do one of these:
+   - Take any number of tokens from one pile (a regular Nim move) and put them in your stash; **or**
+   - Put any number of tokens from your stash back into a single pile.
+3. The player who cannot move loses (normal play). Since the stash is finite, the game cannot go on forever.
 
 ## Solution status
 
@@ -47,11 +40,11 @@ Nim*: nim-sum equals 0 iff the position is a P-position.
 
 ## Consensus on optimal play
 
-- **Play ordinary Nim** — compute the nim-sum of all heap sizes and maintain it at 0 on every turn; the add-from-reserve option is irrelevant to the winning strategy.
-- **Mirror your opponent's additions** — if your opponent adds k tokens to a heap, immediately remove exactly k tokens from that same heap; this undoes the move and keeps the nim-sum where it was.
-- **Reserve-filling does not help** — adding tokens to a heap is a reversible move; in Combinatorial Game Theory reversible moves cannot help the player who makes them because the opponent can undo them.
-- **Keep nim-sum at 0 as the second player** — if you are the second player and the initial nim-sum is 0, maintain it; the first player will inevitably break it and you restore it.
-- **The finite reserve guarantees termination** — tokens in a reserve can be re-added only from previous takes, so the game cannot cycle indefinitely; the total token count bounds the game length.
+- **Play ordinary Nim** — calculate the XOR of all pile sizes and keep it at 0 after every move. The option to add from your stash does not change the winning strategy.
+- **Undo any additions the opponent makes** — if the opponent adds k tokens to a pile, immediately remove exactly k tokens from that same pile. This cancels their move and keeps the XOR where you want it.
+- **Adding tokens never helps** — putting tokens back into a pile is a move the opponent can always undo. It cannot help the player who makes it.
+- **If you are second player and the XOR starts at 0, keep it there** — maintain it at 0; the first player will inevitably break it and you can restore it.
+- **The limited stash keeps the game finite** — tokens can only come from previous takes, so the game cannot cycle forever. The total number of tokens limits how long the game can last.
 
 ## Engines & current best play
 

@@ -1,7 +1,6 @@
 # Red-Blue-Green Hackenbush
 
-> Hackenbush with three edge colours — a partisan game whose values introduce
-> *switches* and require the full surreal-number machinery.
+> Hackenbush with three colours of edges — a game where different players control different edges. Its values include switches and require the full surreal number system.
 
 | Field | Value |
 |-------|-------|
@@ -20,21 +19,14 @@
 
 ## Description
 
-Hackenbush is played on a graph attached to "the ground." In RBG Hackenbush
-each edge is coloured **blue** (Left's), **red** (Right's), or **green**
-(either player's). Removing an edge causes any subgraph no longer connected to
-the ground to fall off. The partisan moves on differently-coloured edges give a
-much richer value space than the impartial Green-only [Hackenbush](hackenbush.md).
+Hackenbush is played on a drawing (graph) attached to "the ground." In RBG Hackenbush each line is coloured **blue** (one player's), **red** (the other player's), or **green** (either player's). When you remove a line, any part of the drawing that is no longer connected to the ground falls off. The fact that different players can remove different colours makes this game much richer in values than the all-green [Hackenbush](hackenbush.md) where either player can cut anything.
 
 ## Rules
 
-1. A graph with one or more *ground* vertices and edges coloured blue, red, or
-   green is given.
-2. Left moves: remove a blue or green edge. Right moves: remove a red or green
-   edge.
-3. After removing an edge, any subgraph no longer connected to the ground is
-   removed too.
-4. The player unable to move loses (normal play).
+1. A drawing with one or more points connected to the ground and lines coloured blue, red, or green is given.
+2. One player's moves: remove a blue or green line. The other player's moves: remove a red or green line.
+3. After removing a line, any part of the drawing no longer connected to the ground falls off too.
+4. The player who cannot move loses (normal play).
 
 ## Solution status
 
@@ -47,11 +39,11 @@ infinitesimals appear naturally in mixed positions. See
 
 ## Consensus on optimal play
 
-- **Compute each component's surreal value separately** — disjoint subgraphs add as games; analyse each connected component in isolation and combine by CGT addition.
-- **Blue/Red edges on strings have dyadic-rational values** — a Blue-Red path from ground gives value equal to the "sign-expansion" of the edge sequence; memorise short strings and use Berlekamp's algorithm for longer ones.
-- **Green edges add nimbers (stars)** — a single green edge contributes *1 (star); groups of green edges in a tree produce larger nimbers by XOR; add these to the Blue-Red value of the position.
-- **Play the hottest component first** — in a sum, the move with the highest temperature (half the gap between Left and Right game values) is usually the correct "hot game" choice.
-- **Switches require careful timing** — a switch {a | b} should be taken by Left when a > b and it is your turn; converting a switch too early when the rest of the sum is hotter wastes opportunity.
+- **Figure out the value of each separate part** — disconnected parts of the drawing add together. Analyse each connected piece on its own and combine the values.
+- **Blue/Red lines on strings have simple number values** — a path of blue and red lines from the ground can be turned into a number using a special method (sign-expansion). Memorise short patterns and use the algorithm for longer ones.
+- **Green lines add special star values** — a single green line has a value called star. Groups of green lines in a tree produce larger values that combine by XOR. Add these to the blue/red value.
+- **Play the biggest-value part first** — when adding up several parts, the move with the largest gap between the two players' values is usually the right choice to play first.
+- **Time switches carefully** — a switch position gives an advantage to the player who moves there. But if other parts of the board are more urgent, do not waste your move on a switch too early.
 
 ## Engines & current best play
 

@@ -1,7 +1,6 @@
 # Notakto
 
-> Tic-tac-toe where both players play X, and making three-in-a-row *loses* —
-> impartial misère tic-tac-toe.
+> Tic-tac-toe where both players use X, and making three in a row makes you lose instead of winning.
 
 | Field | Value |
 |-------|-------|
@@ -20,11 +19,7 @@
 
 ## Description
 
-Notakto is [impartial](../lexicon/README.md#impartial-game) tic-tac-toe: **both**
-players mark cells with an X, and a player who completes three X's in a row
-**loses** ([misère](../lexicon/README.md#misère-play) convention). It is
-typically played on **several** 3×3 boards at once — a move is an X on any one
-live board, and you lose when forced to complete a line on the last board.
+Notakto is tic-tac-toe where **both** players place X marks, and a player who makes three X's in a row **loses** instead of winning. It is usually played on **several** 3x3 boards at the same time — each turn you place an X on any board that is still active. You lose when you are forced to make a line on the last remaining board.
 
 ## Solution status
 
@@ -42,11 +37,11 @@ monoid for the multi-board game.
 
 ## Consensus on optimal play
 
-- **Avoid the last X — the loser completes a line** — every move should aim to leave the opponent in a position where every cell they can play completes a three-in-a-row somewhere.
-- **On a single board, first player loses with perfect play** — the second player can always mirror the winning response; knowing this, the first player should try to create symmetric or forcing positions as early as possible.
-- **Multi-board: track the misère monoid value** — compute each board's equivalence class in the order-18 monoid described by Plambeck & Whitehead, then combine by monoid multiplication; a position with a losing monoid value means you are to move into a loss.
-- **Fork to create two "live" lines** — placing an X that threatens two potential completions forces your opponent to complete one, keeping you safe for another turn.
-- **Avoid "dead" boards in your own move** — completing a line on a board you are forced to play on ends the game for you if it is the last board; delay exhausting boards until the opponent is in a worse state.
+- **Avoid being the one who makes a line** — every move should aim to leave the opponent in a position where every cell they can play would complete a three-in-a-row somewhere.
+- **On a single board, the first player loses with perfect play** — the second player can always mirror and counter. If you are first, try to create symmetrical or forcing positions as early as possible.
+- **Multiple boards: use the solution table** — each board can be classified into one of 18 types (as described by Plambeck & Whitehead). Combine board types using a special multiplication table. If the combined value is a losing type, you are about to lose.
+- **Create forks that threaten two lines at once** — placing an X that threatens two different ways to complete a line forces the opponent to complete one, keeping you safe for another turn.
+- **Do not finish a board yourself** — completing a line on a board you are forced to play on ends the game if it is the last board. Delay finishing boards until the opponent is in a worse position.
 
 ## Engines & current best play
 

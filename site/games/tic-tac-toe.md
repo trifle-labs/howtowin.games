@@ -1,7 +1,6 @@
 # Tic-tac-toe
 
-> The game everyone solves as a child — and the standard first example of a
-> strongly solved game.
+> Two players take turns marking X and O on a 3x3 grid. The first to get three in a row wins. It is the most basic example of a solved game.
 
 | Field | Value |
 |-------|-------|
@@ -20,9 +19,7 @@
 
 ## Description
 
-Played on a 3×3 grid. Players alternately mark cells (X and O); the first to
-place three of their marks in a row — horizontally, vertically, or diagonally —
-wins. If the grid fills with no line, the game is a draw.
+Played on a 3x3 grid. Players take turns marking cells with X and O. The first to get three of their marks in a row (horizontally, vertically, or diagonally) wins. If the grid fills up with no winner, the game is a draw.
 
 ## Solution status
 
@@ -39,12 +36,12 @@ guaranteeing a draw.
 
 ## Consensus on optimal play
 
-- **Take the centre first** — the centre square participates in 4 of the 8 winning lines (row, column, and both diagonals); it is the most valuable cell on the board.
-- **If you go second and the opponent takes centre, play a corner** — corners participate in 3 winning lines; an edge square participates in only 2. Never open with an edge as the second player.
-- **Block every two-in-a-row immediately** — with only 9 cells, leaving any two-in-a-row unblocked loses outright; defence is mandatory before extending your own line.
-- **Create a fork (double threat) to win** — a fork sets up two simultaneous unblockable three-in-a-rows; the most common winning sequence for first player is centre → corner → opposite corner → fork.
-- **Counter a fork threat by threatening to win** — if your opponent is setting up a fork, force them to block your own three-in-a-row instead; this derails the fork at no cost if you can complete the threat on the next move.
-- **Optimal play always draws** — against any legal move sequence, a correct defensive reply exists; the entire draw-guarantee fits in an 8-rule decision tree.
+- **Take the center first** — the center square is part of 4 of the 8 winning lines (row, column, and both diagonals). It is the most valuable cell on the board.
+- **If you go second and the opponent takes the center, take a corner** — corners are part of 3 winning lines. Edge squares are part of only 2. Never take an edge as the second player.
+- **Block every two-in-a-row immediately** — with only 9 cells, leaving any two-in-a-row unblocked loses the game. Block first, then build your own line.
+- **Create a fork (double threat) to win** — a fork sets up two three-in-a-row threats at the same time. The opponent cannot block both. The most common winning sequence for the first player is center, then corner, then opposite corner, then fork.
+- **Counter a fork threat by threatening to win yourself** — if the opponent is setting up a fork, force them to block your own three-in-a-row instead. This derails their fork at no cost if you can complete your threat on your next move.
+- **Perfect play always ends in a draw** — against any legal move, a correct defensive reply exists. The complete draw strategy fits in a simple 8-rule decision tree.
 
 ## Engines & current best play
 

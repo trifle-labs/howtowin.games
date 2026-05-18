@@ -1,7 +1,6 @@
 # Havannah
 
-> A connection game with three different winning shapes — solved only on small
-> boards.
+> A game where you try to make one of three shapes: a ring, a bridge, or a fork. Only small boards have been solved.
 
 | Field | Value |
 |-------|-------|
@@ -20,10 +19,7 @@
 
 ## Description
 
-Played on a hexagonal board of hexagons (tournament size: 10 cells per side).
-Players alternately place stones. A player wins by completing any one of three
-shapes: a **ring** (a loop around at least one cell), a **bridge** (connecting
-two of the six corners), or a **fork** (connecting three of the six edges).
+Played on a hexagonal board of hexagons (tournament size: 10 cells per side). Players take turns placing stones. A player wins by completing any one of three shapes: a ring (a loop around at least one cell), a bridge (connecting two of the six corners), or a fork (connecting three of the six edges).
 
 ## Solution status
 
@@ -38,12 +34,12 @@ players.
 
 ## Consensus on optimal play
 
-- **Threaten multiple win shapes simultaneously** — a stone that advances toward both a fork and a bridge is much harder to counter than one aimed at a single goal; forcing the opponent to block two threats at once is the central attacking principle.
-- **Corners are double-edged** — a corner counts as one edge point for a fork AND as a corner piece for a bridge; occupying or contesting corners early gives threats in both categories.
-- **Respond to ring attempts aggressively** — rings require encircling at least one cell; if the opponent is building a loose loop, inserting a stone inside the potential ring breaks it; don't let rings grow uncontested.
-- **Use the swap rule wisely** — if swap is in effect, the first move should occupy a modestly strong but not obviously dominant cell; too-powerful first moves will be swapped.
-- **Keep groups connected** — disconnected stones give the opponent opportunities to cut and isolate; a network of stones with short bridge-connections (moving to adjacent hexes through two cells) maintains both fork and ring potential.
-- **Deny the opponent's key junction cells** — cells where several of the opponent's groups would connect (completing a fork or bridge) are worth contesting even at material cost.
+- **Threaten multiple win shapes at once** — a stone that advances toward both a fork and a bridge is much harder to counter than one aimed at a single goal. Forcing the opponent to block two threats at once is the central attacking principle.
+- **Corners help two goals at once** — a corner counts as one edge point for a fork AND as a corner piece for a bridge. Occupying or contesting corners early gives threats in both categories.
+- **Respond to ring attempts aggressively** — rings require encircling at least one cell. If the opponent is building a loose loop, inserting a stone inside the potential ring breaks it. Do not let rings grow uncontested.
+- **Use the swap rule wisely** — if the swap (pie) rule is in effect, the first move should occupy a moderately strong but not obviously dominant cell. Too-powerful first moves will be swapped.
+- **Keep groups connected** — disconnected stones give the opponent opportunities to cut and isolate. A network of stones with short connections maintains both fork and ring potential.
+- **Deny the opponent's key junction cells** — cells where several of the opponent's groups would connect (completing a fork or bridge) are worth contesting even at the cost of losing a stone.
 
 ## Engines & current best play
 

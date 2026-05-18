@@ -1,7 +1,6 @@
 # Tablut
 
-> A Sámi member of the asymmetric tafl family — strong programs and endgame
-> databases exist, but the standard game has no published formal solution.
+> An asymmetric Viking-style board game where one side tries to protect a king and the other side tries to capture it. It has not been formally solved.
 
 | Field | Value |
 |-------|-------|
@@ -20,14 +19,7 @@
 
 ## Description
 
-Played on a 9×9 board. The **defender** controls a king on the central throne
-plus 8 soldiers; the **attacker** controls 16 soldiers around the edges. All
-pieces move like a rook. Pieces are captured by being sandwiched between two
-enemies (custodial capture). The king wins by reaching the board edge (or a
-corner, depending on the rule set); the attackers win by capturing the king.
-Tablut is the variant Linnaeus recorded among the Sámi in 1732, and the modern
-tafl revival largely descends from it — but the surviving rules are incomplete,
-so many incompatible rule sets exist.
+Played on a 9x9 board. The defender controls a king on the central square plus 8 soldiers. The attacker controls 16 soldiers around the edges. All pieces move any number of squares up, down, left, or right (like a rook in chess). A piece is captured when it is sandwiched between two enemies (called custodial capture). The king wins by reaching the edge of the board (or a corner, depending on the rules). The attackers win by capturing the king. Tablut is the version recorded by the naturalist Linnaeus among the Sámi people in 1732, and most modern tafl games are based on it — but the historical rules are incomplete, so many different rule sets exist.
 
 ## Solution status
 
@@ -41,11 +33,11 @@ of a standard Tablut has been published.
 
 ## Consensus on optimal play
 
-- **Attackers must build a full blockade** — with 16 pieces surrounding a 9×9 board, attackers win by encircling the king so it has no clear path to the edge; a partial blockade that leaves a single corridor will fail.
-- **Defenders prioritise king mobility over piece count** — keeping the king able to move in at least two directions is more important than saving individual soldiers; trapped defenders should sacrifice pieces to open king routes.
-- **Custodial chains create tempo** — moving a single piece to complete a custodial sandwich removes an enemy piece and threatens others; attackers should stage pieces so each advancing move threatens or completes a capture.
-- **Corner squares (if they win) demand immediate control** — under rule sets where the king wins by reaching a corner, defenders should aim for the nearest corner from the opening; attackers must post pieces on the two squares adjacent to each corner immediately.
-- **Rule-set awareness is paramount** — whether the king needs a corner or an edge, whether the king is "armed" (can participate in captures), and whether the throne blocks movement all change optimal strategy substantially; confirm the rule set before applying any opening theory.
+- **Attackers must build a full blockade** — with 16 pieces surrounding a 9x9 board, the attackers win by encircling the king so it has no clear path to the edge. A partial blockade that leaves one open path will fail.
+- **Defenders should value king movement over saving pieces** — keeping the king able to move in at least two directions is more important than protecting individual soldiers. Sacrifice defending pieces if it opens a route for the king.
+- **Set up capture chains as the attacker** — moving a single piece to complete a sandwich capture removes an enemy piece and threatens others. Attackers should position pieces so every forward move threatens or completes a capture.
+- **Control corner squares immediately (if corners win)** — under rules where the king wins by reaching a corner, defenders should head for the nearest corner from the start. Attackers must place pieces on the two squares next to each corner right away.
+- **Know which rule set you are using** — whether the king needs a corner or an edge, whether the king can capture enemy pieces, and whether the central throne blocks movement all change the best strategy. Confirm the rules before applying any opening theory.
 
 ## Engines & current best play
 

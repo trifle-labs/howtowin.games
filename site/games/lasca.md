@@ -1,7 +1,6 @@
 # Lasca
 
-> Emanuel Lasker's draughts variant where captured pieces are stacked, not
-> removed — unsolved.
+> A checkers variant where captured pieces are stacked underneath the capturing piece instead of being removed. Unsolved.
 
 | Field | Value |
 |-------|-------|
@@ -20,12 +19,7 @@
 
 ## Description
 
-Invented by chess world champion Emanuel Lasker (1911). Played on a 7×7 board
-(25 playing squares), 11 pieces per side. The defining rule: when you capture by
-jumping, the captured piece is **not removed** — it is placed *underneath* the
-jumping piece, forming a **column (tower)**. Only the top piece of a column
-determines its owner and movement; capturing the top piece can "liberate" an
-enemy piece beneath it. A player wins when the opponent cannot move.
+Invented by chess world champion Emanuel Lasker (1911). Played on a 7x7 board (25 playing squares), 11 pieces per side. The defining rule: when you capture by jumping, the captured piece is not removed — it is placed underneath the jumping piece, forming a column (tower). Only the top piece of a column determines who owns it and how it moves. Capturing the top piece can "liberate" an enemy piece beneath it. A player wins when the opponent cannot move.
 
 ## Solution status
 
@@ -40,11 +34,11 @@ been established.
 
 ## Consensus on optimal play
 
-- **Control the top of your towers** — only the top piece determines who controls a tower; capturing the top liberates the piece beneath and hands it to the opponent; prioritise maintaining friendly tops on your valuable towers.
-- **Build tall towers carefully** — a tall tower with enemy pieces buried beneath it is a liability: losing the top piece in a jump turns those enemy pieces into mobile attackers; keep your deepest towers guarded.
-- **Forcing captures that liberate strong enemy pieces is losing** — before making a jump, check what colour the piece beneath your target is; liberating a strong enemy piece from under a tower can instantly swing the position.
-- **The player who can access buried pieces first has an advantage** — jumping a tower to claim the top can unearth a piece of the correct colour that becomes a new attacker; plan sequences with the tower composition in mind.
-- **Mobility wins in the endgame** — a player with more moveable towers wins by attrition; avoid positions where all your towers are locked behind opponent towers.
+- **Control the top of your towers** — only the top piece determines who controls a tower. Capturing the top frees the piece beneath and hands it to the opponent. Prioritize keeping your own color on top of your valuable towers.
+- **Build tall towers carefully** — a tall tower with enemy pieces buried beneath it is a liability. Losing the top piece in a jump turns those enemy pieces into mobile attackers. Keep your deepest towers guarded.
+- **Check what is underneath before capturing** — before making a jump, check what color the piece beneath your target is. Freeing a strong enemy piece from under a tower can instantly swing the position.
+- **The player who can access buried pieces first has an advantage** — jumping a tower to claim the top can unearth a piece of the right color that becomes a new attacker. Plan sequences with the tower composition in mind.
+- **Mobility wins in the endgame** — a player with more movable towers wins by wearing the opponent down. Avoid positions where all your towers are locked behind opponent towers.
 
 ## Engines & current best play
 

@@ -1,7 +1,6 @@
 # Hackenbush
 
-> The game that taught combinatorial game theory how to do arithmetic — its
-> positions *are* numbers.
+> A cutting game with colored edges. The game's positions can be described using surreal numbers, which is a kind of arithmetic for games.
 
 | Field | Value |
 |-------|-------|
@@ -20,12 +19,7 @@
 
 ## Description
 
-A drawing of coloured line segments ("edges") connected to the ground. In
-**Blue-Red Hackenbush** one player may remove blue edges, the other red edges;
-in **Green Hackenbush** all edges are green and either player may remove any.
-Removing an edge also removes anything no longer connected to the ground. Under
-[normal play](../lexicon/README.md#normal-play-convention) the player unable to
-move loses.
+A drawing of colored line segments ("edges") connected to the ground. In Blue-Red Hackenbush, one player may remove blue edges, the other removes red edges. In Green Hackenbush, all edges are green and either player may remove any edge. Removing an edge also removes anything that is no longer connected to the ground. The player who cannot move loses.
 
 ## Solution status
 
@@ -48,11 +42,11 @@ calculus — even though evaluating a specific large picture can still take work
 
 ## Consensus on optimal play
 
-- **Blue-Red strings: read the value by sign expansion** — in a vertical string, each edge is a bit (Blue = positive step, Red = negative step); the value is the surreal number given by reading the string as a binary fraction after the first sign change; remove whichever edge collapses the most positive (or negative) value.
-- **Trees: evaluate bottom-up** — the colon principle lets you replace any branch with its nimber (Green) or game value (Blue-Red); work leaf-to-root rather than root-to-leaf.
-- **Cycles: apply the fusion principle** — in Green Hackenbush, any cycle contributes a nimber equal to its length modulo 2 (odd cycle → nimber 1, even cycle → nimber 0); merge vertices on the cycle to a single ground-connected node.
-- **Blue-Red: aim for positive total value as Blue, negative as Red** — if the sum of all component values is positive, Blue wins under optimal play regardless of who moves first; the magnitude is the "number of free moves" in hand.
-- **Match losing components** — if your position has a negative component (bad for you), try to make a move in an equal-and-opposite good component to cancel it; hedging is the arithmetic of Hackenbush strategy.
+- **Blue-Red strings: read the value step by step** — in a vertical string of edges, each edge is like a bit (Blue = positive step, Red = negative step). The value is found by reading the string as a kind of number. Remove whichever edge shifts the total value most in your favor.
+- **Trees: evaluate from the bottom up** — the "colon principle" lets you replace any branch with its game value (a Grundy value for Green edges, or a regular game value for Blue-Red). Work from the leaves to the root rather than the other way around.
+- **Cycles: apply the fusion principle** — in Green Hackenbush, any loop (cycle) contributes a value equal to its length modulo 2 (odd loop has value 1, even loop has value 0). Merge the loop into a single point connected to the ground.
+- **Blue-Red: aim for a positive total value as Blue, negative as Red** — if the sum of all component values is positive, Blue wins regardless of who moves first. The size of the number tells you how many "free moves" you have.
+- **Balance losing components against winning ones** — if your position has a component with a bad value (negative for Blue), try to make a move in an equally good component to cancel it out. Balancing values is the arithmetic of Hackenbush strategy.
 
 ## Engines & current best play
 

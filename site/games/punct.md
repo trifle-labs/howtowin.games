@@ -1,7 +1,6 @@
 # PÜNCT
 
-> A connection game on a small hexagonal board with stackable pieces of three
-> shapes — unsolved.
+> A connection game on a small hexagonal board using stackable pieces of three shapes. It has not been solved.
 
 | Field | Value |
 |-------|-------|
@@ -16,26 +15,20 @@
 | Solved by | — |
 | State-space complexity | Moderate |
 | Game-tree complexity | Moderate-large |
+| **Playable** | punct |
 
 ## Description
 
-PÜNCT (Kris Burm, 2005) is the fifth GIPF-project game. It is a **connection
-game**: each player has pieces of three different shapes, each occupying a
-different number of cells, and the goal is to link two opposite sides with a
-contiguous chain of your pieces.
+PUNCT (Kris Burm, 2005) is the fifth game in the GIPF project. It is a **connection game**: each player has pieces of three different shapes that cover different numbers of cells, and the goal is to connect two opposite sides of the board with an unbroken chain of your pieces.
 
 ## Rules
 
-1. Board: small hexagonal grid (37 cells).
-2. Each player has pieces of three sizes (1, 2, and 3 cells in different
-   linear arrangements), totalling a fixed small set per player.
-3. On a turn, a player either:
-   - **Place** a new piece flat on the board, covering the appropriate empty
-     cells; **or**
-   - **Move/stack** an existing piece on top of another piece, advancing it
-     toward the connection.
-4. The first player to form a chain of connected pieces of their colour from
-   their starting edge to the opposite edge wins.
+1. Board: a small hexagonal grid (37 cells).
+2. Each player has pieces of three sizes (1, 2, and 3 cells in different line arrangements), a fixed small set per player.
+3. On your turn, you can either:
+   - **Place** a new piece flat on the board, covering the right number of empty cells; **or**
+   - **Move/stack** an existing piece on top of another piece, moving it closer to your connection goal.
+4. The first player to make a chain of connected pieces of their colour from their starting edge to the opposite edge wins.
 
 ## Solution status
 
@@ -44,11 +37,11 @@ evaluation problem; no published solution.
 
 ## Consensus on optimal play
 
-- **Use larger pieces for bridging** — the 2- and 3-cell pieces span more distance per move and can leap over single-cell gaps; prioritise them for advancing your connection path.
-- **Stack to bypass opponent blockers** — moving a piece on top of an opponent's piece both advances your chain and removes the opponent's piece from its blocking location; stacking is often the decisive manoeuvre.
-- **Build the connection through the board's shortest diameter** — on the small hexagonal board some diagonal paths are shorter than straight paths; route your chain along the minimum-distance axis.
-- **Threaten two routes simultaneously** — if your pieces create two separate partial chains that each need one more bridging move to complete, the opponent cannot block both.
-- **Defend with 1-cell pieces** — small single-cell pieces are cheap blockers; place them in the opponent's direct path to force them to stack and spend tempo.
+- **Use big pieces for bridging** — 2- and 3-cell pieces cover more distance per move and can leap over single-cell gaps. Use them to push your connection forward.
+- **Stack to get past blockers** — moving a piece on top of an opponent's piece both advances your chain and removes the opponent's piece from its blocking spot. Stacking is often the winning move.
+- **Build along the shortest path across the board** — on the small hexagonal board, some diagonal routes are shorter than straight ones. Route your chain along the shortest possible path.
+- **Threaten two routes at once** — if your pieces create two separate partial chains that each need one more piece to complete, the opponent cannot block both.
+- **Use small pieces for defence** — single-cell pieces are cheap blockers. Place them in the opponent's path to force them to waste moves stacking.
 
 ## Engines & current best play
 

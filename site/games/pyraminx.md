@@ -1,6 +1,6 @@
 # Pyraminx
 
-> Tetrahedral twist puzzle — fully solved: God's number is 11 (or 6 ignoring tips).
+> A pyramid-shaped twist puzzle. Fully solved: any position can be solved in 11 moves (or 6 moves if you ignore the corner tips).
 
 | Field | Value |
 |-------|-------|
@@ -15,21 +15,17 @@
 | Solved by | Tomas Rokicki and others |
 | State-space complexity | 75,582,720 positions (933,120 ignoring trivial tips) |
 | Game-tree complexity | Solved by exhaustive table |
+| **Playable** | pyraminx |
 
 ## Description
 
-The Pyraminx (Uwe Mèffert, 1981) is a tetrahedral twist puzzle. Its
-state-graph is small (under 10^8) and has been fully analysed: any scramble
-solves in at most **11 moves**, or **6 moves** ignoring the four trivial
-corner tips.
+The Pyraminx (Uwe Meffert, 1981) is a pyramid-shaped twist puzzle with four triangular faces. Its state space is small (under 100 million positions) and has been fully analyzed: any scrambled puzzle can be solved in at most **11 moves**, or **6 moves** if you ignore the four corner tips (which are trivial to twist).
 
 ## Rules
 
-1. Puzzle: tetrahedral puzzle with 4 corner tips, 4 axial "trivial" pieces,
-   and 6 edges.
-2. On a move the solver rotates one of the 4 axes by 120° or 240°.
-3. Each tip is on its own axis and trivially rotates independently — solving
-   them is essentially a free operation.
+1. Puzzle: a pyramid with 4 corner tips, 4 axial pieces, and 6 edge pieces.
+2. On each move, you rotate one of the 4 axes by 120 or 240 degrees.
+3. Each corner tip has its own axis and can be rotated independently — solving the tips is basically free since it does not affect the rest of the puzzle.
 4. The puzzle is solved when every face shows a single colour.
 
 ## Solution status
@@ -39,11 +35,11 @@ ignoring tips).
 
 ## Consensus on optimal play
 
-- **Fix tips last (or first — they're free)** — the four corner tips each have a trivial independent axis; orient them at any point without affecting the rest of the puzzle; many speedcubers fix tips last as a final trivial step.
-- **V method (solve edges in a V-shape on one face)** — place three edge pieces on the bottom face first, then solve the top cap; this is faster than a strict layer-by-layer approach.
-- **Keyhole / L4E methods** — reduce the remaining pieces to a known lookup case and apply a single short algorithm; top speedcubers often reduce the solve to one or two algorithm applications.
-- **Optimal solve ≤ 11 moves** — any scramble is within 11 axis rotations of solved; an IDA* search over the small state space finds optimal solutions instantly.
-- **Only 75 million positions** — the full state graph is smaller than many games' opening books; brute-force optimal lookup is practical.
+- **Fix the tips whenever you want** — the four corner tips twist independently without affecting anything else. Many speed-solvers fix them last as a simple final step.
+- **V method: solve edges in a V-shape on one face** — place three edge pieces on the bottom face first, then solve the top. This is faster than a strict layer-by-layer method.
+- **Keyhole / L4E methods** — reduce the remaining pieces to a pattern you recognize from a lookup table, then apply one short algorithm. Top solvers often finish in just one or two algorithms.
+- **Any scramble can be solved in 11 moves or fewer** — an optimal solver using the small set of all positions finds the shortest solution instantly.
+- **Only 75 million positions** — the full set of positions is small enough for a computer to store and look up instantly.
 
 ## Engines & current best play
 

@@ -1,7 +1,6 @@
 # Col
 
-> A map-colouring partisan game, fully solved by combinatorial game theory: its
-> positions have exact values.
+> A map-coloring game where players take turns coloring regions. Fully solved by combinatorial game theory.
 
 | Field | Value |
 |-------|-------|
@@ -20,10 +19,10 @@
 
 ## Description
 
-Played on a map (a graph of regions). One player colours regions **blue**, the
-other **red**, with the rule that **adjacent regions may not share a colour**
-(as in proper map colouring). A player who cannot legally colour a region loses
-([normal play](../lexicon/README.md#normal-play-convention)).
+Played on a map (a drawing of connected regions). One player colors regions
+**blue**, the other **red**, with the rule that **neighboring regions cannot
+share the same color** (like a proper map coloring). A player who cannot
+legally color any remaining region loses.
 
 ## Solution status
 
@@ -42,11 +41,11 @@ play optimally.
 
 ## Consensus on optimal play
 
-- **Compute the CGT value of each component, then sum** — a Col position decomposes into independent sub-maps; each has an exact value (a number or number + *); the overall position value is the sum, which determines who wins and by how much.
-- **A position with value > 0 is a Left win, < 0 a Right win, = 0 is a second-player win** — reading the numeric CGT value directly gives the game result; no tree search is needed once values are computed.
-- **Mark "dead" regions immediately** — a region adjacent to both blue and red is unavailable to either player; identifying and discarding dead regions simplifies the position and avoids wasted computation.
-- **Prefer moves that maximise the remaining position's value (for Left) or minimise it (for Right)** — in CGT parlance, Left always wants to leave a position as positive as possible; at each step choose the move from the component that shifts the total sum furthest in your favour.
-- **Tinting technique eliminates constrained regions** — a region already adjacent to one colour can be replaced by a simpler representation (its "tint"); applying this before summing reduces the position to its canonical form.
+- **Figure out the value of each separate part, then add them up** — a Col position splits into independent sub-maps. Each sub-map has an exact value (a number or a number plus star). Adding them up gives the overall position value, which tells you who wins.
+- **Positive value means one player wins, negative means the other wins, zero means the second player wins** — reading the numeric value directly tells you the game result. No searching through moves needed once values are known.
+- **Mark "dead" regions right away** — a region next to both blue and red is unavailable to either player. Spotting and ignoring dead regions simplifies the position.
+- **Choose moves that maximize the remaining value (if you are one player) or minimize it (if you are the other)** — in game theory terms, one player always wants to leave the position as positive as possible. On each turn, pick the move that shifts the total value furthest in your favor.
+- **Use "tinting" to simplify** — a region already next to just one color can be replaced by a simpler version (its "tint"). Doing this before adding up values makes the position easier to work with.
 
 ## Engines & current best play
 

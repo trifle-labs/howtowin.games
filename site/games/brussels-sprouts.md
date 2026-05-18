@@ -1,7 +1,6 @@
 # Brussels Sprouts
 
-> A "game" that looks strategic but whose winner is fixed before a single move
-> is made — the ultimate strong solution.
+> A game that looks strategic, but the winner is fixed before any move is made. The ultimate strong solution.
 
 | Field | Value |
 |-------|-------|
@@ -20,10 +19,11 @@
 
 ## Description
 
-A variant of [Sprouts](sprouts.md). Start with *n* crosses (+), each with four
-free ends. On a turn a player draws a line connecting two free ends (not
-crossing existing lines) and adds a small cross-bar in the middle, creating two
-new free ends. The player unable to move loses.
+A variant of [Sprouts](sprouts.md). The game starts with *n* plus signs (+),
+each with four free ends. On a turn, a player draws a curve connecting two
+free ends (without crossing any existing lines) and adds a small cross-bar
+in the middle of that curve, which creates two new free ends. The player who
+cannot move loses.
 
 ## Solution status
 
@@ -40,9 +40,9 @@ solved" can sometimes mean "there was never anything to solve."
 
 ## Consensus on optimal play
 
-- **The winner is determined entirely by the starting count *n*** — every game from *n* crosses lasts exactly 5n − 2 moves; if that number is odd (i.e., *n* is odd), the first player wins; if even (*n* even), the second player wins. No move by either player can change this.
-- **No strategy is meaningful** — because the game length is fixed regardless of moves made, there is literally no "better" or "worse" play; any legal move has the same outcome as any other.
-- **Use this as a teaching example of predetermined games** — Brussels Sprouts illustrates that the appearance of decision-making does not imply strategic depth; the Euler-characteristic argument makes this one of the cleanest "fake game" examples in combinatorial game theory.
+- **The winner is decided entirely by how many crosses you start with (*n*)** — every game starting from *n* crosses lasts exactly 5n minus 2 moves, no matter what. If that number is odd (when *n* is odd), the first player wins. If even (*n* is even), the second player wins. No move by either player can change this.
+- **There is no strategy** — because the game always lasts the same number of moves regardless of what anyone does, there is simply no "better" or "worse" play. Every legal move leads to the same result as any other.
+- **Use this as a teaching example of a fixed-outcome game** — Brussels Sprouts shows that a game can look like it involves decision-making without actually having any strategic depth.
 
 ## Engines & current best play
 

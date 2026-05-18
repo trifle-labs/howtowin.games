@@ -9,8 +9,7 @@ export function create(canvas) {
   const dpr = window.devicePixelRatio || 1;
   if (dpr > 1) {
     const w = canvas.width, h = canvas.height;
-    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
-    canvas.width = w * dpr; canvas.height = h * dpr; ctx.scale(dpr, dpr);
+    canvas.style.width = w + 'px';    canvas.width = w * dpr; canvas.height = h * dpr; ctx.scale(dpr, dpr);
   }
 
   const cols = 4, rows = 5;

@@ -1,7 +1,6 @@
 # Fanorona
 
-> Madagascar's national board game, with capture by approach and withdrawal —
-> weakly solved in 2008 as a draw.
+> Madagascar's national board game. You capture by moving toward or away from enemy pieces. Solved in 2008 — it is a draw with perfect play.
 
 | Field | Value |
 |-------|-------|
@@ -20,11 +19,12 @@
 
 ## Description
 
-The standard board (*Fanorona-Tsivy*) is a 9×5 grid of points connected by
-lines. Pieces capture by **approach** (moving toward an adjacent enemy line) or
-**withdrawal** (moving away from one), removing the whole line of enemy pieces
-beyond; capturing is compulsory when possible and capture-chains can continue.
-A player wins by removing all enemy pieces.
+The standard board (called *Fanorona-Tsivy*) is a 9×5 grid of points connected
+by lines. Pieces capture in two ways: by **approach** (moving toward a
+neighboring enemy piece) or by **withdrawal** (moving away from one). Either
+way, you remove the entire line of enemy pieces beyond the one you touch.
+Capturing is required if you can, and capture chains can continue in the same
+turn. A player wins by removing all enemy pieces.
 
 ## Solution status
 
@@ -39,11 +39,11 @@ meet-in-the-middle methodology used for checkers and Nine Men's Morris. At
 
 ## Consensus on optimal play
 
-- **Prioritise capture chains over single captures** — each capture allows an additional move in the same turn (using a different direction and piece); a multi-capture sequence that removes 4–6 enemy pieces in one turn is often decisive; plan the chain before committing to the first capture.
-- **Distinguish approach from withdrawal before each capture** — approach captures the line of pieces in front of you (the ones you move toward), withdrawal captures the line behind you (the ones you move away from); choosing the correct direction often doubles or triples the number of pieces removed.
-- **Use the central points for maximum capture reach** — the Fanorona board has both orthogonal and diagonal lines; central points intersect more lines than edge points and give pieces more potential capture directions in a chain.
-- **The "passing" capture restriction prevents infinite loops** — a piece cannot revisit a position it has already occupied in the current capture chain; keep track of where you have been to avoid cutting off your own chain mid-sequence.
-- **With perfect play the game is a draw** — neither side should expect to win against a strong opponent; the correct defensive goal is to maintain sufficient piece density to answer all capture chains, not to race for a material advantage.
+- **Go for capture chains, not single captures** — each capture lets you take another move in the same turn (using a different direction and piece). A chain that removes 4-6 enemy pieces in one turn is often a winning move. Plan the chain before making the first capture.
+- **Know the difference between approach and withdrawal** — approach captures the line of pieces in front of you (the ones you move toward), while withdrawal captures the line behind you (the ones you move away from). Choosing the right direction often doubles or triples how many pieces you remove.
+- **Use the center points for the most capture options** — the Fanorona board has both up/down/left/right and diagonal lines. Center points connect to more lines than edge points and give pieces more directions to capture in a chain.
+- **The "passing" rule stops infinite loops** — a piece cannot go back to a spot it already visited in the same capture chain. Keep track of where you have been to avoid accidentally ending your chain early.
+- **With perfect play, the game is a draw** — neither side should expect to win against a strong opponent. The correct defensive goal is to keep enough pieces to answer any capture chain, not to race for a material advantage.
 
 ## Engines & current best play
 

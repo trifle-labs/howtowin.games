@@ -1,7 +1,6 @@
 # Mastermind
 
-> The code-breaking pegboard game — solved: the codebreaker can always win, and
-> the worst-case optimal guess count is known exactly.
+> A code-breaking game with colored pegs. The codebreaker can always win in 5 guesses or fewer.
 
 | Field | Value |
 |-------|-------|
@@ -20,11 +19,7 @@
 
 ## Description
 
-The **codemaker** secretly chooses a code of 4 pegs, each one of 6 colours
-(repeats allowed). The **codebreaker** makes guesses; after each, the codemaker
-reports how many pegs are the right colour in the right position ("black" pegs)
-and how many are the right colour in the wrong position ("white" pegs). The
-codebreaker tries to identify the code in as few guesses as possible.
+The codemaker secretly chooses a code of 4 pegs, each one of 6 colors (repeats allowed). The codebreaker makes guesses. After each guess, the codemaker reports how many pegs are the right color in the right position ("black" pegs) and how many are the right color in the wrong position ("white" pegs). The codebreaker tries to identify the code in as few guesses as possible.
 
 ## Solution status
 
@@ -40,12 +35,12 @@ favour.
 
 ## Consensus on optimal play
 
-- **Start with 1122** — Knuth's optimal first guess is 1122 (two distinct colours, each appearing twice); this guess maximises the worst-case information gain and is the standard opening for the 5-guess strategy.
-- **After each response, eliminate all codes inconsistent with the feedback** — maintain (mentally or on paper) the set of codes still possible; your next guess should be chosen to minimise the size of the largest remaining group after the codemaker's response.
-- **Minimax: pick the guess that minimises the worst-case remaining codes** — at each step, for every candidate guess, compute the worst-case number of possibilities that remain; choose the guess with the smallest worst-case; this guarantees ≤5 guesses.
-- **Your guess need not itself be a possible code** — a "non-code" guess (a pattern you already know is wrong) can still provide useful information; don't restrict guesses to remaining possibilities if a non-code guess splits the remaining pool better.
-- **Five guesses suffice; four do not always** — Knuth proved 5 is the worst-case minimum; no strategy can guarantee a win in ≤4 guesses for all codes in the standard 4-peg, 6-colour game.
-- **For minimum expected guesses (~4.34), use a different strategy** — the minimax (worst-case) and expected-case-optimal strategies differ; if you care about average performance rather than the worst case, use the expected-case lookup table instead.
+- **Start with 1122** — Knuth's optimal first guess is 1122 (two distinct colors, each appearing twice). This guess gives the most information in the worst case and is the standard opening for the 5-guess strategy.
+- **After each response, eliminate all codes that do not match the feedback** — maintain (mentally or on paper) the set of codes still possible. Your next guess should be chosen to minimize the size of the largest remaining group after the codemaker's response.
+- **Pick the guess that minimizes the worst-case remaining codes** — at each step, for every candidate guess, calculate the worst-case number of possibilities that remain. Choose the guess with the smallest worst-case. This guarantees 5 guesses or fewer.
+- **Your guess does not need to be a possible code** — a "non-code" guess (a pattern you already know is wrong) can still provide useful information. Do not restrict guesses to remaining possibilities if a non-code guess splits the remaining pool better.
+- **Five guesses always work; four do not** — Knuth proved 5 is the worst-case minimum. No strategy can guarantee a win in 4 guesses or fewer for all codes in the standard 4-peg, 6-color game.
+- **For minimum expected guesses (about 4.34), use a different strategy** — the worst-case and expected-case-optimal strategies differ. If you care about average performance rather than the worst case, use the expected-case table instead.
 
 ## Engines & current best play
 

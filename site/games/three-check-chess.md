@@ -1,6 +1,6 @@
 # Three-check chess
 
-> Chess variant where giving check three times wins — unsolved.
+> Like regular chess, except a player can also win by putting the opponent's king in check three times. It has not been solved.
 
 | Field | Value |
 |-------|-------|
@@ -15,21 +15,18 @@
 | Solved by | — |
 | State-space complexity | Similar to chess |
 | Game-tree complexity | Similar to chess |
+| **Playable** | three-check-chess |
 
 ## Description
 
-Three-check chess is identical to orthodox chess except that a player wins
-either by checkmate **or** by checking the opposing king three times in the
-game. The added win condition reshapes opening and middlegame priorities.
+Three-check chess follows the same rules as regular chess, except a player can also win by putting the opposing king in check three times over the course of the game. This extra win condition changes how the opening and middle game are played.
 
 ## Rules
 
-1. Same setup, movement, and rules as orthodox chess.
-2. Each side maintains a **check count**; each time a player gives check, the
-   count for the opponent increases by one.
-3. The third check delivered against either king ends the game in favour of
-   the checker, regardless of whether it is checkmate.
-4. Checkmate, stalemate, draw-by-rule conditions continue to apply normally.
+1. Same setup, movement, and rules as regular chess.
+2. Each side keeps a check count. Each time a player puts the opponent's king in check, the opponent's count goes up by one.
+3. The third check delivered against either king wins the game for the player who gave check, even if it is not checkmate.
+4. Normal chess rules for checkmate, stalemate, and draws still apply.
 
 ## Solution status
 
@@ -38,12 +35,10 @@ popular online but no published proof exists.
 
 ## Consensus on optimal play
 
-Heuristics from strong online play:
-
-- **Develop pieces toward the king, not the centre** — the standard chess maxim "develop knights before bishops, claim the centre" is partially superseded: pieces that attack the king from afar (long diagonals, files behind the enemy king) are worth more because each safe check counts.
-- **Don't trade queens** — the queen is the most versatile checking piece; trading it gives the opponent two free checking moves of relative safety.
-- **Castle queenside more often than in chess** — kingside castling sometimes exposes the king to early check sequences on the h-file/diagonals; queenside is sometimes safer because Black's queen-attacking diagonals are blocked.
-- **Count the checks, not just material** — losing a pawn to avoid the second/third check is often correct.
+- **Develop pieces toward the opponent's king, not just the center** — the usual chess advice of "develop knights before bishops and control the center" is less important here. Pieces that attack the king from a distance (long diagonals, open files) are worth more because each safe check counts.
+- **Do not trade queens** — the queen is the best piece for giving check. Trading queens gives the opponent two safe moves without worrying about checks.
+- **Castle queenside more often than in regular chess** — kingside castling can expose the king to early checks along the h-file or diagonals. Queenside is often safer because the opponent's attacking diagonals are blocked.
+- **Count the checks, not just pieces** — losing a pawn to avoid a second or third check is often the right move.
 
 ## Engines & current best play
 

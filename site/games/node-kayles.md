@@ -1,7 +1,6 @@
 # Node Kayles
 
-> A graph-theoretic relative of Kayles whose decision problem is
-> PSPACE-complete.
+> A version of Kayles played on any graph. The general problem is PSPACE-complete (very hard to solve).
 
 | Field | Value |
 |-------|-------|
@@ -20,19 +19,15 @@
 
 ## Description
 
-Node Kayles lifts the row-of-pins [Kayles](kayles.md) game to an arbitrary
-graph. Players alternately *remove a vertex together with all its neighbours*
-— equivalently, they alternately enlarge an independent set.
+Node Kayles takes the idea of [Kayles](kayles.md) (a game about knocking down bowling pins in a row) and plays it on any kind of graph (a network of points connected by lines). On your turn you *remove a point plus all of its neighboring points*. You can also think of it as building a set of points where no two are connected.
 
 ## Rules
 
-1. An undirected graph G is given. Set S of "claimed" vertices starts empty.
-2. On your turn, pick a vertex v not in S and not adjacent to any vertex of S,
-   and add v to S.
+1. A graph (a set of points connected by lines) is given. Start with an empty set S of "claimed" points.
+2. On your turn, pick a point that is not in S and is not next to any point already in S, then add it to S.
 3. The player who cannot move loses (normal play).
 
-Equivalently: players alternately remove a vertex *together with* all its
-neighbours, until the graph is empty.
+Another way to think of it: players take turns removing a point *together with* all its neighboring points, until the graph is empty.
 
 ## Solution status
 
@@ -45,11 +40,11 @@ graph problem.
 
 ## Consensus on optimal play
 
-- **Use tabulated nim-values for named families** — on paths (ordinary Kayles), cycles, and complete graphs the Sprague–Grundy values are known; look up the table and pick the move that sets nim-sum to 0.
-- **Isolate high-degree vertices early** — removing a vertex with many neighbours shrinks the graph rapidly; the resulting smaller components can then be analysed independently.
-- **Decompose into components** — once the graph breaks into disconnected components, compute the Grundy value of each and XOR them (Sprague–Grundy additivity).
-- **In symmetric positions, mirror** — if the graph has a structural symmetry your opponent is about to exploit, consider playing the mirror vertex to restore balance.
-- **General graphs are hard** — for arbitrary graphs no efficient algorithm is known (PSPACE-complete); rely on brute-force retrograde analysis for small instances.
+- **Use known values for common graph types** — for paths (regular Kayles), circles, and complete graphs, the winning values are already known from tables. Look up the value and pick the move that sets the XOR to 0.
+- **Remove highly-connected points early** — removing a point that connects to many others shrinks the graph quickly. The smaller pieces left behind can then be analyzed on their own.
+- **Break the graph into separate pieces** — once the graph splits into disconnected parts, figure out the value of each part separately and XOR them together to get the total.
+- **Mirror symmetrical positions** — if the graph has a mirror image and the opponent is about to exploit it, consider taking the mirror point to restore balance.
+- **General graphs are very hard** — for random graphs no efficient method is known (it is PSPACE-complete). For small cases, just brute-force all possibilities by working backward from the end.
 
 ## Engines & current best play
 

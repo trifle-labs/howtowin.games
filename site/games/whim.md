@@ -1,7 +1,6 @@
 # Whim
 
-> Conway's whimsical variant of Nim: players may, *once each*, swap to the
-> misère convention. The whole game is strongly solved.
+> A version of Nim where each player may, once per game, switch the ending rule from normal to misere (last player to move loses instead of wins). It is fully solved.
 
 | Field | Value |
 |-------|-------|
@@ -20,21 +19,15 @@
 
 ## Description
 
-Whim is Nim plus a single "whim" move available once to each player: at any
-turn, instead of removing tokens, a player may declare that the game's ending
-convention is *reversed* (last-move-wins becomes last-move-loses, or vice
-versa). Whim is the canonical example of how a slight extension of Nim can be
-analysed without abandoning the Sprague–Grundy framework.
+Whim is like Nim, but each player has a special power they can use once per game: instead of removing tokens, they can switch the ending rule. Normally the player who takes the last token wins. After the switch, the player who takes the last token loses instead. This switch can be toggled back by the other player's whim move.
 
 ## Rules
 
-1. Several heaps of tokens, as in Nim.
-2. On your turn either:
-   - Make an ordinary Nim move (remove any positive number from one heap), **or**
-   - If you have not yet used your "whim," declare the **misère switch**:
-     toggle the ending convention. (Each player may do this at most once.)
-3. Under whatever ending convention is active when the last token is taken, that
-   player wins or loses accordingly.
+1. Several piles of tokens, as in Nim.
+2. On your turn, either:
+   - Make an ordinary Nim move (remove any positive number of tokens from one pile); or
+   - If you have not yet used your whim power, switch the ending rule. (Each player may do this at most once.)
+3. Whichever ending rule is active when the last token is taken determines whether that player wins or loses.
 
 ## Solution status
 
@@ -46,11 +39,11 @@ Misère Nim. The analysis adds two state flags (whether each player still has a
 
 ## Consensus on optimal play
 
-- **Play ordinary Nim (XOR to zero) while heaps are large** — when all heaps are of size ≥ 2, the whim flags are irrelevant to the immediate move; play standard Nim (XOR all heap sizes to zero) and save your whim for the endgame.
-- **Use your whim when heaps shrink to all-1s** — the critical moment is when the position reduces to heaps of size 1 only; at that point the active ending convention determines the winner, so using the whim switch to flip to the favourable convention (or preventing the opponent from doing so) is the entire endgame.
-- **Whoever uses their whim last in the all-1s endgame wins** — in the final all-1s phase, the last whim used sets the final convention; the player with a whim remaining has the decisive move.
-- **Do not waste your whim prematurely** — using the whim switch while large heaps remain is usually wasted: the opponent can simply play the corrected strategy in whatever convention now applies; preserve the whim for maximum value.
-- **Track both players' whim flags as part of the game state** — there are four possible (my-whim, opponent-whim) flag combinations; know which phase you are in to apply the correct strategy.
+- **Play ordinary Nim while piles are large** — when all piles have 2 or more tokens, the ending-switch power is not useful yet. Play standard Nim (aim to make the XOR of all pile sizes zero) and save your whim switch for the endgame.
+- **Use your whim when piles become all 1s** — the critical moment comes when only piles of size 1 remain. At that point, the active ending rule decides the winner. Using your whim to switch to the favorable rule (or stopping the opponent from doing so) is the whole endgame.
+- **Whoever uses their whim last in the all-1s endgame wins** — when only piles of 1 remain, the player who switches the ending rule last decides the final rule. The player with a whim move still available has the decisive move.
+- **Do not waste your whim early** — using the switch while large piles remain is usually a waste. The opponent can just adapt their strategy to the new rule. Save your whim for when it matters most.
+- **Keep track of both players' whim status** — there are four possible combinations (you have your whim or not, the opponent has theirs or not). Know which state you are in to apply the right strategy.
 
 ## Engines & current best play
 

@@ -1,7 +1,6 @@
 # Tribonacci Nim
 
-> A Fibonacci-Nim variant where each move is bounded by *three times* the
-> previous move — losing positions track the tribonacci numbers.
+> A game where players remove tokens from a pile, and each move cannot take more than three times what the opponent just took. It is fully solved.
 
 | Field | Value |
 |-------|-------|
@@ -20,10 +19,7 @@
 
 ## Description
 
-A generalisation of [Fibonacci Nim](fibonacci-nim.md) in which the take-size
-restriction is loosened. Where Fibonacci Nim's optimal P-positions sit on
-Fibonacci numbers and use Zeckendorf representations, Tribonacci Nim's sit on
-**tribonacci** numbers (the recurrence T(n) = T(n−1) + T(n−2) + T(n−3)).
+A variation of Fibonacci Nim. Players take turns removing tokens from a pile. The first player may remove any number of tokens less than the total pile. After that, each move may remove at most three times the number of tokens the opponent just removed. The player who takes the last token wins.
 
 ## Rules
 
@@ -44,11 +40,11 @@ as for Fibonacci Nim.
 
 ## Consensus on optimal play
 
-- **Identify if the heap is a tribonacci number** — the tribonacci sequence is 1, 1, 2, 4, 7, 13, 24, 44, …; if the current heap equals a tribonacci number you are in a losing (P-) position with best play by your opponent, so choose a move that forces a tribonacci-number heap.
-- **Use the tribonacci (Zeckendorf-like) representation** — write n as a sum of distinct tribonacci numbers using the greedy algorithm; the winning move is to remove the *smallest* summand in that representation.
-- **Respect the "at most 3×" constraint** — the winning move from an N-position (heap not a tribonacci number) is always small enough to satisfy the constraint; verify that your chosen removal does not exceed three times your opponent's last move.
-- **Limit the opponent's range by removing small amounts** — removing k tokens lets your opponent remove up to 3k; when you are forced to take from a P-position, take as few as possible (1 token) to limit your opponent's reply range.
-- **First move is unrestricted** — on the very first move any amount from 1 to n−1 is legal; always identify whether n is itself a tribonacci number before making the opening move.
+- **Know the tribonacci numbers** — the losing pile sizes follow the tribonacci sequence: 1, 1, 2, 4, 7, 13, 24, 44, and so on (each number is the sum of the three before it). If the pile size is a tribonacci number, you are in a losing position if the opponent plays perfectly.
+- **Use tribonacci representation to find the winning move** — from a winning position, write the pile size as a sum of tribonacci numbers (using the biggest ones first). The winning move is to remove the smallest number in that sum.
+- **Respect the "at most 3x" rule** — your move cannot take more than three times what the opponent just took. The winning move from a non-tribonacci pile is always small enough to satisfy this.
+- **Limit the opponent's options when you must take from a losing position** — if you are stuck in a losing position (pile is a tribonacci number), take just 1 token. This limits how many the opponent can take on their next turn (at most 3).
+- **The first move has no restriction** — on the very first move, you can take any number of tokens from 1 to one less than the pile. Check if the pile is a tribonacci number before deciding how many to take.
 
 ## Engines & current best play
 

@@ -1,6 +1,6 @@
 # Surakarta
 
-> Indonesian capture game with looped corner tracks — unsolved.
+> An Indonesian game from Java where pieces capture by travelling around curved tracks at the corners of the board.
 
 | Field | Value |
 |-------|-------|
@@ -19,25 +19,16 @@
 
 ## Description
 
-Surakarta is a Javanese capture game on a 6×6 grid joined at the corners by
-four curved "loop" tracks. Pieces capture exclusively by travelling around at
-least one loop and ending on an opposing piece — there are no captures by
-short-range movement.
+Surakarta is a capture game from Java (Indonesia) played on a 6x6 grid with four curved tracks connecting the corners. Pieces capture by travelling around at least one of these curved loops and landing on an enemy piece. There are no captures by normal step-by-step movement.
 
 ## Rules
 
-1. Board: 6×6 grid of intersections with four curved loops connecting the
-   outer four rows on each side to themselves.
-2. Each side has 12 pieces placed on the two ranks nearest them.
-3. On a turn a player either:
-   - **Moves** one piece one step to an adjacent vacant intersection
-     (orthogonally or diagonally); **or**
-   - **Captures** by sliding one of their pieces in a straight line, then
-     around **at least one** corner loop, and onto an opposing piece (the
-     captured piece is removed). Captures require the entire path to be
-     unobstructed.
-4. The player who captures all of the opponent's pieces wins; if neither side
-   can force a capture, the game is drawn or decided by counting (varies).
+1. Board: a 6x6 grid of intersections with four curved loops connecting the outer rows on each side.
+2. Each player has 12 pieces placed on the two rows closest to them.
+3. On a turn, a player either:
+   - Moves one piece one step to a neighboring empty intersection (up, down, left, right, or diagonally); or
+   - Captures by sliding one of their pieces in a straight line, then around at least one corner loop, and onto an enemy piece (the captured piece is removed). The entire path must be clear — no other pieces can block it.
+4. The player who captures all of the opponent's pieces wins. If neither side can force a capture, the game is drawn or decided by counting (varies by ruleset).
 
 ## Solution status
 
@@ -46,11 +37,11 @@ but no formal value is known.
 
 ## Consensus on optimal play
 
-- **Control the loop entry points** — pieces placed at or near the intersections that feed into the curved corner loops can both threaten captures and block enemy loop-travelling attacks; contest these key squares early.
-- **Use non-capturing moves to set up loop attacks** — ordinary steps position a piece for a future loop-capture; move pieces into lines that align with a loop so a single step later triggers a capture.
-- **Do not leave pieces on loop lanes unguarded** — a piece sitting on a straight segment connecting to a loop is vulnerable to a long-range capture if the path is clear; keep threatened pieces off the main arteries or have a blocker on the path.
-- **Maintain numerical superiority** — with 12 pieces per side on a 6×6 board, trading evenly is neutral; gaining a piece advantage accelerates the win since the opponent has fewer blocking pieces.
-- **Corner clusters are both strong and dangerous** — pieces concentrated near a corner control multiple loop exits but are also reachable from two loops; a densely packed corner can be stripped by consecutive loop captures.
+- **Control the loop entry points** — pieces near the points where the curved corner loops connect to the main grid can threaten captures and block the opponent's loop attacks. Fight for these key spots early.
+- **Use ordinary moves to set up loop attacks** — normal step-by-step moves position a piece for a future loop capture. Move pieces into lines that line up with a loop so that a single step later sets up a capture.
+- **Do not leave pieces on loop paths unguarded** — a piece sitting on a straight line leading to a loop is vulnerable to a long-range capture if the path is clear. Keep threatened pieces off the main paths, or place a blocker between them and the loop.
+- **Try to get more pieces than the opponent** — with 12 pieces per side on a 6x6 board, trading pieces evenly is neutral. Getting a piece advantage helps you win because the opponent has fewer pieces to block with.
+- **Corner clusters are both strong and risky** — pieces grouped near a corner control multiple loop exits, but they are also reachable from two different loops. A packed corner can be cleared out by back-to-back loop captures.
 
 ## Engines & current best play
 

@@ -1,6 +1,6 @@
 # Gomoku
 
-> Free-style five-in-a-row — weakly solved in 1993 as a first-player win.
+> Five in a row on a 15x15 board. The first player can always win with perfect play.
 
 | Field | Value |
 |-------|-------|
@@ -19,10 +19,7 @@
 
 ## Description
 
-Played on the intersections of a 15×15 board. Players alternately place a stone
-of their colour; the winner is the first to make **five (or, in free-style,
-five or more) in a row** — horizontally, vertically, or diagonally. "Free-style"
-Gomoku imposes no restrictions on either player.
+Played on the intersections of a 15x15 board. Players take turns placing a stone of their color. The first player to get five (or more, in free-style rules) in a row — horizontally, vertically, or diagonally — wins. "Free-style" means there are no special restrictions on either player.
 
 ## Solution status
 
@@ -41,12 +38,12 @@ remain foundational for solving k-in-a-row games.
 
 ## Consensus on optimal play
 
-- **Play the centre first** — the exact centre of the 15×15 board connects to the most five-in-a-row lines; deviating from the centre as first player surrenders the strongest winning basis.
-- **Build double threats** — a "double open four" (two directions each one stone from five) cannot both be blocked; creating such forks is the immediate goal of Black's winning strategy.
-- **Respond to open threes immediately** — an unblocked open three becomes an open four on the opponent's next move, which then forces a block; respond before the forcing chain escalates.
-- **Avoid clustering all stones on one diagonal** — spreading threats across horizontal, vertical, and both diagonals makes your position harder to address with a single response.
-- **White must complicate and avoid open board** — White has no path to a forced win; the best defence creates a blocked, tactical fight where Black's forcing advantage is hardest to convert.
-- **Threat-space search wins games** — strong players calculate sequences of "urgent" threat moves (open fours, forks) many steps ahead; a player who sees one more forcing move in the chain will prevail.
+- **Play the center first** — the exact center of the 15x15 board connects to the most five-in-a-row lines. Moving away from center as the first player gives up the strongest winning position.
+- **Build double threats** — a "double open four" (two directions each needing one more stone to make five) cannot both be blocked. Creating such forks is the main goal of the first player's winning strategy.
+- **Respond to open threes immediately** — an unblocked open three becomes an open four on the opponent's next move, which then forces a block. Stop threats before they escalate.
+- **Spread threats across multiple directions** — spreading your stones across horizontal, vertical, and both diagonals makes your position harder for the opponent to block with a single response.
+- **White must complicate the game** — White has no path to a forced win. The best defense creates a messy, tactical fight where the first player's forcing advantage is hardest to use.
+- **Calculate forcing sequences many moves ahead** — strong players calculate sequences of urgent threat moves (open fours, forks) many steps ahead. The player who sees one more forcing move in the chain will win.
 
 ## Engines & current best play
 

@@ -1,7 +1,6 @@
 # Yahtzee
 
-> The dice game — solved in the solitaire sense: the strategy maximising
-> expected score is fully computed.
+> A dice game where players roll five dice and try to score points in different categories. The best strategy for maximizing your score has been fully computed.
 
 | Field | Value |
 |-------|-------|

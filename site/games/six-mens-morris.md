@@ -1,7 +1,6 @@
 # Six Men's Morris
 
-> A mid-sized morris game; like its bigger sibling, it comes out a draw with
-> perfect play.
+> A smaller version of Nine Men's Morris played on a board of two connected squares. With perfect play it ends in a draw.
 
 | Field | Value |
 |-------|-------|
@@ -20,11 +19,7 @@
 
 ## Description
 
-Played on a board of two concentric squares with connecting midlines (16
-points, **no** diagonals). Each player has six pieces. As in all morris games
-there is a **placement phase** then a **movement phase**; forming a *mill*
-(three in a line) lets a player remove an enemy piece. A player reduced to two
-pieces, or unable to move, loses.
+Played on a board of two squares (one inside the other) connected by lines at their midpoints — 16 spaces in total, with no diagonal lines. Each player has six pieces. Like other morris games, there is a placement phase (putting pieces on empty spaces) followed by a movement phase (sliding pieces along lines). Forming a "mill" (three pieces in a straight line) lets a player remove one of the opponent's pieces. A player reduced to two pieces, or with no legal moves, loses.
 
 ## Solution status
 
@@ -41,11 +36,11 @@ value is a **draw** with perfect play.
 
 ## Consensus on optimal play
 
-- **Placement shapes the outcome** — as in Nine Men's Morris, place all six pieces to threaten two different mills simultaneously; an opponent who can only block one opening will concede the other.
-- **Two-mill configurations are the key weapon** — a pattern where one piece slides back and forth between two mills generates a forced capture every turn; establishing this before the opponent can counter is the decisive strategic goal.
-- **The 16-point board without diagonals is more constrained** — with only two squares and midlines (no diagonal connections), mill configurations are limited; memorise the possible double-mill patterns on the smaller board.
-- **Force the opponent below three pieces to win** — a player reduced to two pieces loses; plan piece-removal to approach this threshold rather than removing randomly.
-- **Draw with correct play** — the game is a draw under mutual perfect play; look for opponent errors in the placement phase, as errors there are the most common decisive mistakes.
+- **Placement shapes the outcome** — as in Nine Men's Morris, place all six pieces so that you threaten two different mills (three-in-a-rows) at the same time. The opponent can only block one, so you will complete the other.
+- **Two-mill configurations are the key weapon** — a setup where one piece slides back and forth between two mills lets you capture a piece every turn. Setting this up before the opponent can stop it is your main goal.
+- **The 16-point board without diagonals is more limited** — with only two squares and midline connections (no diagonals), there are fewer ways to form mills. Learn the possible double-mill patterns on this smaller board.
+- **Force the opponent below three pieces to win** — a player reduced to two pieces loses. Plan your captures to bring the opponent closer to this threshold.
+- **Draw with correct play** — the game is a draw when both players play perfectly. Look for opponent mistakes in the placement phase, as that is where most decisive errors happen.
 
 ## Engines & current best play
 

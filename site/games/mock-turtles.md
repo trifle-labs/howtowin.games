@@ -1,7 +1,6 @@
 # Mock Turtles
 
-> A coin-turning game whose every position decomposes into a tidy nim-sum of
-> "Mock Turtle numbers."
+> A coin-turning game where each position breaks down into a simple XOR sum of special numbers called Mock Turtle numbers.
 
 | Field | Value |
 |-------|-------|
@@ -20,10 +19,9 @@
 
 ## Description
 
-A row of coins, each heads or tails. On a turn a player turns over up to **three**
-coins, of which the **rightmost must go from heads to tails**. The game ends
-when all coins are tails; under [normal play](../lexicon/README.md#normal-play-convention)
-the player making the last move wins.
+A row of coins, each showing heads or tails. On your turn you flip up to **three**
+coins, and the **rightmost coin you flip must change from heads to tails**. The
+game ends when all coins show tails, and the player who makes the last move wins.
 
 ## Solution status
 
@@ -38,11 +36,11 @@ optimal move are immediate.
 
 ## Consensus on optimal play
 
-- **XOR all Mock Turtle values for heads coins** — for each coin at position n (0-indexed from the right) that is heads, look up the Mock Turtle number for n; nim-sum (XOR) all those values; if the result is non-zero you are in a winning position.
-- **Winning move: choose coins to XOR the nim-sum to 0** — find a set of up to three coins (rightmost must be flipped from heads to tails) whose combined flip reduces the nim-sum to 0; this is always possible from a non-zero position.
-- **Mock Turtle value of position n is the odious number nearest to 2n** — "odious" means having an odd number of 1-bits in binary; the Mock Turtle value is 2n if 2n is odious, otherwise 2n+1; memorise or compute this quickly.
-- **Turning multiple coins can target multiple positions** — the flexibility to flip up to three coins (rightmost from heads to tails) means you can alter the nim-sum by changing up to three components; use this freedom to zeroise the nim-sum efficiently.
-- **All-tails is a losing position for the player to move** — the empty position (all tails) has nim-value 0 and is a P-position (previous player wins); steer toward leaving your opponent with all-tails.
+- **XOR all the Mock Turtle values for coins showing heads** — for each heads coin at position n (counting from 0 at the rightmost position), look up that position's Mock Turtle number and XOR all those numbers together. If the result is not zero, you are in a winning position.
+- **Winning move: make the XOR result become 0** — find up to three coins (the rightmost one you flip must go from heads to tails) whose combined flip reduces the XOR total to 0. From a non-zero position this is always possible.
+- **The Mock Turtle value of position n is the "odious" number closest to 2n** — an odious number is one with an odd number of 1s when written in binary. The Mock Turtle value is 2n if 2n is odious, otherwise 2n+1.
+- **Flipping multiple coins lets you adjust several values at once** — since you can flip up to three coins (the rightmost from heads to tails), you can change up to three parts of the XOR at the same time. Use this to zero out the total efficiently.
+- **All-tails is a losing position for the player whose turn it is** — when all coins show tails the XOR is 0, which means the previous player won. Aim to leave your opponent with all tails.
 
 ## Engines & current best play
 

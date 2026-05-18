@@ -1,6 +1,6 @@
 # Sudoku
 
-> Number-placement puzzle — generalised solving is NP-complete.
+> A number-placement puzzle where the solver fills a 9x9 grid so each row, column, and 3x3 box contains the digits 1-9 exactly once.
 
 | Field | Value |
 |-------|-------|
@@ -19,10 +19,7 @@
 
 ## Description
 
-Sudoku is a number-placement puzzle on a 9×9 grid divided into nine 3×3
-sub-grids. The solver fills empty cells with digits 1–9 so each row, column,
-and sub-grid contains each digit exactly once. Yato & Seta (2003) proved
-that the general n²×n² version is **NP-complete**.
+Sudoku is a number-placement puzzle played on a 9x9 grid divided into nine 3x3 boxes. The solver fills empty cells with digits 1 through 9 so that each row, each column, and each 3x3 box contains every digit exactly once. Mathematicians have proved that larger versions of Sudoku (with n x n boxes) belong to a class of problems called NP-complete, meaning they are very hard for a computer to solve in general.
 
 ## Rules
 
@@ -42,12 +39,12 @@ generalisation is **NP-complete** (Yato & Seta 2003).
 
 ## Consensus on optimal play
 
-- **Single-candidate (naked single) first** — if a cell has only one remaining possible digit, fill it immediately; these cascades often resolve large portions of the puzzle without guessing.
-- **Hidden singles reveal forced placements** — if a digit can go in only one cell within a row, column, or box, place it there even if that cell has multiple candidates; scan all three scopes for each digit.
-- **Naked and hidden pairs/triples prune candidates** — two cells in a unit that share exactly two candidates exclude those digits from all other cells in the unit; applying this before guessing usually avoids backtracking.
-- **X-Wing and swordfish eliminate distant candidates** — when a candidate digit appears in exactly two rows' same two columns (X-Wing), it can be removed from those columns' other rows; swordfish extends this to three rows/columns.
-- **Colouring (chaining) handles medium difficulty** — assign conjugate pairs of the same candidate alternating colours; if both same-colour instances appear in the same unit, that colour is false and its cells can be eliminated.
-- **Backtracking (guessing) is the universal fallback** — for hardest puzzles, pick the most constrained cell, guess a value, propagate constraints, and backtrack on contradiction; computers use this via dancing-links Algorithm X.
+- **Fill in forced cells first (naked singles)** — if a cell has only one possible digit left, write it in right away. These forced moves often unlock large parts of the puzzle without any guessing.
+- **Look for hidden singles** — if a digit can only go in one cell within a row, column, or box, place it there even if that cell has other candidates. Check every row, column, and box for each digit.
+- **Use pairs and triples to eliminate candidates** — if two cells in the same row, column, or box share exactly the same two possible digits, those digits cannot appear anywhere else in that row, column, or box. Use this to narrow down possibilities before guessing.
+- **X-Wing and swordfish patterns** — when a candidate digit appears in exactly two rows at the same two columns, it can be removed from those columns in other rows (this is called an X-Wing). Swordfish extends this to three rows and columns.
+- **Coloring (chaining) for medium difficulty** — mark cells that share a candidate with alternating colors. If the same color appears twice in the same row, column, or box, that color's cells can be eliminated.
+- **Guessing is the last resort** — for the hardest puzzles, pick the most constrained cell, guess a value, and see if it leads to a contradiction. Computers use this approach with an algorithm called dancing-links.
 
 ## Engines & current best play
 

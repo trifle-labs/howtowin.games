@@ -1,6 +1,6 @@
 # Shatranj
 
-> The medieval ancestor of modern chess — slower pieces, but still unsolved.
+> The medieval ancestor of modern chess with weaker pieces. Still unsolved.
 
 | Field | Value |
 |-------|-------|
@@ -19,11 +19,7 @@
 
 ## Description
 
-Played on an 8×8 board. Shatranj is the form of chess that spread through the
-medieval Islamic world. Its key differences from modern chess: the Ferz (Queen)
-moves only one square diagonally; the Alfil (Bishop) jumps exactly two squares
-diagonally; there is no initial two-square pawn move, no castling, and pawns
-promote only to Ferz. Bare-king and stalemate rules differ from modern chess.
+Played on an 8x8 board. Shatranj is the version of chess that spread through the medieval Islamic world. The main differences from modern chess are: the Ferz (like a queen) only moves one square diagonally; the Alfil (like a bishop) jumps exactly two squares diagonally; there is no two-square pawn move at the start, no castling, and pawns can only promote to Ferz. The rules for bare king (king alone) and stalemate are also different from modern chess.
 
 ## Solution status
 
@@ -37,11 +33,11 @@ proven value, and it has attracted little modern solving effort.
 
 ## Consensus on optimal play
 
-- **Pawn structure determines the endgame** — with weak pieces, pawn majorities that can promote to Ferz are the primary winning mechanism; protect passed pawns aggressively.
-- **The Alfil jump creates permanent colour blindness** — the Alfil only reaches half the board (same colour squares only, skipping ranks); it cannot protect its own pawns on the opposite colour and cannot defend a bare king against a Ferz on the wrong colour.
-- **Bare king rule changes material evaluation** — exposing the opponent's king (removing all their pieces) wins even without checkmate; this makes large material exchanges more dangerous than in modern chess.
-- **Stalemate convention varies** — in many historical Shatranj rules stalemate is a win for the side achieving it; if using this rule, be more aggressive about confining the opponent's king.
-- **The Ferz's limited range makes king safety less urgent** — a single-step queen cannot deliver quick mating threats; plan for long endgame manoeuvres rather than sharp tactical attacks.
+- **Pawn structure decides the endgame** — with weak pieces, getting an extra pawn that can promote to Ferz is the main way to win. Protect your pawns that are past the opponent's.
+- **The Alfil only reaches half the board** — the Alfil only lands on same-colour squares and skips ranks. It cannot protect its own pawns on the opposite colour and cannot defend a bare king against a Ferz on the wrong colour.
+- **Bare king changes how you think about pieces** — if you remove all of the opponent's pieces, you win even without checkmate. This makes big piece trades more dangerous than in modern chess.
+- **Stalemate rules vary** — in many old Shatranj rules, stalemate is a win for the player who causes it. If using this rule, be more aggressive about boxing in the opponent's king.
+- **The Ferz is slow — king safety matters less** — a queen that only moves one square diagonally cannot deliver quick checkmates. Plan for long endgame fights rather than sharp attacks.
 
 ## Engines & current best play
 

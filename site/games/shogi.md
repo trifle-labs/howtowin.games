@@ -1,7 +1,6 @@
 # Shogi
 
-> Japanese chess — captured pieces change sides and re-enter play, making it
-> larger and harder to solve than Western chess.
+> Japanese chess. Captured pieces change sides and can re-enter the board, making it bigger and harder to solve than Western chess.
 
 | Field | Value |
 |-------|-------|
@@ -20,11 +19,7 @@
 
 ## Description
 
-Played on a 9×9 board, each side with 20 pieces. Shogi's defining rule is the
-**drop**: a captured piece is kept "in hand" and may later be placed back onto
-the board as one's own. This recycling means material never leaves play, which
-keeps the branching factor high throughout and rules out the endgame
-simplification that chess enjoys.
+Played on a 9x9 board, each side with 20 pieces. Shogi's special rule is the **drop**: a captured piece is kept "in hand" and can later be placed back onto the board as your own piece. This recycling means pieces never truly leave the game. The game stays complex all the way through, unlike Western chess where the endgame gets simpler as pieces are captured.
 
 ## Solution status
 
@@ -42,11 +37,11 @@ solved — illustrating how drastically board size changes tractability.
 
 ## Consensus on optimal play
 
-- **Drops change the whole tempo calculus** — a piece in hand can threaten a devastating drop on any legal square; calculating whether a drop-check or drop-fork is available after a trade is mandatory before initiating any exchange.
-- **The king must stay mobile** — with drop-attacks possible on any square, a king kept in the back corner behind gold generals and a bishop is the standard defensive formation; learn the "castling" structures (mino, yagura, anaguma).
-- **Attack castled kings with "floating" pieces** — lance, rook, and bishop promotions near the opponent's king create relentless drop threats; the offensive side typically sacrifices pieces to earn drop hands.
-- **Promoted pieces stay in the enemy territory** — a promoted rook (Dragon King) or promoted bishop (Dragon Horse) in or near the opponent's camp is extremely powerful; trading it back early is almost always a mistake.
-- **Material is almost never "lost"** — every captured piece is added to your hand; being behind in material only means your opponent has more drop options; evaluate hand pieces as future threats, not losses.
+- **Drops change everything** — a piece in your hand can be a devastating surprise on any empty square. Before you trade pieces, always check whether the opponent will have a dangerous drop afterward.
+- **Keep your king mobile** — with drop attacks possible on any square, the standard defence is to keep your king in the back corner behind gold generals and a bishop. Learn the common castle formations (mino, yagura, anaguma).
+- **Attack with floating pieces** — promoting a lance, rook, or bishop near the opponent's king creates relentless drop threats. The attacking side usually sacrifices pieces to build up a strong hand.
+- **Keep promoted pieces in enemy territory** — a promoted rook (Dragon King) or promoted bishop (Dragon Horse) near the opponent's camp is extremely powerful. Trading it back early is almost always a mistake.
+- **No piece is ever truly lost** — every captured piece goes to your hand. If you are behind in material, it only means the opponent has more drop options. Think of hand pieces as future threats, not losses.
 
 ## Engines & current best play
 

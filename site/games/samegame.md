@@ -1,7 +1,6 @@
 # SameGame
 
-> A single-player tile-clearing puzzle — its optimisation version is NP-hard
-> and the world high-score competition is dominated by Monte-Carlo search.
+> A single-player puzzle where you clear groups of coloured tiles. Finding the best possible score is NP-hard. World records are set by Monte-Carlo search programs.
 
 | Field | Value |
 |-------|-------|
@@ -20,22 +19,15 @@
 
 ## Description
 
-A rectangular grid filled with coloured blocks (commonly 15×15 with up to 5
-colours). Each move clears a connected group of same-coloured blocks; the
-column collapses (and rows compact, in some variants); the player maximises
-score, which is non-linear in group size. The game is famously a benchmark for
-Monte-Carlo tree search and nested rollout policies — record scores are held by
-search programs.
+A rectangular grid filled with coloured blocks (usually 15x15 with up to 5 colours). Each move clears a connected group of same-coloured blocks. After clearing, the column falls down (and rows may compact, depending on the version). Your score goes up, and bigger groups give much more points than small ones. This game is famous as a test for Monte-Carlo search programs — record scores are held by computer search algorithms.
 
 ## Rules
 
-1. Start with an m × n grid filled with coloured blocks.
-2. Select any **connected group of ≥ 2 same-coloured** blocks; remove the whole
-   group. Score (group_size − 2)² (or another fixed convex function).
-3. After a removal, blocks above the gap fall straight down; empty columns slide
-   leftward.
-4. Continue until no group of size ≥ 2 remains.
-5. Bonus: a board cleared completely scores a fixed bonus (commonly 1000).
+1. Start with an m by n grid filled with coloured blocks.
+2. Select any **connected group of 2 or more same-coloured** blocks and remove the whole group. You score (group_size - 2) squared points (or another similar formula).
+3. After removing blocks, the blocks above fall straight down, and empty columns slide to the left.
+4. Keep going until no group of size 2 or more remains.
+5. Bonus: if you clear the whole board, you get extra points (usually 1000).
 
 ## Solution status
 
@@ -47,11 +39,11 @@ have advanced the state of the art repeatedly over the past two decades.
 
 ## Consensus on optimal play
 
-- **Prefer convex scoring — remove large groups** — the (size−2)² scoring function means removing a group of 10 scores 64 while two groups of 5 score 18 each (36 total); always prefer merging groups before removing them.
-- **Target the complete clear** — a board cleared entirely gives a large bonus (commonly 1000 points); when a complete clear is possible, it almost always outscores any partial removal sequence.
-- **Nested rollout search (NRPE) outperforms greedy** — random playouts, especially in nested or nested Monte-Carlo form, consistently find much higher scores than greedy-largest-first strategies; use MCTS or NRPE for benchmarks.
-- **Avoid isolating small groups of 1** — a single block of colour that becomes isolated (no same-colour neighbours) can never be removed; every move should check whether it strands any colour.
-- **Plan column structure** — after each collapse the column distribution changes; think ahead about how removing a left-side group changes the relative positions of right-side groups that you plan to merge next.
+- **Go for big groups** — the scoring formula means a group of 10 gives 64 points while two groups of 5 give only 18 each (36 total). Always try to merge groups before removing them.
+- **Aim to clear the whole board** — clearing completely gives a big bonus (usually 1000 points). If a full clear is possible, it almost always beats any partial removal strategy.
+- **Use search programs, not just guessing** — random playouts and Monte-Carlo search consistently find much higher scores than just picking the biggest group each time.
+- **Do not leave single blocks stranded** — a single block of colour with no same-colour neighbours can never be removed. Check that your move does not leave any colour stranded alone.
+- **Think about column positions** — after blocks fall and columns slide, the layout changes. Think ahead about how removing a left-side group affects where right-side groups end up, which you might want to merge later.
 
 ## Engines & current best play
 

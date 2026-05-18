@@ -1,7 +1,6 @@
 # Anti-Reversi
 
-> Reversi played to lose — fewer discs wins. Largely unsolved despite the
-> small board.
+> Reversi played in reverse — the player with the fewest discs wins. Mostly unsolved despite the small board.
 
 | Field | Value |
 |-------|-------|
@@ -20,19 +19,19 @@
 
 ## Description
 
-The misère cousin of [Othello](othello.md): the rules are identical, but **the
-player with the fewest discs at the end wins**. As with most misère games,
-strategy diverges sharply from the normal-play version.
+Anti-Reversi is a twist on [Othello](othello.md) (also called Reversi). The
+rules are the same, but **the player with the fewest discs on the board at
+the end wins**. This small change completely flips the strategy upside down.
 
 ## Rules
 
-1. Same board, setup, and movement rules as [Othello](othello.md):
-   - 8×8 board with the standard four-disc cross opening.
-   - On a turn a player places a disc that **must** bracket at least one
-     opposing run of discs, flipping all bracketed discs.
-   - If no legal placement exists, the player passes; if neither player can
-     move, the game ends.
-2. At the end, the player with the **fewer** discs on the board wins.
+1. The board, setup, and basic rules are the same as [Othello](othello.md):
+   - 8×8 board. The game starts with four discs in a cross pattern in the center.
+   - On your turn you place a disc so that it **traps** at least one line of
+     the opponent's discs between your new disc and one of your existing discs.
+     All trapped discs flip to your color.
+   - If you have no legal move, you pass. If neither player can move, the game ends.
+2. At the end, the player with **fewer** discs on the board wins.
 
 ## Solution status
 
@@ -44,11 +43,11 @@ inverts the usual evaluations; opening theory is markedly different.
 
 ## Consensus on optimal play
 
-- **Avoid big flip chains** — in normal Othello you want to flip many discs at once; in Anti-Reversi, large flips move discs to your colour, which is bad. Prefer moves that flip as few discs as possible.
-- **Surrender edge and corner squares** — in normal Othello corners are gold; here, landing on a corner anchors your disc permanently (it cannot be flipped back), which is a liability. Avoid corners unless forced.
-- **Aim for fewer discs throughout, not just at the end** — disc count shifts dramatically in late-game mass flips; trailing in disc count mid-game is usually good.
-- **Force the opponent to flip your discs** — set up positions where the opponent's only legal moves are ones that convert your discs to theirs.
-- **Parity still matters** — like normal Othello, the final sequence of forced moves is often decisive; maintaining move-parity in the last region can determine who makes the last large flip.
+- **Avoid flipping big groups** — in normal Othello you want to flip many discs at once. In Anti-Reversi, large flips put more discs in your color, which is bad. Prefer moves that flip as few discs as possible.
+- **Give up edge and corner squares** — in normal Othello, corners are gold. Here, landing on a corner locks your disc there forever (it can never be flipped back), which hurts you. Avoid corners unless you have no other choice.
+- **Try to have fewer discs throughout the game, not just at the end** — disc counts can change a lot near the end with big flips. Having fewer discs in the middle of the game is usually good.
+- **Force the opponent to flip your discs** — set up positions where the opponent's only legal moves turn your discs into their color (helping you).
+- **Who gets the last move still matters** — just like normal Othello, the final sequence of moves often decides the game. Making the last move in each area can determine who gets stuck with a big group of discs.
 
 ## Engines & current best play
 

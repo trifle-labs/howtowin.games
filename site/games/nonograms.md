@@ -1,6 +1,6 @@
 # Nonograms
 
-> Picture-by-numbers grid puzzles — NP-complete in general.
+> Grid puzzles where you shade cells based on number clues to reveal a hidden picture. General case is NP-complete.
 
 | Field | Value |
 |-------|-------|
@@ -19,22 +19,15 @@
 
 ## Description
 
-Nonograms (Non Ishida / James Dalgety, 1980s) are grid puzzles whose row and
-column clues are sequences of run-lengths. The solver shades cells so each
-row's shaded runs match the row clue, and each column's shaded runs match
-the column clue. The general problem is **NP-complete**.
+Nonograms (also called Picross, Hanjie, or Griddlers) are grid puzzles where each row and column has a number clue telling you the lengths of consecutive shaded blocks in that line. You shade cells so that every row's shaded blocks match its clue, and every column's shaded blocks match its clue. The shaded cells form a hidden picture. The general problem of solving one from scratch is **NP-complete** (very hard in the worst case).
 
 ## Rules
 
-1. Board: rectangular grid of cells.
-2. Each row and each column has a sequence of positive integers (the
-   **clue**) listing the lengths of consecutive shaded runs in that row or
-   column, in order.
-3. Different runs in the same row or column must be separated by at least one
-   unshaded cell.
-4. The solver shades a subset of cells so that every row clue and every
-   column clue is satisfied.
-5. A well-formed puzzle has a unique solution.
+1. Board: a rectangular grid of cells.
+2. Each row and each column has a sequence of positive numbers (the **clue**) that tells you the lengths of consecutive shaded blocks in that row or column, in order from left to right or top to bottom.
+3. Different shaded blocks in the same row or column must be separated by at least one unshaded cell.
+4. The solver shades cells so that every row clue and every column clue is satisfied.
+5. A well-made puzzle has exactly one correct solution.
 
 ## Solution status
 
@@ -43,11 +36,11 @@ SAT/ILP solvers handle typical Nikoli-sized puzzles instantly.
 
 ## Consensus on optimal play
 
-- **Overlap (interval) deduction first** — for each clue, find the leftmost and rightmost placement of each run; cells covered by both placements are definitely shaded; gaps between them are definitely empty.
-- **Cross-reference rows against columns** — after deducing cells in a row, use those fixed cells to constrain the intersecting columns, and iterate until no new deductions arise.
-- **Start with the longest runs** — clues with a single large run leave little slack; their cells are nearly all deterministic and anchor the rest of the grid.
-- **Use edge constraints** — runs that touch a board edge have no offset uncertainty on one side; this can pin them precisely even when the interior is ambiguous.
-- **Backtrack sparingly and only on contradiction** — well-formed Nikoli puzzles are uniquely solvable by logic alone; if constraint propagation stalls, a single hypothesis-and-test branch is usually enough.
+- **Use overlap deduction first** — for each clue, figure out the leftmost and rightmost possible position for each block. Cells that are shaded in both positions are definitely shaded; cells that are empty in both are definitely empty.
+- **Cross-check rows against columns** — after you figure out some cells in a row, use those fixed cells to narrow down the intersecting columns. Repeat back and forth until no new deductions appear.
+- **Start with the longest blocks** — clues with one big block leave little room for guesswork. Those cells are almost completely certain and help anchor the rest of the puzzle.
+- **Use the edges** — blocks that touch the board edge have no uncertainty on one side. This can pin them down exactly even when the middle of the board is still unclear.
+- **Guess only as a last resort** — well-designed puzzles can be solved by logic alone. If you get stuck, one careful guess-and-check branch is usually enough to get going again.
 
 ## Engines & current best play
 

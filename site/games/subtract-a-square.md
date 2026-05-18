@@ -1,7 +1,6 @@
 # Subtract-a-square
 
-> A one-heap subtraction game in which you may only remove a perfect-square
-> number of objects.
+> Players take turns removing a number of objects that must be a perfect square (1, 4, 9, 16...). Whoever takes the last object wins.
 
 | Field | Value |
 |-------|-------|
@@ -20,10 +19,7 @@
 
 ## Description
 
-A single heap of *n* objects. On a turn a player removes a positive
-*perfect-square* number of objects (1, 4, 9, 16, …). Under
-[normal play](../lexicon/README.md#normal-play-convention) the player taking the
-last object wins.
+A single pile of some number of objects. On a turn, a player removes a number of objects that must be a perfect square (1, 4, 9, 16, and so on). The player who takes the last object wins.
 
 ## Solution status
 
@@ -41,11 +37,11 @@ its deeper structure is not understood.
 
 ## Consensus on optimal play
 
-- **Build and consult the nim-value table** — compute nim-values for 0 through n by the mex recurrence; from any position with nim-value > 0, always move to a position with nim-value 0 (the losing positions for the player to move).
-- **Losing positions have no simple pattern** — unlike Nim or Wythoff's game, the P-positions (0, 2, 5, 7, 10, 12, 15, 17, 20, 22, 34, 39, …) cannot be predicted by a formula; memorising a table or computing on the fly is required.
-- **Removing 1 is rarely correct** — subtracting 1 (the smallest square) almost always leaves a winning position for the opponent; check the table before defaulting to the "safe-looking" small move.
-- **From large heaps, many squares are available** — with many choices near √n in magnitude, the winning move is typically within the range 1 to ⌊√n⌋; compute mex over this range to find it.
-- **Multi-heap variants require full Sprague–Grundy XOR** — if you play several simultaneous subtract-a-square piles, XOR all nim-values; a combined XOR of 0 is a losing position for the player to move.
+- **Learn which pile sizes are losing positions** — the losing pile sizes (where the player whose turn it is will lose with perfect play) are 0, 2, 5, 7, 10, 12, 15, 17, 20, 22, 34, 39, and so on. From any other pile size, there is a winning move.
+- **The losing positions have no simple pattern** — unlike Nim or Wythoff's game, there is no known formula to predict them. You need to either memorize them or compute them on the fly.
+- **Removing just 1 is rarely the right move** — taking away 1 (the smallest square) almost always leaves a winning position for the opponent. Check before choosing the "safe-looking" small move.
+- **From large piles, many choices are available** — when the pile is large, the number of squares you can subtract grows. The winning move is typically some square within the range of 1 up to the square root of the pile size.
+- **With multiple piles, use nim-sum calculation** — if playing with several piles at once, write each pile's value in binary and add them without carrying. If the result is 0, the position is losing for the player whose turn it is.
 
 ## Engines & current best play
 

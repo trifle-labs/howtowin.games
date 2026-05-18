@@ -1,6 +1,6 @@
 # Atomic chess
 
-> Chess variant where captures cause an explosion — unsolved.
+> A chess variant where every capture sets off an explosion. Unsolved.
 
 | Field | Value |
 |-------|-------|
@@ -20,22 +20,23 @@
 
 ## Description
 
-Atomic chess uses the standard chessboard and pieces, but every capture
-triggers an **explosion** that removes both the capturing piece and all
-non-pawn pieces on the eight adjacent squares. The king cannot capture
-(suicide), and detonating the enemy king wins.
+Atomic chess uses the same board and pieces as regular chess, but every time
+you capture a piece, it causes an **explosion**. The blast removes your piece
+too, along with all non-pawn pieces on the eight squares surrounding the
+capture. The king is not allowed to capture (that would be suicide). You win
+if your capture explodes the enemy king.
 
 ## Rules
 
-1. Same setup and base movement as orthodox chess.
-2. Whenever a piece captures, the capturing piece is also removed; all pieces
-   on the 8 squares around the capture square are removed **except pawns**.
-3. The king may not capture (it would self-destruct).
-4. You may **explode** the opposing king by capturing any piece adjacent to it;
-   doing so wins the game immediately.
-5. The kings may legally stand on adjacent squares — they cannot capture each
-   other.
-6. Stalemate, threefold and 50-move rules carry over from chess.
+1. Same starting setup and basic piece movements as regular chess.
+2. Whenever a piece captures, the capturing piece is also destroyed. All pieces
+   on the 8 squares around the captured piece are also destroyed **except pawns**.
+3. The king may not capture (it would blow itself up).
+4. You can **blow up** the enemy king by capturing any piece next to it. If you
+   do this, you win immediately.
+5. The two kings can sit on neighboring squares — they cannot capture each other.
+6. The stalemate, threefold repetition, and 50-move rules work the same as in
+   regular chess.
 
 ## Solution status
 
@@ -45,14 +46,14 @@ formal solving result exists.
 
 ## Consensus on optimal play
 
-Practical wisdom from strong online play:
+Tips from strong online play:
 
-- **King safety dominates** — because any capture next to the king explodes it, the king is far more exposed than in chess. Castling is often *avoided*; many strong games keep the king on its starting square (or move it to f1/f8) to keep adjacent squares free.
-- **Pawn shields are deadly to you, not the opponent** — a pawn directly in front of your king means the opponent can blow you up with any capture on that square.
-- **Avoid early queen exchanges**; queens cannot capture without exploding themselves and are often used as long-range detonators.
-- **Known losing first moves for White** include 1.Nf3 in some lines (engine analysis on Lichess); 1.e4 and 1.d4 are the standard practical choices.
+- **King safety is everything** — since any capture next to the king blows it up, the king is much more exposed than in regular chess. Players often avoid castling. Many strong players keep the king on its starting square (or move it to f1/f8) to keep the squares around it clear.
+- **Pawns in front of your king help the enemy, not you** — a pawn directly in front of your king means the opponent can blow you up by capturing anything on that square.
+- **Avoid trading queens early** — queens cannot capture without exploding themselves and are often best used as long-range bomb triggers.
+- **Known bad opening moves for White** include 1.Nf3 in some cases (according to engine analysis on Lichess). 1.e4 and 1.d4 are the standard safe choices.
 
-No proven game-theoretic value.
+No one has proven the game-theoretic value of the starting position.
 
 ## Engines & current best play
 

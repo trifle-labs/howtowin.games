@@ -1,6 +1,6 @@
 # Pallanguzhi
 
-> South Indian mancala with chain sowing — unsolved.
+> A South Indian mancala game where sowing is chained (you keep going after each drop). It has not been solved.
 
 | Field | Value |
 |-------|-------|
@@ -19,28 +19,16 @@
 
 ## Description
 
-Pallanguzhi is the traditional mancala of Tamil Nadu, played on a 2×7 board.
-Sowing is **chained**: when the seed after the last drops into a pit, the
-player picks up the contents of the next pit and continues sowing, repeating
-until a stopping condition occurs.
+Pallanguzhi is the traditional mancala (seed-sowing game) of Tamil Nadu, played on a 2x7 board (2 rows of 7 pits each). The special feature is **chain sowing**: after you drop the last seed, you pick up the seeds from the next pit and keep going, repeating until a stopping condition is met.
 
 ## Rules
 
-1. Board: 7 pits per player; no large stores. Each pit begins with 6 seeds
-   (varies by regional rule).
-2. On a turn the player picks up seeds from one of their own pits and sows
-   counterclockwise.
-3. **Chain sowing**: after sowing, the pit immediately after the last sown
-   pit is picked up and sown the same way; the chain continues until either
-   the player drops the last seed into an empty pit, or into a pit followed
-   by an empty pit on the same side.
-4. **Capture**: when the chain ends on an empty pit, the seeds in the pit
-   beyond it (if any) are captured.
-5. When a player runs out of seeds on their side, they pass; the round ends
-   when both sides empty. Seeds left on the opponent's side may go to that
-   opponent (varies by variant).
-6. Game is played as a series of rounds with reseeding; the player who can
-   no longer fill all their pits at the start of a round loses.
+1. Board: 7 pits per player, no large stores (unlike some mancala games). Each pit starts with 6 seeds (though this varies by region).
+2. On your turn, you pick up all the seeds from one of your own pits and sow them (drop one seed in each pit) going counterclockwise.
+3. **Chain sowing**: after you drop the last seed, you immediately pick up the seeds from the very next pit and keep sowing them the same way. The chain continues until either you drop the last seed into an empty pit, or into a pit that is followed by an empty pit on your own side.
+4. **Capture**: when the chain ends on an empty pit, you capture any seeds in the pit after it.
+5. When a player empties all pits on their own side, they pass. The round ends when both sides are empty. Seeds left on the opponent's side may go to that opponent (depending on the variant).
+6. The game is played over several rounds with reseeding. A player who cannot fill all of their own pits at the start of a round loses.
 
 ## Solution status
 
@@ -49,11 +37,11 @@ published values exist for the standard ruleset.
 
 ## Consensus on optimal play
 
-- **Prefer long-chain triggers** — moves that initiate a long chain sow often pass through many pits, creating unpredictable stops; opponents find it harder to foresee where the chain will terminate.
-- **Keep seeds spread across your pits** — concentrating all seeds in one pit wastes turns on a single long sow; distributing seeds lets you maintain more chain options each turn.
-- **Target the opponent's near-empty pits** — a chain that terminates just before an opponent's heavily loaded pit captures those seeds; watching for this opportunity is critical.
-- **Protect your loaded pits from capture** — do not allow your large pits to sit one position past an opponent's likely chain-end; rebalance before they can line up a capture.
-- **Endgame seed counting** — with few seeds left, track exactly which positions will allow a chain to continue vs. stop; the player who can keep chains going longest captures the final seeds.
+- **Try to trigger long chains** — moves that start a long chain sow go through many pits and create harder-to-predict results. Opponents will find it harder to see where the chain will stop.
+- **Spread your seeds around** — putting all your seeds in one pit wastes turns on a single long sow. Spreading them out gives you more chain-starting options each turn.
+- **Aim for the opponent's full pits** — if a chain stops just before a pit that has many seeds in it, you capture those seeds. Watch for this opportunity.
+- **Protect your full pits** — do not let one of your loaded pits sit one position past where the opponent's chain is likely to end. Shift seeds around before they can set up a capture.
+- **Count seeds in the endgame** — with few seeds left, keep track of exactly which positions will let a chain continue versus stop. The player who can keep chains going the longest captures the final seeds.
 
 ## Engines & current best play
 

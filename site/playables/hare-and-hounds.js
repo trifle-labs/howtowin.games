@@ -8,13 +8,12 @@ export function create(canvas) {
   const size = Math.min(canvas.parentElement.clientWidth - 24, 540);
   canvas.width = size;
   canvas.height = 260;
+  const H = canvas.height;
   const dpr = window.devicePixelRatio || 1;
   if (dpr > 1) {
     const w = canvas.width, h = canvas.height;
-    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
-    canvas.width = w * dpr; canvas.height = h * dpr; ctx.scale(dpr, dpr);
+    canvas.style.width = w + 'px';    canvas.width = w * dpr; canvas.height = h * dpr; ctx.scale(dpr, dpr);
   }
-  const H = canvas.height;
   const statusEl = document.getElementById("playable-status");
 
   // 11 points: M0 (left tip), then a 3×3 grid in cols 1..3, then M4 (right tip).

@@ -1,7 +1,6 @@
 # Peg solitaire
 
-> The classic jump-and-remove puzzle — completely solved: there is a full
-> mathematical theory of which problems are solvable.
+> The classic puzzle where pegs jump over each other and are removed. Completely solved — there is a full mathematical theory of which positions can be solved.
 
 | Field | Value |
 |-------|-------|
@@ -20,10 +19,7 @@
 
 ## Description
 
-Pegs sit in a grid of holes (the standard "English" board is a 33-hole cross).
-A peg jumps orthogonally over an adjacent peg into an empty hole beyond,
-removing the jumped peg. The classic goal is to start with one hole empty and
-finish with a single peg — ideally in the centre.
+Pegs sit in a grid of holes (the standard English board is a cross-shaped board with 33 holes). A peg can jump over a neighboring peg into an empty hole beyond, going up, down, left, or right. The jumped peg is removed. The classic goal is to start with one hole empty and finish with a single peg left, ideally in the centre.
 
 ## Solution status
 
@@ -40,11 +36,11 @@ counting multi-jumps as one move).
 
 ## Consensus on optimal play
 
-- **Check the pagoda function first** — before attempting a problem, compute the pagoda-function value of the start and target positions; if the start value is less than the target value under any valid pagoda weighting, the problem is unsolvable.
-- **Work backwards** — the most reliable human solving technique is to plan the last few moves first (what single peg lands in the target hole?) then extend the solution backward.
-- **Prefer "packages"** — a package is a local sequence of jumps that clears a region and leaves a specific peg in a specific hole; assembling known packages reduces a complex board to a short sequence of sub-problems.
-- **Avoid stranded pegs** — a single peg isolated from all others (no neighbour with an empty hole beyond it) can never be moved; identify and address potential stranded-peg configurations early.
-- **The 18-move minimum for the central complement** — the optimal solution to the classic English board problem (start with centre empty, end with centre full) takes exactly 18 multi-jumps; known solutions achieving this have been published.
+- **Use the pagoda function to check if a problem is possible** — before trying to solve a puzzle, compute the pagoda-function value (a special weighted sum that can never increase). If the start value is less than the target value, the problem is impossible and you should not waste time on it.
+- **Work backwards from the end** — the most reliable method is to plan the last few moves first (what single peg lands in the target hole?) and then work your way back to the start.
+- **Use package sequences** — a "package" is a small set of jumps that clears an area and leaves a specific peg in a specific hole. Learning known packages turns a complex board into a short sequence of simple sub-problems.
+- **Avoid stranded pegs** — a peg that is alone with no neighboring peg that can jump over it into an empty hole can never be moved again. Spot these early and deal with them.
+- **The classic problem can be solved in 18 moves** — the optimal solution for the standard English board (start with the centre empty, end with a peg in the centre) takes exactly 18 multi-jump moves.
 
 ## Engines & current best play
 

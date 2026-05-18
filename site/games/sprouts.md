@@ -1,7 +1,6 @@
 # Sprouts
 
-> A pencil-and-paper game with a deceptively deep structure; solved by computer
-> only up to a modest number of starting spots.
+> A pencil-and-paper game where players draw lines between dots. Only partially solved — the winning strategy is known for small numbers of starting dots but not proven for all cases.
 
 | Field | Value |
 |-------|-------|
@@ -16,14 +15,11 @@
 | Solved by | M. S. Paterson & J. H. Conway (inventors); D. Applegate, G. Jacobson & D. Sleator (computer analysis) |
 | State-space complexity | Grows rapidly with starting spots |
 | Game-tree complexity | Grows rapidly with starting spots |
+| **Playable** | sprouts |
 
 ## Description
 
-Start with *n* spots on paper. On a turn a player draws a line (which may curve)
-joining two spots or a spot to itself, not crossing any existing line, and then
-places a new spot on that line. Each spot may have at most three lines meeting
-it. The player unable to move loses ([normal play](../lexicon/README.md#normal-play-convention)).
-A game lasts at most 3n − 1 moves.
+Start with some number of dots on paper. On a turn, a player draws a line (which may curve) connecting two dots or a dot to itself. The line cannot cross any existing line. Then the player places a new dot somewhere on that line. Each dot can have at most three lines meeting it. The player who cannot move loses. A game lasts at most 3 times the starting number of dots minus 1 moves.
 
 ## Solution status
 
@@ -41,11 +37,11 @@ and is essentially a joke: its outcome is fixed in advance.
 
 ## Consensus on optimal play
 
-- **Parity (the Sprouts conjecture) is the strategic compass** — if the starting count n mod 6 is 3, 4, or 5, the first player wins with correct play; otherwise the second player wins. Use this to decide whether to "waste" a move early on.
-- **Degree-2 spots are almost as flexible as free spots** — a spot with two lines can still absorb exactly one more connection; treat them as near-live resources and plan around when they become exhausted.
-- **Prevent large connected surviving regions** — isolated sub-regions of live spots each generate their own continuation; confining the game to fewer, smaller regions reduces your opponent's options.
-- **Closing loops traps spots** — drawing a closed curve around one or more spots renders them unreachable (no line may cross existing lines); deliberately trap your opponent's live spots to deny moves.
-- **Count the surviving moves** — at any point the maximum remaining moves is bounded by live spot count; track whether you or your opponent will exhaust moves first.
+- **Use the Sprouts conjecture as a guide** — based on computer analysis, it is believed that the first player wins when the starting number of dots divided by 6 leaves a remainder of 3, 4, or 5. Otherwise the second player wins. Use this to decide whether to make a "waste" move early on.
+- **Dots with two lines still matter** — a dot that already has two lines can still accept exactly one more connection. Treat these as nearly-live resources and plan around when they run out.
+- **Keep the game contained** — dividing the board into many separate areas gives the opponent more options. Try to keep the game in fewer, smaller regions.
+- **Trap the opponent's dots with closed loops** — drawing a closed curve around one or more dots makes them unreachable (no line can cross existing lines). Deliberately trap the opponent's live dots to deny them moves.
+- **Count how many moves are left** — at any point, the maximum remaining moves is limited by the number of live dots. Track whether you or the opponent will run out of moves first.
 
 ## Engines & current best play
 

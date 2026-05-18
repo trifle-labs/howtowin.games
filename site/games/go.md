@@ -1,7 +1,6 @@
 # Go
 
-> The largest classical board game — superhuman AI exists, small boards are
-> solved, but 19×19 Go is far from solved.
+> The most complex classical board game. Superhuman AI exists for the full 19x19 board, but only tiny boards (5x5) have been fully solved.
 
 | Field | Value |
 |-------|-------|
@@ -19,10 +18,7 @@
 
 ## Description
 
-Played on the intersections of a 19×19 grid. Players alternately place stones;
-stones with no liberties are captured; the goal is to control more territory
-(plus captures) than the opponent. The *ko* rule forbids immediate board
-repetition.
+Played on the intersections of a 19x19 grid. Players take turns placing stones. Stones with no empty neighboring points (liberties) are captured. The goal is to control more territory (plus captured stones) than the opponent. The ko rule (a rule that prevents repeating the same board position) forbids taking back a stone immediately if it would repeat the previous board layout.
 
 ## Solution status
 
@@ -44,12 +40,12 @@ dwarf every other classical game.
 
 ## Consensus on optimal play
 
-- **Influence over territory early, territory over influence late** — early in the game, strong players build frameworks (moyo) that threaten large territories; converting influence into solid territory before the opponent invades is the central tension.
-- **Two eyes or die** — any group without two distinct eye spaces is eventually captured; building eyes (or the potential for them) is the unconditional requirement for group survival.
-- **Do not attach to weak stones** — attaching a stone to an opponent's already-weak group strengthens that group while thickening their position; instead, attack from a distance (the knight's move or two-space extension) to maintain flexibility.
-- **Komi calibrates the first-move advantage** — professional consensus has settled on 6.5 or 7.5 points komi as roughly fair; playing for a narrow margin win as Black (or neutralising it as White) shapes endgame priorities.
-- **Sente (initiative) is a resource** — a move that demands a response grants the player the next "free" move elsewhere; counting sente/gote sequences is essential in the middle and late game.
-- **Reducing while maintaining your own thickness** — invasions succeed when the invader can run or live; ensure your invasion point is not adjacent to a strong opponent wall that would make escape impossible.
+- **Build influence early, convert to territory late** — early in the game, strong players build large frameworks (moyo) that threaten to become big territories. Turning that influence into solid points before the opponent invades is the central challenge.
+- **Two eyes or die** — any group that does not have at least two separate empty spaces (eyes) inside it can eventually be captured. Building eyes (or the potential to make them) is essential for a group to survive.
+- **Do not attach to weak stones** — placing a stone directly next to an opponent's already-weak group often strengthens that group while improving their overall position. Instead, attack from a distance (a knight's-move or two-space extension) to stay flexible.
+- **Komi compensates for going first** — professional players agree that a komi (point bonus for the second player) of 6.5 or 7.5 points is roughly fair. As Black, play for a narrow win; as White, aim to neutralize that advantage.
+- **Sente (initiative) is valuable** — a move that forces the opponent to respond gives you the next "free" move somewhere else. Counting which moves force a response (sente) versus which do not (gote) is essential in the middle and late game.
+- **Invade where you can run or live** — invasions (playing inside the opponent's area) succeed when the invader can escape to open space or make two eyes. Make sure your invasion point is not next to a strong opponent wall that would make escape impossible.
 
 ## Engines & current best play
 

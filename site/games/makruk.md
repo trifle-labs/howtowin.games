@@ -1,7 +1,6 @@
 # Makruk
 
-> Thai chess — a chess relative with weak long-range pieces and a distinctive
-> counting endgame; unsolved.
+> Thai chess, a relative of Western chess with weaker pieces and a special counting rule for endgames. Unsolved.
 
 | Field | Value |
 |-------|-------|
@@ -20,12 +19,7 @@
 
 ## Description
 
-Played on an 8×8 board. Makruk descends, like Western chess, from the older
-[shatranj](shatranj.md) tradition: its Queen-equivalent (Met) moves only one
-square diagonally, its Bishop-equivalent (Khon) is also short-range, and pawns
-promote on the *sixth* rank. Pieces start one rank advanced compared to chess. A
-detailed **counting rule** forces a draw if the stronger side cannot mate within
-a bounded number of moves.
+Played on an 8x8 board. Makruk descends, like Western chess, from the older shatranj tradition. Its queen-equivalent (Met) moves only one square diagonally, its bishop-equivalent (Khon) is also short-range, and pawns promote on the sixth row. Pieces start one row closer to the center compared to chess. A detailed counting rule forces a draw if the stronger side cannot checkmate within a limited number of moves.
 
 ## Solution status
 
@@ -38,12 +32,12 @@ sub-games; the full game's value is unknown.
 
 ## Consensus on optimal play
 
-- **The counting rule shapes the entire endgame** — once the last pawn is promoted or captured, the defending side starts counting; the attacker must mate within the allotted moves (determined by the count rule) or the game is drawn; knowing when the count begins and how many moves remain is essential.
-- **Pawns promote on the sixth rank, not the eighth** — promoted pawns (Met/queen equivalent) come into play faster; use pawn advances early to threaten early promotion and force defensive commitments.
-- **The Met is a short-range piece — treat it as a bishop/knight hybrid** — the Met (queen) moves only one square diagonally; centralise it to maximise its impact rather than leaving it on the flank where it can only cover one or two adjacent squares.
-- **The Khon (bishop-equivalent) covers only one colour** — like chess bishops, Khon pieces are colour-bound (one square diagonal); if both Khon are on the same colour, coordinate them as a pair; if on different colours, one will always cover gaps the other cannot.
-- **Endgame: consult the tablebase for small material counts** — makruk tablebases for positions with a few pieces are publicly used by Thai competitive players; a position that looks winning may be drawn due to the counting rule; check before committing to a piece exchange.
-- **Opening: advance both flanks to create Met activity** — because pieces start one rank closer than in chess, early activation is easier; develop both wings simultaneously to avoid giving the opponent a free centralisation advantage.
+- **The counting rule shapes the entire endgame** — once the last pawn is promoted or captured, the defending side starts counting. The attacker must checkmate within the allotted moves (determined by the counting rule) or the game is drawn. Knowing when the count begins and how many moves remain is essential.
+- **Pawns promote on the sixth row, not the eighth** — promoted pawns come into play faster. Use pawn advances early to threaten early promotion and force defensive commitments.
+- **The Met (queen) moves only one square diagonally** — treat it as a short-range piece. Centralize it to maximize its impact rather than leaving it on the edge where it can only cover one or two neighboring squares.
+- **The Khon (bishop) covers only one color** — like chess bishops, Khon pieces are color-bound (one square diagonal). If both Khon are on the same color, coordinate them as a pair. If on different colors, one will always cover gaps the other cannot.
+- **Endgame: consult tablebases for small material counts** — Makruk tablebases for positions with a few pieces are publicly used by Thai competitive players. A position that looks winning may be drawn due to the counting rule. Check before committing to a piece exchange.
+- **Opening: advance both flanks to create queen activity** — because pieces start one row closer than in chess, early activation is easier. Develop both wings simultaneously to avoid giving the opponent a free centralization advantage.
 
 ## Engines & current best play
 

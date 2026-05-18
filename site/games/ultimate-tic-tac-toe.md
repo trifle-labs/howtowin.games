@@ -1,7 +1,6 @@
 # Ultimate tic-tac-toe
 
-> Nine tic-tac-toe boards nested inside one — small-looking, but its standard
-> game is not solved.
+> A larger version of tic-tac-toe made of nine smaller tic-tac-toe boards. It has not been solved.
 
 | Field | Value |
 |-------|-------|
@@ -20,11 +19,7 @@
 
 ## Description
 
-Played on a 3×3 arrangement of nine small [tic-tac-toe](tic-tac-toe.md) boards.
-A move's cell *within* a small board dictates *which* small board the opponent
-must play in next. Winning a small board claims it; winning three small boards
-in a row wins the game. (Rules vary on what happens when you are sent to an
-already-decided board.)
+Played on a 3x3 grid of nine small tic-tac-toe boards. When you mark a cell in a small board, that cell's position tells the opponent which small board they must play in next. Winning a small board claims it for you. Winning three small boards in a row wins the overall game. (Different rule sets handle what happens when you are sent to an already-decided board differently.)
 
 ## Solution status
 
@@ -40,11 +35,11 @@ game should be treated as unsolved.
 
 ## Consensus on optimal play
 
-- **Winning the centre macro-board is the highest strategic goal** — the centre small board participates in all four winning lines (row, column, and both diagonals) of the meta-board; fight hard for it and send the opponent to weak macro-cells when possible.
-- **Send your opponent to already-decided or unfavourable boards** — a move in cell X of the current small board sends the opponent to small board X; send them to boards you have won (they play in the neutral cell) or to boards where they have few good options.
-- **Control local boards with tic-tac-toe principles** — within each small board, take the centre first, corners second, block two-in-a-rows; strong local play is necessary to claim macro-boards.
-- **Use the "free choice" rule wisely** — under most rule variants, when you are sent to an already-won or full board you may play anywhere; this is a powerful tempo advantage, so deliberately fill contested boards to earn free-choice turns.
-- **Balance board wins with strategic sends** — winning a small board is only worthwhile if it does not send the opponent to a macro-pivotal board; sometimes deliberately losing a small board is correct to control where the opponent plays next.
+- **Winning the center big board is the most important goal** — the center small board is part of all four winning lines (row, column, and both diagonals) of the overall game. Fight hard for it, and send the opponent to weak boards when you can.
+- **Send the opponent to already-decided or bad boards** — when you play in cell X of the current small board, the opponent must play in small board X. Send them to a board you have already won (they will have to play in the neutral leftover cell) or to a board where they have few good moves.
+- **Use basic tic-tac-toe strategy within each small board** — in each small board, take the center first, corners second, and block two-in-a-rows. Strong local play is necessary to win big boards.
+- **Use the free-choice rule wisely** — under most rules, when sent to an already-won or full board, you can play anywhere on the whole board. This is a powerful advantage, so deliberately fill contested boards to earn free-choice turns.
+- **Balance winning boards with sending the opponent to bad boards** — winning a small board is only helpful if it does not send the opponent to a strategically important board. Sometimes it is correct to lose a small board on purpose to control where the opponent plays next.
 
 ## Engines & current best play
 

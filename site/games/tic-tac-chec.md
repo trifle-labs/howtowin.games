@@ -1,7 +1,6 @@
 # Tic-Tac-Chec
 
-> A chess-piece-based tic-tac-toe — players bring on chess pieces and try to
-> line up four of their colour.
+> A game that combines chess pieces with a tic-tac-toe-style win condition. It has not been solved.
 
 | Field | Value |
 |-------|-------|
@@ -20,24 +19,17 @@
 
 ## Description
 
-A commercial game from the 2000s combining chess movement with a connect-four
-flavour. Each player has four chess pieces in reserve (a pawn, knight, bishop,
-rook); the goal is to be the first to align all four of your pieces along a
-row, column, or diagonal on a 4×4 board.
+A commercial game from the 2000s that combines chess piece movement with a connect-four-style goal. Each player has four chess pieces in reserve (a pawn, a knight, a bishop, and a rook). The goal is to be the first to get all four of your pieces in a row, column, or diagonal on a 4x4 board.
 
 ## Rules
 
-1. Board: 4×4 grid, empty initially.
-2. Each player has a reserve of **one pawn, one knight, one bishop, one rook**.
+1. Board: a 4x4 grid, empty at the start.
+2. Each player has a reserve of one pawn, one knight, one bishop, and one rook.
 3. On a turn, a player may either:
-   - **Drop** a reserve piece onto any empty square it could legally move to
-     from off-board (some sources allow drops on any empty square — **[verify]**
-     the canonical rule); or
-   - **Move** one of their on-board pieces according to its chess movement
-     rules (within the 4×4 grid), optionally capturing an opposing piece.
-4. Captured pieces return to the owner's reserve.
-5. The first player to align **all four of their pieces** in a row, column, or
-   diagonal wins.
+   - Drop a reserve piece onto any empty square it could legally move to from off the board; or
+   - Move one of their on-board pieces according to its chess movement rules (within the 4x4 grid), and may capture an opposing piece.
+4. Captured pieces return to their owner's reserve.
+5. The first player to get all four of their pieces in a row, column, or diagonal wins.
 
 ## Solution status
 
@@ -47,11 +39,11 @@ exists.
 
 ## Consensus on optimal play
 
-- **Deploy the rook as a locking piece** — a rook on the board covers its entire rank and file, threatening alignment along any row or column it occupies; play it early to anchor one of those two lines.
-- **Use the knight for non-linear threats** — knights jump over pieces and are the hardest to block; threatening alignment with a knight already placed in a corner or edge forces the opponent to solve two problems at once.
-- **Capture strategically, not reflexively** — captured pieces return to the captor's reserve, so capturing an opponent's rook gives them back a powerful drop piece; be certain capturing is worth the gift.
-- **Target the diagonal from the start** — with only a 4×4 board, the main diagonals are the most compact winning line (all four pieces must occupy one of eight specific squares); controlling both endpoints of a diagonal early is a lasting threat.
-- **Block opponent alignment before extending your own** — the board is too small to ignore even a two-piece alignment; verify that your drop or move does not leave the opponent one step from winning.
+- **Deploy the rook as an anchor piece** — a rook on the board controls its entire row and column, threatening to line up along any of them. Play the rook early to lock down one of those lines.
+- **Use the knight for tricky threats** — knights jump over other pieces and are the hardest to block. Threatening a line with a knight already in a corner or edge forces the opponent to solve two problems at once.
+- **Capture carefully** — captured pieces return to the opponent's reserve. If you capture the opponent's rook, they get it back to drop anywhere. Make sure capturing is worth giving them that powerful piece.
+- **Target a diagonal from the start** — with only a 4x4 board, the main diagonals are the shortest winning line. Controlling both ends of a diagonal early creates a lasting threat.
+- **Block the opponent before extending your own line** — the board is too small to ignore even a two-piece alignment. Check that your move does not leave the opponent one step from winning.
 
 ## Engines & current best play
 

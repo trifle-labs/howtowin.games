@@ -1,7 +1,6 @@
 # EinStein würfelt nicht!
 
-> A small modern dice-driven abstract — endgames and reduced boards are solved,
-> but the standard game's value is not formally settled.
+> A small dice-driven abstract game. Endgames are solved, but the standard game is not formally settled.
 
 | Field | Value |
 |-------|-------|
@@ -20,13 +19,14 @@
 
 ## Description
 
-Designed by Ingo Althöfer (2004). On a 5×5 board each player has six numbered
-cubes (1–6) in one corner. Each turn a die is rolled; the player must move the
-cube of that number — or, if it has been captured, the nearest numbered cube
-above or below. Moves go toward the opposite corner; landing on any cube (yours
-or the opponent's) removes it. A player wins by getting a cube to the opposite
-corner or by capturing all the opponent's cubes. The die roll means the game has
-**chance but no hidden information**.
+Designed by Ingo Althofer in 2004. On a 5×5 board, each player has six numbered
+cubes (1 through 6) starting in one corner. Each turn, a die is rolled. You
+must move the cube with that number — or, if that cube has been captured, the
+cube with the closest number above or below it. Moves go toward the opposite
+corner. If you land on any cube (yours or the opponent's), that cube is removed.
+You win by getting a cube to the opposite corner or by capturing all of the
+opponent's cubes. The die roll means the game involves **luck, but no hidden
+information**.
 
 ## Solution status
 
@@ -42,11 +42,11 @@ open.
 
 ## Consensus on optimal play
 
-- **Place your low-numbered cubes (1, 2) centrally at setup** — the placement phase before the first roll is free; low numbers are rolled more frequently per valid move opportunity, so placing small-numbered cubes on the direct path to the goal corner maximises their expected contribution.
-- **Move diagonally toward the goal whenever the die allows** — diagonal moves (decreasing both row and column simultaneously) bring your cube closest to the opposite corner per step; prefer diagonal over straight moves when both are legal.
-- **Use cube 1 and 2 aggressively; they are the fastest attackers** — when rolled, low cubes that are well-placed can reach the goal in fewer turns on average; protecting them by not exposing them to capture is worth more than shielding large-numbered cubes.
-- **Capturing is often better than advancing** — removing an opponent cube denies them a potential fast mover and also forces their remaining cubes to cover that number's roll; a capture that also advances you toward the goal is nearly always correct.
-- **Stay off the edges when possible** — cubes on the board's edge have fewer valid diagonal moves; central or near-central positions maximise your options when a specific number is rolled.
+- **Put your low-numbered cubes (1 and 2) in the center at setup** — you get to place cubes freely before the first roll. Low numbers are rolled more often per valid move opportunity, so putting small-numbered cubes on the direct path to the goal corner gives you the best odds.
+- **Move diagonally toward the goal when you can** — diagonal moves (reducing both row and column at once) bring your cube closest to the opposite corner in a single move. Prefer diagonal over straight moves when both are possible.
+- **Use cubes 1 and 2 aggressively — they are your fastest attackers** — when rolled, well-placed low cubes can reach the goal in fewer turns. Protecting them is worth more than shielding your large-numbered cubes.
+- **Capturing is often better than advancing** — removing an opponent's cube takes away one of their fast movers and forces their remaining cubes to cover that number's rolls. A capture that also gets you closer to the goal is almost always the right move.
+- **Stay away from the edges when possible** — cubes on the edge have fewer diagonal moves. Central or near-central positions give you more options when a specific number is rolled.
 
 ## Engines & current best play
 

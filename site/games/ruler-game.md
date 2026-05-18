@@ -1,7 +1,6 @@
 # Ruler game
 
-> A textbook octal game whose nim-sequence is the "ruler" function — a clean
-> example for the Sprague–Grundy theory.
+> A classic take-away game whose values follow the "ruler" pattern (1, 2, 1, 3, 1, 2, 1, 4...). A clean example of how game values work.
 
 | Field | Value |
 |-------|-------|
@@ -20,21 +19,15 @@
 
 ## Description
 
-Played on heaps of tokens. The game is named for its nim-sequence, which equals
-the **ruler function** — the largest power of 2 dividing the heap size — so the
-nim-values look like markings on a ruler: 1, 2, 1, 3, 1, 2, 1, 4, 1, 2, 1, 3,...
+Played with piles of tokens. The game gets its name from the pattern of its values, called the **ruler function** — the largest power of 2 that divides the pile size. This creates a sequence that looks like the markings on a ruler: 1, 2, 1, 3, 1, 2, 1, 4, 1, 2, 1, 3, and so on.
 
 ## Rules
 
-1. One or more heaps of tokens.
-2. A move picks one heap of size n and removes between 1 and n tokens, but the
-   exact allowed removals are given by the octal code .07 — concretely, you
-   may remove any positive amount and optionally split the remainder according
-   to a fixed rule.
+1. One or more piles of tokens.
+2. On your turn, pick one pile of size n and remove some tokens (between 1 and n). The exact rule for which removals are allowed is given by the octal code .07 — in practice, you may remove any number and may optionally split what is left according to a fixed rule.
 3. The player who cannot move loses (normal play).
 
-In practice the game is most often described directly by its nim-value table
-rather than by the octal rule.
+In practice, this game is usually described by its pattern of game values rather than by the removal rule.
 
 ## Solution status
 
@@ -45,11 +38,11 @@ several piles by [nim-sum](../lexicon/README.md#nim-sum).
 
 ## Consensus on optimal play
 
-- **Compute the nim-value via the ruler function** — for a heap of size n, find the largest k such that 2^k divides n; the nim-value is k + 1 (so nim-values cycle as 1,2,1,3,1,2,1,4,…).
-- **Combine heaps by XOR** — with multiple heaps, XOR all their nim-values; the position is a second-player win (P-position) iff the XOR equals 0.
-- **Make the XOR zero on every move** — as in ordinary Nim, the winning strategy is to leave your opponent a position where the nim-sum (XOR) of all piles is 0.
-- **Powers of two are the strategic reference points** — heaps of size 2^k have nim-value k+1 (the highest value achievable for that size), making them the dominant heaps in any multi-pile position.
-- **The game is solved by a formula, not search** — computing the nim-value takes O(log n) time; no game tree search is needed.
+- **Find the value using the ruler function** — for a pile of size n, find the largest number k such that 2^k divides evenly into n. The value is k + 1. The values cycle as 1, 2, 1, 3, 1, 2, 1, 4, and so on.
+- **Combine multiple piles with XOR** — with more than one pile, XOR their values together. If the result is 0, the position is a loss for the player whose turn it is.
+- **Make the XOR equal to 0 on every move** — like in Nim, the winning strategy is to leave the opponent with an XOR of 0.
+- **Powers of two are the most important** — a pile of size 2^k has the highest value possible for a pile of that size. These piles dominate in multi-pile positions.
+- **The game is solved by a formula, not by searching** — figuring out the value of a pile takes only a simple calculation. No need to explore the game tree.
 
 ## Engines & current best play
 

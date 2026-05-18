@@ -1,6 +1,6 @@
 # Rush Hour
 
-> Sliding-car traffic puzzle — generalised version is PSPACE-complete.
+> A sliding-car traffic puzzle. The general version (on any size board) is PSPACE-complete (very hard to solve).
 
 | Field | Value |
 |-------|-------|
@@ -19,20 +19,14 @@
 
 ## Description
 
-Rush Hour (Nob Yoshigahara, ~1996) is a 6×6 sliding-car puzzle: cars and
-trucks occupying 2 or 3 cells can be slid along their long axis; the goal is
-to free the red car by sliding it to the right edge. The generalised version
-is **PSPACE-complete** (Flake & Baum, 2002).
+Rush Hour (Nob Yoshigahara, about 1996) is a 6x6 sliding-car puzzle. Cars (2 cells long) and trucks (3 cells long) can be slid along the direction they are facing. The goal is to free the red car by sliding it out through the right edge. The general version (on any size board) is **PSPACE-complete** (very hard to solve in the worst case).
 
 ## Rules
 
-1. Board: 6×6 grid with the right edge open at one row (the exit row).
-2. Pieces are cars (length 2) and trucks (length 3), each placed horizontally
-   or vertically.
-3. On a move the player slides one piece any number of cells along its long
-   axis, passing through empty cells only.
-4. The player wins when the **red car** (length 2, horizontal, on the exit
-   row) leaves the board through the right edge.
+1. Board: 6x6 grid with the right side open at one row (the exit row).
+2. Pieces are cars (2 cells long) and trucks (3 cells long), each placed either horizontally or vertically.
+3. On each move, you slide one piece any number of cells along its long direction, but only through empty cells.
+4. You win when the **red car** (2 cells long, horizontal, on the exit row) drives out through the right edge of the board.
 
 ## Solution status
 
@@ -42,11 +36,11 @@ solved trivially by BFS.
 
 ## Consensus on optimal play
 
-- **BFS gives the optimal solution** — breadth-first search on the state graph (each node = board configuration, each edge = single-car slide) finds the minimum-move sequence; the 6×6 board has at most a few thousand reachable states per puzzle.
-- **Clear the exit row first** — the red car must exit right; identify which cars block the exit row and plan to slide them out of the way as the first priority.
-- **Work backward from the exit** — if car A blocks the red car, find what blocks A, and what blocks those blockers; the dependency tree reveals the order of necessary moves.
-- **A single slide can move multiple cells** — cars can slide as many cells as open space allows in one move; prefer slides that create large openings over multiple small shuffles.
-- **Avoid unnecessarily locking your own exits** — sliding a car to clear one path can inadvertently block another; preview the full downstream effect before committing to a move.
+- **Breadth-first search (BFS) finds the shortest solution** — by exploring all possible moves from the start, spreading out evenly, you find the minimum number of moves. The 6x6 board has at most a few thousand possible states per puzzle.
+- **Clear the exit row first** — the red car needs to go out the right side. Find which cars are blocking the exit row and plan to move them out of the way first.
+- **Work backward from the goal** — if car A blocks the red car, find what blocks A, and what blocks those blockers. This chain reveals the right order of moves.
+- **One slide can cover many cells** — cars can slide as far as open space allows in a single move. Prefer one big slide over several small shuffles.
+- **Do not trap your own exit** — moving one car to clear a path can accidentally block another. Think ahead about all the downstream effects before committing.
 
 ## Engines & current best play
 

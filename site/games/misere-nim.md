@@ -1,7 +1,6 @@
 # Misère Nim
 
-> Nim played so that taking the last object *loses*; solved by a small twist on
-> Bouton's rule.
+> Like Nim, but the player who takes the last object loses instead of wins. Solved with a small twist on Bouton's rule.
 
 | Field | Value |
 |-------|-------|
@@ -20,9 +19,7 @@
 
 ## Description
 
-Identical to [Nim](nim.md) — heaps of objects, remove any number from one heap
-per turn — but under the [misère play convention](../lexicon/README.md#misère-play)
-the player who takes the *last* object **loses**.
+This is the same as [Nim](nim.md) — piles of objects where you remove any number from one pile per turn — but with one important change: the player who takes the *last* object **loses** instead of winning.
 
 ## Solution status
 
@@ -41,11 +38,11 @@ Nim is the exception where the misère fix is a one-line special case.
 
 ## Consensus on optimal play
 
-- **If any heap has size ≥ 2, play exactly as in normal Nim** — compute the nim-sum (XOR) of all heap sizes; move to make it 0; this is optimal identical to normal play until only size-1 heaps remain.
-- **When only size-1 heaps remain, leave an odd number** — the single-exception rule: at the moment all remaining heaps are size 1 (or would be after your move), the correct play is to leave an **odd** number of such heaps; the player facing an odd number of single-object heaps must take one, leaving an even number for the opponent, who can mirror until the opponent takes the last one.
-- **The "switch" moment is the key calculation** — identify in advance the position where all heaps collapse to size 1; your last move with a heap of size ≥ 2 should also leave the correct (odd/even) parity of unit heaps.
-- **If all heaps are size 1 already, count and parity decides immediately** — even number of size-1 heaps: the player to move loses; odd number: wins; no further calculation needed.
-- **Misère Nim is the easy misère case** — for most other impartial games, misère theory is far harder; Nim's misère rule is a special one-line exception, not a general template.
+- **If any pile has size 2 or more, play exactly like normal Nim** — calculate the XOR (a special math operation) of all pile sizes and make a move that brings the result to 0. This is the same as normal-play Nim until only size-1 piles remain.
+- **When only size-1 piles remain, leave an odd number** — here is the single exception: once all piles are just 1 object each (or would be after your move), you want to leave an **odd** number of them. The player facing an odd number of single-object piles has to take one, leaving an even number for the other player, who can keep taking one each turn until the opponent is forced to take the last one and lose.
+- **Watch for the switch point** — plan ahead for when the piles will all be size 1. Your last move with a pile of size 2 or more should also set up the correct odd/even count of size-1 piles.
+- **If all piles are already size 1, just count them** — even number of size-1 piles: the player whose turn it is loses. Odd number: that player wins. No calculation needed.
+- **Misère Nim is the easy version of this rule** — for most other games, the "whoever takes the last thing loses" version is much harder. Nim just happens to have a simple one-line exception.
 
 ## Engines & current best play
 

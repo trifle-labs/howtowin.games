@@ -1,6 +1,6 @@
 # Qubic
 
-> Three-dimensional tic-tac-toe on a 4×4×4 cube — and a first-player win.
+> Three-dimensional tic-tac-toe on a 4x4x4 cube. The first player wins with perfect play.
 
 | Field | Value |
 |-------|-------|
@@ -19,9 +19,7 @@
 
 ## Description
 
-Played in a 4×4×4 cube of 64 cells. Players alternately claim cells; the winner
-is the first to claim four cells in a straight line — along any of the cube's
-rows, columns, pillars, or the 2-D and 3-D diagonals (76 winning lines in all).
+Played in a 4x4x4 cube with 64 cells. Players take turns claiming cells. The winner is the first to get four cells in a straight line — along any row, column, pillar (up-down), or diagonal in two or three dimensions. There are 76 possible winning lines in total.
 
 ## Solution status
 
@@ -37,11 +35,11 @@ first player enough overlapping threats to force a win against any defence.
 
 ## Consensus on optimal play
 
-- **First player must threaten multiple lines simultaneously** — with 76 winning lines in a 4×4×4 cube, the winning strategy depends on building multiple overlapping threats; a single line is easily blocked.
-- **3-D diagonals are hard to visualise and defend** — the four long space-diagonals of the cube (corner to opposite corner) are frequently overlooked by defenders; build through them early.
-- **Centre layers are more valuable than faces** — cells in the two inner layers (z=2, z=3) participate in more winning lines than surface cells; prioritise them in the opening.
-- **The 2×2 threat cluster** — claiming the four corners of any face of a sub-cube creates multiple simultaneous winning-line seeds; the opponent cannot address all resulting threats.
-- **First player wins with correct play** — the Patashnik/Allis result is definitive; as second player your only hope is an error by the first player in the intricate winning tree.
+- **First player must threaten multiple lines at once** — with 76 winning lines in a 4x4x4 cube, the winning strategy depends on building many overlapping threats. A single line is too easy to block.
+- **3-D diagonals are easy to overlook** — the four long diagonals from one corner to the opposite corner are often missed by defenders. Build through them early.
+- **Centre layers are more valuable than the surface** — cells in the two inner layers (z=2, z=3) sit on more winning lines than surface cells. Focus on them in the opening.
+- **Use 2x2 threat clusters** — claiming the four corners of any face of a sub-cube creates many winning-line seeds at once. The opponent cannot deal with all of them.
+- **First player wins with correct play** — the Patashnik/Allis result is definitive. As the second player, your only hope is a mistake by the first player in the complicated winning tree.
 
 ## Engines & current best play
 

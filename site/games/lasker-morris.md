@@ -1,7 +1,6 @@
 # Lasker Morris
 
-> Emanuel Lasker's variant of Nine Men's Morris that fixes its "stalling"
-> opening problem — weakly solved as a draw.
+> A variant of Nine Men's Morris that fixes a stalling problem in the original. Solved as a draw.
 
 | Field | Value |
 |-------|-------|
@@ -20,23 +19,14 @@
 
 ## Description
 
-A modification of [Nine Men's Morris](nine-mens-morris.md) proposed by world
-chess champion Emanuel Lasker (1931). The key change: a player may **either
-place a new stone or move an existing one on every turn**, instead of completing
-the entire placement phase first. This eliminates the rigid two-phase structure
-that, in standard morris, gives a strong advantage to the placement-phase
-defender.
+A modification of Nine Men's Morris proposed by world chess champion Emanuel Lasker (1931). The key change: a player may either place a new stone or move an existing one on every turn, instead of completing the entire placement phase first. This eliminates the rigid two-phase structure that, in standard Morris, gives a strong advantage to the defender in the placement phase.
 
 ## Rules
 
-1. Same 24-point board as [Nine Men's Morris](nine-mens-morris.md), with nine
-   stones per player.
-2. On each turn a player may **either** place a new (reserve) stone on an empty
-   point **or** move one of their on-board stones to an adjacent empty point.
-3. Forming a row of three ("mill") allows the player to remove one opposing
-   stone, as in standard morris.
-4. The "flying" endgame rule (move anywhere when down to 3 stones) usually
-   applies.
+1. Same 24-point board as Nine Men's Morris, with nine stones per player.
+2. On each turn a player may either place a new (reserve) stone on an empty point or move one of their on-board stones to a neighboring empty point.
+3. Forming a row of three ("mill") allows the player to remove one opposing stone, as in standard Morris.
+4. The "flying" endgame rule (move anywhere when down to 3 stones) usually applies.
 5. A player reduced to 2 stones, or unable to move, loses.
 
 ## Solution status

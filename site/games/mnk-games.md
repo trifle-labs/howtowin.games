@@ -1,7 +1,6 @@
 # m,n,k-games
 
-> The general family of "tic-tac-toe on an m × n board with k-in-a-row to
-> win" — partially classified, with a Hales–Jewett-style monotone structure.
+> A whole family of tic-tac-toe-like games on an m x n board where you need k in a row to win. Partially classified.
 
 | Field | Value |
 |-------|-------|
@@ -20,17 +19,16 @@
 
 ## Description
 
-The unified theory of "tic-tac-toe family" games. An m,n,k-game is played on an
-m × n grid; the goal is to be the first player to form an unbroken line of k
-of your marks in any straight direction.
+This is the big-picture view of all "tic-tac-toe-like" games. In an m,n,k-game you play
+on an m by n grid, and the goal is to be the first to get k of your marks in a
+row — horizontally, vertically, or diagonally.
 
 ## Rules
 
-1. Board: m × n grid, empty initially.
-2. Players alternate placing one of their marks (X or O) on any empty cell.
-3. The first player to **align k of their marks** in a single horizontal,
-   vertical, or diagonal line wins.
-4. If the board fills with no winning line, the game is a draw.
+1. Board: an m by n grid, all cells empty at the start.
+2. Players take turns placing their marks (X or O) on any empty cell.
+3. The first player to get **k of their marks in a row** — horizontally, vertically, or diagonally — wins.
+4. If the board fills up and nobody has k in a row, the game is a draw.
 
 ## Solution status
 
@@ -53,12 +51,12 @@ Theory* for the comprehensive treatment.
 
 ## Consensus on optimal play
 
-- **The second player can never win** — strategy-stealing proves this universally; only first-player wins or draws occur; if you are second player, aim for a draw.
-- **For k ≥ 8, any board is a draw** — pairing/strategy arguments prove no m,n,k-game with k ≥ 8 is a first-player win regardless of board size; if the winning-line length is 8 or more, the first player cannot force a win.
-- **For small k (k = 3, 4, 5) on large boards, threat-tree attacks win for first player** — the first player builds double open-k−1 threats (two simultaneous nearly-complete lines); forcing sequences that create unblockable forks are the winning mechanism.
-- **Centre cells dominate for small boards** — cells that lie on the most k-length winning lines should be taken first; in (3,3,3) the centre is on 4 lines, corners on 2, edges on 2; in larger boards, central cells are similarly privileged.
-- **Pairing strategies give drawing algorithms** — for draw-valued games, a pairing argument assigns each cell a unique "partner"; whenever first player plays in a cell, second player responds in the partner; this ensures first player never completes a line.
-- **For specific cases, threat-space search gives exact results** — the Allis (1993/1996) technique for Gomoku applies to any m,n,k-game: chain compulsory threat sequences to prove a first-player win.
+- **The second player can never win** — a famous proof called "strategy-stealing" shows this is always true. Only the first player can win, or the game is a draw. If you are second player, aim for a draw.
+- **If you need 8 or more in a row, the game is a draw** — no matter how big the board, if you need 8 or more marks to win, the first player cannot force a win. The game will always be a draw with perfect play.
+- **For small k (3, 4, 5) on large boards, the first player wins by building threats** — the first player creates two near-complete lines at once (a fork), so the opponent cannot block both.
+- **Take the centre first on small boards** — cells that lie on the most possible winning lines are the most valuable. In 3x3 tic-tac-toe the centre covers 4 lines, corners cover 2, and edges cover 2. The same idea works for larger boards.
+- **Pairing strategies force a draw** — for games that are draws, you can pair up each cell with a "partner." Whenever the first player marks a cell, the second player immediately marks its partner. This stops the first player from ever completing a line.
+- **For specific cases, follow-the-threat works** — the same technique used to solve Gomoku (Allis, 1993/1996) applies to any m,n,k-game: chain together forced moves to prove the first player wins.
 
 ## Engines & current best play
 

@@ -1,7 +1,6 @@
 # Grundy's game
 
-> An impartial game whose nim-value sequence is computed for billions of values
-> yet still not *proven* periodic — a famous open problem.
+> A game where you split heaps into two unequal parts. The winning move can be calculated for any heap size, but the underlying pattern is still a mystery.
 
 | Field | Value |
 |-------|-------|
@@ -20,9 +19,7 @@
 
 ## Description
 
-A heap of objects. On a turn a player splits one heap into two **non-empty,
-unequal** parts. A player who cannot move (all heaps are size 1 or 2) loses
-under [normal play](../lexicon/README.md#normal-play-convention).
+A heap of objects. On your turn, you split one heap into two non-empty, unequal parts. If you cannot make a move (every heap is size 1 or 2), you lose.
 
 ## Solution status
 
@@ -41,11 +38,11 @@ or computer will encounter, but not solved in the theoretical sense.
 
 ## Consensus on optimal play
 
-- **Compute nim-values, then nim-sum to zero** — with multiple heaps, calculate the nim-value (Grundy value) of each heap using the mex recurrence, then make a move that sets the nim-sum of all heaps to 0; this is the exact winning condition.
-- **A heap of size 2 is a dead end** — heaps of size 1 and 2 cannot be split (size-1 is indivisible; size-2 cannot be split into two unequal non-empty parts); track them as terminal heaps with nim-value 0.
-- **Heap size 3 has nim-value 1** — split into {1, 2}; this is the smallest non-trivial move and a useful anchor for hand calculation.
-- **Use precomputed tables for larger heaps** — beyond small heaps, the nim-value sequence is irregular enough that memorisation or table lookup is the only practical approach for over-the-board play.
-- **With a single large heap, nim-value 0 is a loss for the player to move** — if your only heap has nim-value 0, every split you make will give the opponent a nim-value-0 position to respond to; you lose with optimal opponent play.
+- **Calculate the Grundy value for each heap, then make the total XOR (nim-sum) equal zero** — with multiple heaps, calculate the Grundy value of each heap, then make a move that sets the nim-sum (a mathematical way of combining heap values) to zero. This is the exact winning condition.
+- **A heap of size 2 is a dead end** — heaps of size 1 and 2 cannot be split (size 1 is indivisible; size 2 cannot be split into two unequal non-empty parts). Treat them as terminal heaps with Grundy value 0.
+- **Heap size 3 has Grundy value 1** — split into {1, 2}. This is the smallest meaningful move and a useful starting point for hand calculation.
+- **Use precomputed tables for larger heaps** — beyond small heaps, the Grundy value pattern is irregular enough that looking up a table or computing it is the only practical approach during play.
+- **With a single large heap, Grundy value 0 means you lose** — if your only heap has Grundy value 0, every split you make will give the opponent a position they can win from. You lose against perfect play.
 
 ## Engines & current best play
 

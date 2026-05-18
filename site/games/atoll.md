@@ -1,6 +1,6 @@
 # Atoll
 
-> An island-connection game by Mark Steere — unsolved.
+> A connection game where each player must link their two islands. Unsolved.
 
 | Field | Value |
 |-------|-------|
@@ -19,20 +19,15 @@
 
 ## Description
 
-Atoll (Mark Steere) is a hexagonal-board connection game with **island
-endpoints**: instead of two opposite *edges* of the board, each player has
-two **specific cells** (the "islands") that they must connect.
+Atoll (by Mark Steere) is played on a hexagonal board. Instead of connecting two
+opposite edges of the board like in Hex, each player has two **specific spots**
+(called "islands") that they must connect with a chain of their pieces.
 
 ## Rules
 
-1. Hexagonal grid board with four marked cells (two per player), located near
-   the four corners or on opposing sides.
-2. Players alternate placing one stone of their colour on any empty cell. (One
-   stone may not be played adjacent to a same-colour stone if doing so would
-   violate the no-clumping rule — variants differ; **[verify]** the canonical
-   version.)
-3. The first player to form a connected chain of their colour linking **both**
-   of their islands wins.
+1. The board is made of hexagons (hexagonal grid) with four marked spots (two per player), usually near the four corners or on opposite sides.
+2. Players take turns placing one stone of their color on any empty cell. (In some versions, you cannot place a stone next to one of your own if it would create a clump — rules differ by version.)
+3. The first player to create a connected chain of their color linking **both** of their islands wins.
 4. Draws are not possible.
 
 ## Solution status
@@ -43,11 +38,11 @@ solution has been published.
 
 ## Consensus on optimal play
 
-- **Build toward both islands simultaneously** — connecting your two islands requires a spanning path; advancing a chain that serves neither island wastes tempo and leaves you vulnerable to being cut.
-- **The virtual connection principle applies** — as in Hex, two groups that share two disjoint paths to each other are "virtually connected" and cannot both be cut; recognise these structures to play confidently without fully bridging gaps yet.
-- **Cutting between opponent's islands is the primary attack** — find the narrowest crossing between the opponent's two islands and contest it; a stone planted in that corridor forces the opponent to detour.
-- **Centralise early** — cells near the centre of the board lie on more potential paths between any pair of islands; central stones are harder to render irrelevant than peripheral ones.
-- **The strategy-stealing argument applies** — an extra stone is never a liability in a connection game, so first player has at least a draw theoretically; this implies the pie rule swap is appropriate for fair play.
+- **Build toward both islands at the same time** — you need a path connecting your two islands. Advancing a chain that only helps one side wastes moves and leaves you open to being cut off.
+- **Use "virtual connections"** — as in Hex, two groups that have two separate paths connecting them are "virtually connected" and cannot both be blocked. Learn to spot these patterns so you can play confidently without filling every gap.
+- **Cut between the opponent's islands** — find the narrowest passage between the opponent's two islands and put your stone there. A stone in that corridor forces the opponent to take a longer path.
+- **Play toward the center early** — cells near the center of the board sit on more possible paths between any pair of islands. Central stones are harder to make useless than edge stones.
+- **An extra stone never hurts in a connection game** — in theory, having one more piece on the board is always good for you, so the first player has at least a draw. This is why the swap rule (letting the second player switch sides) is used to keep things fair.
 
 ## Engines & current best play
 

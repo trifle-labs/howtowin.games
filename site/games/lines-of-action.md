@@ -1,6 +1,6 @@
 # Lines of Action
 
-> A connection game on a chessboard; played strongly by engines but not solved.
+> A connection game on a chessboard. Engines play it very well, but it has not been solved.
 
 | Field | Value |
 |-------|-------|
@@ -19,12 +19,7 @@
 
 ## Description
 
-Played on an 8×8 board. Each player has pieces (Black on the top and bottom
-edges, White on the left and right). A piece moves in a straight line exactly as
-many squares as there are pieces (of either colour) on that line; it may jump
-its own pieces but not enemy pieces, and may capture by landing on an enemy
-piece. **The goal is to connect all of one's own pieces into a single
-group** (orthogonally or diagonally).
+Played on an 8x8 board. Each player has pieces (Black on the top and bottom edges, White on the left and right). A piece moves in a straight line exactly as many squares as there are pieces (of either color) on that line. It may jump over its own pieces but not enemy pieces, and may capture by landing on an enemy piece. The goal is to connect all of one's own pieces into a single group (up/down/left/right or diagonally).
 
 ## Solution status
 
@@ -40,12 +35,12 @@ than any fundamental obstacle.
 
 ## Consensus on optimal play
 
-- **Keep your pieces in a compact cluster** — the goal is a single connected group; pieces that wander to the edges become hard to reconnect; keep the cluster tight and avoid isolated outliers.
-- **Moves that both connect and disrupt** — the best moves advance your own connectivity (reduce the number of components your pieces form) while simultaneously splitting the opponent's group; evaluate moves by counting components before and after.
-- **The move-distance rule rewards centrality** — a piece on a full row or column moves far; a piece on a sparse row or column moves only a little; use dense lines to make long reaching moves and sparse lines for fine positioning.
-- **Restrict opponent mobility by occupying shared lines** — placing your pieces on lines the opponent needs to traverse forces their pieces to move longer distances (more of your pieces on that line means longer moves for both), which can overshoot their intended landing squares.
-- **Sacrifice pieces on the periphery if they join the core** — capturing an opponent piece that brings your outlier piece into your cluster is often worth the trade; count connectivity gain per move.
-- **Force asymmetry early** — symmetric positions reward the second player; break symmetry in a direction that compresses your pieces faster than the opponent's.
+- **Keep your pieces in a compact cluster** — the goal is a single connected group. Pieces that wander to the edges become hard to reconnect. Keep the cluster tight and avoid isolated outliers.
+- **Moves that both connect and disrupt** — the best moves advance your own connectivity (reduce how many separate groups your pieces form) while simultaneously splitting the opponent's group. Evaluate moves by counting groups before and after.
+- **The move-distance rule rewards centrality** — a piece on a full row or column moves far. A piece on a sparse row or column moves only a little. Use dense lines to make long moves and sparse lines for fine positioning.
+- **Restrict opponent mobility by occupying shared lines** — placing your pieces on lines the opponent needs to use forces their pieces to move longer distances, which can overshoot their intended landing squares.
+- **Sacrifice pieces on the edge if they join the core** — capturing an opponent piece that brings your outlier piece into your cluster is often worth the trade.
+- **Break symmetry early** — symmetric positions reward the second player. Break symmetry in a direction that compresses your pieces faster than the opponent's.
 
 ## Engines & current best play
 

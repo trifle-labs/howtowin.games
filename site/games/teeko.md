@@ -1,7 +1,6 @@
 # Teeko
 
-> John Scarne's "perfect game" — a compact placement-and-movement game that
-> exhaustive analysis shows to be a draw.
+> A placement-and-movement game on a 5x5 board. Computer analysis shows it is a draw with perfect play.
 
 | Field | Value |
 |-------|-------|
@@ -20,11 +19,7 @@
 
 ## Description
 
-Played on a 5×5 board. Each player has four pieces. In the **placement phase**
-players alternately place their four pieces; in the **movement phase** they
-slide a piece to an adjacent (orthogonal or diagonal) empty cell. A player wins
-by getting their four pieces into a row, column, diagonal, or — in the standard
-rules — any 2×2 square.
+Played on a 5x5 board. Each player has four pieces. In the placement phase, players take turns placing their four pieces on empty cells. In the movement phase, they slide a piece to a neighboring empty cell (up, down, left, right, or diagonally). A player wins by getting their four pieces into a row, column, diagonal, or any 2x2 square.
 
 ## Solution status
 
@@ -42,11 +37,11 @@ win.
 
 ## Consensus on optimal play
 
-- **Place pieces to threaten multiple win conditions** — a piece placed where it simultaneously contributes to a row, a diagonal, and a potential 2×2 square forces the opponent to block two threats at once, often fatally.
-- **Contest the centre of the 5×5 board** — central placement reaches the most winning lines and squares; peripheral pieces contribute to fewer configurations.
-- **During placement, prevent the opponent from forming three-in-a-line** — three aligned opponent pieces with a clear extension are one move from winning; block before all four placements are complete.
-- **In the movement phase, use the 2×2 square as a stealth threat** — linear threats are easy to spot; a 2×2 cluster forming in a corner is often missed and provides a quicker win than completing a row.
-- **Draw by forcing repetition** — if behind in the movement phase, shuttle a piece back and forth to force a repetition draw; the board is small enough that repetition is achievable when the win is lost.
+- **Place pieces to threaten multiple wins at once** — a piece placed so it helps form a row, a diagonal, and a 2x2 square at the same time forces the opponent to block two threats with one move, often deciding the game.
+- **Fight for the center of the 5x5 board** — central pieces reach the most winning lines. Pieces on the edge contribute to fewer configurations.
+- **During placement, block the opponent's three-in-a-row** — if the opponent has three pieces in line with room to extend, they are one move from winning. Block before all four pieces are placed.
+- **Use the 2x2 square as a hidden threat in the movement phase** — straight lines are easy to spot, but a 2x2 cluster forming in a corner is often overlooked and can win faster than completing a row.
+- **Force a draw by repeating moves** — if you are behind in the movement phase, shuttle a piece back and forth to force a draw by repetition. The board is small enough that this is often possible.
 
 ## Engines & current best play
 

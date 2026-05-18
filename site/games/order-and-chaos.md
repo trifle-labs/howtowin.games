@@ -1,7 +1,6 @@
 # Order and Chaos
 
-> An asymmetric tic-tac-toe variant: one player wants a line, the other wants to
-> prevent any.
+> An uneven tic-tac-toe variant: one player tries to make a line, the other tries to stop it from happening.
 
 | Field | Value |
 |-------|-------|
@@ -20,11 +19,7 @@
 
 ## Description
 
-Played on a 6×6 grid. **Both** players may place **either** an X or an O in any
-empty cell. The player "Order" wins if **five identical symbols** (all X or all
-O) ever appear in a row, column, or diagonal. The player "Chaos" wins if the
-board fills with no such line. It is a [Maker–Breaker](../lexicon/README.md#maker-breaker-game)
-game: Order is Maker, Chaos is Breaker.
+Played on a 6x6 grid. **Both** players can place **either** an X or an O in any empty cell. The player called "Order" wins if **five matching symbols** (all X or all O) appear in a row, column, or diagonal. The player called "Chaos" wins if the board fills up without any such line. This is a "Maker-Breaker" game: Order tries to make something, Chaos tries to break it.
 
 ## Solution status
 
@@ -42,11 +37,11 @@ Chaos.
 
 ## Consensus on optimal play
 
-- **Order should build dual-symbol threats** — because Order can place either X or O, a single row can threaten completion with X if one more X is placed, and simultaneously threaten O-completion if one more O is placed; Chaos cannot block both with a single move.
-- **Chaos must avoid homogeneous clusters** — placing a mix of X and O close together is Chaos's best disruption; it prevents Order from extending any single run without creating a different run that Chaos must also address.
-- **Order targets diagonals** — diagonals are harder for Chaos to monitor simultaneously with rows and columns; Order should seed diagonal five-in-a-row threats.
-- **Chaos exploits board edges** — near the edge fewer cells complete a five-line; placing odd symbols at edge cells makes it harder for Order to build through the edge zones.
-- **Order wins with correct play** — the exhaustive solution confirms Order can always force a five-line on the 6×6 board; Chaos's task requires perfect vigilance and is ultimately futile.
+- **Order should build threats with both symbols** — since Order can place either X or O, a single row can threaten to become five X's with one more X, or five O's with one more O. Chaos cannot block both possibilities with one move.
+- **Chaos must keep symbols mixed** — placing a mix of X and O near each other is Chaos's best defence. It stops Order from extending any single run without creating another threat that Chaos must also handle.
+- **Order should aim for diagonals** — diagonals are harder for Chaos to watch at the same time as rows and columns. Plant diagonal five-in-a-row threats early.
+- **Chaos should use the edges** — near the board edge, fewer cells are available to complete a five-in-a-row. Placing odd symbols at edge cells makes it harder for Order to build through those zones.
+- **Order wins with correct play** — exhaustive search confirms Order can always force a five-line on the 6x6 board. Chaos's task requires perfect vigilance and is ultimately hopeless against perfect play.
 
 ## Engines & current best play
 

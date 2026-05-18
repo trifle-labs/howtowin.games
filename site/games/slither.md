@@ -1,6 +1,6 @@
 # Slither
 
-> A modern connection-with-sliding game — unsolved.
+> A connection game where stones can also slide to new positions. It has not been solved.
 
 | Field | Value |
 |-------|-------|
@@ -19,23 +19,16 @@
 
 ## Description
 
-Slither (Corey Clark, 2010s) is a connection game played on a square grid with
-**no diagonal-touching** restriction and an additional **sliding** move. The
-balance between the placement and sliding rules gives a different feel from
-[Hex](hex.md) — and a much harder analysis problem.
+Slither (Corey Clark, 2010s) is a connection game played on a square grid. Stones cannot touch diagonally without an up/down/left/right connection, and players can also slide existing stones to new positions. The combination of placing and sliding makes it very different from Hex.
 
 ## Rules
 
-1. Square board (commonly 8×8 or larger). Each player owns two opposite sides.
-2. On each turn a player either:
-   - **Place** a new stone on an empty cell, **provided** the placement does
-     not result in any two same-colour stones being diagonally adjacent without
-     an orthogonal connector; **or**
-   - **Slide** one of their existing stones one orthogonal step, again subject
-     to the no-illegal-diagonal-pair rule.
-3. The first player to make an orthogonally-connected chain of their stones
-   spanning their two sides wins.
-4. Draws are not possible under the standard rule set.
+1. Square board (commonly 8x8 or larger). Each player owns two opposite sides of the board.
+2. On each turn, a player either:
+   - Places a new stone on an empty cell, as long as doing so does not create two same-colored stones that are diagonally next to each other without an up/down/left/right connection between them; or
+   - Slides one of their existing stones one cell up, down, left, or right, following the same diagonal restriction.
+3. The first player to make a chain of their stones connected up/down/left/right that reaches from one of their sides to the opposite side wins.
+4. Draws are not possible under the standard rules.
 
 ## Solution status
 
@@ -45,11 +38,11 @@ solution.
 
 ## Consensus on optimal play
 
-- **Maintain orthogonal connectivity in your chain** — unlike diagonal-connection games, only orthogonal links count toward your spanning chain; always verify that newly placed or slid stones are part of your orthogonal main group.
-- **Use slides to extend without over-committing** — a slide moves an existing stone rather than adding a new one, preserving stone count while repositioning; use slides to bridge gaps without the cost of a permanent new placement.
-- **The no-diagonal rule prevents loose coupling** — two of your stones diagonally adjacent with no orthogonal connector violates placement rules; avoid creating such configurations as they restrict future placements in that area.
-- **Threaten two crossing paths** — as in all connection games, the key is to maintain two separate path threats to your goal sides simultaneously; this forces the opponent to block both or concede one.
-- **First player advantage is presumed but unproven** — draws are impossible (one player must complete a spanning chain); first-player advantage is widely observed but no formal proof exists.
+- **Keep your chain connected up/down/left/right** — only up/down/left/right connections count toward your winning path. Always check that newly placed or slid stones stay connected to your main group.
+- **Use slides to extend without overcommitting** — sliding moves an existing stone instead of adding a new one, saving stones while repositioning. Use slides to bridge gaps without permanent new placements.
+- **Avoid loose diagonal pairs** — having two of your stones diagonally next to each other without an up/down/left/right connector is illegal. Avoid creating these situations as they block future placements.
+- **Threaten two paths at once** — as in all connection games, the key is to have two separate path threats to your goal sides at the same time. This forces the opponent to block both or lose one.
+- **First player advantage is suspected but not proven** — draws are impossible (someone must complete a chain). The first player likely has an advantage, but this has not been formally proved.
 
 ## Engines & current best play
 

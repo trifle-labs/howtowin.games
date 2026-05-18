@@ -1,6 +1,6 @@
 # Ninuki-renju
 
-> Renju with captures — the historical Japanese ancestor of Pente.
+> Like Renju but with captures. The historical Japanese game that Pente came from.
 
 | Field | Value |
 |-------|-------|
@@ -19,26 +19,17 @@
 
 ## Description
 
-Ninuki-renju is the Japanese 19th-century forerunner of [Pente](pente.md). It
-plays on a Go board with five-in-a-row as the primary winning condition, plus
-a custodial capture rule: a pair of opposing stones sandwiched between two of
-yours is removed. A player reaching a fixed number of captures (usually 5
-pairs) also wins.
+Ninuki-renju is a 19th-century Japanese game that came before [Pente](pente.md). It is played on a Go board. Getting five stones in a row is one way to win. There is also a capture rule: if you surround two of your opponent's stones from both ends in a straight line, those two stones are captured and removed. The first player to reach a set number of captures (usually 5 pairs, or 10 stones) also wins.
 
 ## Rules
 
-1. Go board (commonly 15×15 or 19×19), initially empty.
-2. Players alternate placing one stone of their colour on any empty
-   intersection.
-3. **Capture**: if a placement creates the pattern X**O**O**X** (your stones
-   bracketing exactly two adjacent opposing stones in a straight line), the two
-   bracketed stones are removed and counted toward your capture total.
+1. Go board (commonly 15x15 or 19x19), empty at the start.
+2. Players take turns placing one stone of their colour on any empty point on the grid.
+3. **Capture**: if your move creates the pattern X**O**O**X** (your stones surrounding exactly two of the opponent's stones that are next to each other in a straight line), those two stones are captured and removed, and counted toward your capture total.
 4. A player **wins** by either:
-   - Forming an unbroken five-in-a-row of their stones, **or**
-   - Accumulating 5 pairs of captures (10 captured stones), **or** depending on
-     the variant, **[verify]** other thresholds.
-5. (Some variants of Ninuki-renju also borrow Renju's restrictions on Black's
-   3-3, 4-4, and overline moves.)
+   - Making an unbroken line of five stones in a row, **or**
+   - Capturing 5 pairs (10 stones total), **or** — depending on the variant — **[verify]** other thresholds.
+5. (Some versions of Ninuki-renju also use Renju's restrictions on Black's 3-3, 4-4, and overline (6+) moves.)
 
 ## Solution status
 
@@ -48,11 +39,11 @@ and no formal solution exists.
 
 ## Consensus on optimal play
 
-- **Dual threat: five-in-a-row OR five captures** — always be aware of both winning paths; a position threatening row-completion forces a different defence than one racing toward 5 capture-pairs.
-- **Custodial traps over pure extension** — placing a stone to bracket an enemy pair (capturing immediately) is often stronger than extending your own row, because captures simultaneously remove material and advance your capture count.
-- **Break open overlines** — unlike standard Renju, overlines (6+) do not lose here; a player threatening both an exact five and an overline creates a double win-threat.
-- **Restrict opponent's pairing** — avoid leaving two of your own stones sitting adjacent in a line where the opponent can bracket both ends; pairs on the board are permanent capture bait.
-- **Race the capture win against a row threat** — if the opponent is one move from five-in-a-row, capturing a pair may not help; calculate whether row defence or racing your own capture count is faster.
+- **Watch both winning paths: five-in-a-row OR five captures** — always keep track of both ways to win. A position that threatens a five-in-a-row forces a different kind of defence than one racing toward 5 capture-pairs.
+- **Capturing is often better than extending** — placing a stone to trap two enemy stones (capturing them immediately) is often stronger than adding to your own row, because captures remove enemy stones and bring you closer to a capture win.
+- **Overlines are okay here** — unlike standard Renju, having six or more of your stones in a row does not make you lose. If you can threaten both an exact five and a longer line at the same time, the opponent has two problems to deal with.
+- **Do not leave two of your stones lined up** — avoid putting two of your stones next to each other in a line where the opponent could surround both ends. Pairs sitting on the board are permanent capture targets.
+- **Race the capture win against a row threat** — if the opponent is one move away from five-in-a-row, capturing a pair might not help in time. Figure out whether you need to block their row or race toward your own capture total.
 
 ## Engines & current best play
 

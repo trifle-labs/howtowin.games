@@ -1,6 +1,6 @@
 # Sokoban
 
-> Single-player box-pushing puzzle — PSPACE-complete.
+> A single-player puzzle where you push boxes onto target spots in a warehouse.
 
 | Field | Value |
 |-------|-------|
@@ -19,20 +19,15 @@
 
 ## Description
 
-Sokoban (Hiroyuki Imabayashi, 1981) is a solo puzzle in which a warehouse
-keeper pushes crates onto designated target cells. **Deciding whether a
-Sokoban level is solvable is PSPACE-complete** (Culberson, 1997).
+Sokoban (Hiroyuki Imabayashi, 1981) is a solo puzzle in which a warehouse keeper pushes crates onto designated target spots. Deciding whether a Sokoban level is solvable is PSPACE-complete (a measure of how hard the problem is for a computer to solve in general).
 
 ## Rules
 
-1. Board: rectangular grid containing walls, crates, target cells, and a
-   single "keeper" piece.
-2. On each step the keeper moves orthogonally one cell to an empty cell (no
-   wall, no crate).
-3. The keeper may **push** a single crate one cell in the direction of motion
-   if that cell is empty (no wall, no second crate).
+1. Board: rectangular grid containing walls, crates, target spots, and a single "keeper" piece.
+2. On each step, the keeper moves one cell up, down, left, or right to an empty cell (no wall, no crate).
+3. The keeper may push a single crate one cell in the direction of movement if that cell is empty (no wall, no second crate).
 4. The keeper cannot pull crates.
-5. The puzzle is solved when every target cell holds a crate.
+5. The puzzle is solved when every target spot holds a crate.
 
 ## Solution status
 
@@ -43,12 +38,12 @@ for years.
 
 ## Consensus on optimal play
 
-- **Avoid deadlocks immediately** — a crate pushed into a corner (two walls meeting) is permanently frozen; scanning for corner-deadlock before every push prunes most failed branches.
-- **Identify goal packing order first** — work out which target cell each crate should occupy before moving anything; assigning wrong crates to goals wastes many moves.
-- **Clear the path to targets, not just targets** — a corridor crate that blocks access to a distant target must be moved early; experienced solvers plan the "routing layer" before the "placement layer."
-- **Keep the keeper path short** — unnecessary keeper repositioning inflates move count; prefer pushing sequences where the keeper naturally arrives behind the next crate.
-- **Freeze analysis saves depth** — if pushing a crate creates a frozen group (two crates and a wall forming an unmovable block) that covers an unclaimed target, the state is a dead loss; cut it.
-- **Work backwards for hard levels** — pull analysis (imagine pulling crates away from targets) reveals which keeper positions are reachable and which paths are geometrically impossible.
+- **Avoid deadlocks right away** — a crate pushed into a corner (where two walls meet) is stuck forever. Check for corner deadlocks before every push — this eliminates most losing paths.
+- **Decide which crate goes to which target first** — figure out which target each crate should end up on before you start moving anything. Assigning crates to the wrong targets wastes many moves.
+- **Clear access paths, not just targets** — a crate blocking a hallway must be moved early even if it is not near any target yet. Experienced solvers plan the routing before the placement.
+- **Keep the keeper's walking path short** — unnecessary movement wastes moves. Prefer pushing sequences where the keeper naturally ends up behind the next crate to push.
+- **Watch for frozen groups** — if pushing a crate creates an immovable block (two crates and a wall) that covers an unclaimed target, the position is hopeless. Abandon that plan.
+- **Work backwards for hard levels** — imagine pulling crates away from targets instead of pushing them. This reveals which positions are reachable and which paths are impossible.
 
 ## Engines & current best play
 

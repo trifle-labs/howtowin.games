@@ -1,6 +1,6 @@
 # Crazyhouse
 
-> Chess variant where captured pieces become reusable — unsolved.
+> A chess variant where captured pieces go into your pocket to drop later. Unsolved.
 
 | Field | Value |
 |-------|-------|
@@ -20,22 +20,20 @@
 
 ## Description
 
-Crazyhouse is a chess variant inspired by Bughouse: when you capture an enemy
-piece you keep it in reserve, and on a later turn you may **drop** it onto any
-empty square (with restrictions on pawns) instead of moving a piece on the
-board. The added reserve state explodes the position space, and the game is
-far from solved.
+Crazyhouse is a chess variant inspired by Bughouse (a fast team chess game).
+When you capture an enemy piece, you keep it in your reserve. On a later turn,
+you can **drop** that piece onto any empty square (pawns have some
+restrictions) instead of moving a piece already on the board. Having pieces in
+reserve makes the game much more complex than regular chess, and it is far
+from solved.
 
 ## Rules
 
-1. Same setup, movement, and check/checkmate rules as orthodox chess.
-2. When you capture an opposing piece, it is placed in your **reserve** as one
-   of your colour (promoted pawns revert to pawns when captured).
-3. On any turn instead of moving a piece, you may **drop** a reserve piece on
-   any empty square subject to: pawns may not be dropped on the 1st or 8th
-   rank; a dropped pawn cannot promote on the drop move.
-4. A drop that delivers checkmate is legal (no "no drop-mate" rule).
-5. Win by checkmate; draws by stalemate, threefold, and the 50-move rule apply.
+1. Same starting setup, piece movement, and check/checkmate rules as regular chess.
+2. When you capture an enemy piece, it goes into your **reserve** as one of your own pieces (promoted pawns return to being regular pawns when captured).
+3. On any turn, instead of moving a piece, you may **drop** a piece from your reserve onto any empty square, with these limits: pawns cannot be dropped on the 1st or 8th row; a dropped pawn cannot promote on the same turn it is dropped.
+4. You can deliver checkmate with a drop (there is no rule against it).
+5. Win by checkmate. Draws happen by stalemate, threefold repetition, or the 50-move rule.
 
 ## Solution status
 
@@ -44,13 +42,13 @@ chess, and engine strength has only recently caught up with top humans.
 
 ## Consensus on optimal play
 
-Heuristics from strong human and engine play:
+Tips from strong human and engine play:
 
-- **Pieces in hand are worth more than pieces on the board** — top players will sacrifice material on the board to gain a piece in reserve that can be dropped with tempo.
-- **Knights are king** — knights are disproportionately valuable because drop-checks with knights are uncontested by interposition and can fork the king and queen.
-- **Pawn breaks beat pawn structure** — opening up files to drop pieces matters more than long-term structural weaknesses.
-- **The king must run** — castling is common but the king often walks to safety along the back rank because dropped pieces can fork castled kings easily.
-- **First-move advantage is large** — practical statistics and engine self-play show a clear White edge, though no proof exists.
+- **Pieces in your hand are worth more than pieces on the board** — top players will sacrifice pieces on the board to gain a piece in reserve that they can drop with an attack.
+- **Knights are king** — knights are extra valuable because dropping a knight to give check cannot be blocked (you cannot put a piece between the knight and the king), and knights can fork the king and queen.
+- **Opening files with pawn moves matters more than pawn structure** — creating open files to drop pieces into is more important than worrying about long-term pawn weaknesses.
+- **The king must run** — castling is common, but the king often has to keep moving along the back row to safety because dropped pieces can easily fork a castled king.
+- **First-move advantage is large** — statistics and engine self-play show a clear advantage for White, though no proof exists.
 
 ## Engines & current best play
 

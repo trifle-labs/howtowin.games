@@ -1,7 +1,6 @@
 # Breakthrough
 
-> A modern racing game with simple rules — weakly solved on small boards, but
-> the standard 8×8 game remains open.
+> A modern racing game with simple rules. Solved on small boards, but the standard 8×8 game is still open.
 
 | Field | Value |
 |-------|-------|
@@ -20,13 +19,13 @@
 
 ## Description
 
-Invented by Dan Troyka in 2000 (it won a 2001 design competition). Played on a
-rectangular board — standard is 8×8. Each player has two rows of identical
-pieces. A piece moves one square straight or diagonally forward; it may **capture
-only diagonally** forward. There are no other captures and pieces never move
-backward. The first player to reach the opponent's back rank — or to capture all
-enemy pieces — wins. Draws are impossible: material is monotonically depleted and
-someone must break through.
+Breakthrough was invented by Dan Troyka in 2000 (it won a design competition in
+2001). It is played on a rectangular board — usually 8×8. Each player has two
+rows of identical pieces. A piece moves one square forward (straight or
+diagonally) and can **only capture diagonally** forward. Pieces never move
+backward. The first player to reach the opponent's back row — or to capture all
+of the opponent's pieces — wins. Draws are impossible: pieces only get removed,
+and someone must eventually break through.
 
 ## Solution status
 
@@ -40,11 +39,11 @@ strong programs play it well.
 
 ## Consensus on optimal play
 
-- **Advance on a broad front, not a single file** — pieces can only capture diagonally, so a piece advancing in a single column can be blocked by a lone defender directly ahead; spreading multiple pieces across files creates threats the opponent cannot all cover.
-- **Create a passed pawn equivalent** — a piece with no enemy piece that can diagonally intercept it on the way to the back rank is effectively won; creating such a "passer" while denying the opponent the same is the main strategic goal.
-- **Trade advantageously to open a lane** — a capture is always diagonal, never forward; use captures to remove pieces that would block or deflect your advance, choosing exchanges that leave your own pieces better positioned to race.
-- **Tempo is decisive in races** — both players simultaneously advance; counting how many moves each side needs to promote a piece (the "race count") tells you whether you can afford to spend a move on a capture or must push straight ahead.
-- **Use wing pieces to threaten diversionary attacks** — an advance on the flank forces the opponent to defend it, which can free up a path in the centre for your decisive breakthrough.
+- **Advance on a broad front, not in one column** — since you can only capture diagonally, a piece moving straight forward in one column can be blocked by a single enemy piece directly ahead. Spreading your attack across multiple columns creates threats the opponent cannot block all at once.
+- **Create a piece that cannot be stopped** — a piece with no enemy piece that can diagonally intercept it on the way to the back row is as good as a win. Creating such a "runner" while stopping the opponent from making one is the main strategic goal.
+- **Trade pieces to open a path** — captures are always diagonal. Use them to remove pieces that block your advance. Choose trades that leave your pieces in a better position to race forward.
+- **Count moves in a race** — both players advance at the same time. Count how many moves each side needs to get a piece across. This tells you whether you can afford to capture or must push straight ahead.
+- **Attack from the sides to distract** — advancing on the flank forces the opponent to defend there, which can open up a path in the middle for your winning breakthrough.
 
 ## Engines & current best play
 

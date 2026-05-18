@@ -1,7 +1,6 @@
 # Wolves and Sheep
 
-> A draughts-style asymmetric racing game on a small chessboard — solvable by
-> hand.
+> An asymmetric game where one wolf tries to get past four sheep on a chessboard. It can be solved by hand.
 
 | Field | Value |
 |-------|-------|
@@ -20,21 +19,15 @@
 
 ## Description
 
-A traditional asymmetric pursuit game, often shown on an 8×8 chessboard with
-diagonal moves only. One wolf tries to slip past four sheep advancing in a
-phalanx. It is a classic teaching example of how a coordinated weak group beats
-a stronger lone piece — like [Fox and Geese](fox-and-geese.md) in miniature.
+A traditional asymmetric pursuit game, usually played on an 8x8 chessboard with diagonal moves only. One wolf tries to slip past four sheep that advance as a group. It is a classic example of how a coordinated group of weaker pieces can defeat a single stronger piece.
 
 ## Rules
 
-1. On the black squares of an 8×8 board, place **4 sheep** on the black squares
-   of one back rank and **1 wolf** on a black square of the opposite back rank.
-2. Pieces move like draughts men: one square diagonally per turn.
-3. Sheep may only move **forward** (toward the wolf's home rank); the wolf may
-   move forward or backward (any diagonal).
-4. The **wolf** wins by reaching the sheep's home rank. The **sheep** win by
-   trapping the wolf so it cannot move.
-5. No captures.
+1. On the black squares of an 8x8 board, place 4 sheep on the black squares of one back row and 1 wolf on a black square of the opposite back row.
+2. Pieces move like checkers pieces: one square diagonally per turn.
+3. Sheep may only move forward (toward the wolf's starting side). The wolf may move forward or backward along any diagonal.
+4. The wolf wins by reaching the sheep's starting side. The sheep win by trapping the wolf so it cannot move.
+5. No captures — pieces stay on the board.
 
 ## Solution status
 

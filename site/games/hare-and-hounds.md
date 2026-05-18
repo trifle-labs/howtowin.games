@@ -1,7 +1,6 @@
 # Hare and Hounds
 
-> A small asymmetric pursuit game — fully solved by exhaustive search; with
-> correct play the hounds can confine the hare.
+> A small chase game on a board of 11 points. The three hounds can always trap the hare if they play correctly.
 
 | Field | Value |
 |-------|-------|
@@ -20,13 +19,7 @@
 
 ## Description
 
-Played on a small board of 11 points connected by lines. Three **hounds** start
-at one end, a single **hare** in the middle. Hounds may move along lines
-vertically or forward but never backward (toward their own side); the hare moves
-along any line in any direction. The hounds win by trapping the hare so it
-cannot move; the hare wins by slipping past all three hounds, or — in the
-standard rule set — if the hounds make a number of non-advancing "side" moves in
-a row (a stalling rule that prevents the hounds from playing for a draw).
+Played on a small board of 11 points connected by lines. Three hounds start at one end, a single hare starts in the middle. Hounds may move along lines up/down or forward but never backward (toward their own side). The hare may move along any line in any direction. The hounds win by trapping the hare so it cannot move. The hare wins by slipping past all three hounds, or (in some rule sets) if the hounds make too many sideways moves in a row (a stalling rule that keeps the hounds from playing for a draw).
 
 ## Solution status
 
@@ -39,11 +32,11 @@ is used. **[verify]** the precise value against a primary combinatorial analysis
 
 ## Consensus on optimal play
 
-- **Hounds: advance as an unbroken wall** — the three hounds must maintain contact (no gaps between adjacent pieces) as they advance; a single gap in the line lets the hare slip through and escape.
-- **Hounds: don't stall on side moves** — stalling rules prevent the hounds from playing indefinitely without advancing; every move should bring the formation one step closer to the end of the board, otherwise the hare wins on the stalling count.
-- **Hounds: coordinate the outer pair** — the two edge hounds must keep pace with the centre hound; letting an edge hound fall behind opens a flank lane for the hare.
-- **Hare: immediately probe the flanks** — the hare cannot wait in the middle while the hounds advance; sprint toward an edge and force the outer hound to make a choice between closing and leaving a gap.
-- **Hare: provoke asymmetry** — move in ways that require two different hounds to respond, making it impossible for both to act without one falling out of formation.
+- **Hounds: advance as an unbroken wall** — the three hounds must stay in contact (no gaps between pieces) as they advance. A single gap in the line lets the hare slip through and escape.
+- **Hounds: don't waste moves** — stalling rules keep the hounds from playing forever without advancing. Every move should bring the formation one step closer to the end of the board, or the hare wins on the stalling count.
+- **Hounds: coordinate the outer pair** — the two edge hounds must keep pace with the center hound. Letting an edge hound fall behind opens a lane for the hare.
+- **Hare: test the edges immediately** — the hare cannot wait in the middle while the hounds advance. Sprint toward an edge and force the outer hound to choose between closing and leaving a gap.
+- **Hare: make the hounds move unevenly** — move in ways that require two different hounds to respond, making it impossible for both to act without one falling out of formation.
 
 ## Engines & current best play
 

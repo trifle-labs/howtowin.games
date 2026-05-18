@@ -1,6 +1,6 @@
 # TAMSK
 
-> The GIPF-project's time-pressure game — pieces are sand-timers that "run out."
+> A game where the playing pieces are sand-timers that run out of sand over time. It has not been solved.
 
 | Field | Value |
 |-------|-------|
@@ -15,25 +15,19 @@
 | Solved by | — |
 | State-space complexity | Small board, large timing state |
 | Game-tree complexity | Moderate |
+| **Playable** | tamsk |
 
 ## Description
 
-TAMSK (Kris Burm, 1998) is the GIPF-project's most unusual entry: each "piece"
-is a small **sand-timer**. The state of the game depends on which side of each
-timer is up, encoding how much sand has fallen. Moves must be made within the
-time the relevant timer still has remaining.
+TAMSK (Kris Burm, 1998) is the most unusual game in the GIPF project. Each playing piece is a small sand-timer. The state of the game depends on how much sand has fallen in each timer. A move must be made while the relevant timer still has sand remaining.
 
 ## Rules
 
-1. Board: hexagonal grid of cells; each cell has a fixed maximum capacity.
-2. Each player owns a set of small sand-timers (three colours of timers,
-   varying sand durations).
-3. On a turn, the player picks one of their timers from the board, flips it
-   onto an empty cell — the cell's timer-count constraint must be respected —
-   and the sand starts running.
+1. Board: a hexagonal grid of cells, each with a fixed maximum number of timers it can hold.
+2. Each player owns a set of small sand-timers in three colors, each with different sand durations.
+3. On a turn, the player picks one of their timers from the board, flips it onto an empty cell (the cell's timer limit must be respected), and the sand starts running.
 4. Once a timer runs out of sand, it can no longer be moved.
-5. The player who can no longer legally move a timer loses; final scoring is
-   on the number of timers each player has used to claim "territory."
+5. The player who can no longer make a legal move loses. Final scoring is based on how many timers each player has used to claim territory.
 
 ## Solution status
 
@@ -42,11 +36,11 @@ relative to other GIPF entries, and there is no published solving result.
 
 ## Consensus on optimal play
 
-- **Prioritise long-duration timers in contested cells** — timers with more remaining sand stay mobile longer; placing them on cells that will be fought over maintains flexibility while short-lived timers lock down peripheral positions.
-- **Freeze opponent timers early** — moving so that an opponent's timers run dry in poor positions permanently removes them from play; deliberately contest the cells opponents must visit to keep timers active.
-- **Do not flip timers unnecessarily** — each flip uses the timer's remaining sand; unnecessary moves waste that sand and may strand a timer in the wrong location.
-- **Corner cells are low-risk anchors** — cells on the periphery of the hex board are contested by fewer approaches; placing a medium-duration timer there early secures territory at minimal future flip-cost.
-- **Track the sand state, not just positions** — the total amount of sand remaining across your timers is a resource; the player who runs out of movable timers first loses, so managing sand longevity is the primary metric.
+- **Use long-duration timers in contested spots** — timers with more sand left stay moveable longer. Place them where fighting will happen, while using short-lived timers to lock down less important positions.
+- **Freeze the opponent's timers early** — force the opponent's timers to run out of sand in bad positions, permanently removing them from play. Fight for the cells the opponent needs to keep their timers active.
+- **Do not flip timers needlessly** — each flip uses up some of the timer's remaining sand. Unnecessary flips waste sand and may leave a timer stuck in the wrong place.
+- **Corner cells are safe anchors** — edge cells on the hexagonal board are attacked from fewer directions. Placing a medium-duration timer there early secures territory with minimal future flipping.
+- **Track sand remaining, not just positions** — the total sand left across all your timers is a resource. The player who runs out of moveable timers first loses, so managing sand is your top priority.
 
 ## Engines & current best play
 

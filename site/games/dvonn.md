@@ -1,7 +1,6 @@
 # DVONN
 
-> A stacking game with three "DVONN" pieces that anchor the board — unsolved
-> but a frequent computer-game research target.
+> A stacking game where three red "DVONN" pieces anchor the board. Unsolved, but a common target for game AI research.
 
 | Field | Value |
 |-------|-------|
@@ -20,25 +19,18 @@
 
 ## Description
 
-DVONN (Kris Burm, 2001) is the third GIPF-project game. Two players have
-single-coloured pieces (black and white); a small set of red **DVONN pieces**
-anchor groups of pieces. The board shrinks as orphaned stacks (groups not
-connected via a DVONN piece) fall off.
+DVONN (by Kris Burm, 2001) is the third game in the GIPF project. The two
+players have pieces of their own color (black and white). A small set of red
+**DVONN pieces** act as anchors for stacks of pieces. The board shrinks as
+groups of stacks that are not connected to a DVONN piece fall off.
 
 ## Rules
 
-1. Board: 49-cell hexagonal grid.
-2. **Placement phase**: starting with the DVONN pieces (red), then alternating
-   their own colours, players place all pieces onto empty cells until the board
-   is filled.
-3. **Movement phase**: players alternate moving a stack they control on top of
-   (= same colour topping the stack). A stack moves exactly the number of
-   cells equal to its height, in any of six directions, and must land on
-   another stack (cannot move to an empty cell).
-4. After every move, any stack not connected (via stacks) to a DVONN piece
-   falls off the board.
-5. A player who cannot move passes; once both pass, the game ends and the
-   player with the **taller controlled total height** wins.
+1. Board: a hexagonal grid with 49 cells.
+2. **Placement phase**: First, the red DVONN pieces are placed. Then players take turns placing their own colored pieces on empty cells until the board is full.
+3. **Movement phase**: Players take turns moving a stack they control (a stack is controlled by whoever has their color on top). A stack moves exactly as many cells as its height, in any of six directions, and must land on top of another stack (it cannot move to an empty cell).
+4. After every move, any stack that is not connected (through other stacks) to a DVONN piece falls off the board.
+5. A player who cannot move passes. When both players pass in a row, the game ends and the player with the **greater total height of their controlled stacks** wins.
 
 ## Solution status
 
@@ -48,11 +40,11 @@ solution exists.
 
 ## Consensus on optimal play
 
-- **Control DVONN piece proximity** — every stack on the board must stay connected to a DVONN piece; placing your stacks to maintain and threaten connection while forcing opponent stacks to become isolated is the dominant strategic theme.
-- **In the placement phase, surround DVONN pieces with your colour** — stacks near a DVONN piece are harder to isolate; placing your pieces in a loose ring around the DVONN pieces in the placement phase gives you reliable anchors for the movement phase.
-- **Build tall stacks before moving, not during** — a tall stack is harder to isolate (it moves a long distance and lands on many targets), but building height requires sacrificing short stacks by merging early; identify which merges build height efficiently without leaving isolated pieces.
-- **Cut opponent connection lines** — moving a stack between an opponent stack and the nearest DVONN piece severs that stack's lifeline; isolation threats force the opponent into defensive moves that waste their tempo.
-- **Prefer to have the last move in tight endgames** — when most stacks are large, the player who can make the last controlling move to absorb the remaining DVONN-connected stacks often wins; parity counting matters in the late game.
+- **Control access to the DVONN pieces** — every stack must stay connected to a DVONN piece. Keeping your stacks connected while cutting off your opponent's stacks from the DVONN pieces is the main strategic goal.
+- **During placement, surround the DVONN pieces with your color** — stacks near a DVONN piece are harder to isolate. Placing your pieces in a loose ring around the DVONN pieces during setup gives you reliable anchors for the movement phase.
+- **Build tall stacks before moving, not while moving** — tall stacks are harder to isolate (they move farther and land on more targets), but building height requires merging short stacks early. Figure out which merges build height efficiently without leaving isolated pieces.
+- **Cut the opponent's connections to DVONN pieces** — moving a stack between an opponent stack and the nearest DVONN piece cuts that stack's lifeline. Threatening to isolate pieces forces the opponent into defensive moves that waste their turn.
+- **Try to have the last move in tight endgames** — when most stacks are large, the player who makes the last key move to absorb the remaining DVONN-connected stacks often wins. Counting turns matters in the late game.
 
 ## Engines & current best play
 

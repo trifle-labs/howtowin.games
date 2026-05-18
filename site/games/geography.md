@@ -1,7 +1,6 @@
 # Generalized Geography
 
-> The textbook PSPACE-complete game — a directed-graph reachability game whose
-> complexity is the gold standard for "solved games are hard."
+> A word game played on a network of connected points. Figuring out who wins is extremely hard for large networks.
 
 | Field | Value |
 |-------|-------|
@@ -20,22 +19,18 @@
 
 ## Description
 
-The motivating example is the children's game in which players alternate
-naming places, each starting with the last letter of the previous one; "places
-already used" are forbidden. Generalised on a directed graph, this becomes the
-standard model for hardness reductions in combinatorial game theory.
+The real-life version is the children's game where players take turns naming places — each new place must start with the last letter of the previous one, and you cannot repeat a place already used. In the general version, this is played on a directed graph (a network of points connected by arrows). A token sits on a starting point. Players take turns moving the token along an arrow to a new point that has not been visited before. The player who cannot move loses.
 
 ## Rules
 
-1. A directed graph G and a starting vertex v are given.
-2. A token starts at v. Players alternate moving the token along a directed
-   edge to an unvisited vertex.
-3. The player unable to move loses (normal play).
+1. A directed graph (a network of points connected by one-way arrows) and a starting point are given.
+2. A token starts at the starting point. Players take turns moving the token along an arrow to a point that has not been visited before.
+3. The player who cannot move loses.
 
 Variants:
 
-- **Vertex Geography** — once a vertex is visited, it cannot be re-entered.
-- **Edge Geography** — once an edge is traversed, it cannot be re-used.
+- **Vertex Geography** — once a point has been visited, it cannot be visited again.
+- **Edge Geography** — once an arrow has been traveled, it cannot be used again.
 
 ## Solution status
 
@@ -48,11 +43,11 @@ others). The undirected variant differs sharply: see
 
 ## Consensus on optimal play
 
-- **Move to vertices with the fewest outgoing edges** — restricting the opponent's future options is the core heuristic; a vertex with degree 1 is essentially a trap to push the opponent toward.
-- **Force the opponent into a dead-end path** — count the length of reachable chains; if you can steer into a path of odd length, the opponent faces the last move and loses.
-- **Bipartite structure is decisive** — on bipartite directed graphs, the first player loses if and only if the starting vertex is matched in every maximum matching; checking this is the efficient algorithm for those cases.
-- **Cut vertices are key resources** — moving through a cut vertex seals off a subgraph; identify which player benefits from that subgraph being isolated before committing.
-- **For small instances, retrograde analysis is the exact solver** — work backwards from positions with no moves (losses for the mover) to classify every reachable position as W or L.
+- **Move to points with the fewest outgoing arrows** — limiting the opponent's future options is the key idea. A point with only one outgoing arrow is like a trap door for the opponent.
+- **Force the opponent into a dead-end path** — count how long the available chains of moves are. If you can steer into a path with an odd number of moves, the opponent will face the last move and lose.
+- **On certain graphs, the first player loses if the starting point is matched in every possible pairing** — for special types of graphs (bipartite graphs), checking the maximum matching tells you the winner.
+- **Cut points are key** — moving through a point that connects two otherwise separate parts of the graph seals off that part. Figure out which player benefits from that part being cut off before committing.
+- **For small graphs, work backward from the end** — start from positions where no moves are possible (a loss for the player whose turn it is) and mark every reachable position as a win or loss.
 
 ## Engines & current best play
 

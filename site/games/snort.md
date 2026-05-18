@@ -1,7 +1,6 @@
 # Snort
 
-> Col's companion game — same map-colouring setup, opposite adjacency rule, much
-> wilder values.
+> A map-coloring game where neighboring regions must share the same color instead of avoiding each other's color.
 
 | Field | Value |
 |-------|-------|
@@ -20,10 +19,7 @@
 
 ## Description
 
-Played on a map like [Col](col.md), but with the *opposite* adjacency rule: one
-player colours regions blue, the other red, and **adjacent regions must not
-have *different* colours** — neighbours may share a colour but cannot clash. A
-player unable to move loses.
+Played on a map like Col, but with the opposite rule: one player colors regions blue, the other red, and neighboring regions must not have different colors — neighbors may share a color but cannot clash. A player unable to move loses.
 
 ## Solution status
 
@@ -41,11 +37,11 @@ global theory — it is the harder twin.
 
 ## Consensus on optimal play
 
-- **Temperature guides move priority** — Snort positions are often "hot" (high temperature), so always respond to your opponent's most valuable (hottest) available region; letting them take the hottest spot is a large loss.
-- **Claim large isolated regions early** — a region with no adjacency constraints is worth its size outright; grab these before they become contested.
-- **Force clashes on opponent's side** — if you can colour two mutually adjacent regions the same colour as your opponent's pieces, you deny them both squares.
-- **Evaluate by disjunctive sum** — when the map splits into independent components, compute each component's CGT value separately and sum; optimal play then targets the hottest remaining component.
-- **Star (∗) positions are dangerous** — a Snort position with value ∗ is a second-player win regardless of who goes next; recognise these gadget shapes and avoid gifting them to your opponent.
+- **Play in the most valuable region first** — Snort positions often have one region that is much more valuable than the others. If you leave the most valuable region for the opponent, you will likely lose.
+- **Claim large isolated regions early** — a region with no neighboring constraints is valuable for its size alone. Take these before they become contested.
+- **Force clashes on the opponent's side** — if you can color two neighboring regions the same color as the opponent's pieces, you deny them both spots.
+- **Split the map into independent parts** — when the board divides into separate areas, think about each area on its own. Play in the area where you have the most to gain.
+- **Watch for second-player-win positions** — some board shapes mean that whoever moves next (even if it is the opponent) will force a win. Learn to recognize these shapes and avoid creating them for your opponent.
 
 ## Engines & current best play
 

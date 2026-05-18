@@ -1,8 +1,6 @@
 # Mock Wythoff
 
-> A Wythoff-like two-pile game with a slightly modified diagonal move — its
-> P-positions are conjectured to follow a Beatty-style sequence, but the
-> general theory is incomplete.
+> A two-pile game like Wythoff but with a slightly different diagonal move. Its losing positions probably follow a Beatty pattern, but the full theory is not complete.
 
 | Field | Value |
 |-------|-------|
@@ -21,20 +19,14 @@
 
 ## Description
 
-Mock Wythoff modifies the diagonal move of [Wythoff's game](wythoffs-game.md):
-where Wythoff allows removal of the same number from both piles, Mock Wythoff
-allows the diagonal move only when the two amounts are nearly but not exactly
-equal (or restricts diagonal moves to a parity class). Different authors define
-"mock Wythoff" with small variations; specific rule statements differ
-**[verify]**.
+Mock Wythoff is a variation of [Wythoff's game](wythoffs-game.md) that changes the diagonal move. In regular Wythoff you can remove the same number from both piles; in Mock Wythoff the diagonal move only works when the two piles are close but not exactly equal (or is restricted in some other way). Different sources define "Mock Wythoff" in slightly different ways, so **[verify]** the exact rules for the version you are playing.
 
 ## Rules
 
-1. Two piles of tokens, sizes (a, b).
-2. On your turn, pick any one of:
-   - Remove any positive number from a single pile (Nim move);
-   - Remove (k, k+1) tokens (or some other diagonal-with-offset move),
-     depending on the variant.
+1. Two piles of tokens, with sizes (a, b).
+2. On your turn, you can do one of these:
+   - Remove any number of tokens from a single pile (like regular Nim).
+   - Remove (k, k+1) tokens (one more from the larger pile), or some other offset diagonal move, depending on the variant.
 3. The player who takes the last token wins (normal play).
 
 ## Solution status
@@ -48,11 +40,11 @@ to this archive's knowledge, been published; treat detailed value claims as
 
 ## Consensus on optimal play
 
-- **Compute P-positions by induction** — for any specific rule set, enumerate P-positions from (0,0) upward: (a,b) is a P-position if no move from (a,b) lands on a P-position; the pattern becomes recognisable quickly for small piles.
-- **In Wythoff-like games, steer toward the P-set** — the P-positions in Mock Wythoff form a sparse set, likely following a Beatty-sequence pattern similar to Wythoff's (floor(nφ), floor(nφ²)); from a winning position, any move that reaches a P-position wins.
-- **The offset diagonal move is the key tactical tool** — the modified diagonal (e.g., remove (k, k+1)) is the move that differs from ordinary Nim; use it to reach specific pile-difference targets that land on P-positions.
-- **Pile differences matter** — in Wythoff-family games, the difference |a − b| between pile sizes plays a role analogous to a pile count in regular Nim; keep track of differences as you enumerate P-positions.
-- **When in doubt, enumerate small cases and look for periodicity** — the P-position table for reasonable pile sizes is quickly computed; once the pattern is recognised, it serves as a decision rule for the rest of the game.
+- **Find losing positions by working upward from (0,0)** — for any specific set of rules, start from the smallest piles and work up. A position (a,b) is a losing spot if no possible move from it lands on another losing spot. The pattern becomes clear quickly for small piles.
+- **Aim for the losing set** — the losing positions in Mock Wythoff form a sparse set, probably following a Beatty pattern similar to Wythoff's (using the golden ratio). From a winning position, any move that reaches a losing position wins.
+- **The offset diagonal move is your special tool** — the modified diagonal (like removing (k, k+1)) is the move that makes this game different from regular Nim. Use it to reach specific pile-difference targets that are losing positions.
+- **Pay attention to the difference between piles** — in Wythoff-like games, the difference between the two pile sizes |a - b| matters in a way similar to how pile size matters in regular Nim. Keep track of differences as you figure out the losing positions.
+- **When unsure, work out small cases and look for patterns** — the table of losing positions for reasonable pile sizes is quick to compute by hand. Once you see the pattern, it will guide you for the rest of the game.
 
 ## Engines & current best play
 

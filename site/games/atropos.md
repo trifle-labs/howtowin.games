@@ -1,7 +1,6 @@
 # Atropos
 
-> A Sperner-lemma-flavoured colouring game — its decision problem is
-> PSPACE-complete.
+> A coloring game based on a famous math idea (Sperner's lemma). Proven to be PSPACE-complete, which means it is very hard to solve in general.
 
 | Field | Value |
 |-------|-------|
@@ -20,21 +19,19 @@
 
 ## Description
 
-Atropos is a board game inspired by **Sperner's lemma**. The board is a
-triangulated triangle whose corner vertices are pre-coloured 1, 2, 3 (one each).
-Players alternately colour internal vertices subject to constraints, and the
-losing player is the one forced to complete a tricoloured (1-2-3) triangle —
-Sperner's lemma guarantees such a triangle eventually exists.
+Atropos is a board game based on a math idea called **Sperner's lemma**. The
+board is a triangle made of many smaller triangles, like a sliced-up pizza.
+The three corner dots are pre-colored 1, 2, and 3 (one color each). Players
+take turns coloring the inside dots, following certain rules. The player who
+is forced to be the first to complete a triangle that contains all three
+colors (1-2-3) loses. Sperner's lemma says that such a triangle is guaranteed
+to show up eventually.
 
 ## Rules
 
-1. A triangular grid (a triangulation of a large triangle) is given, with each
-   corner labelled 1, 2, 3 and edge vertices restricted to the two
-   adjacent-corner colours.
-2. Players alternate colouring an internal vertex with one of {1, 2, 3}; the
-   first move colours any vertex adjacent to the last move. (Atropos enforces
-   a chain rule: each move must be next to the previous move.)
-3. A player who is **forced to create a tricoloured triangle** loses.
+1. The board is a large triangle made of smaller triangles. The three corner dots are labeled 1, 2, and 3. Dots along the edges can only use the two colors of the corners they sit between.
+2. Players take turns coloring an inside dot with one of the colors (1, 2, or 3). Each move must be next to the previous move (you have to color a dot that touches the last colored dot).
+3. A player who is **forced to create a triangle that has all three colors** loses.
 
 ## Solution status
 
@@ -45,11 +42,11 @@ in general.
 
 ## Consensus on optimal play
 
-- **Avoid completing the third colour in a near-Sperner triangle** — whenever a triangle already shows two of the three colours on its vertices, colouring the third vertex with the missing colour hands your opponent the losing condition; scan for such triangles before every move.
-- **Force your opponent into constrained positions** — because each move must be adjacent to the previous one (the chain rule), steer the chain toward dense regions where your opponent will have fewer safe colour choices.
-- **Colour ambiguously where possible** — choosing a colour that does not immediately threaten any near-complete Sperner triangle maximises your future options and minimises risk.
-- **Control the last few uncoloured vertices** — the endgame typically funnels down to a small cluster; the player who can force their opponent to colour the final triangle-completing vertex wins; work backward from likely endgame configurations.
-- **PSPACE-hardness means no simple heuristic suffices on large boards** — on small (≤ size-3 or size-4) triangulations, exhaustive backward induction is feasible and should be used; for larger boards there is no known efficient strategy.
+- **Avoid finishing a triangle with all three colors** — whenever a triangle already has two of the three colors on its corners, coloring the third corner with the missing color makes you lose. Look for these triangles before every move.
+- **Force your opponent into tight spots** — because each move must be next to the previous one, steer the chain of moves toward crowded areas where your opponent will have fewer safe color choices.
+- **Choose safe colors when you can** — picking a color that does not complete any triangle keeps your options open and reduces risk.
+- **Control the last few empty dots** — near the end of the game, the action comes down to a small cluster. The player who can force the opponent to complete the final triangle wins. Think ahead about how the end will play out.
+- **On small boards, you can calculate every possibility** — on small triangles (up to size 3 or 4), you can work out every possible move. On larger boards, there is no known shortcut strategy.
 
 ## Engines & current best play
 

@@ -1,7 +1,6 @@
 # Nim
 
-> The foundational solved game: a complete mathematical theory has been known
-> since 1901.
+> The classic solved game. A complete mathematical theory has been known since 1901.
 
 | Field | Value |
 |-------|-------|
@@ -20,11 +19,7 @@
 
 ## Description
 
-Several heaps of objects are placed between two players. On a turn a player
-removes any positive number of objects from a single heap. Under the
-[normal play convention](../lexicon/README.md#normal-play-convention) the
-player who takes the last object wins; the [misère](../lexicon/README.md#misère-play)
-variant is treated separately ([Misère Nim](misere-nim.md)).
+Several piles of objects are placed between two players. On your turn you remove any number of objects (at least one) from a single pile. Under the normal play rule, the player who takes the last object wins. The version where taking the last object makes you lose is treated separately ([Misère Nim](misere-nim.md)).
 
 ## Solution status
 
@@ -41,11 +36,11 @@ Nim is in effect the universal impartial game.
 
 ## Consensus on optimal play
 
-- **XOR to zero** — compute the nim-sum (bitwise XOR of all heap sizes); the position is a second-player win iff the nim-sum is 0; otherwise move to make it 0.
-- **Reduce the largest heap** — when multiple heaps are large, a winning move often targets the largest heap to restore nim-sum 0, especially in end-game positions.
-- **Single heap is trivial** — with one heap left, take everything (normal play) or leave one object (misère).
-- **Misère exception** — under misère play, use the same nim-sum strategy except when all heaps are size ≤ 1; in that case leave an odd number of heaps.
-- **The Sprague–Grundy lens** — any impartial position is equivalent to a single Nim heap of some Grundy value; combine components by XOR-ing their Grundy values.
+- **Make the XOR of all pile sizes equal to 0** — take the pile sizes, write them in binary (base-2), and compute their XOR (a special math operation where bits cancel if they appear twice). If the result is 0, the position is a loss for the player whose turn it is. If it is not 0, make a move that brings it to 0.
+- **When piles are large, target the biggest one** — a winning move often involves taking from the largest pile to bring the XOR back to 0, especially near the end of the game.
+- **One pile is easy** — with only one pile left, just take everything (in normal play) or leave one object (in misere play).
+- **Misere exception** — in misere play (where taking the last object loses), use the same XOR strategy except when all piles are size 1 or smaller. In that case, leave an odd number of piles instead.
+- **The big idea: any impartial game can be treated as Nim** — a famous theorem (Sprague-Grundy) says that every impartial game with no luck or hidden information is equivalent to a single pile of Nim of some size. To combine two games, just XOR their equivalent pile sizes.
 
 ## Engines & current best play
 

@@ -1,7 +1,6 @@
 # Gonnect
 
-> A Go-based connection game on the Go board — ultra-weakly solved as a
-> first-player win by strategy stealing.
+> A combination of Go and the connection game Hex. The first player can always win, though we do not know the winning strategy.
 
 | Field | Value |
 |-------|-------|
@@ -20,21 +19,14 @@
 
 ## Description
 
-Gonnect (João Pedro Neto, 2000) plays on a Go board and uses Go's capture rules,
-but with a **Hex-style connection win condition**: connect any two opposite
-sides of the board. Combining Go captures with a connection goal makes a game
-with rich tactics in a small ruleset.
+Gonnect (Joao Pedro Neto, 2000) is played on a Go board and uses Go's capture rules, but the winning condition comes from the game Hex: you must connect two opposite sides of the board with your stones. Combining Go-style captures with a connection goal creates a game with rich tactics from simple rules.
 
 ## Rules
 
-1. Go board (commonly 13×13 or 19×19).
-2. Players alternate placing one stone of their colour on an empty intersection,
-   subject to Go's no-suicide rule and an extra no-pass rule: a player must
-   move if any legal move exists.
-3. Standard Go captures: a group with no liberties is removed.
-4. The first player to form a connected group spanning their two opposite sides
-   (orthogonal connection) wins. If a player has **no legal move**, they win
-   (no-passing forced-no-move rule). The ko rule applies.
+1. Go board (commonly 13x13 or 19x19).
+2. Players take turns placing one stone of their color on an empty intersection. You cannot place a stone that would immediately be captured (Go's no-suicide rule), and you must always make a move if any legal move exists (no passing).
+3. Standard Go captures: a group with no empty neighboring points (liberties) is removed from the board.
+4. The first player to form a connected group of stones linking their two opposite sides (up/down or left/right) wins. If a player has no legal move, they win instead (because passing is not allowed). The ko rule (a rule that prevents repeating the same board position) applies.
 
 ## Solution status
 
@@ -45,11 +37,11 @@ The proof is non-constructive.
 
 ## Consensus on optimal play
 
-- **Build groups with multiple connection paths** — a single-path chain across the board is easily cut by captures; maintain at least two separate pathways to each side so the opponent must deal with both simultaneously.
-- **Exploit the no-pass rule** — unlike Go, you cannot pass; creating positions where any opponent move either completes your connection or puts their own group in atari can be decisive.
-- **Prioritise liberties in contested areas** — because groups can be captured Go-style, a connection attempt through a low-liberty group is fragile; connect through living or unkillable groups whenever possible.
-- **Cutting the opponent's chain is often better than extending yours** — inserting a stone that divides the opponent's path forces them to rescue one branch, letting you extend the other leg of your connection uncontested.
-- **Central stones serve both connection directions** — a stone in the middle of the board contributes to horizontal and vertical connection alike; edge stones commit to only one side.
+- **Build groups with multiple connection paths** — a single-path chain across the board is easily cut by captures. Maintain at least two separate pathways to each side so the opponent must deal with both at once.
+- **Use the no-passing rule** — unlike Go, you cannot pass. Creating positions where any move the opponent makes either completes your connection or puts their own group in danger (atari) can be decisive.
+- **Keep liberties in contested areas** — because groups can be captured Go-style, a connection line that goes through a low-liberty group is fragile. Connect through living or unkillable groups when possible.
+- **Cutting the opponent's path is often better than extending yours** — placing a stone that splits the opponent's path forces them to rescue one branch, letting you extend the other side of your connection without interference.
+- **Center stones serve both connection directions** — a stone in the middle of the board helps both horizontal and vertical connection at once. Edge stones only help one side.
 
 ## Engines & current best play
 

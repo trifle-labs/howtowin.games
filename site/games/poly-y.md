@@ -1,6 +1,6 @@
 # Poly-Y
 
-> A multi-cornered relative of Y — first-player win by strategy stealing.
+> A relative of Y with more corners. The first player can always win, proved by a strategy-stealing argument.
 
 | Field | Value |
 |-------|-------|
@@ -19,21 +19,14 @@
 
 ## Description
 
-Poly-Y generalises [Y](y.md) from a triangular board (three "corners") to
-boards with **more corners** — pentagonal, hexagonal, and beyond. The winning
-condition: own a connected group that **touches at least three different
-corner regions** of the board. As in Y and Hex, draws are structurally
-impossible.
+Poly-Y is an extension of [Y](y.md) from a triangular board (which has three "corners") to boards with **more corners** — pentagonal, hexagonal, and beyond. To win, you need to create a connected group that **touches at least three different corner regions** of the board. Like Y and Hex, draws are impossible by the rules.
 
 ## Rules
 
-1. A polygonal board (pentagon, hexagon, etc.) tiled with hexagonal cells.
-   The boundary is divided into "corner regions" — one for each corner of the
-   outer polygon.
-2. Players alternate placing one stone of their colour on any empty cell.
-3. The first player to form a single connected group of their colour touching
-   **at least three different corner regions** wins.
-4. Draws are impossible (a parity/no-pair-of-disjoint-spans argument).
+1. A polygonal board (pentagon, hexagon, etc.) made of hexagonal cells. The edge is divided into "corner regions" — one for each corner of the outer shape.
+2. Players take turns placing one stone of their colour on any empty cell.
+3. The first player to make a single connected group of their own colour that touches **at least three different corner regions** wins.
+4. Draws are impossible (a mathematical proof shows there is always a winner).
 
 ## Solution status
 

@@ -1,7 +1,6 @@
 # Score Four
 
-> Connect Four with gravity in three dimensions — four-in-a-row on a 4×4×4 grid
-> of beads on pegs.
+> Connect Four in three dimensions — four in a row on a 4x4x4 grid of beads on pegs.
 
 | Field | Value |
 |-------|-------|
@@ -20,11 +19,7 @@
 
 ## Description
 
-Played with a 4×4 array of vertical pegs. Players alternately slide a bead of
-their colour onto a peg; like [Connect Four](connect-four.md), gravity forces
-each bead to the lowest free position on its peg. The winner is the first to
-make four of their beads in a straight line anywhere in the 4×4×4 cube — along
-rows, columns, pegs, or any 2-D or 3-D diagonal.
+Played with a 4x4 grid of vertical pegs. Players take turns sliding a bead of their colour onto a peg. Like [Connect Four](connect-four.md), gravity makes each bead fall to the lowest free spot on its peg. The winner is the first to get four of their beads in a straight line anywhere in the 4x4x4 cube — along rows, columns, pegs, or any two-dimensional or three-dimensional diagonal.
 
 ## Solution status
 
@@ -42,11 +37,11 @@ reach of modern exhaustive solvers.
 
 ## Consensus on optimal play
 
-- **Centre pegs are the most powerful** — the four central pegs of the 4×4 array participate in the most winning lines (rows, columns, and 3-D diagonals); fill them early to maximise winning-line coverage.
-- **Vertical columns are dangerous to gift** — if you allow the opponent to stack many beads on a single peg uncontested, they gain a complete peg-column line easily; contest central pegs immediately.
-- **3-D diagonals are hard to see but decisive** — the four space diagonals of the cube (corner to opposite corner) are easy to miss; check all 76 winning lines after every move, not just the obvious 2-D rows.
-- **First player should impose early threats** — with correct play the first player wins; exploit first-move advantage by building a multi-direction threat cluster on the first 4–5 moves.
-- **Gravity limits flexibility** — unlike Qubic you cannot place freely; if a needed cell is not at the bottom of its peg you must wait or fill lower cells first, which the opponent can anticipate.
+- **Centre pegs are the most powerful** — the four pegs in the middle of the 4x4 grid sit on the most winning lines (rows, columns, and 3-D diagonals). Fill them early.
+- **Do not let the opponent stack a peg** — if you let the opponent stack beads on one peg without contesting it, they can easily get four in a column. Fight for the centre pegs right away.
+- **Watch the 3-D diagonals** — the four diagonals that go from one corner of the cube to the opposite corner are easy to miss. Check all 76 winning lines after every move, not just the obvious flat ones.
+- **First player should build threats early** — with correct play the first player wins. Use your first 4-5 moves to build threats pointing in multiple directions.
+- **Gravity limits where you can place** — unlike Qubic (which has no gravity), you cannot place a bead just anywhere. If the spot you need is not at the bottom of its peg, you must fill lower cells first. The opponent knows this too and can plan around it.
 
 ## Engines & current best play
 

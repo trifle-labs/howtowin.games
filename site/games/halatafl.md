@@ -1,6 +1,6 @@
 # Halatafl
 
-> Scandinavian fox-and-geese hunt game — partially analysed.
+> A Norse version of fox and geese, played on a cross-shaped board. The outcome depends on the exact rules used.
 
 | Field | Value |
 |-------|-------|
@@ -19,22 +19,15 @@
 
 ## Description
 
-Halatafl is a Norse variant of fox-and-geese — described in the 13th-century
-*Grettis saga* — played on a cross-shaped board where one player controls a
-single fox and the other controls a flock of geese trying to corner it.
+Halatafl is a Norse variant of fox-and-geese, mentioned in the 13th-century Grettis saga. It is played on a cross-shaped board where one player controls a single fox and the other controls a flock of geese trying to corner it.
 
 ## Rules
 
-1. Board: cross-shaped grid of 33 cells (the standard fox-and-geese
-   diagram).
-2. One player has 13 geese starting on the lower arm and centre; the other
-   has 1 fox starting in the upper centre.
-3. Geese move one step in any orthogonal direction (no backward in some
-   variants — **[verify]**). Geese never capture.
-4. The fox moves one step orthogonally or **jumps** an adjacent goose along
-   an orthogonal line to an empty cell beyond, removing the goose.
-5. The fox wins by reducing the geese to a number too small to trap it (e.g.,
-   fewer than 6). The geese win by surrounding the fox so it cannot move.
+1. Board: cross-shaped grid of 33 cells (the standard fox-and-geese diagram).
+2. One player has 13 geese starting on the lower arm and center; the other has 1 fox starting in the upper center.
+3. Geese move one step up, down, left, or right (no backward in some variants). Geese never capture.
+4. The fox moves one step up/down/left/right or jumps over a neighboring goose along a straight line to an empty cell beyond, removing that goose.
+5. The fox wins by reducing the geese to a number too small to trap it (e.g., fewer than 6). The geese win by surrounding the fox so it cannot move.
 
 ## Solution status
 
@@ -45,11 +38,11 @@ for an authoritative solution.
 
 ## Consensus on optimal play
 
-- **Geese: maintain a gapless advancing line** — as in classical Fox and Geese, the key is never leaving a hole in the formation that the fox can jump through; advance the line uniformly.
-- **Geese: use the flanks to contain, not just chase** — wrapping geese around the fox's sides prevents diagonal escapes and compresses its space without relying solely on a head-on push.
-- **Fox: head for the corners or flanks immediately** — the fox's best escape route is along the board edge or toward a corner where the geese's wider formation cannot follow efficiently.
-- **Fox: create forced goose moves** — a jump that captures one goose while threatening another forces the geese to react inefficiently, potentially opening a gap in their line.
-- **Geese: never leave a single isolated goose ahead of the line** — an isolated advanced goose is a free capture for the fox, reducing the flock below the trapping threshold.
+- **Geese: keep a gap-free advancing line** — as in classical Fox and Geese, the key is never leaving a hole in the formation that the fox can jump through. Advance the line evenly.
+- **Geese: use the flanks to contain, not just chase** — wrapping geese around the fox's sides prevents diagonal escapes and compresses its space.
+- **Fox: head for the corners or edges immediately** — the fox's best escape route is along the board edge or toward a corner where the geese's wider formation cannot follow efficiently.
+- **Fox: create forced goose moves** — a jump that captures one goose while threatening another forces the geese to react inefficiently, potentially opening a gap.
+- **Geese: never leave a single goose ahead of the rest** — an isolated goose that is ahead of the line is a free capture for the fox, reducing the flock below the trapping threshold.
 
 ## Engines & current best play
 

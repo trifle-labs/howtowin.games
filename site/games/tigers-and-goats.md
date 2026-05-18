@@ -1,7 +1,6 @@
 # Tigers and Goats (Bagh-Chal)
 
-> The Nepalese hunt game — strong computer analysis exists and the value is
-> widely believed to be a draw, but no fully published formal solution.
+> An asymmetric hunt game from Nepal where four tigers try to capture goats, and twenty goats try to trap the tigers. It is believed to be a draw with perfect play.
 
 | Field | Value |
 |-------|-------|
@@ -20,12 +19,7 @@
 
 ## Description
 
-Played on a 5×5 grid of points with diagonals (the traditional *aadu puli*
-board). Four **tigers** begin on the corners; the **goat** player has 20 goats,
-entered one per turn in an opening "placement" phase. Tigers move along lines and
-capture a goat by jumping it (as in draughts); goats never move during placement
-and never capture. Tigers win by capturing enough goats (commonly 5); goats win
-by immobilising all four tigers.
+Played on a 5x5 grid of points with diagonals included. Four tigers start on the corners. The goat player has 20 goats, entered one per turn in a placement phase. Tigers move along lines and capture a goat by jumping over it (like in checkers). Goats never move during placement and never capture. Tigers win by capturing enough goats (usually 5). Goats win by trapping all four tigers so they cannot move.
 
 ## Solution status
 
@@ -38,12 +32,12 @@ consensus rather than a peer-reviewed proof; treat the value as **[verify]**.
 
 ## Consensus on optimal play
 
-- **Goats: place to block jump lanes in the placement phase** — during the opening 20 goat placements, avoid ever leaving a goat on a point where a tiger can jump over it; no goat should be placed with an empty escape cell behind it on the tiger's attack line.
-- **Goats: build a dense wall to trap tigers** — cluster goats along one or two rows to progressively restrict tiger mobility; the win condition for goats is full tiger immobilisation, so systematic encirclement beats piecemeal defence.
-- **Tigers: attack immediately during placement** — tigers can move (and capture) from the very first turn; aggressive early jumps force goats into defensive placements rather than the ideal blockade pattern.
-- **Tigers: keep multiple attack directions open** — a tiger cornered with no jump available and only one move is already effectively trapped; maintain at least two possible jump lines for each tiger.
-- **Goats: 5-capture loss is a hard cliff** — once 5 goats are captured the tigers win; a goat player who tolerates 3 or 4 captures must play near-perfectly for the rest of the game; avoid any capture in the mid-game.
-- **Sacrifice placement to maintain blockade integrity** — occasionally placing a goat in a suboptimal square to patch a jump lane is correct; a live goat in a non-ideal spot is better than a gap that lets a tiger roam freely.
+- **Goats: block jump paths during placement** — during the opening 20 placements, do not leave a goat where a tiger can jump over it. Every goat should have its escape route blocked behind it along the tiger's attack line.
+- **Goats: build a dense wall to trap tigers** — cluster goats along one or two rows to slowly restrict the tigers' movement. Goats win by fully trapping the tigers, so systematic encirclement works better than scattered defense.
+- **Tigers: attack right away during placement** — tigers can move and capture from the very first turn. Aggressive early jumps force the goat player to place defensively instead of building their ideal blockade.
+- **Tigers: keep multiple attack directions open** — a tiger with no jump available and only one way to move is already nearly trapped. Keep at least two possible jump paths for each tiger.
+- **Goats: do not let the tigers capture 5 goats** — once 5 goats are captured, the tigers win. If you let 3 or 4 goats get captured, you must play nearly perfectly for the rest of the game. Avoid any capture in the mid-game.
+- **Sacrifice placement to keep the blockade intact** — placing a goat in a less-than-ideal spot to close a jump path is usually correct. A live goat in a non-ideal spot is better than a gap that lets a tiger roam free.
 
 ## Engines & current best play
 

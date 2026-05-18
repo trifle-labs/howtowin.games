@@ -1,6 +1,6 @@
 # Pocket Cube
 
-> 2×2×2 Rubik's Cube — fully solved: God's number is 11.
+> The 2x2x2 version of Rubik's Cube. Fully solved: any position can be solved in 11 moves or fewer.
 
 | Field | Value |
 |-------|-------|
@@ -19,19 +19,14 @@
 
 ## Description
 
-The Pocket Cube is the 2×2×2 version of Rubik's Cube. Its full state graph
-has only 3,674,160 positions and is small enough to be exhaustively analysed:
-every scramble is solvable in **at most 11 face-turn moves (FTM)** or 14
-quarter-turn moves (QTM).
+The Pocket Cube is the 2x2x2 version of Rubik's Cube. It has only 3,674,160 possible positions — small enough to be fully analyzed. Every scrambled cube can be solved in **at most 11 face-turn moves** (rotating a face by 90 or 180 degrees) or 14 quarter-turn moves (90-degree rotations only).
 
 ## Rules
 
-1. Puzzle: 2×2×2 cube of 8 corner cubies. Each face is one of six colours.
-2. On a move the solver rotates one of the 6 faces by 90° or 180° (face-turn
-   metric); some literature counts only 90° rotations (quarter-turn metric).
-3. The puzzle is solved when every face shows a single colour.
-4. There are no captured pieces; the solver simply applies a sequence of
-   moves.
+1. Puzzle: a 2x2x2 cube made of 8 corner pieces. Each of the six faces has its own colour.
+2. On each move, you rotate one of the 6 faces by 90 degrees or 180 degrees (called face-turn metric); some systems count only 90-degree rotations (quarter-turn metric).
+3. The puzzle is solved when every face shows a single solid colour.
+4. No pieces are captured or removed — you just apply a sequence of moves to rearrange the pieces.
 
 ## Solution status
 
@@ -40,11 +35,11 @@ quarter-turn moves (QTM).
 
 ## Consensus on optimal play
 
-- **Solve corners by layer (beginner)** — place the top layer's four corners, then orient and permute the bottom four; this takes 6–8 moves on average but is easy to learn.
-- **Ortega method** — first orient both top and bottom layer faces (OLL of each face separately, then permute corners); reduces average move count to around 6–8 moves.
-- **CLL / EG methods (advanced)** — recognize the combined top-face orientation and top/bottom permutation state in one look and apply a single algorithm; top speed-cubers execute the whole solve in one algorithmic block.
-- **Optimal solve ≤ 11 FTM** — any position can be solved in 11 or fewer face-turn moves; an optimal solver (IDA* against the complete tablebase) finds a shortest solution instantly.
-- **Pocket Cube has only corners** — unlike the 3×3, there are no edge pieces; every piece is a corner cubie, so parity issues differ and algorithms are simpler.
+- **Beginner: solve by layers** — first place the four corners of the top layer, then orient and move the bottom four into place. This takes 6-8 moves on average and is easy to learn.
+- **Intermediate: Ortega method** — orient both the top and bottom faces first (OLL, or "orientation of the last layer"), then move the corners into their correct spots. Average moves drop to about 6-8.
+- **Advanced: CLL / EG methods** — recognize the top face orientation and the top/bottom corner positions all at once, then apply one algorithm. Top speed-solvers do the whole puzzle in a single algorithm.
+- **Any position can be solved in 11 face-turn moves or fewer** — an optimal solver using the complete table of all positions finds the shortest solution instantly.
+- **Only corner pieces, no edges** — unlike the 3x3 Rubik's Cube, the Pocket Cube has no edge pieces. This makes some rules simpler and algorithms shorter.
 
 ## Engines & current best play
 

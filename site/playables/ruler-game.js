@@ -18,7 +18,7 @@ export function create(canvas) {
   canvas.height = 240;
   const W = canvas.width, H = canvas.height;
   const dpr = window.devicePixelRatio || 1;
-  if (dpr > 1) { canvas.style.width = W + 'px'; canvas.style.height = H + 'px'; canvas.width = W * dpr; canvas.height = H * dpr; ctx.scale(dpr, dpr); }
+  if (dpr > 1) { canvas.style.width = W + 'px'; canvas.width = W * dpr; canvas.height = H * dpr; ctx.scale(dpr, dpr); }
   const statusEl = document.getElementById("playable-status");
 
   let heaps, turn, winner;

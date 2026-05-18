@@ -1,6 +1,6 @@
 # Onyx
 
-> Connection game on a mixed square/triangle grid — unsolved.
+> A connection game on a board made of both squares and triangles. It has not been solved.
 
 | Field | Value |
 |-------|-------|
@@ -19,24 +19,16 @@
 
 ## Description
 
-Onyx (Larry Back, 1996) is a connection game on a hybrid grid of squares
-with additional points at certain square centres, forming a mix of square
-and triangular adjacency. Players race to connect their two sides while
-capture rules allow stones to be removed by surrounding.
+Onyx (by Larry Back, 1996) is a connection game played on a grid of squares with extra points added at the centre of some squares, creating a mix of square and triangle connections. Each player tries to connect their two sides of the board. You can also capture enemy stones by surrounding them.
 
 ## Rules
 
-1. Board: 12×12 square grid with extra points at the centre of certain
-   squares (forming local triangular adjacency).
-2. White connects the left and right edges with white stones; Black connects
-   top and bottom with black stones.
-3. On each turn a player places one stone of their colour on any empty point.
-4. **Capture**: when a player completes a pattern in which one or two
-   opposing stones are surrounded by the player's own stones at all
-   adjacent points (within the local geometry), those stones are removed.
-5. The first player to form an unbroken chain of their stones between their
-   two designated edges wins.
-6. The pie rule may be used to neutralise first-player advantage.
+1. Board: 12x12 square grid with extra points at the centre of certain squares (creating local triangle-shaped connections).
+2. White wants to connect the left and right edges with white stones; Black wants to connect the top and bottom edges with black stones.
+3. On each turn, a player places one stone of their colour on any empty point.
+4. **Capture**: when you surround one or two of the opponent's stones on all sides, those stones are removed.
+5. The first player to create an unbroken chain of their stones between their two target edges wins.
+6. A "pie rule" (swap rule) may be used to balance the first-player advantage.
 
 ## Solution status
 
@@ -46,11 +38,11 @@ strategy-stealing proofs of win, so its value remains open. **[verify]**
 
 ## Consensus on optimal play
 
-- **Connect through the triangular hubs** — the extra centre-of-square points create shortcut adjacencies; routing your chain through them can make it harder for the opponent to cut.
-- **Dual-threat paths** — as in Hex, maintain two independent connection paths toward your goal edges; forcing the opponent to block both simultaneously is usually impossible.
-- **Captures serve connection, not material** — removing an opponent stone is valuable only when it directly opens a connection path or collapses a blocking chain; random captures that don't affect the chain topology are wasted tempo.
-- **Use the pie rule to equalise** — if playing with the swap rule, aim for a first move that is as close to balanced as possible to avoid being swapped into a losing position.
-- **Treat the hybrid grid carefully** — the square/triangle adjacency means that apparent "cuts" sometimes have bypass routes through triangle centres that are easy to miss.
+- **Route through the triangle centres** — the extra points in the centre of squares create shortcut connections. Running your chain through them makes it harder for the opponent to cut you off.
+- **Keep two separate paths to your goal** — as in Hex, work on two independent ways to connect your target edges at the same time. The opponent usually cannot block both at once.
+- **Only capture if it helps your connection** — removing an enemy stone is only useful if it opens a path for you or breaks a blocking chain. Random captures that do not affect the connection are a waste of a move.
+- **Use the pie rule wisely** — if the game has a swap rule, pick a first move that is as balanced as possible, or else the opponent will swap sides and leave you with a worse position.
+- **Watch out for the mixed grid** — because the board has both square and triangle connections, paths that look blocked sometimes have hidden shortcuts through triangle centres. Do not assume a cut is solid.
 
 ## Engines & current best play
 

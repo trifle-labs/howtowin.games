@@ -1,7 +1,6 @@
 # Maharajah and the Sepoys
 
-> An asymmetric chess variant: one super-piece against a full army. The army
-> wins.
+> An uneven chess game: one super-powered piece against a full army. The army wins with correct play.
 
 | Field | Value |
 |-------|-------|
@@ -20,10 +19,7 @@
 
 ## Description
 
-An asymmetric chess variant. One player has a **full standard chess army** (the
-"Sepoys"); the other has a **single piece**, the **Maharajah**, which moves as a
-combined Queen + Knight (an "amazon"). The Maharajah wins by capturing the enemy
-king; the Sepoys win by capturing the Maharajah. The Sepoys move first.
+An asymmetric chess variant. One player has a full standard chess army (the "Sepoys"). The other has a single piece, the Maharajah, which moves like a queen and a knight combined (an "amazon"). The Maharajah wins by capturing the enemy king. The Sepoys win by capturing the Maharajah. The Sepoys move first.
 
 ## Solution status
 
@@ -41,12 +37,12 @@ correct play" rather than "trivially won."
 
 ## Consensus on optimal play
 
-- **Sepoys: advance pawns in a mutually defended wall** — never leave a pawn undefended; the Maharajah can afford one capture that equalises material; a defended pawn-phalanx denies all such opportunities and slowly compresses the Maharajah's space.
-- **Sepoys: do not rush pieces forward singly** — pieces advanced alone become targets for the Maharajah's Amazon (queen+knight) move; bring the whole army forward together, subordinating individual activity to collective safety.
-- **Maharajah: fork whenever possible** — the Amazon's combined queen and knight reach makes two-attack forks against undefended Sepoy pieces the only realistic path to material gain; look for cells the Amazon can reach that attack two pieces simultaneously.
-- **Maharajah: avoid the edge** — the Amazon is weakest near the board edge where its mobility is cut in half; stay central to maximise threat range and escape paths.
-- **Sepoys: trade material freely except for pawns** — giving up a piece to keep the pawn wall intact is usually correct; pawns form the impenetrable front that drives the Maharajah into a corner.
-- **Maharajah: stalemate is a draw** — if the Sepoys leave no legal move for the Maharajah (without capturing it), the game is drawn; as the Maharajah player, steer toward positions with minimal legal squares and hope for a stalemate error.
+- **Sepoys: advance pawns in a mutually defended wall** — never leave a pawn undefended. The Maharajah can afford one capture that evens the material. A defended pawn wall denies all such opportunities and slowly squeezes the Maharajah's space.
+- **Sepoys: do not rush pieces forward alone** — pieces advanced by themselves become targets for the Maharajah's combined queen-and-knight move. Bring the whole army forward together.
+- **Maharajah: fork whenever possible** — the Maharajah's combined queen and knight movement lets it attack two pieces at once. Look for cells where the Maharajah can attack two undefended Sepoy pieces at the same time.
+- **Maharajah: avoid the edge** — the Maharajah is weakest near the board edge where its mobility is cut in half. Stay central to maximize threat range and escape paths.
+- **Sepoys: trade material freely except for pawns** — giving up a piece to keep the pawn wall intact is usually correct. Pawns form the wall that drives the Maharajah into a corner.
+- **Maharajah: stalemate is a draw** — if the Sepoys leave the Maharajah with no legal move (without capturing it), the game is drawn. As the Maharajah player, steer toward positions with few legal squares and hope for a stalemate error.
 
 ## Engines & current best play
 

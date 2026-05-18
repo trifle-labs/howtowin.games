@@ -1,7 +1,6 @@
 # Kayles
 
-> The archetypal octal game: knock down one pin, or two adjacent pins, from a
-> row.
+> Knock down one pin or two neighboring pins from a row. The game is fully solved using a pattern that repeats every 12 pins.
 
 | Field | Value |
 |-------|-------|
@@ -20,10 +19,7 @@
 
 ## Description
 
-A row of pins. On a turn a player removes either a single pin or two *adjacent*
-pins, which may split the row into two independent shorter rows. Under
-[normal play](../lexicon/README.md#normal-play-convention) the player removing
-the last pin wins.
+A row of pins. On your turn you remove either a single pin or two neighboring pins. This may split the row into two independent shorter rows. The player who removes the last pin wins.
 
 ## Solution status
 
@@ -43,11 +39,11 @@ games and *conjectured but unproven* for others (see
 
 ## Consensus on optimal play
 
-- **Look up the nim-value from the period-12 table** — for any single row of n pins, the nim-value is given by the precomputed periodic table (period 12 for n ≥ 71); this is a one-step table lookup.
-- **Nim-sum all row values to get the position value** — with multiple rows, XOR their nim-values; if the nim-sum is non-zero you are in a winning position and can find the correct move.
-- **Winning move: reduce nim-sum to zero** — find a move in one of the rows that changes its nim-value so the new XOR of all rows equals 0; this is always possible from a non-zero (winning) position.
-- **Removing two adjacent pins splits the row** — removing two adjacent pins from the interior of a row of n creates two independent rows of sizes k and (n−k−2); calculate both halves' nim-values and choose the split that zeroes the nim-sum.
-- **Rows of size 0 (empty) are zero** — rows that have been completely removed contribute 0 to the nim-sum and can be ignored; focus on rows with non-zero nim-values.
+- **Look up the Grundy value from the period-12 table** — for any single row of n pins, the Grundy value is given by a precomputed periodic table (period 12 for n of 71 or more). This is a one-step table lookup.
+- **XOR all row values to get the position value** — with multiple rows, combine their Grundy values using XOR (a mathematical operation). If the result is non-zero you are in a winning position and can find the correct move.
+- **Winning move: make the XOR sum equal zero** — find a move in one of the rows that changes its Grundy value so the new XOR of all rows equals 0. This is always possible from a non-zero (winning) position.
+- **Removing two neighboring pins splits the row** — removing two neighboring pins from the middle of a row of n creates two independent rows. Calculate both halves' Grundy values and choose the split that zeros the XOR sum.
+- **Rows of size 0 (empty) are zero** — rows that have been completely removed contribute 0 to the XOR sum and can be ignored. Focus on rows with non-zero Grundy values.
 
 ## Engines & current best play
 

@@ -1,7 +1,6 @@
 # Sim
 
-> A Ramsey-theory game: every full game must produce a triangle, and the player
-> forced to make one loses.
+> Two players take turns drawing colored lines between six dots. The first person who draws a triangle in their own color loses.
 
 | Field | Value |
 |-------|-------|
@@ -20,13 +19,9 @@
 
 ## Description
 
-Six dots are drawn (the vertices of a complete graph K₆). Players alternately
-colour one of the 15 edges, each using their own colour. A player who is forced
-to complete a triangle **in their own colour** loses.
+The game uses six dots, each connected to every other dot by a line (15 lines total). Players take turns coloring a line in their own color. If a player is forced to complete a triangle where all three sides are their own color, that player loses.
 
-Because Ramsey's theorem gives R(3,3) = 6, *any* 2-colouring of all 15 edges of
-K₆ contains a monochromatic triangle — so Sim can never end in a draw. Someone
-must lose.
+Because of a mathematical rule called Ramsey's theorem, no matter how you color the 15 lines with two colors, there will always be at least one triangle of a single color. This means Sim can never end in a draw — someone will always lose.
 
 ## Solution status
 
@@ -41,11 +36,11 @@ solved — most casual players cannot execute the winning line.
 
 ## Consensus on optimal play
 
-- **Second player wins with perfect play** — the result is proven; as first player your only hope is an opponent error in the 15-edge game.
-- **Avoid contributing two edges to the same triangle** — before each move, count how many triangles you have already "contributed two sides to"; colouring the third side of any such triangle is an immediate loss.
-- **Track your opponent's dangerous triangles** — monitor which triangles the opponent has two sides of; completing one of those for them (on your colour) is not dangerous, but it wastes the opponent's turn when they must also avoid their own completions.
-- **Force the opponent into a "Zugzwang"** — the second-player strategy works by maintaining a position where every edge the first player colours either completes a first-player triangle or creates a situation where the second player can respond to maintain safety.
-- **A draw is impossible** — R(3,3)=6 guarantees that all 15 edges must be coloured before the game ends and someone must have a monochromatic triangle; never try to "play for a draw."
+- **Second player wins with perfect play** — this is mathematically proven. If you are the first player, your only chance is that the second player makes a mistake.
+- **Avoid having two lines of the same triangle** — before each move, check how many triangles you already have two sides of. Coloring the third side of any such triangle means you lose immediately.
+- **Watch which triangles the opponent is close to completing** — if the opponent has two sides of a triangle, it is safe to color the third side (since it would be a triangle in the opponent's color, which hurts them, not you). But doing so wastes a turn for both players.
+- **Force the opponent into a no-win situation** — the second-player winning strategy works by setting up the board so that every line the first player colors either creates a triangle for the first player or gives the second player a safe response.
+- **A draw is impossible** — because of Ramsey's theorem, all 15 lines will eventually be colored and someone will have a triangle. Never try to "play for a draw."
 
 ## Engines & current best play
 
